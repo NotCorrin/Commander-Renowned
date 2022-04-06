@@ -9,6 +9,7 @@ public class Soldier : MilitaryUnit
     {
         Health = MaxHealth;
         Ammo = MaxAmmo;
+
     }
 
     // Update is called once per frame

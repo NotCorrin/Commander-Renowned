@@ -11,6 +11,6 @@ public class Attack : Ability
 
     public override void UseAbility(Unit Caster, Unit Target)
     {
-        //if in vanguard attack other vanguard
+        GameEvents.HealthChanged(Target, -1);
     }
 }
