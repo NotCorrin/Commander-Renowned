@@ -25,17 +25,23 @@ public class Defend : Ability
 
     public override bool IsAbilityValid(Unit Caster, Unit Target)
     {
+        bool casterValid;
+        bool targetValid;
+
         if (Caster is MilitaryUnit)
         {
             MilitaryUnit casterUnit = Caster as MilitaryUnit;
-            return casterUnit.Ammo > Cost;
+            casterValid = casterUnit.Ammo >= Cost;
         }
         else if (Caster is CommanderUnit)
         {
             CommanderUnit casterUnit = Caster as CommanderUnit;
-            return casterUnit.Ammo > Cost;
+            casterValid = casterUnit.Ammo >= Cost;
         }
+        else return false;
 
-        return false;
+        targetValid = (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && !FieldController.main.IsUnitPlayer(Target);
+
+        return casterValid && targetValid;
     }
 }
