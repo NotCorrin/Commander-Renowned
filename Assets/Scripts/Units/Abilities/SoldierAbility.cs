@@ -16,4 +16,20 @@ public class SoldierAbility : Ability
             //attack target in any position
         }
     }
+
+    public override bool IsAbilityValid(Unit Caster)
+    {
+        if (Caster is MilitaryUnit)
+        {
+            MilitaryUnit casterUnit = Caster as MilitaryUnit;
+            return casterUnit.Ammo < casterUnit.MaxAmmo;
+        }
+        else if (Caster is CommanderUnit)
+        {
+            CommanderUnit casterUnit = Caster as CommanderUnit;
+            return casterUnit.Ammo < casterUnit.MaxAmmo;
+        }
+
+        return false;
+    }
 }

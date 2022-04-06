@@ -7,8 +7,6 @@ public class Soldier : MilitaryUnit
     // Start is called before the first frame update
     void Start()
     {
-        Health = MaxHealth;
-        Ammo = MaxAmmo;
 
     }
 

@@ -13,4 +13,20 @@ public class Attack : Ability
     {
         GameEvents.HealthChanged(Target, -1);
     }
+
+    public override bool IsAbilityValid(Unit Caster)
+    {
+        if (Caster is MilitaryUnit)
+        {
+            MilitaryUnit casterUnit = Caster as MilitaryUnit;
+            return casterUnit.Ammo > 0;
+        }
+        else if (Caster is CommanderUnit)
+        {
+            CommanderUnit casterUnit = Caster as CommanderUnit;
+            return casterUnit.Ammo > 0;
+        }
+
+        return false;
+    }
 }
