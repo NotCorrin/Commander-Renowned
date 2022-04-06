@@ -7,6 +7,9 @@ public abstract class Unit : Listener
     [SerializeField] Ability[] VanguardAbilities = new Ability[3];
     [SerializeField] Ability[] SupportAbilities =  new Ability[3];
 
+    SpriteRenderer spriteRenderer;
+    Animator animator;
+
     [SerializeField] protected int maxHealth;
 
     public int MaxHealth
@@ -47,22 +50,53 @@ public abstract class Unit : Listener
         }
     }
 
+    // End variables, Start Functions
+
+    private void OnHealthChanged(Unit target, int healthChange)
+    {
+        if (target == this)
+        {
+            Health += healthChange;
+        }
+    }
+
+    private void OnAttackChanged(Unit target, int AttackChange)
+    {
+        if (target == this)
+        {
+            Attack += AttackChange;
+        }
+    }
+
+    private void OnDefenseChanged(Unit target, int DefenseChange)
+    {
+        if (target == this)
+        {
+            Defense += DefenseChange;
+        }
+    }
+
     protected void UseAbility(Unit caster, Unit target, int selectedAbility)
     {
         if (caster == this)
         {
+            Ability targetAbility;
+
             if (FieldController.main.GetPosition(this) == FieldController.Position.Vanguard)
             {
-                Ability targetAbility = VanguardAbilities[selectedAbility - 1];
-                if (targetAbility.IsAbilityValid(caster)) targetAbility.UseAbility(this, target);
-                else Debug.Log("Ability Can't be Used");
+                targetAbility = VanguardAbilities[selectedAbility - 1];
             }
             else
             {
-                Ability targetAbility = SupportAbilities[selectedAbility - 1];
-                if (targetAbility.IsAbilityValid(caster)) targetAbility.UseAbility(this, target);
+                targetAbility = SupportAbilities[selectedAbility - 1];
+            }
+
+            if (targetAbility != null)
+            {
+                if (targetAbility.IsAbilityValid(caster, target)) targetAbility.UseAbility(this, target);
                 else Debug.Log("Ability Can't be Used");
             }
+
         }
     }
 
@@ -76,24 +110,29 @@ public abstract class Unit : Listener
         Health = MaxHealth;
     }
 
-    private void OnHeathChanged(Unit target, int healthChange)
-    {
-        if (target == this)
-        {
-            Health += healthChange;
-        }
-    }
+
 
     protected override void SubscribeListeners()
     {
         GameEvents.onBattleStarted += ResetUnit;
-        GameEvents.onHealthChanged += OnHeathChanged;
+        GameEvents.onHealthChanged += OnHealthChanged;
+        GameEvents.onDefenceUp += OnDefenseChanged;
+        GameEvents.onAttackUp += OnAttackChanged;
+        GameEvents.onUseAbility += UseAbility;
         
     }
 
     protected override void UnsubscribeListeners()
     {
         GameEvents.onBattleStarted -= ResetUnit;
-        GameEvents.onHealthChanged -= OnHeathChanged;
+        GameEvents.onHealthChanged -= OnHealthChanged;
+        GameEvents.onDefenceUp -= OnDefenseChanged;
+        GameEvents.onAttackUp -= OnAttackChanged;
+        GameEvents.onUseAbility -= UseAbility;
+    }
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
     }
 }

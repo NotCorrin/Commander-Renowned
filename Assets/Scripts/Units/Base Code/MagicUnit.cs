@@ -16,7 +16,7 @@ public class MagicUnit : Unit
         get => mana;
         set
         {
-            mana = value;
+            mana = Mathf.Min(Mathf.Max(value, 0), MaxMana);
             ScoreEvents.UnitManaChanged(this, mana);
         }
     }
@@ -44,11 +44,26 @@ public class MagicUnit : Unit
 
     protected override void SubscribeListeners()
     {
+        GameEvents.onUseMana += OnUseMana;
         base.SubscribeListeners();
     }
 
     protected override void UnsubscribeListeners()
     {
+        GameEvents.onUseMana -= OnUseMana;
         base.UnsubscribeListeners();
     }
+
+    private void OnUseMana(Unit caster, int cost)
+    {
+        if (caster == this)
+        {
+            Mana -= cost;
+        }
+    }
+
+    protected override void ResetUnit () {
+        Mana = MaxMana;
+		base.ResetUnit();
+	}
 }

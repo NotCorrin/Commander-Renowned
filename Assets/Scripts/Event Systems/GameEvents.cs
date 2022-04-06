@@ -24,26 +24,26 @@ public static class GameEvents
     public static void HealthChanged(Unit target, int Value)
     {
         if (onHealthChanged != null)
-        {
+        {   
             onHealthChanged(target, Value);
         }
     }
 
-    public static Action<Unit> onDefenceUp;
-    public static void DefenceUp(Unit Caster)
+    public static Action<Unit, int> onDefenceUp;
+    public static void DefenceUp(Unit Caster, int Amount)
     {
         if (onDefenceUp != null)
         {
-            onDefenceUp(Caster);
+            onDefenceUp(Caster, Amount);
         }
     }
 
-    public static Action<Unit> onAttackUp;
-    public static void AttackUp(Unit Caster)
+    public static Action<Unit, int> onAttackUp;
+    public static void AttackUp(Unit Caster, int Amount)
     {
         if (onAttackUp != null)
         {
-            onAttackUp(Caster);
+            onAttackUp(Caster, Amount);
         }
     }
 
@@ -62,6 +62,21 @@ public static class GameEvents
         if (onUseMana != null)
         {
             onUseMana(Caster, Cost);
+        }
+    }
+
+    public static Action<Unit, Unit, int> onUseAbility;
+    public static void UseAbility(Unit caster, Unit target, int abilityNumber)
+    {
+        if (abilityNumber > 3 || abilityNumber < 1)
+        {
+            Debug.Log("Invalid Ability Number");
+            return;
+        }
+             
+        if (onUseAbility != null)
+        {
+            onUseAbility(caster, target, abilityNumber);
         }
     }
 }
