@@ -5,7 +5,9 @@ using System;
 
 /*
  * Event list:
- * 
+ * onUnitHealthChanged
+ * onUnitAmmoChanged
+ * onUnitManaChanged
  */
 
 public static class ScoreEvents

@@ -7,9 +7,8 @@ public class Soldier : MilitaryUnit
     // Start is called before the first frame update
     void Start()
     {
-        health = 5;
-        maxAmmunition = 5;
-        ammunition = maxAmmunition;
+        Health = MaxHealth;
+        Ammo = MaxAmmo;
     }
 
     // Update is called once per frame
@@ -18,8 +17,4 @@ public class Soldier : MilitaryUnit
         
     }
 
-    public override void Ability()
-    {
-        
-    }
 }

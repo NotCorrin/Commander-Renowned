@@ -7,6 +7,8 @@ public abstract class Unit : Listener
     [SerializeField] Ability[] VanguardAbilities = new Ability[3];
     [SerializeField] Ability[] SupportAbilities =  new Ability[3];
     [SerializeField] protected int maxHealth;
+    
+    public enum AbilityNumber { One, Two, Three};
     public int MaxHealth
     {
         get => maxHealth;
