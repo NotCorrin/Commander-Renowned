@@ -5,7 +5,9 @@ using System;
 
 /*
  * Event list:
- * 
+ * onUnitHealthChanged
+ * onUnitAmmoChanged
+ * onUnitManaChanged
  */
 
 public static class ScoreEvents
@@ -34,6 +36,24 @@ public static class ScoreEvents
         if (onUnitManaChanged != null)
         {
             onUnitManaChanged(unit, newMana);
+        }
+    }
+
+    public static Action<Unit, int> onUnitAttackChanged;
+    public static void UnitAttackChanged(Unit unit, int attackChange)
+    {
+        if (onUnitAttackChanged != null)
+        {
+            onUnitAttackChanged(unit, attackChange);
+        }
+    }
+
+    public static Action<Unit, int> onUnitDefenseChanged;
+    public static void UnitDefenseChanged(Unit unit, int defenseChange)
+    {
+        if (onUnitDefenseChanged != null)
+        {
+            onUnitDefenseChanged(unit, defenseChange);
         }
     }
 }

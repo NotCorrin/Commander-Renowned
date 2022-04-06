@@ -42,6 +42,12 @@ public class MilitaryUnit : Unit
         throw new System.NotImplementedException();
     }
 
+    protected override void ResetUnit()
+    {
+        base.ResetUnit();
+        Ammo = MaxAmmo;
+    }
+
     protected override void SubscribeListeners()
     {
         base.SubscribeListeners();
