@@ -104,6 +104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Confidence
   abilityDescription: Increases attack damage
+  buffAmount: 1
   Cost: 1
 --- !u!212 &1552070783684818511
 SpriteRenderer:
