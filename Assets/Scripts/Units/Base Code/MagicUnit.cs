@@ -51,4 +51,8 @@ public class MagicUnit : Unit
     {
         base.UnsubscribeListeners();
     }
+	protected override void ResetUnit () {
+        Mana = MaxMana;
+		base.ResetUnit();
+	}
 }
