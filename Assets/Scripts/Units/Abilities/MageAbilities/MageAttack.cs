@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MageAttack : Ability
-{
+{ 
 	public override bool IsAbilityValid (Unit Caster, Unit Target) {
 		//does the unit have mana
 		if(Caster is MagicUnit) {

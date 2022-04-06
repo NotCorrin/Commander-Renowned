@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Attack : Ability
 {
+    [SerializeField] int Damage;
+    [SerializeField] int Cost;
+
     public override int GetMoveWeight()
     {
         return 0;
@@ -14,8 +17,8 @@ public class Attack : Ability
         if (IsAbilityValid(Caster, Target))
         {
             GameEvents.AttackUp(Caster, 1);
-            GameEvents.HealthChanged(Target, -3);
-            GameEvents.UseAmmo(Caster, 1);
+            GameEvents.HealthChanged(Target, -Damage);
+            GameEvents.UseAmmo(Caster, Cost);
         }
 
     }
@@ -25,12 +28,12 @@ public class Attack : Ability
         if (Caster is MilitaryUnit)
         {
             MilitaryUnit casterUnit = Caster as MilitaryUnit;
-            return casterUnit.Ammo > 0;
+            return casterUnit.Ammo >= Cost;
         }
         else if (Caster is CommanderUnit)
         {
             CommanderUnit casterUnit = Caster as CommanderUnit;
-            return casterUnit.Ammo > 0;
+            return casterUnit.Ammo >= Cost;
         }
 
         return false;

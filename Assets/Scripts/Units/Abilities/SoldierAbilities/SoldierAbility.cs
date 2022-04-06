@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SoldierAbility : Ability
 {
+    [SerializeField] int AmmoRestored;
+
     public override int GetMoveWeight()
     {
         return 0;
@@ -13,20 +15,15 @@ public class SoldierAbility : Ability
     {
         if (IsAbilityValid(Caster, Target))
         {
-
+            GameEvents.onUseAmmo(Target, -AmmoRestored);
         }
     }
 
     public override bool IsAbilityValid(Unit Caster, Unit Target)
     {
-        if (Caster is MilitaryUnit)
+        if (Caster == Target)
         {
             MilitaryUnit casterUnit = Caster as MilitaryUnit;
-            return casterUnit.Ammo < casterUnit.MaxAmmo;
-        }
-        else if (Caster is CommanderUnit)
-        {
-            CommanderUnit casterUnit = Caster as CommanderUnit;
             return casterUnit.Ammo < casterUnit.MaxAmmo;
         }
 

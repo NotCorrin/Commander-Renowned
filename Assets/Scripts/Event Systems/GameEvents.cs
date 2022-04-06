@@ -64,4 +64,19 @@ public static class GameEvents
             onUseMana(Caster, Cost);
         }
     }
+
+    public static Action<Unit, Unit, int> onUseAbility;
+    public static void UseAbility(Unit caster, Unit target, int abilityNumber)
+    {
+        if (abilityNumber > 3 || abilityNumber < 1)
+        {
+            Debug.Log("Invalid Ability Number");
+            return;
+        }
+             
+        if (onUseAbility != null)
+        {
+            onUseAbility(caster, target, abilityNumber);
+        }
+    }
 }

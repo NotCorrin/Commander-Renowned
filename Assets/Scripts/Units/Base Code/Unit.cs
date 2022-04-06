@@ -118,6 +118,7 @@ public abstract class Unit : Listener
         GameEvents.onHealthChanged += OnHealthChanged;
         GameEvents.onDefenceUp += OnDefenseChanged;
         GameEvents.onAttackUp += OnAttackChanged;
+        GameEvents.onUseAbility += UseAbility;
         
     }
 
@@ -127,6 +128,7 @@ public abstract class Unit : Listener
         GameEvents.onHealthChanged -= OnHealthChanged;
         GameEvents.onDefenceUp -= OnDefenseChanged;
         GameEvents.onAttackUp -= OnAttackChanged;
+        GameEvents.onUseAbility -= UseAbility;
     }
 
     private void Awake()

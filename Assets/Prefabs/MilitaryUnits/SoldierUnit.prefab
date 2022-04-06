@@ -70,6 +70,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b91f29ce248a6ff44942adc8c3c73030, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Damage: 3
+  Cost: 1
 --- !u!114 &7171566273673930400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,6 +84,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 914062dcfc6646c49a3ae74c6f4113cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Damage: 3
+  Cost: 1
 --- !u!114 &4694148546171231837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,6 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 915fd35938fc1084db60c26f453b0b76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AmmoRestored: 3
 --- !u!212 &3095930897375498056
 SpriteRenderer:
   m_ObjectHideFlags: 0
