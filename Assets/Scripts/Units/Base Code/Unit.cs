@@ -33,7 +33,7 @@ public abstract class Unit : Listener
         set
         {
             attack = value;
-            //ScoreEvents.UnitAttackChanged(this, attack);
+            ScoreEvents.UnitAttackChanged(this, attack);
         }
     }
 
@@ -44,7 +44,7 @@ public abstract class Unit : Listener
         set
         {
             defense = value;
-            //ScoreEvents.UnitDefenseChanged(this, defense);
+            ScoreEvents.UnitDefenseChanged(this, defense);
         }
     }
 
