@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Defend : Ability
 {
+    [SerializeField] int Damage;
+    [SerializeField] int Cost;
+
     public override int GetMoveWeight()
     {
         return 0;
@@ -14,8 +17,8 @@ public class Defend : Ability
         if (IsAbilityValid(Caster, Target))
         {
             GameEvents.DefenceUp(Caster, 1);
-            GameEvents.HealthChanged(Target, -3);
-            GameEvents.UseAmmo(Caster, 1);
+            GameEvents.HealthChanged(Target, -GetDamageCalculation(Caster, Target, Damage));
+            GameEvents.UseAmmo(Caster, Cost);
         }
         //reduce damage from next attack
     }
@@ -25,12 +28,12 @@ public class Defend : Ability
         if (Caster is MilitaryUnit)
         {
             MilitaryUnit casterUnit = Caster as MilitaryUnit;
-            return casterUnit.Ammo > 0;
+            return casterUnit.Ammo > Cost;
         }
         else if (Caster is CommanderUnit)
         {
             CommanderUnit casterUnit = Caster as CommanderUnit;
-            return casterUnit.Ammo > 0;
+            return casterUnit.Ammo > Cost;
         }
 
         return false;
