@@ -4,8 +4,18 @@ using UnityEngine;
 
 public abstract class Ability : MonoBehaviour
 {
-    [SerializeField] string AbilityName;
-    [SerializeField] string AbilityDescription;
+    [SerializeField] string abilityName;
+    public string AbilityName
+    {
+        get => abilityName;
+    }
+
+    [SerializeField] string abilityDescription;
+    public string AbilityDescription
+    {
+        get => abilityDescription;
+    }
+
     public abstract int GetMoveWeight();
     public abstract void UseAbility(Unit Caster, Unit Target);
     public abstract bool IsAbilityValid(Unit Caster, Unit Target);
