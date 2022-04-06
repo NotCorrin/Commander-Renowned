@@ -9,13 +9,17 @@ public class MageAttack : Ability
 		if(Caster is MagicUnit) {
 			MagicUnit magicUnit = Caster as MagicUnit;
 			return magicUnit.Mana > 0;
+		} else if (Caster is CommanderUnit) {
+			CommanderUnit casterUnit = Caster as CommanderUnit;
+			return casterUnit.Mana > 0;
 		}
 		return false;
 	}
 	public override void UseAbility (Unit Caster, Unit Target) {
-		throw new System.NotImplementedException();
-		// remove mana from the caster
-		// do something to the target
+		if (IsAbilityValid(Caster, Target)) {
+			GameEvents.onHealthChanged(Target, -1);
+			GameEvents.onUseMana(Caster, 1);
+		}
 	}
 	public override int GetMoveWeight () {
 		throw new System.NotImplementedException();
