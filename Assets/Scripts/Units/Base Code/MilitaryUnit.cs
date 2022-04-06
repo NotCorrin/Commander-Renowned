@@ -16,7 +16,7 @@ public class MilitaryUnit : Unit
         get => ammo;
         set
         {
-            ammo = value;
+            ammo = Mathf.Min(Mathf.Max(value, 0), MaxAmmo);
             ScoreEvents.UnitAmmoChanged(this, ammo);
         }
     }
@@ -50,11 +50,21 @@ public class MilitaryUnit : Unit
 
     protected override void SubscribeListeners()
     {
+        GameEvents.onUseAmmo += OnUseAmmo;
         base.SubscribeListeners();
     }
 
     protected override void UnsubscribeListeners()
     {
+        GameEvents.onUseAmmo -= OnUseAmmo;
         base.UnsubscribeListeners();
+    }
+
+    private void OnUseAmmo(Unit caster, int cost)
+    {
+        if (caster == this)
+        {
+            Ammo -= cost;
+        }
     }
 }
