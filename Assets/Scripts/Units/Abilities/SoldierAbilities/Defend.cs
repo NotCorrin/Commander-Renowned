@@ -17,7 +17,7 @@ public class Defend : Ability
         if (IsAbilityValid(Caster, Target))
         {
             GameEvents.DefenceUp(Caster, 1);
-            GameEvents.HealthChanged(Target, -Damage);
+            GameEvents.HealthChanged(Target, -GetDamageCalculation(Caster, Target, Damage));
             GameEvents.UseAmmo(Caster, Cost);
         }
         //reduce damage from next attack

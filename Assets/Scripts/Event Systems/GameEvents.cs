@@ -24,7 +24,7 @@ public static class GameEvents
     public static void HealthChanged(Unit target, int Value)
     {
         if (onHealthChanged != null)
-        {
+        {   
             onHealthChanged(target, Value);
         }
     }

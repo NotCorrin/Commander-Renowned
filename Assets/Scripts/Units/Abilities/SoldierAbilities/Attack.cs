@@ -17,7 +17,7 @@ public class Attack : Ability
         if (IsAbilityValid(Caster, Target))
         {
             GameEvents.AttackUp(Caster, 1);
-            GameEvents.HealthChanged(Target, -Damage);
+            GameEvents.HealthChanged(Target, -GetDamageCalculation(Caster, Target, Damage));
             GameEvents.UseAmmo(Caster, Cost);
         }
 
