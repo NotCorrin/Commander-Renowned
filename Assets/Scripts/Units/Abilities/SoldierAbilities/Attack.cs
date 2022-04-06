@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoldierAbility : Ability
+public class Attack : Ability
 {
     public override int GetMoveWeight()
     {
@@ -11,23 +11,26 @@ public class SoldierAbility : Ability
 
     public override void UseAbility(Unit Caster, Unit Target)
     {
-        if (!(Caster is MilitaryUnit))
+        if (IsAbilityValid(Caster, Target))
         {
-            //attack target in any position
+            GameEvents.AttackUp(Caster, 1);
+            GameEvents.HealthChanged(Target, -3);
+            GameEvents.UseAmmo(Caster, 1);
         }
+
     }
 
-    public override bool IsAbilityValid(Unit Caster)
+    public override bool IsAbilityValid(Unit Caster, Unit Target)
     {
         if (Caster is MilitaryUnit)
         {
             MilitaryUnit casterUnit = Caster as MilitaryUnit;
-            return casterUnit.Ammo < casterUnit.MaxAmmo;
+            return casterUnit.Ammo > 0;
         }
         else if (Caster is CommanderUnit)
         {
             CommanderUnit casterUnit = Caster as CommanderUnit;
-            return casterUnit.Ammo < casterUnit.MaxAmmo;
+            return casterUnit.Ammo > 0;
         }
 
         return false;

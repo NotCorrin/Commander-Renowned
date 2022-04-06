@@ -11,10 +11,16 @@ public class Defend : Ability
 
     public override void UseAbility(Unit Caster, Unit Target)
     {
+        if (IsAbilityValid(Caster, Target))
+        {
+            GameEvents.DefenceUp(Caster, 1);
+            GameEvents.HealthChanged(Target, -3);
+            GameEvents.UseAmmo(Caster, 1);
+        }
         //reduce damage from next attack
     }
 
-    public override bool IsAbilityValid(Unit Caster)
+    public override bool IsAbilityValid(Unit Caster, Unit Target)
     {
         if (Caster is MilitaryUnit)
         {

@@ -29,21 +29,21 @@ public static class GameEvents
         }
     }
 
-    public static Action<Unit> onDefenceUp;
-    public static void DefenceUp(Unit Caster)
+    public static Action<Unit, int> onDefenceUp;
+    public static void DefenceUp(Unit Caster, int Amount)
     {
         if (onDefenceUp != null)
         {
-            onDefenceUp(Caster);
+            onDefenceUp(Caster, Amount);
         }
     }
 
-    public static Action<Unit> onAttackUp;
-    public static void AttackUp(Unit Caster)
+    public static Action<Unit, int> onAttackUp;
+    public static void AttackUp(Unit Caster, int Amount)
     {
         if (onAttackUp != null)
         {
-            onAttackUp(Caster);
+            onAttackUp(Caster, Amount);
         }
     }
 
