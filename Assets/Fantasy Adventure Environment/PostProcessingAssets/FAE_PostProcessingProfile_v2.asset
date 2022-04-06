@@ -9,15 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e6292b2c06870d4495f009f912b9600, type: 3}
+  m_Script: {fileID: 0}
   m_Name: FAE_PostProcessingProfile_v2
   m_EditorClassIdentifier: 
-  settings:
-  - {fileID: 114731288360835970}
-  - {fileID: 114438058328876292}
-  - {fileID: 114912513338895136}
-  - {fileID: 114161918749538342}
-  - {fileID: 114758963708434408}
 --- !u!114 &114001947540919812
 MonoBehaviour:
   m_ObjectHideFlags: 3
