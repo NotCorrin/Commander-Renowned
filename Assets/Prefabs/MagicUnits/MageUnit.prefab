@@ -56,8 +56,8 @@ MonoBehaviour:
   - {fileID: 7274132632927612479}
   - {fileID: 0}
   - {fileID: 0}
-  maxHealth: 0
-  maxMana: 0
+  maxHealth: 10
+  maxMana: 5
 --- !u!114 &7927553117975152034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,6 +70,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 253e47844c531874b9f052dea09cd492, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilityName: Spirit Burn
+  abilityDescription: Will ignite a flame to smolder the clothing of the enemy.
+  Damage: 1
+  Cost: 1
 --- !u!114 &3921007691822419878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,6 +86,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7359014e2093b147abd5364bb655244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilityName: Wall of Plasma
+  abilityDescription: Will form an invisible wall to protect the mage
+  Damage: 1
+  Cost: 1
 --- !u!114 &7274132632927612479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,6 +102,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 566e2a4e1e28dd64d8e5d985da0c7b4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilityName: Confidence
+  abilityDescription: Increases attack damage
+  Cost: 1
 --- !u!212 &1552070783684818511
 SpriteRenderer:
   m_ObjectHideFlags: 0
