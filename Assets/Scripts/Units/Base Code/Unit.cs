@@ -6,6 +6,7 @@ public abstract class Unit : Listener
 {
     [SerializeField] Ability[] VanguardAbilities = new Ability[3];
     [SerializeField] Ability[] SupportAbilities =  new Ability[3];
+
     [SerializeField] protected int maxHealth;
     
     public enum AbilityNumber { One, Two, Three};
@@ -22,6 +23,28 @@ public abstract class Unit : Listener
         {
             health = value;
             ScoreEvents.UnitHealthChanged(this, health);
+        }
+    }
+
+    protected int attack;
+    public int Attack
+    {
+        get => attack;
+        set
+        {
+            attack = value;
+            //ScoreEvents.UnitAttackChanged(this, attack);
+        }
+    }
+
+    protected int defense;
+    public int Defense
+    {
+        get => defense;
+        set
+        {
+            defense = value;
+            //ScoreEvents.UnitDefenseChanged(this, defense);
         }
     }
 
