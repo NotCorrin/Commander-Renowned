@@ -5,12 +5,15 @@ using System;
 
 /*
  * Event list:
- * onUnitHealthChanged
- * onUnitAmmoChanged
- * onUnitManaChanged
+ * onUnitHealthChanged(Unit, int)
+ * onUnitAmmoChanged(Unit, int)
+ * onUnitManaChanged(Unit, int)
+ * onUnitAttackChanged(Unit, int)
+ * onUnitDefenseChanged(Unit, int)
+ * onDisplayQTEResults(QTEController.QTEDisplayResult)
  */
 
-public static class ScoreEvents
+public static class UIEvents
 {
     public static Action<Unit, int> onUnitHealthChanged;
     public static void UnitHealthChanged(Unit unit, int newHealth)
@@ -54,6 +57,15 @@ public static class ScoreEvents
         if (onUnitDefenseChanged != null)
         {
             onUnitDefenseChanged(unit, defenseChange);
+        }
+    }
+
+    public static Action<QTEController.QTEDisplayResult> onDisplayQTEResults;
+    public static void DisplayQTEResults(QTEController.QTEDisplayResult DisplayResult)
+    {
+        if (onDisplayQTEResults != null)
+        {
+            onDisplayQTEResults(DisplayResult);
         }
     }
 }

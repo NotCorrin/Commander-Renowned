@@ -5,7 +5,15 @@ using System;
 
 /*
  * Event list:
- * onBattleStart
+ * onBattleStart()
+ * onHealthChanged(Unit, int)
+ * onDefenseUp(Unit, int)
+ * onAttackUp(Unit, int)
+ * onUseAmmo(Unit, int)
+ * onUseMana(Unit, int)
+ * onUseAbility(Unit, Unit, int)
+ * onQTEStart(QTEController.QTEType)
+ * onQTEResolves(QTEController.QTEResult)
  */
 
 public static class GameEvents
@@ -29,12 +37,12 @@ public static class GameEvents
         }
     }
 
-    public static Action<Unit, int> onDefenceUp;
-    public static void DefenceUp(Unit Caster, int Amount)
+    public static Action<Unit, int> onDefenseUp;
+    public static void DefenseUp(Unit Caster, int Amount)
     {
-        if (onDefenceUp != null)
+        if (onDefenseUp != null)
         {
-            onDefenceUp(Caster, Amount);
+            onDefenseUp(Caster, Amount);
         }
     }
 
@@ -73,10 +81,28 @@ public static class GameEvents
             Debug.Log("Invalid Ability Number");
             return;
         }
-             
+
         if (onUseAbility != null)
         {
             onUseAbility(caster, target, abilityNumber);
+        }
+    }
+
+    public static Action<QTEController.QTEType> onQTEStart;
+    public static void QTEStart( QTEController.QTEType qteType)
+    {
+        if (onQTEStart != null)
+        {
+            onQTEStart(qteType);
+        }
+    }
+
+    public static Action<QTEController.QTEResult> onQTEResolved;
+    public static void QTEResolved(QTEController.QTEResult QTEResult)
+    {
+        if (onQTEResolved != null)
+        {
+            onQTEResolved(QTEResult);
         }
     }
 }

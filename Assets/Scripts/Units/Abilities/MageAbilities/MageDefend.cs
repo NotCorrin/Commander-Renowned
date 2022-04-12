@@ -26,7 +26,7 @@ public class MageDefend : Ability
 	}
 	public override void UseAbility (Unit Caster, Unit Target) {
 		if (IsAbilityValid(Caster, Target)) {
-			GameEvents.DefenceUp(Caster, 1);
+			GameEvents.DefenseUp(Caster, 1);
 			GameEvents.onHealthChanged(Target, GetDamageCalculation(Caster, Target, Damage));
 			GameEvents.onUseMana(Caster, -Cost);
 		}

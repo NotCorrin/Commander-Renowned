@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class QTEController : Listener
 {
+    public enum QTEType { shrinkingCircle }
+    public enum QTEResult { Critical, Hit, Miss }
+    public enum QTEDisplayResult { Perfect, Good, Poor }
+
     // Start is called before the first frame update
     void Start()
     {

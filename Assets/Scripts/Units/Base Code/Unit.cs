@@ -24,7 +24,7 @@ public abstract class Unit : Listener
         set
         {
             health = value;
-            ScoreEvents.UnitHealthChanged(this, health);
+            UIEvents.UnitHealthChanged(this, health);
         }
     }
 
@@ -35,7 +35,7 @@ public abstract class Unit : Listener
         set
         {
             attack = value;
-            ScoreEvents.UnitAttackChanged(this, attack);
+            UIEvents.UnitAttackChanged(this, attack);
         }
     }
 
@@ -46,7 +46,7 @@ public abstract class Unit : Listener
         set
         {
             defense = value;
-            ScoreEvents.UnitDefenseChanged(this, defense);
+            UIEvents.UnitDefenseChanged(this, defense);
         }
     }
 
@@ -116,7 +116,7 @@ public abstract class Unit : Listener
     {
         GameEvents.onBattleStarted += ResetUnit;
         GameEvents.onHealthChanged += OnHealthChanged;
-        GameEvents.onDefenceUp += OnDefenseChanged;
+        GameEvents.onDefenseUp += OnDefenseChanged;
         GameEvents.onAttackUp += OnAttackChanged;
         GameEvents.onUseAbility += UseAbility;
         
@@ -126,7 +126,7 @@ public abstract class Unit : Listener
     {
         GameEvents.onBattleStarted -= ResetUnit;
         GameEvents.onHealthChanged -= OnHealthChanged;
-        GameEvents.onDefenceUp -= OnDefenseChanged;
+        GameEvents.onDefenseUp -= OnDefenseChanged;
         GameEvents.onAttackUp -= OnAttackChanged;
         GameEvents.onUseAbility -= UseAbility;
     }
