@@ -50,6 +50,17 @@ public abstract class Unit : Listener
         }
     }
 
+    protected int accuracy;
+    public int Accuracy
+    {
+        get => accuracy;
+        set
+        {
+            accuracy = value;
+            UIEvents.UnitAccuracyChanged(this, accuracy);
+        }
+    }
+
     // End variables, Start Functions
 
     private void OnHealthChanged(Unit target, int healthChange)
@@ -73,6 +84,14 @@ public abstract class Unit : Listener
         if (target == this)
         {
             Defense += DefenseChange;
+        }
+    }
+
+    private void OnAccuracyChanged(Unit target, int AccuracyChange)
+    {
+        if (target == this)
+        {
+            Accuracy += AccuracyChange;
         }
     }
 
@@ -108,6 +127,9 @@ public abstract class Unit : Listener
     protected virtual void ResetUnit()
     {
         Health = MaxHealth;
+        Attack = 0;
+        Defense = 0;
+        Accuracy = 0;
     }
 
 
@@ -118,7 +140,9 @@ public abstract class Unit : Listener
         GameEvents.onHealthChanged += OnHealthChanged;
         GameEvents.onDefenseUp += OnDefenseChanged;
         GameEvents.onAttackUp += OnAttackChanged;
+        GameEvents.onAccuracyUp += OnAccuracyChanged;
         GameEvents.onUseAbility += UseAbility;
+
         
     }
 
@@ -128,7 +152,9 @@ public abstract class Unit : Listener
         GameEvents.onHealthChanged -= OnHealthChanged;
         GameEvents.onDefenseUp -= OnDefenseChanged;
         GameEvents.onAttackUp -= OnAttackChanged;
+        GameEvents.onAccuracyUp -= OnAccuracyChanged;
         GameEvents.onUseAbility -= UseAbility;
+
     }
 
     private void Awake()

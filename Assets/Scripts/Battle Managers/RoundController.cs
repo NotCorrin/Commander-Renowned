@@ -26,4 +26,9 @@ public class RoundController : Listener
     {
         throw new System.NotImplementedException();
     }
+
+    public bool IsCurrentRoundPlayer()
+    {
+        return true;
+    }
 }

@@ -2,17 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MageAttack : Ability
+public class MageAttack : QTEAbility
 {
 	[SerializeField] int Damage;
 	[SerializeField] int Cost;
 
     [SerializeField] int DamageVariation;
     [SerializeField] int CostVariation;
-
-    private Unit Caster;
-    private Unit Target;
-
 
     public override bool IsAbilityValid (Unit Caster, Unit Target)
     {
@@ -35,25 +31,17 @@ public class MageAttack : Ability
 		return casterValid && targetValid;
 	}
 
-
-	public override void UseAbility (Unit Caster, Unit Target)
+    protected override QTEController.QTEType GetQTEType()
     {
-        if (IsAbilityValid(Caster, Target))
-        {
-            this.Caster = Caster;
-            this.Target = Target;
-            GameEvents.QTEStart(QTEController.QTEType.shrinkingCircle);
-            GameEvents.onQTEResolved += AbilityUsed;
-        }
+        return QTEController.QTEType.shrinkingCircle;
     }
 
-
-	public override int GetMoveWeight ()
+    public override int GetMoveWeight ()
     {
 		throw new System.NotImplementedException();
 	}
 
-    private void AbilityUsed(QTEController.QTEResult result)
+    protected override void AbilityUsed(QTEController.QTEResult result)
     {
         int FinalDamage = Damage;
         int FinalCost = Cost;

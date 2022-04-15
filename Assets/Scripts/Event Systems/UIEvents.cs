@@ -10,6 +10,7 @@ using System;
  * onUnitManaChanged(Unit, int)
  * onUnitAttackChanged(Unit, int)
  * onUnitDefenseChanged(Unit, int)
+ * onUnitAccuracyChanged(Unit, int)
  * onDisplayQTEResults(QTEController.QTEDisplayResult)
  */
 
@@ -57,6 +58,15 @@ public static class UIEvents
         if (onUnitDefenseChanged != null)
         {
             onUnitDefenseChanged(unit, defenseChange);
+        }
+    }
+
+    public static Action<Unit, int> onUnitAccuracyChanged;
+    public static void UnitAccuracyChanged(Unit unit, int AccuracyChange)
+    {
+        if (onUnitAccuracyChanged != null)
+        {
+            onUnitAccuracyChanged(unit, AccuracyChange);
         }
     }
 

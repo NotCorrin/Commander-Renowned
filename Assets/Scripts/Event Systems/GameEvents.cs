@@ -9,6 +9,7 @@ using System;
  * onHealthChanged(Unit, int)
  * onDefenseUp(Unit, int)
  * onAttackUp(Unit, int)
+ * onAccuracyUp(Unit, int)
  * onUseAmmo(Unit, int)
  * onUseMana(Unit, int)
  * onUseAbility(Unit, Unit, int)
@@ -55,6 +56,15 @@ public static class GameEvents
         }
     }
 
+    public static Action<Unit, int> onAccuracyUp;
+    public static void AccuracyUp(Unit Caster, int Amount)
+    {
+        if (onAccuracyUp != null)
+        {
+            onAccuracyUp(Caster, Amount);
+        }
+    }
+
     public static Action<Unit, int> onUseAmmo;
     public static void UseAmmo(Unit Caster, int Cost)
     {
@@ -88,12 +98,12 @@ public static class GameEvents
         }
     }
 
-    public static Action<QTEController.QTEType> onQTEStart;
-    public static void QTEStart( QTEController.QTEType qteType)
+    public static Action<QTEController.QTEType, int> onQTEStart;
+    public static void QTEStart( QTEController.QTEType qteType, int difficultyModifier)
     {
         if (onQTEStart != null)
         {
-            onQTEStart(qteType);
+            onQTEStart(qteType, difficultyModifier);
         }
     }
 

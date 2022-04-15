@@ -5,8 +5,9 @@ using System;
 
 /*
  * Event list:
- * onBattleStartSelected
- * onUseAbility
+ * onBattleStartSelected()
+ * onUseAbility()
+ * onQTETriggered()
  */
 
 public static class MenuEvents
@@ -27,6 +28,15 @@ public static class MenuEvents
         if (onUseAbility != null)
         {
             onUseAbility(unit, ability);
+        }
+    }
+
+    public static Action onQTETriggered;
+    public static void QTETriggered()
+    {
+        if (onQTETriggered != null)
+        {
+            onQTETriggered();
         }
     }
 }
