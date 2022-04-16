@@ -24,7 +24,7 @@ public abstract class Unit : Listener
         set
         {
             health = value;
-            ScoreEvents.UnitHealthChanged(this, health);
+            UIEvents.UnitHealthChanged(this, health);
         }
     }
 
@@ -35,7 +35,7 @@ public abstract class Unit : Listener
         set
         {
             attack = value;
-            ScoreEvents.UnitAttackChanged(this, attack);
+            UIEvents.UnitAttackChanged(this, attack);
         }
     }
 
@@ -46,7 +46,18 @@ public abstract class Unit : Listener
         set
         {
             defense = value;
-            ScoreEvents.UnitDefenseChanged(this, defense);
+            UIEvents.UnitDefenseChanged(this, defense);
+        }
+    }
+
+    protected int accuracy;
+    public int Accuracy
+    {
+        get => accuracy;
+        set
+        {
+            accuracy = value;
+            UIEvents.UnitAccuracyChanged(this, accuracy);
         }
     }
 
@@ -73,6 +84,14 @@ public abstract class Unit : Listener
         if (target == this)
         {
             Defense += DefenseChange;
+        }
+    }
+
+    private void OnAccuracyChanged(Unit target, int AccuracyChange)
+    {
+        if (target == this)
+        {
+            Accuracy += AccuracyChange;
         }
     }
 
@@ -108,6 +127,9 @@ public abstract class Unit : Listener
     protected virtual void ResetUnit()
     {
         Health = MaxHealth;
+        Attack = 0;
+        Defense = 0;
+        Accuracy = 0;
     }
 
 
@@ -116,9 +138,11 @@ public abstract class Unit : Listener
     {
         GameEvents.onBattleStarted += ResetUnit;
         GameEvents.onHealthChanged += OnHealthChanged;
-        GameEvents.onDefenceUp += OnDefenseChanged;
+        GameEvents.onDefenseUp += OnDefenseChanged;
         GameEvents.onAttackUp += OnAttackChanged;
+        GameEvents.onAccuracyUp += OnAccuracyChanged;
         GameEvents.onUseAbility += UseAbility;
+
         
     }
 
@@ -126,9 +150,11 @@ public abstract class Unit : Listener
     {
         GameEvents.onBattleStarted -= ResetUnit;
         GameEvents.onHealthChanged -= OnHealthChanged;
-        GameEvents.onDefenceUp -= OnDefenseChanged;
+        GameEvents.onDefenseUp -= OnDefenseChanged;
         GameEvents.onAttackUp -= OnAttackChanged;
+        GameEvents.onAccuracyUp -= OnAccuracyChanged;
         GameEvents.onUseAbility -= UseAbility;
+
     }
 
     private void Awake()

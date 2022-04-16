@@ -2,11 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MageDefend : Ability
+public class MageDefend : QTEAbility
 {
 	[SerializeField] int Damage;
 	[SerializeField] int Cost;
-	public override bool IsAbilityValid (Unit Caster, Unit Target) {
+    [SerializeField] int DefenseBoost;
+
+    [SerializeField] int DefenseVariation;
+    [SerializeField] int CostVariation;
+    
+
+    public override bool IsAbilityValid (Unit Caster, Unit Target) {
 		bool casterValid;
 		bool targetValid;
 
@@ -24,14 +30,42 @@ public class MageDefend : Ability
 
 		return casterValid && targetValid;
 	}
-	public override void UseAbility (Unit Caster, Unit Target) {
-		if (IsAbilityValid(Caster, Target)) {
-			GameEvents.DefenceUp(Caster, 1);
-			GameEvents.onHealthChanged(Target, GetDamageCalculation(Caster, Target, Damage));
-			GameEvents.onUseMana(Caster, -Cost);
-		}
-	}
-	public override int GetMoveWeight () {
+
+    protected override QTEController.QTEType GetQTEType()
+    {
+        return QTEController.QTEType.shrinkingCircle;
+    }
+
+    public override int GetMoveWeight ()
+    {
 		throw new System.NotImplementedException();
 	}
+
+    protected override void AbilityUsed(QTEController.QTEResult result)
+    {
+        int FinalDefense = Damage;
+        int FinalCost = Cost;
+
+        switch (result)
+        {
+            case QTEController.QTEResult.Critical:
+                {
+                    FinalDefense += DefenseVariation;
+                    FinalCost += CostVariation;
+                    break;
+                }
+            case QTEController.QTEResult.Miss:
+                {
+                    FinalDefense = Mathf.Max(0, FinalDefense - DefenseVariation);
+                    FinalCost -= CostVariation;
+                    break;
+                }
+        }
+
+        GameEvents.DefenseUp(Caster, FinalDefense);
+        GameEvents.onHealthChanged(Target, GetDamageCalculation(Caster, Target, Damage));
+        GameEvents.onUseMana(Caster, -FinalCost);
+    }
+
+    
 }

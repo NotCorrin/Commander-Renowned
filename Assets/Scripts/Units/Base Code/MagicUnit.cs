@@ -17,7 +17,7 @@ public class MagicUnit : Unit
         set
         {
             mana = Mathf.Min(Mathf.Max(value, 0), MaxMana);
-            ScoreEvents.UnitManaChanged(this, mana);
+            UIEvents.UnitManaChanged(this, mana);
         }
     }
     // Start is called before the first frame update
