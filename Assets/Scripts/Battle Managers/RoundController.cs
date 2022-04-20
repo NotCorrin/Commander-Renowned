@@ -5,6 +5,7 @@ using UnityEngine;
 public class RoundController : Listener
 {
     public static RoundController main;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +20,7 @@ public class RoundController : Listener
 
     protected override void SubscribeListeners()
     {
-        throw new System.NotImplementedException();
+        
     }
 
     protected override void UnsubscribeListeners()
@@ -30,5 +31,12 @@ public class RoundController : Listener
     public bool IsCurrentRoundPlayer()
     {
         return true;
+    }
+
+    public enum Phase
+    {
+        ChooseAttack,
+        SwapSupport,
+        ChooseSupport
     }
 }
