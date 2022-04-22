@@ -1,8 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement name="Container" style="width: 175px; height: 50px; background-color: rgba(255, 255, 255, 0.69); flex-direction: row; padding-left: 2px; padding-right: 2px; padding-top: 2px; padding-bottom: 2px; border-top-left-radius: 6px; border-bottom-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; -unity-font: url(&apos;/Assets/Fonts/Saira-Regular.ttf&apos;); -unity-font-definition: url(&apos;/Assets/Fonts/Saira-Regular SDF.asset&apos;);">
-        <ui:VisualElement name="Icon" style="background-color: rgb(255, 0, 0); width: 50%; border-left-width: 5px; border-right-width: 5px; border-top-width: 5px; border-bottom-width: 5px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-top-left-radius: 19px; border-bottom-left-radius: 19px; border-top-right-radius: 19px; border-bottom-right-radius: 19px;" />
-        <ui:VisualElement name="HealthbarValue" style="width: 50%; justify-content: center; align-items: flex-start;">
-            <ui:Label text="x0" display-tooltip-when-elided="true" name="HealthValue" style="color: rgb(0, 0, 0); -unity-font: url(&apos;/Assets/Fonts/Saira-Regular.ttf&apos;); -unity-font-definition: url(&apos;/Assets/Fonts/Saira-Regular SDF.asset&apos;); font-size: 29px;" />
-        </ui:VisualElement>
-    </ui:VisualElement>
-</ui:UXML>
