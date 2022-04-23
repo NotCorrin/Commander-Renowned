@@ -115,4 +115,21 @@ public static class GameEvents
             onQTEResolved(QTEResult);
         }
     }
+    
+    public static Action<Unit> onSwitchUnitEnd;
+    public static void SwitchUnitEnd(Unit unitSwitched)
+    {
+        if (onSwitchUnitEnd != null)
+        {
+            onSwitchUnitEnd(unitSwitched);
+        }
+    }    
+    public static Action onSupportPhaseEnd;
+    public static void SupportPhaseEnd()
+    {
+        if (onSupportPhaseEnd != null)
+        {
+            onSupportPhaseEnd();
+        }
+    }
 }

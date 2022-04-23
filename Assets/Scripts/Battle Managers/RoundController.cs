@@ -5,7 +5,10 @@ using UnityEngine;
 public class RoundController : Listener
 {
     public static RoundController main;
-    
+    public static Phase phase;
+    private int numUnitsUsed;
+    public Unit unitSwitched;
+    public Unit unitUsed;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,19 +16,33 @@ public class RoundController : Listener
     }
 
     // Update is called once per frame
-    void Update()
+    void ChooseAttack()
     {
-        
+        phase = Phase.ChooseAttack;
+    }
+
+    void SwapSupport(QTEController.QTEResult QTEResult)
+    {
+        phase = Phase.SwapSupport;
+    }
+
+    void ChooseSupport(Unit unitSwitched)
+    {
+        phase = Phase.ChooseSupport;
     }
 
     protected override void SubscribeListeners()
     {
-        
+        GameEvents.onQTEResolved += SwapSupport;
+        GameEvents.onSwitchUnitEnd += ChooseSupport;
+        //throw new System.NotImplementedException();
     }
 
     protected override void UnsubscribeListeners()
     {
-        throw new System.NotImplementedException();
+        GameEvents.onQTEResolved -= SwapSupport;
+
+        //throw new System.NotImplementedException();
     }
 
     public bool IsCurrentRoundPlayer()
