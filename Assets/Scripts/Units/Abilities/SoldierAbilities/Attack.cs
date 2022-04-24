@@ -11,7 +11,29 @@ public class Attack : QTEAbility
 
     public override int GetMoveWeight(Unit caster)
     {
-        return 0;
+        int HealthWeight = Mathf.FloorToInt((caster.Health / caster.MaxHealth) * 100);
+        int AmmoWeight;
+        if (caster is MilitaryUnit)
+        {
+            MilitaryUnit militaryCaster = caster as MilitaryUnit;
+
+            if (militaryCaster.Ammo < Cost) return 0;
+
+            AmmoWeight = Mathf.FloorToInt((militaryCaster.Ammo / militaryCaster.MaxAmmo) * 100);
+
+        }
+        else if (caster is CommanderUnit)
+        {
+            CommanderUnit commanderCaster = caster as CommanderUnit;
+            if (commanderCaster.Ammo < Cost) return 0;
+
+            AmmoWeight = Mathf.FloorToInt((commanderCaster.Ammo / commanderCaster.MaxAmmo) * 100);
+
+        }
+
+        else return 0;
+
+        return (2 * HealthWeight + AmmoWeight) / 3;
     }
 
     protected override void AbilityUsed(QTEController.QTEResult result)

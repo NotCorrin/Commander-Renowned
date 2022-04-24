@@ -8,7 +8,26 @@ public class SoldierAbility : Ability
 
     public override int GetMoveWeight(Unit caster)
     {
-        return 0;
+        int HealthWeight = Mathf.FloorToInt(1 - (caster.Health / caster.MaxHealth) * 100);
+        int AmmoWeight;
+
+        if (caster is MilitaryUnit)
+        {
+            MilitaryUnit militaryCaster = caster as MilitaryUnit;
+
+            AmmoWeight = Mathf.FloorToInt((1 - (militaryCaster.Ammo / militaryCaster.MaxAmmo)) * 100);
+
+        }
+        else if (caster is CommanderUnit)
+        {
+            CommanderUnit commanderCaster = caster as CommanderUnit;
+
+            AmmoWeight = Mathf.FloorToInt((1 - (commanderCaster.Ammo / commanderCaster.MaxAmmo)) * 100);
+
+        }
+        else return 0;
+
+        return (HealthWeight + 2 * AmmoWeight) / 3;
     }
 
     public override void UseAbility(Unit Caster, Unit Target)

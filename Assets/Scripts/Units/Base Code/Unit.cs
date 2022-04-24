@@ -4,8 +4,8 @@ using UnityEngine;
 
 public abstract class Unit : Listener
 {
-    [SerializeField] Ability[] VanguardAbilities = new Ability[3];
-    [SerializeField] Ability[] SupportAbilities =  new Ability[3];
+    [SerializeField] protected Ability[] VanguardAbilities = new Ability[3];
+    [SerializeField] protected Ability[] SupportAbilities =  new Ability[3];
 
     SpriteRenderer spriteRenderer;
     Animator animator;
@@ -130,6 +130,33 @@ public abstract class Unit : Listener
         Attack = 0;
         Defense = 0;
         Accuracy = 0;
+    }
+
+    protected int GetMoveScoreAIAlgorithm()
+    {
+        int totalVanguardMoveScore = 0;
+        int totalVanguardMoves = 0;
+        foreach (Ability ability in VanguardAbilities)
+        {
+            if (ability)
+            {
+                totalVanguardMoves++;
+                totalVanguardMoveScore += ability.GetMoveWeight(this);
+            }
+        }
+
+        int totalSupportMoveScore = 0;
+        int totalSupportMoves = 0;
+        foreach (Ability ability in SupportAbilities)
+        {
+            if (ability)
+            {
+                totalSupportMoves++;
+                totalSupportMoveScore += ability.GetMoveWeight(this);
+            }
+        }
+
+        return (totalVanguardMoveScore / totalVanguardMoves) - (totalSupportMoveScore / totalSupportMoves);
     }
 
 
