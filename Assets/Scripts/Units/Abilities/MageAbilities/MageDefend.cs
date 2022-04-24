@@ -36,14 +36,14 @@ public class MageDefend : QTEAbility
         return QTEController.QTEType.shrinkingCircle;
     }
 
-    public override int GetMoveWeight ()
+    public override int GetMoveWeight (Unit caster)
     {
 		throw new System.NotImplementedException();
 	}
 
     protected override void AbilityUsed(QTEController.QTEResult result)
     {
-        int FinalDefense = Damage;
+        int FinalDefense = DefenseBoost;
         int FinalCost = Cost;
 
         switch (result)

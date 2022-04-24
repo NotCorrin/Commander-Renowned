@@ -2,25 +2,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Attack : Ability
+public class Attack : QTEAbility
 {
     [SerializeField] int Damage;
     [SerializeField] int Cost;
 
-    public override int GetMoveWeight()
+    [SerializeField] int DamageVariation;
+
+    public override int GetMoveWeight(Unit caster)
     {
         return 0;
     }
 
-    public override void UseAbility(Unit Caster, Unit Target)
+    protected override void AbilityUsed(QTEController.QTEResult result)
     {
-        if (IsAbilityValid(Caster, Target))
-        {
-            GameEvents.AttackUp(Caster, 1);
-            GameEvents.HealthChanged(Target, -GetDamageCalculation(Caster, Target, Damage));
-            GameEvents.UseAmmo(Caster, Cost);
-        }
+        int FinalDamage = Damage;
 
+        switch (result)
+        {
+            case QTEController.QTEResult.Critical:
+                {
+                    FinalDamage += DamageVariation;
+                    break;
+                }
+            case QTEController.QTEResult.Miss:
+                {
+                    FinalDamage -= DamageVariation;
+                    break;
+                }
+        }
+        
+
+        GameEvents.AttackUp(Caster, 1);
+        GameEvents.HealthChanged(Target, -GetDamageCalculation(Caster, Target, Damage));
+        GameEvents.UseAmmo(Caster, Cost);
+    }
+
+    protected override QTEController.QTEType GetQTEType()
+    {
+        return QTEController.QTEType.shrinkingCircle;
     }
 
     public override bool IsAbilityValid(Unit Caster, Unit Target)

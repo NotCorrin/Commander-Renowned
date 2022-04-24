@@ -33,7 +33,7 @@ public class MageBuff : Ability
 			GameEvents.UseMana(Caster, Cost);
 		}
 	}
-	public override int GetMoveWeight () {
+	public override int GetMoveWeight (Unit caster) {
 		throw new System.NotImplementedException();
 	}
 }

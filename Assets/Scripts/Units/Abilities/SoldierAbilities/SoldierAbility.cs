@@ -6,7 +6,7 @@ public class SoldierAbility : Ability
 {
     [SerializeField] int AmmoRestored;
 
-    public override int GetMoveWeight()
+    public override int GetMoveWeight(Unit caster)
     {
         return 0;
     }
