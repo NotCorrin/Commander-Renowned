@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommanderUnit : Unit
+public abstract class CommanderUnit : Unit
 {
     [SerializeField] private int maxAmmo;
     public int MaxAmmo
@@ -38,35 +38,40 @@ public class CommanderUnit : Unit
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    protected override void ResetUnit()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    public override int GetStickScore()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override int GetSwitchScore()
-    {
-        throw new System.NotImplementedException();
+        Mana = MaxMana / 2;
+        Ammo = MaxAmmo;
+        base.ResetUnit();
     }
 
     protected override void SubscribeListeners()
     {
+        GameEvents.onUseMana += OnUseMana;
+        GameEvents.onUseAmmo += OnUseAmmo;
         base.SubscribeListeners();
     }
 
     protected override void UnsubscribeListeners()
     {
+        GameEvents.onUseMana -= OnUseMana;
+        GameEvents.onUseAmmo -= OnUseAmmo;
         base.UnsubscribeListeners();
+    }
+
+    private void OnUseAmmo(Unit caster, int cost)
+    {
+        if (caster == this)
+        {
+            Ammo -= cost;
+        }
+    }
+
+    private void OnUseMana(Unit caster, int cost)
+    {
+        if (caster == this)
+        {
+            Mana -= cost;
+        }
     }
 }

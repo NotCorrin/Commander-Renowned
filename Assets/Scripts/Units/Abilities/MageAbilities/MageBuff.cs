@@ -33,7 +33,31 @@ public class MageBuff : Ability
 			GameEvents.UseMana(Caster, Cost);
 		}
 	}
-	public override int GetMoveWeight () {
-		throw new System.NotImplementedException();
-	}
+	public override int GetMoveWeight (Unit caster) {
+
+        int HealthWeight = Mathf.FloorToInt( 1 - (caster.Health / caster.MaxHealth) * 100);
+        int ManaWeight;
+
+        if (caster is MageUnit)
+        {
+            MageUnit mageCaster = caster as MageUnit;
+
+            if (mageCaster.Mana < Cost) return 0;
+
+            ManaWeight = Mathf.FloorToInt((mageCaster.Mana / mageCaster.MaxMana) * 100);
+
+        }
+        else if (caster is CommanderUnit)
+        {
+            CommanderUnit commanderCaster = caster as CommanderUnit;
+
+            if (commanderCaster.Mana < Cost) return 0;
+
+            ManaWeight = Mathf.FloorToInt((commanderCaster.Mana / commanderCaster.MaxMana) * 100);
+
+        }
+        else return 0;
+
+        return (HealthWeight + 2 * ManaWeight) / 3;
+    }
 }

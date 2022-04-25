@@ -15,8 +15,14 @@ public abstract class QTEAbility : Ability
             this.Caster = Caster;
             this.Target = Target;
             GameEvents.QTEStart(GetQTEType(), -Caster.Accuracy);
-            GameEvents.onQTEResolved += AbilityUsed;
+            GameEvents.onQTEResolved += OnQTEResolved;
         }
+    }
+
+    protected void OnQTEResolved(QTEController.QTEResult result)
+    {
+        AbilityUsed(result);
+        GameEvents.onQTEResolved -= OnQTEResolved;
     }
 
     // Use this to set the QTE type
