@@ -5,7 +5,7 @@ using UnityEngine;
 public class SwappingUnits : MonoBehaviour
 {
     public GameObject selectedUnit;
-    public GameObject frontUnit;
+    public GameObject vanguardUnit;
     public GameObject backUnit1;
     public GameObject backUnit2;
 
@@ -31,21 +31,17 @@ public class SwappingUnits : MonoBehaviour
                     if (hit.transform.gameObject.tag == "Military" && hit.transform.gameObject.transform.position.x < 3)
                     {
                         Debug.Log("military");
-
-                        selectedUnit = hit.transform.gameObject;
                     }
                     else if (hit.transform.gameObject.tag == "Magic" && hit.transform.gameObject.transform.position.x < 3)
                     {
                         Debug.Log("magic");
-
-                        selectedUnit = hit.transform.gameObject;
                     }
                     else if (hit.transform.gameObject.tag == "Renowned" && hit.transform.gameObject.transform.position.x < 3)
                     {
                         Debug.Log("renowned");
-
-                        selectedUnit = hit.transform.gameObject;
                     }
+
+                    selectedUnit = hit.transform.gameObject;
                 }
             }
         }
@@ -54,22 +50,22 @@ public class SwappingUnits : MonoBehaviour
     public void SwapUnits()
     {
         Vector3 selectedUnitPos = selectedUnit.transform.position;
-        Vector3 frontUnitPos = frontUnit.transform.position;
+        Vector3 vanguardUnitPos = vanguardUnit.transform.position;
 
-        selectedUnit.transform.position = frontUnitPos;
-        frontUnit.transform.position = selectedUnitPos;
+        selectedUnit.transform.position = vanguardUnitPos;
+        vanguardUnit.transform.position = selectedUnitPos;
 
         if (backUnit1 == selectedUnit)
         {
             GameObject temp = backUnit1;
-            backUnit1 = frontUnit;
-            frontUnit = temp;
+            backUnit1 = vanguardUnit;
+            vanguardUnit = temp;
         }
         else if(backUnit2 == selectedUnit)
         {
             GameObject temp = backUnit2;
-            backUnit2 = frontUnit;
-            frontUnit = temp;
+            backUnit2 = vanguardUnit;
+            vanguardUnit = temp;
         }
     }
 }

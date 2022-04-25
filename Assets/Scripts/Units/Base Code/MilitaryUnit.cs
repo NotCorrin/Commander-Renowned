@@ -16,8 +16,8 @@ public class MilitaryUnit : Unit
         get => ammo;
         set
         {
-            ammo = value;
-            ScoreEvents.UnitAmmoChanged(this, ammo);
+            ammo = Mathf.Min(Mathf.Max(value, 0), MaxAmmo);
+            UIEvents.UnitAmmoChanged(this, ammo);
         }
     }
     // Start is called before the first frame update
@@ -42,13 +42,29 @@ public class MilitaryUnit : Unit
         throw new System.NotImplementedException();
     }
 
+    protected override void ResetUnit()
+    {
+        base.ResetUnit();
+        Ammo = MaxAmmo;
+    }
+
     protected override void SubscribeListeners()
     {
+        GameEvents.onUseAmmo += OnUseAmmo;
         base.SubscribeListeners();
     }
 
     protected override void UnsubscribeListeners()
     {
+        GameEvents.onUseAmmo -= OnUseAmmo;
         base.UnsubscribeListeners();
+    }
+
+    private void OnUseAmmo(Unit caster, int cost)
+    {
+        if (caster == this)
+        {
+            Ammo -= cost;
+        }
     }
 }

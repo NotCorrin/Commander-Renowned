@@ -5,7 +5,9 @@ using System;
 
 /*
  * Event list:
- * onBattleStartSelected
+ * onBattleStartSelected()
+ * onUseAbility()
+ * onQTETriggered()
  */
 
 public static class MenuEvents
@@ -18,5 +20,23 @@ public static class MenuEvents
             onBattleStartSelected();
         }
     }
-    // Start is called before the first frame update
+
+    public static Action <Unit, Enum> onUseAbility;
+
+    public static void UseAbility(Unit unit, Enum ability )
+    {
+        if (onUseAbility != null)
+        {
+            onUseAbility(unit, ability);
+        }
+    }
+
+    public static Action onQTETriggered;
+    public static void QTETriggered()
+    {
+        if (onQTETriggered != null)
+        {
+            onQTETriggered();
+        }
+    }
 }

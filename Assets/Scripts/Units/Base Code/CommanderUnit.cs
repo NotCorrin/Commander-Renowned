@@ -17,7 +17,7 @@ public class CommanderUnit : Unit
         set
         {
             ammo = value;
-            ScoreEvents.UnitAmmoChanged(this, ammo);
+            UIEvents.UnitAmmoChanged(this, ammo);
         }
     }
 
@@ -34,7 +34,7 @@ public class CommanderUnit : Unit
         set
         {
             mana = value;
-            ScoreEvents.UnitManaChanged(this, mana);
+            UIEvents.UnitManaChanged(this, mana);
         }
     }
 
