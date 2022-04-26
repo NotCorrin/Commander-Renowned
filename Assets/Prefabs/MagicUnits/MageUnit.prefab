@@ -74,6 +74,8 @@ MonoBehaviour:
   abilityDescription: Will ignite a flame to smolder the clothing of the enemy.
   Damage: 1
   Cost: 1
+  DamageVariation: 0
+  CostVariation: 0
 --- !u!114 &3921007691822419878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,6 +92,9 @@ MonoBehaviour:
   abilityDescription: Will form an invisible wall to protect the mage
   Damage: 1
   Cost: 1
+  DefenseBoost: 0
+  DefenseVariation: 0
+  CostVariation: 0
 --- !u!114 &7274132632927612479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,7 +151,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1155603599314371108, guid: 02ea1d89a95c2344a9cc458e6fb75105, type: 3}
+  m_Sprite: {fileID: 1457491203435894738, guid: 2f0f1c5d280668f4fa4e4bb6e099f96a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -167,7 +172,7 @@ Animator:
   m_GameObject: {fileID: 6884881852785777201}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 290842611f5ef174cb1770e4e4ef610f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
