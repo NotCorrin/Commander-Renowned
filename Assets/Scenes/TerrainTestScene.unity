@@ -403,6 +403,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd78024e573d8ff499482fba6dc61023, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  promptBar: {fileID: 1994792227}
+  promptBarUIDocument: {fileID: 1994792229}
+  supportBar: {fileID: 956510860}
+  supportBarUIDocument: {fileID: 956510862}
+  switchBar: {fileID: 165275318}
+  switchBarUIDocument: {fileID: 165275320}
 --- !u!1001 &1289127751
 PrefabInstance:
   m_ObjectHideFlags: 0
