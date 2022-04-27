@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class BattleMenuController : MonoBehaviour
 {
+    public FieldController fieldController;
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        fieldController = FieldController.main;
     }
 
     // Update is called once per frame
