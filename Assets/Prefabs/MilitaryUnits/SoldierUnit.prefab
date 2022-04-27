@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 4694148546171231837}
   - component: {fileID: 3095930897375498056}
   - component: {fileID: 8284957678226594031}
+  - component: {fileID: 911181919}
+  - component: {fileID: 6361040635455189955}
   m_Layer: 0
   m_Name: SoldierUnit
   m_TagString: Untagged
@@ -181,6 +183,32 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &911181919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106158086360272526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e7971b15f0404c489e66ffe60a1a92d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useStaticBillboard: 0
+--- !u!114 &6361040635455189955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106158086360272526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e7971b15f0404c489e66ffe60a1a92d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useStaticBillboard: 0
 --- !u!1 &808247373966991014
 GameObject:
   m_ObjectHideFlags: 0

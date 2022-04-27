@@ -77,6 +77,8 @@ GameObject:
   - component: {fileID: 2294820338508900456}
   - component: {fileID: 5145483213268070333}
   - component: {fileID: 3288217654638550077}
+  - component: {fileID: 2042385486}
+  - component: {fileID: 4418792414986779566}
   m_Layer: 0
   m_Name: CommanderUnit
   m_TagString: Untagged
@@ -261,6 +263,32 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2042385486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6480894034537515106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e7971b15f0404c489e66ffe60a1a92d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useStaticBillboard: 0
+--- !u!114 &4418792414986779566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6480894034537515106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e7971b15f0404c489e66ffe60a1a92d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useStaticBillboard: 0
 --- !u!1 &8060413159524072052
 GameObject:
   m_ObjectHideFlags: 0
