@@ -411,10 +411,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8971809245513799296, guid: 3fc801ee7347b3c4ebb26e6c56ab1a63, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 821cacc0ecea3eb47ad7c840089cad2a, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3fc801ee7347b3c4ebb26e6c56ab1a63, type: 3}
 --- !u!1001 &1393973957
@@ -424,10 +420,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3288217654638550077, guid: 67dba0759c4e90249805bbe221684efb, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 74b3c6f72f520a248965c52c6f97a33e, type: 2}
     - target: {fileID: 6480894034537515106, guid: 67dba0759c4e90249805bbe221684efb, type: 3}
       propertyPath: m_Name
       value: CommanderUnit
