@@ -29,12 +29,12 @@ public class Billboard : MonoBehaviour
     {
         if (!useStaticBillboard)
         {
-            Vector3 direction = camTransform.position - transform.position;
+            Vector3 direction = new Vector3(transform.eulerAngles.x, camTransform.eulerAngles.y, transform.eulerAngles.z);
+            //Quaternion.
             // transform.LookAt(camTransform);
             // transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y - 180f, 0f);
-            direction.x = 0;
-            direction.z = 0;
-            Quaternion toRotation = Quaternion.FromToRotation(transform.forward, direction);
+            //direction.x = transform.right;
+            Quaternion toRotation = Quaternion.Euler(direction);
             transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, Time.deltaTime * 5f);
         }
         else
