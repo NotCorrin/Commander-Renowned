@@ -5,7 +5,6 @@ using UnityEngine;
 public class Defend : QTEAbility
 {
     [SerializeField] int Damage;
-    [SerializeField] int Cost;
     [SerializeField] int DefenseBoost;
 
     [SerializeField] int DefenseVariation;

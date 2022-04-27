@@ -2,16 +2,22 @@ using UnityEngine;
 
 public abstract class Ability : MonoBehaviour
 {
-    [SerializeField] string abilityName;
+    [SerializeField] protected string abilityName;
     public string AbilityName
     {
         get => abilityName;
     }
 
-    [SerializeField] string abilityDescription;
+    [SerializeField] protected string abilityDescription;
     public string AbilityDescription
     {
         get => abilityDescription;
+    }
+
+    [SerializeField] protected int cost;
+    public int Cost
+    {
+        get => cost;
     }
 
     public abstract int GetMoveWeight(Unit Caster);

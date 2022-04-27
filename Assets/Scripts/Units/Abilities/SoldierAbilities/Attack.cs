@@ -5,7 +5,6 @@ using UnityEngine;
 public class Attack : QTEAbility
 {
     [SerializeField] int Damage;
-    [SerializeField] int Cost;
 
     [SerializeField] int DamageVariation;
 

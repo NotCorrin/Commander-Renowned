@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class SceneController : Listener
 {
+    public static SceneController main;
     public GameObject selectedObject;
     public Unit selectedUnit;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        main = this;
     }
 
     // Update is called once per frame

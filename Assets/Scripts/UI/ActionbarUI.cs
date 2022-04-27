@@ -37,6 +37,8 @@ public class ActionbarUI : Listener
     private VisualElement switchBarContainer;
     private Button switchBtn;
     private Button endSwitchTurnBtn;
+
+    private Unit selectedUnit;
     #endregion
 
     void Awake()
@@ -76,22 +78,24 @@ public class ActionbarUI : Listener
     void OnPromptCancelClicked()
     {
         Debug.Log("Prompt Cancel Clicked");
-        promptBarValue.text = "YO HO I WANNA DIE";
     }
 
     void AbilityOneBtn_Clicked()
     {
-        Debug.Log("Ability One Button Clicked");
+        GameEvents.UseAbility(selectedUnit, SceneController.main.selectedUnit, 1);
+        //Debug.Log("Ability One Button Clicked");
     }
 
     void AbilityTwoBtn_Clicked()
     {
-        Debug.Log("Ability Two Button Clicked");
+        GameEvents.UseAbility(selectedUnit, SceneController.main.selectedUnit, 2);
+        //Debug.Log("Ability Two Button Clicked");
     }
 
     void AbilityThreeBtn_Clicked()
     {
-        Debug.Log("Ability Three Button Clicked");
+        GameEvents.UseAbility(selectedUnit, SceneController.main.selectedUnit, 3);
+        //Debug.Log("Ability Three Button Clicked");
     }
 
     void EndSupportTurnBtn_Clicked()
@@ -103,6 +107,7 @@ public class ActionbarUI : Listener
     void SwitchBtn_Clicked()
     {
         Debug.Log("Switch Button Clicked");
+        FieldController.main.SwapUnit();
     }
 
     void EndSwitchTurnBtn_Clicked()
@@ -112,7 +117,26 @@ public class ActionbarUI : Listener
     }
     void OnUnitSelected(Unit unit)
     {
-        
+        Debug.Log("get up");
+        Ability[] _abilities = FieldController.main.GetIsVanguard(unit)?unit.VanguardAbilities:unit.SupportAbilities;
+        if(_abilities[0])
+        {
+            abilityOneName.text = _abilities[0].AbilityName;
+            abilityOneCost.text = _abilities[0].Cost + "";
+            abilityOneDesc.text = _abilities[0].AbilityDescription;
+        }
+        if(_abilities[1])
+        {
+            abilityTwoName.text = _abilities[1].AbilityName;
+            abilityTwoCost.text = _abilities[1].Cost + "";
+            abilityTwoDesc.text = _abilities[1].AbilityDescription;
+        }
+        if(_abilities[2])
+        {
+            abilityThreeName.text = _abilities[2].AbilityName;
+            abilityThreeCost.text = _abilities[2].Cost + "";
+            abilityThreeDesc.text = _abilities[2].AbilityDescription;
+        }
     }
 
     void VerifyVariables()
