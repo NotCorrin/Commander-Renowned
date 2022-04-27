@@ -18,29 +18,42 @@ public class RoundController : Listener
     // Update is called once per frame
     void ChooseAttack()
     {
-        phase = Phase.ChooseAttack;
+        phase = Phase.PlayerVanguard;
     }
 
     void SwapSupport(QTEController.QTEResult QTEResult)
     {
-        phase = Phase.SwapSupport;
+        GameEvents.SetPhase(Phase.NextPhase);
+    }
+    void SwapSupport(Unit unit)
+    {
+        GameEvents.SetPhase(Phase.NextPhase);
     }
 
-    void ChooseSupport(Unit unitSwitched)
+    public static void SetPhase(Phase _phase)
     {
-        phase = Phase.ChooseSupport;
+        if(_phase == Phase.NextPhase) phase++;
+        else phase = _phase;
+    }
+
+    void PhaseSwitchAbilityUsed(Unit caster, Unit target, int abilityNumber)
+    {
+        if(phase == Phase.PlayerVanguard)   GameEvents.QTEStart(QTEController.QTEType.shrinkingCircle, 1);
     }
 
     protected override void SubscribeListeners()
     {
         GameEvents.onQTEResolved += SwapSupport;
-        GameEvents.onSwitchUnitEnd += ChooseSupport;
+        GameEvents.onSwitchUnitEnd += SwapSupport;
+        GameEvents.onUseAbility += PhaseSwitchAbilityUsed;
         //throw new System.NotImplementedException();
     }
 
     protected override void UnsubscribeListeners()
     {
         GameEvents.onQTEResolved -= SwapSupport;
+        GameEvents.onSwitchUnitEnd -= SwapSupport;
+        GameEvents.onUseAbility -= PhaseSwitchAbilityUsed;
 
         //throw new System.NotImplementedException();
     }
@@ -52,8 +65,12 @@ public class RoundController : Listener
 
     public enum Phase
     {
-        ChooseAttack,
-        SwapSupport,
-        ChooseSupport
+        PlayerVanguard,
+        EnemyVangaurd,
+        PlayerSwap,
+        EnemySwap,
+        PlayerSupport,
+        EnemySupport,
+        NextPhase
     }
 }

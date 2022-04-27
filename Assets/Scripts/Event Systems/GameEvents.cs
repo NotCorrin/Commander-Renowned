@@ -23,6 +23,7 @@ public static class GameEvents
     public static Action onBattleStarted;
     public static void BattleStart()
     {
+        RoundController.SetPhase(RoundController.Phase.PlayerVanguard);
         if (onBattleStarted != null)
         {
             onBattleStarted();
@@ -123,7 +124,8 @@ public static class GameEvents
         {
             onSwitchUnitEnd(unitSwitched);
         }
-    }    
+    }
+
     public static Action onSupportPhaseEnd;
     public static void SupportPhaseEnd()
     {
@@ -132,4 +134,22 @@ public static class GameEvents
             onSupportPhaseEnd();
         }
     }
+
+    // public static Action<RoundController.Phase> onSetPhase;
+    public static Action<RoundController.Phase> onPhaseChanged;
+    public static void SetPhase(RoundController.Phase phase)
+    {
+        RoundController.SetPhase(phase);
+        // Additional event not needed
+        // if (onSetPhase != null)
+        // {
+        //     onSetPhase(phase);
+        // }
+        if (onPhaseChanged != null)
+        {
+            onPhaseChanged(RoundController.phase);
+        }
+    }    
+    
+    //public static Action<Unit> onUnitClick;
 }
