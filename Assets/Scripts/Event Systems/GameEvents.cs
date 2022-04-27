@@ -23,6 +23,7 @@ public static class GameEvents
     public static Action onBattleStarted;
     public static void BattleStart()
     {
+        RoundController.SetPhase(RoundController.Phase.EnemyVangaurd);
         if (onBattleStarted != null)
         {
             onBattleStarted();
@@ -115,4 +116,40 @@ public static class GameEvents
             onQTEResolved(QTEResult);
         }
     }
+    
+    public static Action<Unit> onSwitchUnitEnd;
+    public static void SwitchUnitEnd(Unit unitSwitched)
+    {
+        if (onSwitchUnitEnd != null)
+        {
+            onSwitchUnitEnd(unitSwitched);
+        }
+    }
+
+    public static Action onSupportPhaseEnd;
+    public static void SupportPhaseEnd()
+    {
+        if (onSupportPhaseEnd != null)
+        {
+            onSupportPhaseEnd();
+        }
+    }
+
+    // public static Action<RoundController.Phase> onSetPhase;
+    public static Action<RoundController.Phase> onPhaseChanged;
+    public static void SetPhase(RoundController.Phase phase)
+    {
+        RoundController.SetPhase(phase);
+        // Additional event not needed
+        // if (onSetPhase != null)
+        // {
+        //     onSetPhase(phase);
+        // }
+        if (onPhaseChanged != null)
+        {
+            onPhaseChanged(RoundController.phase);
+        }
+    }    
+    
+    //public static Action<Unit> onUnitClick;
 }
