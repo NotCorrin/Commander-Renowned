@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class ActionbarUI : MonoBehaviour
+public class ActionbarUI : Listener
 {
     #region variables
     [Header("Prompt Bar")]
     [SerializeField] private GameObject promptBar;
     [SerializeField] private UIDocument promptBarUIDocument;
     private VisualElement promptBarContainer;
-    TextElement promptBarValue;
+    private TextElement promptBarValue;
+    private Button promptCancelBtn;
 
     [Header("Support Bar")]
     [SerializeField] private GameObject supportBar;
@@ -38,15 +39,80 @@ public class ActionbarUI : MonoBehaviour
     private Button endSwitchTurnBtn;
     #endregion
 
-    void Start()
+    void Awake()
     {
         VerifyVariables();
         RunQueries();
 
-        // Set the display to none on start
         promptBarContainer.style.display = DisplayStyle.None;
-        supportBarContainer.style.display = DisplayStyle.None;
+        // supportBarContainer.style.display = DisplayStyle.None;
         switchBarContainer.style.display = DisplayStyle.None;
+    }
+
+    protected override void SubscribeListeners()
+    {
+        promptCancelBtn.clickable.clicked += OnPromptCancelClicked;
+        abilityOneBtn.clickable.clicked += AbilityOneBtn_Clicked;
+        abilityTwoBtn.clickable.clicked += AbilityTwoBtn_Clicked;
+        abilityThreeBtn.clickable.clicked += AbilityThreeBtn_Clicked;
+        endSupportTurnBtn.clickable.clicked += EndSupportTurnBtn_Clicked;
+        switchBtn.clickable.clicked += SwitchBtn_Clicked;
+        endSwitchTurnBtn.clickable.clicked += EndSwitchTurnBtn_Clicked;
+        UIEvents.onUnitSelected += OnUnitSelected;
+    }
+
+    protected override void UnsubscribeListeners()
+    {
+        promptCancelBtn.clickable.clicked -= OnPromptCancelClicked;
+        abilityOneBtn.clickable.clicked -= AbilityOneBtn_Clicked;
+        abilityTwoBtn.clickable.clicked -= AbilityTwoBtn_Clicked;
+        abilityThreeBtn.clickable.clicked -= AbilityThreeBtn_Clicked;
+        endSupportTurnBtn.clickable.clicked -= EndSupportTurnBtn_Clicked;
+        switchBtn.clickable.clicked -= SwitchBtn_Clicked;
+        endSwitchTurnBtn.clickable.clicked -= EndSwitchTurnBtn_Clicked;
+        UIEvents.onUnitSelected -= OnUnitSelected;
+    }
+
+    void OnPromptCancelClicked()
+    {
+        Debug.Log("Prompt Cancel Clicked");
+        promptBarValue.text = "YO HO I WANNA DIE";
+    }
+
+    void AbilityOneBtn_Clicked()
+    {
+        Debug.Log("Ability One Button Clicked");
+    }
+
+    void AbilityTwoBtn_Clicked()
+    {
+        Debug.Log("Ability Two Button Clicked");
+    }
+
+    void AbilityThreeBtn_Clicked()
+    {
+        Debug.Log("Ability Three Button Clicked");
+    }
+
+    void EndSupportTurnBtn_Clicked()
+    {
+        Debug.Log("End Support Turn Button Clicked");
+        GameEvents.SetPhase(RoundController.Phase.NextPhase);
+    }
+
+    void SwitchBtn_Clicked()
+    {
+        Debug.Log("Switch Button Clicked");
+    }
+
+    void EndSwitchTurnBtn_Clicked()
+    {
+        Debug.Log("End Switch Turn Button Clicked");
+        GameEvents.SetPhase(RoundController.Phase.NextPhase);
+    }
+    void OnUnitSelected(Unit unit)
+    {
+        
     }
 
     void VerifyVariables()
@@ -95,6 +161,7 @@ public class ActionbarUI : MonoBehaviour
             // Prompt Bar
             promptBarContainer = promptBarUIDocument.rootVisualElement.Query<VisualElement>("container");
             promptBarValue = promptBarContainer.Query<TextElement>("prompt");
+            promptCancelBtn = promptBarContainer.Query<Button>("cancel-button");
 
             // Support Bar
             supportBarContainer = supportBarUIDocument.rootVisualElement.Query<VisualElement>("container");
@@ -126,10 +193,5 @@ public class ActionbarUI : MonoBehaviour
         {
             Debug.LogError($"{gameObject.name} : ActionbarUI - Element Query Failed.");
         }
-    }
-
-    void Update()
-    {
-        
     }
 }
