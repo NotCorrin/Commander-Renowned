@@ -18,6 +18,8 @@ public class FieldController : Listener
     Vector3 PlayerVanguardPos;
     Vector3 selectedUnitPos;
 
+    bool[] supportUsed = new bool[4];
+
     public static FieldController main;
     // Start is called before the first frame update
     void Start()
