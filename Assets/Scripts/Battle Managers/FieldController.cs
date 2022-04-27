@@ -31,7 +31,7 @@ public class FieldController : Listener
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.F4)) {
+        if(Input.GetKeyDown(KeyCode.F4) && RoundController.phase == RoundController.Phase.PlayerSwap) {
             SwapUnit();
         }
     }
@@ -95,6 +95,10 @@ public class FieldController : Listener
         //throw new System.NotImplementedException();
     }
 
+    private void Awake()
+    {
+        main = this;
+    }
 
     public void SwapUnit()
     {
