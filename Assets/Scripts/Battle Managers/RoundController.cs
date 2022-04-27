@@ -10,12 +10,14 @@ public class RoundController : Listener
     public Unit unitSwitched;
     public Unit unitUsed;
     // Start is called before the first frame update
-    void Start()
+    void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.F1)) MenuEvents.BattleStartSelected();
+        //if(Input.GetKeyDown(KeyCode.F2)) MenuEvents.UseAbility(unitUsed, );
+        if(Input.GetKeyDown(KeyCode.F3)) MenuEvents.QTETriggered();
+        if(Input.GetKeyDown(KeyCode.Space)) Debug.Log(phase);
     }
 
-    // Update is called once per frame
     void ChooseAttack()
     {
         phase = Phase.PlayerVanguard;
@@ -27,6 +29,7 @@ public class RoundController : Listener
     }
     void SwapSupport(Unit unit)
     {
+        Debug.Log("c");
         GameEvents.SetPhase(Phase.NextPhase);
     }
 
@@ -34,6 +37,8 @@ public class RoundController : Listener
     {
         if(_phase == Phase.NextPhase) phase++;
         else phase = _phase;
+
+        if(phase == Phase.EnemyVangaurd) GameEvents.QTEStart(QTEController.QTEType.shrinkingCircle, 1);
     }
 
     void PhaseSwitchAbilityUsed(Unit caster, Unit target, int abilityNumber)
