@@ -12,9 +12,9 @@ public class RoundController : Listener
     // Start is called before the first frame update
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.F1)) MenuEvents.BattleStartSelected();
-        //if(Input.GetKeyDown(KeyCode.F2)) MenuEvents.UseAbility(unitUsed, );
-        if(Input.GetKeyDown(KeyCode.F3)) MenuEvents.QTETriggered();
+        if(Input.GetKeyDown(KeyCode.F1)) MenuEvents.BattleStartSelected(); //Start battle button
+        //if(Input.GetKeyDown(KeyCode.F2)) MenuEvents.UseAbility(unitUsed, ); //Use vanguard ability
+        if(Input.GetKeyDown(KeyCode.F3)) MenuEvents.QTETriggered(); //QTE Triggered
         if(Input.GetKeyDown(KeyCode.Space)) Debug.Log(phase);
     }
 
