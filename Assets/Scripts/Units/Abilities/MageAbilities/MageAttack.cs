@@ -5,8 +5,6 @@ using UnityEngine;
 public class MageAttack : QTEAbility
 {
 	[SerializeField] int Damage;
-	[SerializeField] int Cost;
-
     [SerializeField] int DamageVariation;
     [SerializeField] int CostVariation;
 

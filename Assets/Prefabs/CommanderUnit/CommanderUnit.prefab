@@ -114,11 +114,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c89f583ff5534084aa37a06879de16fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VanguardAbilities:
+  vanguardAbilities:
   - {fileID: 1827240468676262645}
   - {fileID: 1001161374790124703}
   - {fileID: 0}
-  SupportAbilities:
+  supportAbilities:
   - {fileID: 1145748182108536317}
   - {fileID: 2294820338508900456}
   - {fileID: 0}
@@ -139,8 +139,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Attack Formation
   abilityDescription: Strike in an attack formation. Attack up, Damage 3
+  cost: 0
   Damage: 3
-  Cost: 1
   DamageVariation: 0
 --- !u!114 &1001161374790124703
 MonoBehaviour:
@@ -156,8 +156,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Wall of Plasma
   abilityDescription: Will form an invisible wall to protect the mage
+  cost: 0
   Damage: 1
-  Cost: 1
   DefenseBoost: 0
   DefenseVariation: 0
   CostVariation: 0
@@ -175,7 +175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Reload
   abilityDescription: Gain 3 ammo
-  AmmoRestored: 3
+  cost: 0
 --- !u!114 &2294820338508900456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,8 +190,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Confidence
   abilityDescription: Increases attack damage
+  cost: 0
   buffAmount: 1
-  Cost: 1
 --- !u!212 &5145483213268070333
 SpriteRenderer:
   m_ObjectHideFlags: 0

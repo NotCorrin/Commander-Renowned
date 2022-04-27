@@ -5,7 +5,6 @@ using UnityEngine;
 public class Attack : QTEAbility
 {
     [SerializeField] int Damage;
-    [SerializeField] int Cost;
 
     [SerializeField] int DamageVariation;
 
@@ -81,7 +80,6 @@ public class Attack : QTEAbility
             casterValid = casterUnit.Ammo >= Cost;
         }
         else return false;
-
         targetValid = (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && !FieldController.main.IsUnitPlayer(Target);
 
         return casterValid && targetValid;

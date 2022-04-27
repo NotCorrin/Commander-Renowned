@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="container" style="width: 40px; height: 40px;">
+        <ui:VisualElement style="background-image: url(&apos;/Assets/UI/Images/LeftSelectVector 1.svg&apos;); width: 100%; height: 100%; position: absolute;" />
+        <ui:VisualElement style="background-image: url(&apos;/Assets/UI/Images/RightSelectVector 1.svg&apos;); width: 100%; height: 100%; position: absolute;" />
+    </ui:VisualElement>
+</ui:UXML>

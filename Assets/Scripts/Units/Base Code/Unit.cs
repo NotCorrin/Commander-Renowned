@@ -4,8 +4,11 @@ using UnityEngine;
 
 public abstract class Unit : Listener
 {
-    [SerializeField] protected Ability[] VanguardAbilities = new Ability[3];
-    [SerializeField] protected Ability[] SupportAbilities =  new Ability[3];
+    [SerializeField] protected Ability[] vanguardAbilities = new Ability[3];
+    public Ability[] VanguardAbilities => vanguardAbilities;
+    [SerializeField] protected Ability[] supportAbilities =  new Ability[3];
+    public Ability[] SupportAbilities => supportAbilities;
+
 
     SpriteRenderer spriteRenderer;
     Animator animator;
@@ -17,6 +20,7 @@ public abstract class Unit : Listener
         get => maxHealth;
     }
 
+    [SerializeField]
     protected int health;
     public int Health
     {
@@ -100,14 +104,13 @@ public abstract class Unit : Listener
         if (caster == this)
         {
             Ability targetAbility;
-
             if (FieldController.main.GetPosition(this) == FieldController.Position.Vanguard)
             {
-                targetAbility = VanguardAbilities[selectedAbility - 1];
+                targetAbility = vanguardAbilities[selectedAbility - 1];
             }
             else
             {
-                targetAbility = SupportAbilities[selectedAbility - 1];
+                targetAbility = supportAbilities[selectedAbility - 1];
             }
 
             if (targetAbility != null)
@@ -136,7 +139,7 @@ public abstract class Unit : Listener
     {
         int totalVanguardMoveScore = 0;
         int totalVanguardMoves = 0;
-        foreach (Ability ability in VanguardAbilities)
+        foreach (Ability ability in vanguardAbilities)
         {
             if (ability)
             {
@@ -147,7 +150,7 @@ public abstract class Unit : Listener
 
         int totalSupportMoveScore = 0;
         int totalSupportMoves = 0;
-        foreach (Ability ability in SupportAbilities)
+        foreach (Ability ability in supportAbilities)
         {
             if (ability)
             {

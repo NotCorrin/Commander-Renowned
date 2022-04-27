@@ -52,11 +52,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48348dbd34f76434b94c64a9feee313c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VanguardAbilities:
+  vanguardAbilities:
   - {fileID: 2391539103340119942}
   - {fileID: 7171566273673930400}
   - {fileID: 0}
-  SupportAbilities:
+  supportAbilities:
   - {fileID: 4694148546171231837}
   - {fileID: 0}
   - {fileID: 0}
@@ -76,8 +76,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Attack Formation
   abilityDescription: Strike in an attack formation. Attack up, Damage 3
-  Damage: 3
-  Cost: 1
+  cost: 1
+  Damage: 6
   DamageVariation: 0
 --- !u!114 &7171566273673930400
 MonoBehaviour:
@@ -93,8 +93,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Defense Formation
   abilityDescription: Strike in a negative formation. Defense up, Damage 3
+  cost: 0
   Damage: 3
-  Cost: 1
   DefenseBoost: 0
   DefenseVariation: 0
 --- !u!114 &4694148546171231837
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Reload
   abilityDescription: Gain 3 ammo
-  AmmoRestored: 3
+  cost: 0
 --- !u!212 &3095930897375498056
 SpriteRenderer:
   m_ObjectHideFlags: 0

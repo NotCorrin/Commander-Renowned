@@ -9,7 +9,7 @@ public class QTEController : Listener
     public enum QTEDisplayResult { Perfect, Good, Poor }
 
     //Shrinking Circles QTE
-    static private float shrinkingCircleBaseTime = 5.0f;
+    static private float shrinkingCircleBaseTime = 0.5f; //5.0f
     static private float shrinkingCircleDifficultyStep = 0.5f;
     static private float shrinkingCircleMinCritical = 0.4f;
     static private float shrinkingCircleMaxCritical = 0.6f;
@@ -25,7 +25,7 @@ public class QTEController : Listener
         get => shrinkingCircleTimer;
     }
 
-
+    bool shrinkingCircleActive;
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +36,11 @@ public class QTEController : Listener
     // Update is called once per frame
     void Update()
     {
-        if (shrinkingCircleTimer > 0) shrinkingCircleTimer -= Time.deltaTime;
+        if (shrinkingCircleActive) 
+        {
+            if (shrinkingCircleTimer < 0) MenuEvents.QTETriggered();
+            shrinkingCircleTimer -= Time.deltaTime;
+        }
     }
 
     protected override void SubscribeListeners()
@@ -63,13 +67,16 @@ public class QTEController : Listener
 
     private void StartShrinkingCircle(int difficultyModifier)
     {
+        shrinkingCircleActive = true;
         shrinkingCircleMaxTime = shrinkingCircleBaseTime + (difficultyModifier * shrinkingCircleDifficultyStep);
         shrinkingCircleTimer = shrinkingCircleMaxTime;
         MenuEvents.onQTETriggered += ResolveShrinkingCircle;
+                            Debug.Log("AAAAAAAAA0");
     }
 
     private void ResolveShrinkingCircle()
     {
+                            Debug.Log("AAAAAAAAA1");
         //Placeholder default hit value
         UIEvents.DisplayQTEResults(QTEDisplayResult.Good);
         GameEvents.QTEResolved(QTEResult.Hit);
