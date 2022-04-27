@@ -14,12 +14,15 @@ public class FieldController : Listener
     [SerializeField] Unit EnemySupportLeft;
     [SerializeField] Unit EnemySupportRight;
 
+    SceneController sceneController;
+    Vector3 PlayerVanguardPos;
+    Vector3 selectedUnitPos;
 
     public static FieldController main;
     // Start is called before the first frame update
     void Start()
     {
-        
+        sceneController = GameObject.Find("GameObject").GetComponent<SceneController>();
     }
 
     // Update is called once per frame
@@ -69,23 +72,54 @@ public class FieldController : Listener
 
     public bool GetIsSupportLeft(Unit unit)
     {
-        return (unit == PlayerSupportLeft || unit == PlayerSupportRight);
+        return (unit == PlayerSupportLeft || unit == EnemySupportLeft);
     }
 
     public bool GetIsSupportRight(Unit unit)
     {
-        return (unit == PlayerSupportRight || unit == PlayerSupportRight);
+        return (unit == PlayerSupportRight || unit == EnemySupportRight);
     }
 
     protected override void SubscribeListeners()
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 
     protected override void UnsubscribeListeners()
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 
+
+    public void SwapUnit()
+    {
+        PlayerVanguardPos = PlayerVanguard.transform.position;
+        selectedUnitPos = sceneController.selectedUnit.transform.position;
+        
+
+        sceneController.selectedUnit.transform.position = PlayerVanguardPos;
+        PlayerVanguard.transform.position = selectedUnitPos;
+
+        if (GetIsSupportLeft(sceneController.selectedUnit))
+        {
+            Unit temp = PlayerSupportLeft;
+            PlayerSupportLeft = PlayerVanguard;
+            PlayerVanguard = temp;
+
+            Debug.Log("Player Vanguard: " + PlayerVanguard.transform.position);
+            Debug.Log("Player Support Left: " + PlayerSupportLeft.transform.position);
+            Debug.Log("Player Support Right: " + PlayerSupportRight.transform.position);
+        }
+        else if (GetIsSupportRight(sceneController.selectedUnit))
+        {
+            Unit temp = PlayerSupportRight;
+            PlayerSupportRight = PlayerVanguard;
+            PlayerVanguard = temp;
+
+            Debug.Log("Player Vanguard: " + PlayerVanguard.transform.position);
+            Debug.Log("Player Support Left: " + PlayerSupportLeft.transform.position);
+            Debug.Log("Player Support Right: " + PlayerSupportRight.transform.position);
+        }
+    }
 
 }
