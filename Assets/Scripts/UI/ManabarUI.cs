@@ -3,16 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class ManabarUI : MonoBehaviour
+public class ManabarUI : Listener
 {
     [SerializeField] private UIDocument uiDocument;
     private VisualElement manabarContainer;
     private TextElement manabarValue;
     private Camera cam;
+    private Unit parent;
+
+
+    protected override void SubscribeListeners()
+    {
+        UIEvents.onUnitManaChanged += UpdateMana;
+    }
+
+    protected override void UnsubscribeListeners()
+    {
+        UIEvents.onUnitManaChanged -= UpdateMana;
+    }
+    void UpdateMana(Unit unit, int value)
+    {
+        if(unit == parent) manabarValue.text = value + "";
+    }
 
     void Start()
     {
         cam = Camera.main;
+        parent = transform.parent.GetComponent<Unit>();
+
 
         if (uiDocument == null)
         {

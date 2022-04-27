@@ -31,7 +31,7 @@ public class FieldController : Listener
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.F4) && RoundController.phase == RoundController.Phase.PlayerSwap) {
+        if(Input.GetKeyDown(KeyCode.G) && RoundController.phase == RoundController.Phase.PlayerSwap) {
             SwapUnit();
         }
     }
@@ -129,6 +129,8 @@ public class FieldController : Listener
             Debug.Log("Player Support Left: " + PlayerSupportLeft.transform.position);
             Debug.Log("Player Support Right: " + PlayerSupportRight.transform.position);
         }
+
+        GameEvents.SetPhase(RoundController.Phase.PlayerSupport);
     }
 
 }

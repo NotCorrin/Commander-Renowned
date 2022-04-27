@@ -20,6 +20,7 @@ public abstract class Unit : Listener
         get => maxHealth;
     }
 
+    [SerializeField]
     protected int health;
     public int Health
     {
@@ -103,7 +104,6 @@ public abstract class Unit : Listener
         if (caster == this)
         {
             Ability targetAbility;
-
             if (FieldController.main.GetPosition(this) == FieldController.Position.Vanguard)
             {
                 targetAbility = vanguardAbilities[selectedAbility - 1];

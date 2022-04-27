@@ -55,6 +55,7 @@ public class SceneController : Listener
                 {
                     selectedUnit = selectedObject.GetComponent<CommanderUnit>();
                 }
+                if (selectedUnit) UIEvents.UnitSelected(selectedUnit);
             }
         }
     }

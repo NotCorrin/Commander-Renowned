@@ -92,7 +92,6 @@ public static class GameEvents
             Debug.Log("Invalid Ability Number");
             return;
         }
-
         if (onUseAbility != null)
         {
             onUseAbility(caster, target, abilityNumber);

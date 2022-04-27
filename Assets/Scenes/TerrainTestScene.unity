@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoldierUnit (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2054312825494261375, guid: 2fa2c29d8a97d674db0c801778042fbd, type: 3}
+      propertyPath: maxHealth
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 2845072515036799076, guid: 2fa2c29d8a97d674db0c801778042fbd, type: 3}
       propertyPath: m_RootOrder
       value: 12
@@ -433,6 +437,11 @@ PrefabInstance:
     - target: {fileID: 7272801226209451332, guid: 3fc801ee7347b3c4ebb26e6c56ab1a63, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7274132632927612479, guid: 3fc801ee7347b3c4ebb26e6c56ab1a63, type: 3}
+      propertyPath: abilityDescription
+      value: 'Increases attack damage. (PS: Press ''G'' while in swap phase to swap
+        a selected unit into vanguard mode)'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3fc801ee7347b3c4ebb26e6c56ab1a63, type: 3}

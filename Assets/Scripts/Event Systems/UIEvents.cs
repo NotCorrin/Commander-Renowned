@@ -82,7 +82,6 @@ public static class UIEvents
     public static Action<Unit> onUnitSelected;
     public static void UnitSelected(Unit unit)
     {
-        Debug.Log("Hmm");
         if (onUnitSelected != null)
         {
             onUnitSelected(unit);

@@ -10,6 +10,7 @@ public abstract class MilitaryUnit : Unit
         get => maxAmmo;
     }
 
+    [SerializeField]
     private int ammo;
     public int Ammo
     {

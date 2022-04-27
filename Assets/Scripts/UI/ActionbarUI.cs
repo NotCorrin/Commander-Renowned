@@ -61,6 +61,7 @@ public class ActionbarUI : Listener
         switchBtn.clickable.clicked += SwitchBtn_Clicked;
         endSwitchTurnBtn.clickable.clicked += EndSwitchTurnBtn_Clicked;
         UIEvents.onUnitSelected += OnUnitSelected;
+        GameEvents.onPhaseChanged += PhaseSwitchUI;
     }
 
     protected override void UnsubscribeListeners()
@@ -73,6 +74,7 @@ public class ActionbarUI : Listener
         switchBtn.clickable.clicked -= SwitchBtn_Clicked;
         endSwitchTurnBtn.clickable.clicked -= EndSwitchTurnBtn_Clicked;
         UIEvents.onUnitSelected -= OnUnitSelected;
+        GameEvents.onPhaseChanged -= PhaseSwitchUI;
     }
 
     void OnPromptCancelClicked()
@@ -82,20 +84,32 @@ public class ActionbarUI : Listener
 
     void AbilityOneBtn_Clicked()
     {
-        GameEvents.UseAbility(selectedUnit, SceneController.main.selectedUnit, 1);
-        //Debug.Log("Ability One Button Clicked");
+        if(FieldController.main.GetIsVanguard(selectedUnit)) GameEvents.UseAbility( selectedUnit, 
+                                                                                    FieldController.main.GetUnit(FieldController.Position.Vanguard, 
+                                                                                    !FieldController.main.IsUnitPlayer(selectedUnit)),
+                                                                                    1);
+        else GameEvents.UseAbility(selectedUnit, SceneController.main.selectedUnit, 1);
+        Debug.Log("Ability One Button Clicked");
     }
 
     void AbilityTwoBtn_Clicked()
     {
-        GameEvents.UseAbility(selectedUnit, SceneController.main.selectedUnit, 2);
-        //Debug.Log("Ability Two Button Clicked");
+        if(FieldController.main.GetIsVanguard(selectedUnit)) GameEvents.UseAbility( selectedUnit, 
+                                                                                    FieldController.main.GetUnit(FieldController.Position.Vanguard, 
+                                                                                    !FieldController.main.IsUnitPlayer(selectedUnit)),
+                                                                                    2);
+        else GameEvents.UseAbility(selectedUnit, SceneController.main.selectedUnit, 2);
+        Debug.Log("Ability Two Button Clicked");
     }
 
     void AbilityThreeBtn_Clicked()
     {
-        GameEvents.UseAbility(selectedUnit, SceneController.main.selectedUnit, 3);
-        //Debug.Log("Ability Three Button Clicked");
+        if(FieldController.main.GetIsVanguard(selectedUnit)) GameEvents.UseAbility( selectedUnit, 
+                                                                                    FieldController.main.GetUnit(FieldController.Position.Vanguard, 
+                                                                                    !FieldController.main.IsUnitPlayer(selectedUnit)),
+                                                                                    3);
+        else GameEvents.UseAbility(selectedUnit, SceneController.main.selectedUnit, 3);
+        Debug.Log("Ability Three Button Clicked");
     }
 
     void EndSupportTurnBtn_Clicked()
@@ -117,7 +131,8 @@ public class ActionbarUI : Listener
     }
     void OnUnitSelected(Unit unit)
     {
-        Debug.Log("get up");
+        selectedUnit = unit;
+        Debug.Log(unit.VanguardAbilities[0]);
         Ability[] _abilities = FieldController.main.GetIsVanguard(unit)?unit.VanguardAbilities:unit.SupportAbilities;
         if(_abilities[0])
         {
@@ -125,11 +140,23 @@ public class ActionbarUI : Listener
             abilityOneCost.text = _abilities[0].Cost + "";
             abilityOneDesc.text = _abilities[0].AbilityDescription;
         }
+        else
+        {
+            abilityOneName.text = "";
+            abilityOneCost.text = "";
+            abilityOneDesc.text = "";
+        }
         if(_abilities[1])
         {
             abilityTwoName.text = _abilities[1].AbilityName;
             abilityTwoCost.text = _abilities[1].Cost + "";
             abilityTwoDesc.text = _abilities[1].AbilityDescription;
+        }
+        else
+        {
+            abilityTwoName.text = "";
+            abilityTwoCost.text = "";
+            abilityTwoDesc.text = "";
         }
         if(_abilities[2])
         {
@@ -137,6 +164,45 @@ public class ActionbarUI : Listener
             abilityThreeCost.text = _abilities[2].Cost + "";
             abilityThreeDesc.text = _abilities[2].AbilityDescription;
         }
+        else
+        {
+            abilityThreeName.text = "";
+            abilityThreeCost.text = "";
+            abilityThreeDesc.text = "";
+        }
+    }
+
+    void PhaseSwitchUI(RoundController.Phase phase)
+    {
+        //promptBar.SetActive(false);
+        //supportBar.SetActive(false);
+        //switchBar.SetActive(false);
+        /*
+        switch (phase)
+        {
+            case RoundController.Phase.PlayerVanguard:
+                supportBar.SetActive(true);
+                break;
+            case RoundController.Phase.EnemyVangaurd:
+                supportBar.SetActive(true);
+                break;
+            case RoundController.Phase.PlayerSwap:
+                switchBar.SetActive(true);
+                break;
+            case RoundController.Phase.EnemySwap:
+                switchBar.SetActive(true);
+                break;
+            case RoundController.Phase.PlayerSupport:
+                supportBar.SetActive(true);
+                break;
+            case RoundController.Phase.EnemySupport:
+                supportBar.SetActive(true);
+                break;
+            default:
+                break;
+        }*/
+        OnUnitSelected(selectedUnit);
+        endSupportTurnBtn.text = phase.ToString() + "\nEnd Phase";
     }
 
     void VerifyVariables()
@@ -192,17 +258,17 @@ public class ActionbarUI : Listener
             abilityOneBtn = supportBarContainer.Query<Button>("ability-one");
             abilityOneName = abilityOneBtn.Query<TextElement>("name");
             abilityOneCost = abilityOneBtn.Query<TextElement>("cost");
-            abilityOneDesc = abilityOneBtn.Query<TextElement>("desc");
+            abilityOneDesc = abilityOneBtn.Query<TextElement>("description");
 
             abilityTwoBtn = supportBarContainer.Query<Button>("ability-two");
             abilityTwoName = abilityTwoBtn.Query<TextElement>("name");
             abilityTwoCost = abilityTwoBtn.Query<TextElement>("cost");
-            abilityTwoDesc = abilityTwoBtn.Query<TextElement>("desc");
+            abilityTwoDesc = abilityTwoBtn.Query<TextElement>("description");
 
             abilityThreeBtn = supportBarContainer.Query<Button>("ability-three");
             abilityThreeName = abilityThreeBtn.Query<TextElement>("name");
             abilityThreeCost = abilityThreeBtn.Query<TextElement>("cost");
-            abilityThreeDesc = abilityThreeBtn.Query<TextElement>("desc");
+            abilityThreeDesc = abilityThreeBtn.Query<TextElement>("description");
 
             endSupportTurnBtn = supportBarContainer.Query<Button>("end-button");
 
