@@ -320,6 +320,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b921f83e3023db489286b9d6df19b96, type: 3}
+--- !u!114 &1254211263 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3425432388668474512, guid: 67dba0759c4e90249805bbe221684efb, type: 3}
+  m_PrefabInstance: {fileID: 2042385484}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c89f583ff5534084aa37a06879de16fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1288096274 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2054312825494261375, guid: 2fa2c29d8a97d674db0c801778042fbd, type: 3}
+  m_PrefabInstance: {fileID: 911181917}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48348dbd34f76434b94c64a9feee313c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1474372556
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,6 +464,17 @@ MonoBehaviour:
   heightmapChannel: 0
   HeightmapChannelName: 
   terrainTextureNames: []
+--- !u!114 &1970550376 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1554396190189459016, guid: 3fc801ee7347b3c4ebb26e6c56ab1a63, type: 3}
+  m_PrefabInstance: {fileID: 125292331}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75612f968f66ad3448110ca7755f4d7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1982491775
 GameObject:
   m_ObjectHideFlags: 0
@@ -706,8 +739,9 @@ GameObject:
   - component: {fileID: 2129532611}
   - component: {fileID: 2129532612}
   - component: {fileID: 2129532613}
+  - component: {fileID: 2129532614}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -777,9 +811,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7638aa0dc4623d84ea57b8766d46169b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerVanguard: {fileID: 0}
-  PlayerSupportLeft: {fileID: 0}
-  PlayerSupportRight: {fileID: 0}
+  PlayerVanguard: {fileID: 1254211263}
+  PlayerSupportLeft: {fileID: 1970550376}
+  PlayerSupportRight: {fileID: 1288096274}
   EnemyVanguard: {fileID: 0}
   EnemySupportLeft: {fileID: 0}
   EnemySupportRight: {fileID: 0}
+--- !u!114 &2129532614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2129532608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68fd7981a4fba0646b56e12c08d5005f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedObject: {fileID: 0}
+  selectedUnit: {fileID: 0}

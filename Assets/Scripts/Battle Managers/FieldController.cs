@@ -17,6 +17,7 @@ public class FieldController : Listener
     SceneController sceneController;
     Vector3 PlayerVanguardPos;
     Vector3 selectedUnitPos;
+    
 
     bool[] supportUsed = new bool[4];
 
@@ -24,13 +25,15 @@ public class FieldController : Listener
     // Start is called before the first frame update
     void Start()
     {
-        sceneController = GameObject.Find("GameObject").GetComponent<SceneController>();
+        sceneController = GetComponent<SceneController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.F4)) {
+            SwapUnit();
+        }
     }
 
     public bool IsUnitPlayer(Unit unit)
