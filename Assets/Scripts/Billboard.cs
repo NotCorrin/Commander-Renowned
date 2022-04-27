@@ -42,7 +42,9 @@ public class Billboard : MonoBehaviour
             Quaternion endRotation = Quaternion.Euler(transform.rotation.eulerAngles.x, 0f, 0f);
 
             transform.rotation = camTransform.rotation;
+
             // transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, 0f, 0f);
+
             transform.rotation = Quaternion.Lerp(transform.rotation, endRotation, Time.deltaTime);
         }
     }
