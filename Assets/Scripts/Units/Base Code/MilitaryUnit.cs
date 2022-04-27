@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MilitaryUnit : Unit
+public abstract class MilitaryUnit : Unit
 {
     [SerializeField] private int maxAmmo;
     public int MaxAmmo
@@ -30,16 +30,6 @@ public class MilitaryUnit : Unit
     void Update()
     {
         
-    }
-
-    public override int GetStickScore()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override int GetSwitchScore()
-    {
-        throw new System.NotImplementedException();
     }
 
     protected override void ResetUnit()

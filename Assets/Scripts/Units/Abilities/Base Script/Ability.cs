@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Ability : MonoBehaviour
@@ -16,7 +14,7 @@ public abstract class Ability : MonoBehaviour
         get => abilityDescription;
     }
 
-    public abstract int GetMoveWeight();
+    public abstract int GetMoveWeight(Unit Caster);
     public abstract void UseAbility(Unit Caster, Unit Target);
     public abstract bool IsAbilityValid(Unit Caster, Unit Target);
     protected int GetDamageCalculation(Unit Caster, Unit Target, int Damage)

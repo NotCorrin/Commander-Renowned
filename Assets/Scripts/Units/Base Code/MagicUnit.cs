@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MagicUnit : Unit
+public abstract class MagicUnit : Unit
 {
     [SerializeField] private int maxMana;
     public int MaxMana
@@ -32,16 +32,6 @@ public class MagicUnit : Unit
 
     }
 
-    public override int GetStickScore()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override int GetSwitchScore()
-    {
-        throw new System.NotImplementedException();
-    }
-
     protected override void SubscribeListeners()
     {
         GameEvents.onUseMana += OnUseMana;
@@ -63,7 +53,7 @@ public class MagicUnit : Unit
     }
 
     protected override void ResetUnit () {
-        Mana = MaxMana;
+        Mana = MaxMana/2;
 		base.ResetUnit();
 	}
 }

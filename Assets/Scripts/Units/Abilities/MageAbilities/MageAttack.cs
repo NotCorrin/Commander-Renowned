@@ -36,10 +36,26 @@ public class MageAttack : QTEAbility
         return QTEController.QTEType.shrinkingCircle;
     }
 
-    public override int GetMoveWeight ()
-    {
-		throw new System.NotImplementedException();
-	}
+    public override int GetMoveWeight (Unit caster)
+    {   
+        int HealthWeight = Mathf.FloorToInt((caster.Health / caster.MaxHealth) * 100);
+        int ManaWeight;
+        if (caster is MageUnit)
+        {
+            MageUnit mageCaster = caster as MageUnit;
+            ManaWeight = Mathf.FloorToInt((1 - (mageCaster.Mana / mageCaster.MaxMana)) * 100);
+
+        }
+        else if (caster is CommanderUnit)
+        {
+            CommanderUnit commanderCaster = caster as CommanderUnit;
+            ManaWeight = Mathf.FloorToInt((1 - (commanderCaster.Mana / commanderCaster.MaxMana)) * 100);
+
+        }
+        else return 0;
+
+        return (2 * HealthWeight+ManaWeight)/3;
+    }
 
     protected override void AbilityUsed(QTEController.QTEResult result)
     {
@@ -64,8 +80,6 @@ public class MageAttack : QTEAbility
 
         GameEvents.onHealthChanged(Target, GetDamageCalculation(Caster, Target, FinalDamage));
         GameEvents.onUseMana(Caster, -FinalCost);
-
-        GameEvents.onQTEResolved -= AbilityUsed;
     }
     
 }

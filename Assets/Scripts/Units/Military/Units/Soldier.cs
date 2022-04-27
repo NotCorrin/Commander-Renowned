@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class Soldier : MilitaryUnit
 {
-    // Start is called before the first frame update
-    void Start()
-    {
 
+    public override int GetStickScore()
+    {
+        return GetMoveScoreAIAlgorithm();
     }
 
-    // Update is called once per frame
-    void Update()
+    public override int GetSwitchScore()
     {
-        
+        return GetMoveScoreAIAlgorithm();
     }
 
 }
