@@ -78,4 +78,13 @@ public static class UIEvents
             onDisplayQTEResults(DisplayResult);
         }
     }
+
+    public static Action<Unit> onUnitSelected;
+    public static void UnitSelected(Unit unit)
+    {
+        if (onUnitSelected != null)
+        {
+            onUnitSelected(unit);
+        }
+    }
 }

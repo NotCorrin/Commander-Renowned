@@ -23,7 +23,7 @@ public static class GameEvents
     public static Action onBattleStarted;
     public static void BattleStart()
     {
-        RoundController.SetPhase(RoundController.Phase.EnemyVangaurd);
+        RoundController.SetPhase(RoundController.Phase.PlayerVanguard);
         if (onBattleStarted != null)
         {
             onBattleStarted();
@@ -92,7 +92,6 @@ public static class GameEvents
             Debug.Log("Invalid Ability Number");
             return;
         }
-
         if (onUseAbility != null)
         {
             onUseAbility(caster, target, abilityNumber);
@@ -113,6 +112,8 @@ public static class GameEvents
     {
         if (onQTEResolved != null)
         {
+                    Debug.Log("AAAAAAAAA2");
+
             onQTEResolved(QTEResult);
         }
     }
@@ -126,12 +127,12 @@ public static class GameEvents
         }
     }
 
-    public static Action onSupportPhaseEnd;
-    public static void SupportPhaseEnd()
+    public static Action<Unit> onAbilityResolved;
+    public static void AbilityResolved(Unit source)
     {
-        if (onSupportPhaseEnd != null)
+        if (onAbilityResolved != null)
         {
-            onSupportPhaseEnd();
+            onAbilityResolved(source);
         }
     }
 

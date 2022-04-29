@@ -3,16 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class AmmobarUI : MonoBehaviour
+public class AmmobarUI : Listener
 {
     [SerializeField] private UIDocument uiDocument;
     private VisualElement ammobarContainer;
     private TextElement ammobarValue;
     private Camera cam;
+    private Unit parent;
+
+
+    protected override void SubscribeListeners()
+    {
+        UIEvents.onUnitAmmoChanged += UpdateAmmo;
+    }
+
+    protected override void UnsubscribeListeners()
+    {
+        UIEvents.onUnitAmmoChanged -= UpdateAmmo;
+    }
+    void UpdateAmmo(Unit unit, int value)
+    {
+        if(unit == parent) ammobarValue.text = value + "";
+    }
 
     void Start()
     {
         cam = Camera.main;
+        parent = transform.parent.GetComponent<Unit>();
+
 
         if (uiDocument == null)
         {

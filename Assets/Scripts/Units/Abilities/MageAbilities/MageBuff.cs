@@ -5,7 +5,6 @@ using UnityEngine;
 public class MageBuff : Ability
 {
 	[SerializeField] int buffAmount;
-	[SerializeField] int Cost;
 	public override bool IsAbilityValid (Unit Caster, Unit Target) {
 		bool casterValid;
 		bool targetValid;
@@ -24,8 +23,6 @@ public class MageBuff : Ability
 		targetValid = (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && FieldController.main.IsUnitPlayer(Target);
 
 		return casterValid && targetValid;
-
-		return false;
 	}
 	public override void UseAbility (Unit Caster, Unit Target) {
 		if (IsAbilityValid(Caster, Target)) {

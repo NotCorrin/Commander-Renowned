@@ -76,11 +76,10 @@ GameObject:
   - component: {fileID: 7274132632927612479}
   - component: {fileID: 1552070783684818511}
   - component: {fileID: 8971809245513799296}
-  - component: {fileID: 125292333}
-  - component: {fileID: 844371668118534816}
+  - component: {fileID: 1970550370}
   m_Layer: 0
   m_Name: MageUnit
-  m_TagString: Untagged
+  m_TagString: Magic
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -114,11 +113,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75612f968f66ad3448110ca7755f4d7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VanguardAbilities:
+  vanguardAbilities:
   - {fileID: 7927553117975152034}
   - {fileID: 3921007691822419878}
   - {fileID: 0}
-  SupportAbilities:
+  supportAbilities:
   - {fileID: 7274132632927612479}
   - {fileID: 0}
   - {fileID: 0}
@@ -138,8 +137,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Spirit Burn
   abilityDescription: Will ignite a flame to smolder the clothing of the enemy.
-  Damage: 1
-  Cost: 1
+  cost: 0
+  Damage: 2
   DamageVariation: 0
   CostVariation: 0
 --- !u!114 &3921007691822419878
@@ -156,9 +155,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Wall of Plasma
   abilityDescription: Will form an invisible wall to protect the mage
+  cost: 0
   Damage: 1
-  Cost: 1
-  DefenseBoost: 0
+  DefenseBoost: 1
   DefenseVariation: 0
   CostVariation: 0
 --- !u!114 &7274132632927612479
@@ -175,8 +174,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Confidence
   abilityDescription: Increases attack damage
+  cost: 1
   buffAmount: 1
-  Cost: 1
 --- !u!212 &1552070783684818511
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -247,32 +246,32 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &125292333
-MonoBehaviour:
+--- !u!61 &1970550370
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6884881852785777201}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e7971b15f0404c489e66ffe60a1a92d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  useStaticBillboard: 0
---- !u!114 &844371668118534816
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6884881852785777201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e7971b15f0404c489e66ffe60a1a92d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  useStaticBillboard: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &8305849730140176428
 GameObject:
   m_ObjectHideFlags: 0
