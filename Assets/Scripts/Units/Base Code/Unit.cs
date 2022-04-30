@@ -11,7 +11,8 @@ public abstract class Unit : Listener
 
 
     SpriteRenderer spriteRenderer;
-    Animator animator;
+    private Billboard billboard;
+    private Animator animator;
 
     [SerializeField] protected int maxHealth;
 
@@ -173,6 +174,7 @@ public abstract class Unit : Listener
         GameEvents.onAccuracyUp += OnAccuracyChanged;
         GameEvents.onUseAbility += UseAbility;
 
+        GameEvents.onPhaseChanged += UpdateBillboard;
         
     }
 
@@ -185,10 +187,17 @@ public abstract class Unit : Listener
         GameEvents.onAccuracyUp -= OnAccuracyChanged;
         GameEvents.onUseAbility -= UseAbility;
 
+        GameEvents.onPhaseChanged -= UpdateBillboard;
+
     }
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        billboard = GetComponent<Billboard>();
+    }
+    void UpdateBillboard(RoundController.Phase _phase)
+    {
+        billboard.SwitchBillboardState(((int)_phase)<2);
     }
 }
