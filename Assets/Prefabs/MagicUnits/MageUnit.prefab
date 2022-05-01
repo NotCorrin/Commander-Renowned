@@ -78,6 +78,7 @@ GameObject:
   - component: {fileID: 1552070783684818511}
   - component: {fileID: 8971809245513799296}
   - component: {fileID: 1970550370}
+  - component: {fileID: 3778618176164963972}
   m_Layer: 0
   m_Name: MageUnit
   m_TagString: Magic
@@ -277,6 +278,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &3778618176164963972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6884881852785777201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e7971b15f0404c489e66ffe60a1a92d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useStaticBillboard: 0
 --- !u!1 &8305849730140176428
 GameObject:
   m_ObjectHideFlags: 0
