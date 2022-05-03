@@ -12,6 +12,10 @@ public class RoundController : Listener
     // Start is called before the first frame update
     void Start()
     {
+        Invoke("TEST_StartBattle", 0.1f);
+    }
+    void TEST_StartBattle()
+    {
         MenuEvents.BattleStartSelected();
     }
     void Update()
