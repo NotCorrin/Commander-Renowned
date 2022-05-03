@@ -202,7 +202,7 @@ public class ActionbarUI : Listener
                 break;
         }*/
         OnUnitSelected(selectedUnit);
-        endSupportTurnBtn.text = phase.ToString() + "\nEnd Phase";
+        // endSupportTurnBtn.text = phase.ToString() + "\nEnd Phase";
     }
 
     void VerifyVariables()
