@@ -12,106 +12,110 @@ public class EnemyController : Listener
 	Ability supportLeftBestAbility;
 	Ability supportRightBestAbility;
 
+	int vanguardStickScore;
+	int supportLeftSwitchScore;
+	int supportRightSwitchScore;
+
 	FieldController fieldController;
 	void Start () {
 		fieldController = FieldController.main;
 	}
 
 	void SwitchPositions () {
-
-		int vanguardStickScore;
-		int supportLeftSwitchScore;
-		int supportRightSwitchScore;
-
+		CalculateSwitchStickScores();
 		// No support enemies
 		if (enemySupportLeft == null && enemySupportRight == null) {
 			GameEvents.SetPhase(RoundController.Phase.PlayerSupport);
 			return;
 		}
-
-		// Only left support
+		// Only has left support
 		if (enemySupportLeft != null && enemySupportRight == null) {
-			if(enemyVanguard != null) {
-				vanguardStickScore = enemyVanguard.GetStickScore();
-				supportLeftSwitchScore = enemySupportLeft.GetSwitchScore();
+			// If no enemy vanguard
+			if (enemyVanguard == null) {
+				fieldController.SwapEnemyUnit(enemySupportLeft);
+				return;
+			}
+			// If yes enemy vanguard
+			else {
 				if (vanguardStickScore > supportLeftSwitchScore) {
 					GameEvents.SetPhase(RoundController.Phase.PlayerSupport);
 					return;
-				} else {
+				} else if (vanguardStickScore < supportLeftSwitchScore) {
 					fieldController.SwapEnemyUnit(enemySupportLeft);
 					return;
+				} else {
+					if (Random.Range(0, 100) < 50) {
+						GameEvents.SetPhase(RoundController.Phase.PlayerSupport);
+						return;
+					} else {
+						fieldController.SwapEnemyUnit(enemySupportLeft);
+						return;
+					}
 				}
-			} else {
-				fieldController.SwapEnemyUnit(enemySupportLeft);
-				return;
 			}
 		}
-		
-		// Only right support
+		// Only has right support
 		if (enemySupportLeft == null && enemySupportRight != null) {
-			if (enemyVanguard != null) {
-				vanguardStickScore = enemyVanguard.GetStickScore();
-				supportRightSwitchScore = enemySupportRight.GetSwitchScore();
+			// If no enemy vanguard
+			if (enemyVanguard == null) {
+				fieldController.SwapEnemyUnit(enemySupportRight);
+				return;
+			}
+			// If yes enemy vanguard
+			else {
 				if (vanguardStickScore > supportRightSwitchScore) {
 					GameEvents.SetPhase(RoundController.Phase.PlayerSupport);
 					return;
-				} else {
+				} else if (vanguardStickScore < supportRightSwitchScore) {
 					fieldController.SwapEnemyUnit(enemySupportRight);
 					return;
+				} else {
+					if (Random.Range(0, 100) < 50) {
+						GameEvents.SetPhase(RoundController.Phase.PlayerSupport);
+						return;
+					} else {
+						fieldController.SwapEnemyUnit(enemySupportRight);
+						return;
+					}
 				}
-			} else {
-				fieldController.SwapEnemyUnit(enemySupportRight);
-				return;
 			}
 		}
+		
+		// If we reach here there MUST be two support enemies
 
-		// Have both supports
-		vanguardStickScore = enemyVanguard.GetStickScore();
-		supportLeftSwitchScore = enemySupportLeft.GetSwitchScore();
-		supportRightSwitchScore = enemySupportRight.GetSwitchScore();
-
-		// TODO: SIMPLIFY CODE BELOW (Compare supports together first and then compare results to vanguard)
-
-		// E.G.		V=5  L=1  R=2	(Vanguard greatest)
-		if (vanguardStickScore > supportLeftSwitchScore && vanguardStickScore > supportRightSwitchScore) {
-			GameEvents.SetPhase(RoundController.Phase.PlayerSupport);
+		// Determine which support enemy to switch
+		Unit enemySupportToSwitch;
+		if(supportLeftSwitchScore > supportRightSwitchScore) {
+			enemySupportToSwitch = enemySupportLeft;
+		} else if (supportLeftSwitchScore < supportRightSwitchScore) {
+			enemySupportToSwitch = enemySupportRight;
+		}else {
+			if(Random.Range(0,100) < 50) {
+				enemySupportToSwitch = enemySupportLeft;
+			} else {
+				enemySupportToSwitch = enemySupportRight;
+			}
+		}
+		int enemySupportToSwitchScore = enemySupportToSwitch.GetSwitchScore();
+		// Compare scores and switch
+		if (enemyVanguard == null) {
+			fieldController.SwapEnemyUnit(enemySupportToSwitch);
 			return;
-		}
-		// E.G.		V=2  L=9  R=1	(Support Left greatest)
-		else if (supportLeftSwitchScore > vanguardStickScore && supportLeftSwitchScore > supportRightSwitchScore) {
-			fieldController.SwapEnemyUnit(enemySupportLeft);
-		}
-		// E.G.		V=2  L=1  R=6	(Support Right greatest)
-		else if (supportRightSwitchScore > vanguardStickScore && supportRightSwitchScore > supportLeftSwitchScore) {
-			fieldController.SwapEnemyUnit(enemySupportRight);
-		}
-		// E.G.		V=5  L=5  R=2	(Vanguard & Support Left equal)
-		else if (vanguardStickScore == supportLeftSwitchScore && vanguardStickScore > supportRightSwitchScore) {
-			int chance = Random.Range(0,100);
-			if(chance >= 49) {
-				fieldController.SwapEnemyUnit(enemySupportLeft);
-			} else {
+		} else {
+			if(vanguardStickScore > enemySupportToSwitchScore) {
 				GameEvents.SetPhase(RoundController.Phase.PlayerSupport);
-			}
-		}
-		// E.G.		V=5  L=2  R=5	(Vanguard & Support Right equal)
-		else if (vanguardStickScore == supportLeftSwitchScore && vanguardStickScore > supportRightSwitchScore) {
-			int chance = Random.Range(0, 100);
-			if (chance >= 49) {
-				fieldController.SwapEnemyUnit(enemySupportRight);
-			} else {
-				GameEvents.SetPhase(RoundController.Phase.PlayerSupport);
-			}
-		}
-		// E.G.		V=5  L=5  R=5	(All score equal)
-		else if (vanguardStickScore == supportLeftSwitchScore && vanguardStickScore > supportRightSwitchScore) {
-			int chance = Random.Range(0, 100);
-			if (chance >= 66) {
-				GameEvents.SetPhase(RoundController.Phase.PlayerSupport);
-			} else if (chance >= 33) {
-				fieldController.SwapEnemyUnit(enemySupportLeft);
-			} else {
-				fieldController.SwapEnemyUnit(enemySupportRight);
+				return;
+			}else if (vanguardStickScore < enemySupportToSwitchScore) {
+				fieldController.SwapEnemyUnit(enemySupportToSwitch);
+				return;
+			}else {
+				if (Random.Range(0, 100) < 50) {
+					GameEvents.SetPhase(RoundController.Phase.PlayerSupport);
+					return;
+				} else {
+					fieldController.SwapEnemyUnit(enemySupportToSwitch);
+					return;
+				}
 			}
 		}
 	}
@@ -186,7 +190,7 @@ public class EnemyController : Listener
 		return false;
 	}
 
-	bool SetEnemySupportRight() {
+	bool SetEnemySupportRight () {
 		Unit supportRight = fieldController.GetUnit(FieldController.Position.SupportRight, false);
 		// If there is a right support...
 		if (supportRight != null) {
@@ -195,6 +199,19 @@ public class EnemyController : Listener
 			return true;
 		}
 		return false;
+	}
+
+	void CalculateSwitchStickScores () {
+		// If there is an enemy, grab there switch/stick scores
+		if (enemyVanguard != null) {
+			vanguardStickScore = enemyVanguard.GetStickScore();
+		}
+		if (enemySupportLeft != null) {
+			supportLeftSwitchScore = enemySupportLeft.GetSwitchScore();
+		}
+		if (enemySupportRight != null) {
+			supportRightSwitchScore = enemySupportRight.GetSwitchScore();
+		}
 	}
 
 	protected override void SubscribeListeners () {
