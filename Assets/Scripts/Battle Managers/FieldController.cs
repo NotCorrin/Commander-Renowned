@@ -16,6 +16,7 @@ public class FieldController : Listener
 
     SceneController sceneController;
     Vector3 PlayerVanguardPos;
+    Vector3 EnemyVanguardPos;
     Vector3 selectedUnitPos;
     
 
@@ -33,7 +34,7 @@ public class FieldController : Listener
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.G) && RoundController.phase == RoundController.Phase.PlayerSwap) {
-            SwapUnit();
+            SwapPlayerUnit();
         }
     }
 
@@ -111,34 +112,69 @@ public class FieldController : Listener
         main = this;
     }
 
-    public void SwapUnit()
+    public void SwapPlayerUnit(Unit chosenUnit = null)
     {
+        if(!chosenUnit) chosenUnit = sceneController.selectedUnit;
         PlayerVanguardPos = PlayerVanguard.transform.position;
-        selectedUnitPos = sceneController.selectedUnit.transform.position;
+        selectedUnitPos = chosenUnit.transform.position;
         
 
-        sceneController.selectedUnit.transform.position = PlayerVanguardPos;
+        chosenUnit.transform.position = PlayerVanguardPos;
         PlayerVanguard.transform.position = selectedUnitPos;
 
-        if (GetIsSupportLeft(sceneController.selectedUnit))
+        if (GetIsSupportLeft(chosenUnit))
         {
             Unit temp = PlayerSupportLeft;
             PlayerSupportLeft = PlayerVanguard;
             PlayerVanguard = temp;
 
-            Debug.Log("Player Vanguard: " + PlayerVanguard.transform.position);
-            Debug.Log("Player Support Left: " + PlayerSupportLeft.transform.position);
-            Debug.Log("Player Support Right: " + PlayerSupportRight.transform.position);
+            //Debug.Log("Player Vanguard: " + PlayerVanguard.transform.position);
+            //Debug.Log("Player Support Left: " + PlayerSupportLeft.transform.position);
+            //Debug.Log("Player Support Right: " + PlayerSupportRight.transform.position);
         }
-        else if (GetIsSupportRight(sceneController.selectedUnit))
+        else if (GetIsSupportRight(chosenUnit))
         {
             Unit temp = PlayerSupportRight;
             PlayerSupportRight = PlayerVanguard;
             PlayerVanguard = temp;
 
-            Debug.Log("Player Vanguard: " + PlayerVanguard.transform.position);
-            Debug.Log("Player Support Left: " + PlayerSupportLeft.transform.position);
-            Debug.Log("Player Support Right: " + PlayerSupportRight.transform.position);
+            //Debug.Log("Player Vanguard: " + PlayerVanguard.transform.position);
+            //Debug.Log("Player Support Left: " + PlayerSupportLeft.transform.position);
+            //Debug.Log("Player Support Right: " + PlayerSupportRight.transform.position);
+        }
+
+        GameEvents.SetPhase(RoundController.Phase.EnemySwap);
+    }
+
+    public void SwapEnemyUnit(Unit chosenUnit = null)
+    {
+        if(!chosenUnit) chosenUnit = sceneController.selectedUnit;
+        EnemyVanguardPos = EnemyVanguard.transform.position;
+        selectedUnitPos = chosenUnit.transform.position;
+        
+
+        chosenUnit.transform.position = EnemyVanguardPos;
+        EnemyVanguard.transform.position = selectedUnitPos;
+
+        if (GetIsSupportLeft(chosenUnit))
+        {
+            Unit temp = EnemySupportLeft;
+            EnemySupportLeft = EnemyVanguard;
+            EnemyVanguard = temp;
+
+            //Debug.Log("Enemy Vanguard: " + PlayerVanguard.transform.position);
+            //Debug.Log("Enemy Support Left: " + PlayerSupportLeft.transform.position);
+            //Debug.Log("Enemy Support Right: " + PlayerSupportRight.transform.position);
+        }
+        else if (GetIsSupportRight(chosenUnit))
+        {
+            Unit temp = EnemySupportRight;
+            EnemySupportRight = EnemyVanguard;
+            EnemyVanguard = temp;
+
+            //Debug.Log("Enemy Vanguard: " + PlayerVanguard.transform.position);
+            //Debug.Log("Enemy Support Left: " + PlayerSupportLeft.transform.position);
+            //Debug.Log("Enemy Support Right: " + PlayerSupportRight.transform.position);
         }
 
         GameEvents.SetPhase(RoundController.Phase.PlayerSupport);
