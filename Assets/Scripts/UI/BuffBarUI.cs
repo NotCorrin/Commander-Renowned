@@ -19,12 +19,18 @@ public class BuffBarUI : Listener
 
     protected override void SubscribeListeners()
     {
+        // TODO : Add Event Listeners
         // UIEvents.onUnitAttackBuffChanged += UpdateAttackBuff;
+        // UIEvents.onUnitDefenceBuffChanged += UpdateDefenceBuff;
+        // UIEvents.onUnitAccuracyBuffChanged += UpdateAccuracyBuff;
     }
 
     protected override void UnsubscribeListeners()
     {
+        // TODO : Remove Event Listeners
         // UIEvents.onUnitAttackBuffChanged -= UpdateAttackBuff;
+        // UIEvents.onUnitDefenceBuffChanged -= UpdateDefenceBuff;
+        // UIEvents.onUnitAccuracyBuffChanged -= UpdateAccuracyBuff;
     }
 
     void Start()
@@ -58,36 +64,69 @@ public class BuffBarUI : Listener
         accuracyBuffContainer.style.opacity = 0;
     }
 
-    void Update()
+    void UpdateAttackBuff(int buff)
     {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            attackBuffContainer.style.opacity = 1;
-        }
-
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            defenceBuffContainer.style.opacity = 1;
-        }
-
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            accuracyBuffContainer.style.opacity = 1;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (buff == 0)
         {
             attackBuffContainer.style.opacity = 0;
         }
 
-        if (Input.GetKeyDown(KeyCode.X))
+        else
+        {
+            attackBuffValue.text = buff.ToString();
+
+            if (attackBuffValue.text.Equals("0"))
+            {
+                attackBuffContainer.style.opacity = 0;
+            }
+            else
+            {
+                attackBuffContainer.style.opacity = 1;
+            }
+        }
+    }
+
+    void UpdateDefenceBuff(int buff)
+    {
+        if (buff == 0)
         {
             defenceBuffContainer.style.opacity = 0;
         }
 
-        if (Input.GetKeyDown(KeyCode.C))
+        else
+        {
+            defenceBuffValue.text = buff.ToString();
+
+            if (defenceBuffValue.text.Equals("0"))
+            {
+                defenceBuffContainer.style.opacity = 0;
+            }
+            else
+            {
+                defenceBuffContainer.style.opacity = 1;
+            }
+        }
+    }
+
+    void UpdateAccuracyBuff(int buff)
+    {
+        if (buff == 0)
         {
             accuracyBuffContainer.style.opacity = 0;
+        }
+
+        else
+        {
+            accuracyBuffValue.text = buff.ToString();
+
+            if (accuracyBuffValue.text.Equals("0"))
+            {
+                accuracyBuffContainer.style.opacity = 0;
+            }
+            else
+            {
+                accuracyBuffContainer.style.opacity = 1;
+            }
         }
     }
 
