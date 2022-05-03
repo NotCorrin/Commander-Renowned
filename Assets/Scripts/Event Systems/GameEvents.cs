@@ -23,7 +23,7 @@ public static class GameEvents
     public static Action onBattleStarted;
     public static void BattleStart()
     {
-        RoundController.SetPhase(RoundController.Phase.PlayerVanguard);
+        SetPhase(RoundController.Phase.PlayerVanguard);
         if (onBattleStarted != null)
         {
             onBattleStarted();

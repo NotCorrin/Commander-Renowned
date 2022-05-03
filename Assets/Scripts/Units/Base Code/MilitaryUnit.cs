@@ -18,7 +18,7 @@ public abstract class MilitaryUnit : Unit
         set
         {
             ammo = Mathf.Min(Mathf.Max(value, 0), MaxAmmo);
-            UIEvents.UnitAmmoChanged(this, ammo);
+            UIEvents.UnitAmmoChanged(this, ammo, maxAmmo);
         }
     }
     // Start is called before the first frame update

@@ -116,7 +116,11 @@ public abstract class Unit : Listener
 
             if (targetAbility != null)
             {
-                if (targetAbility.IsAbilityValid(caster, target)) targetAbility.UseAbility(this, target);
+                if (targetAbility.IsAbilityValid(caster, target)) 
+                {
+                    targetAbility.UseAbility(this, target);
+                    GameEvents.AbilityResolved(this);
+                }
                 else Debug.Log("Ability Can't be Used");
             }
 
@@ -198,6 +202,6 @@ public abstract class Unit : Listener
     }
     void UpdateBillboard(RoundController.Phase _phase)
     {
-        billboard.SwitchBillboardState(((int)_phase)<2);
+        billboard.SwitchBillboardState(((int)_phase)>=2);
     }
 }

@@ -3,9 +3,6 @@
         <ui:VisualElement name="image-container" style="width: 40%; justify-content: center; align-items: flex-end; padding-right: 0;">
             <ui:VisualElement name="icon" style="background-image: url(&apos;project://database/Assets/UI/Images/Ammo.png?fileID=2800000&amp;guid=5a832353dad4ec045863d88253cc9cf8&amp;type=3#Ammo&apos;); width: 78%; height: 78%; -unity-background-scale-mode: scale-to-fit;" />
         </ui:VisualElement>
-        <ui:VisualElement name="x-container" style="width: 20%;">
-            <ui:Label text="x" display-tooltip-when-elided="true" name="x-label" style="font-size: 34px; color: rgb(0, 0, 0); -unity-text-align: middle-center;" />
-        </ui:VisualElement>
         <ui:VisualElement name="ammo-container" style="width: 40%;">
             <ui:Label text="4" display-tooltip-when-elided="true" name="value" style="font-size: 34px; color: rgb(0, 0, 0); -unity-text-align: middle-left;" />
         </ui:VisualElement>
