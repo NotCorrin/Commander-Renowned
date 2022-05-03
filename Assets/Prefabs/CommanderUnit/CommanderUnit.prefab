@@ -166,7 +166,7 @@ Transform:
   - {fileID: 4515696426555026560}
   - {fileID: 3171720690092299154}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3425432388668474512
 MonoBehaviour:
@@ -242,7 +242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Reload
   abilityDescription: Gain 3 ammo
-  cost: 0
+  cost: 3
 --- !u!114 &2294820338508900456
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -202,6 +202,6 @@ public abstract class Unit : Listener
     }
     void UpdateBillboard(RoundController.Phase _phase)
     {
-        billboard.SwitchBillboardState(((int)_phase)<2);
+        billboard.SwitchBillboardState(((int)_phase)>=2);
     }
 }
