@@ -144,7 +144,7 @@ public class ActionbarUI : Listener
     void SwitchBtn_Clicked()
     {
         Debug.Log("Switch Button Clicked");
-        FieldController.main.SwapUnit();
+        FieldController.main.SwapPlayerUnit();
     }
 
     void EndSwitchTurnBtn_Clicked()
