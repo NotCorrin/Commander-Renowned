@@ -39,6 +39,8 @@ public class ActionbarUI : Listener
     private Button endSwitchTurnBtn;
 
     private Unit selectedUnit;
+    private int selectedAbility;
+    private bool prompt;
     #endregion
 
     void Awake()
@@ -79,37 +81,50 @@ public class ActionbarUI : Listener
 
     void OnPromptCancelClicked()
     {
+        prompt = false;
         Debug.Log("Prompt Cancel Clicked");
     }
 
     void AbilityOneBtn_Clicked()
     {
-        if(FieldController.main.GetIsVanguard(selectedUnit)) GameEvents.UseAbility( selectedUnit, 
-                                                                                    FieldController.main.GetUnit(FieldController.Position.Vanguard, 
-                                                                                    !FieldController.main.IsUnitPlayer(selectedUnit)),
-                                                                                    1);
-        else GameEvents.UseAbility(selectedUnit, SceneController.main.selectedUnit, 1);
+        UseAbility(1);
         Debug.Log("Ability One Button Clicked");
     }
 
     void AbilityTwoBtn_Clicked()
     {
-        if(FieldController.main.GetIsVanguard(selectedUnit)) GameEvents.UseAbility( selectedUnit, 
-                                                                                    FieldController.main.GetUnit(FieldController.Position.Vanguard, 
-                                                                                    !FieldController.main.IsUnitPlayer(selectedUnit)),
-                                                                                    2);
-        else GameEvents.UseAbility(selectedUnit, SceneController.main.selectedUnit, 2);
+        UseAbility(2);
         Debug.Log("Ability Two Button Clicked");
     }
 
     void AbilityThreeBtn_Clicked()
     {
-        if(FieldController.main.GetIsVanguard(selectedUnit)) GameEvents.UseAbility( selectedUnit, 
-                                                                                    FieldController.main.GetUnit(FieldController.Position.Vanguard, 
-                                                                                    !FieldController.main.IsUnitPlayer(selectedUnit)),
-                                                                                    3);
-        else GameEvents.UseAbility(selectedUnit, SceneController.main.selectedUnit, 3);
+        UseAbility(3);
         Debug.Log("Ability Three Button Clicked");
+    }
+    void UseAbility(int _selectedAbility)
+    {
+        if(RoundController.phase == RoundController.Phase.PlayerVanguard)
+        {
+            if(FieldController.main.IsUnitActive(selectedUnit)) 
+            GameEvents.UseAbility(  selectedUnit, 
+                                    FieldController.main.GetUnit(FieldController.Position.Vanguard, !FieldController.main.IsUnitPlayer(selectedUnit)),
+                                    _selectedAbility);
+        }
+        else if(RoundController.phase == RoundController.Phase.PlayerSupport)
+        {
+            if(selectedUnit.SupportAbilities[_selectedAbility] == null) return;
+            if(selectedUnit.SupportAbilities[_selectedAbility].IsAbilityValid(selectedUnit, selectedUnit))
+                GameEvents.UseAbility(selectedUnit, selectedUnit, _selectedAbility);
+            else
+            {
+                supportBarContainer.style.display = DisplayStyle.None;
+                promptBarContainer.style.display = DisplayStyle.None;
+                prompt = true;
+                selectedAbility = _selectedAbility;
+            }
+        }
+        //else GameEvents.UseAbility(selectedUnit, SceneController.main.selectedUnit, 3);
     }
 
     void EndSupportTurnBtn_Clicked()
@@ -131,6 +146,12 @@ public class ActionbarUI : Listener
     }
     void OnUnitSelected(Unit unit)
     {
+        if(prompt)
+        {
+            GameEvents.UseAbility(  selectedUnit, unit, selectedAbility);
+            return;
+        }
+
         selectedUnit = unit;
         Debug.Log(unit.VanguardAbilities[0]);
         Ability[] _abilities = FieldController.main.GetIsVanguard(unit)?unit.VanguardAbilities:unit.SupportAbilities;
@@ -174,33 +195,34 @@ public class ActionbarUI : Listener
 
     void PhaseSwitchUI(RoundController.Phase phase)
     {
-        //promptBar.SetActive(false);
-        //supportBar.SetActive(false);
-        //switchBar.SetActive(false);
-        /*
+        supportBarContainer.style.display = DisplayStyle.None;
+        switchBarContainer.style.display = DisplayStyle.None;
+        promptBarContainer.style.display = DisplayStyle.None;
+
+        
         switch (phase)
         {
             case RoundController.Phase.PlayerVanguard:
-                supportBar.SetActive(true);
+                supportBarContainer.style.display = DisplayStyle.Flex;
                 break;
             case RoundController.Phase.EnemyVangaurd:
-                supportBar.SetActive(true);
+                supportBarContainer.style.display = DisplayStyle.Flex;
                 break;
             case RoundController.Phase.PlayerSwap:
-                switchBar.SetActive(true);
+                switchBarContainer.style.display = DisplayStyle.Flex;
                 break;
             case RoundController.Phase.EnemySwap:
-                switchBar.SetActive(true);
+                switchBarContainer.style.display = DisplayStyle.Flex;
                 break;
             case RoundController.Phase.PlayerSupport:
-                supportBar.SetActive(true);
+                supportBarContainer.style.display = DisplayStyle.Flex;
                 break;
             case RoundController.Phase.EnemySupport:
-                supportBar.SetActive(true);
+                supportBarContainer.style.display = DisplayStyle.Flex;
                 break;
             default:
                 break;
-        }*/
+        }
         OnUnitSelected(selectedUnit);
         // endSupportTurnBtn.text = phase.ToString() + "\nEnd Phase";
     }

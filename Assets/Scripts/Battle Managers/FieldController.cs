@@ -41,6 +41,16 @@ public class FieldController : Listener
         return (unit == PlayerVanguard || unit == PlayerSupportLeft || unit == PlayerSupportRight);
     }
 
+    public bool IsUnitActive(Unit unit)
+    {
+        return (unit == PlayerSupportLeft && RoundController.phase == RoundController.Phase.PlayerSupport)
+        || (unit == PlayerSupportRight && RoundController.phase == RoundController.Phase.PlayerSupport)
+        || (unit == PlayerVanguard && RoundController.phase == RoundController.Phase.PlayerVanguard)
+        || (unit == EnemySupportLeft && RoundController.phase == RoundController.Phase.EnemySupport)
+        || (unit == EnemySupportRight && RoundController.phase == RoundController.Phase.EnemySupport)
+        || (unit == EnemyVanguard && RoundController.phase == RoundController.Phase.EnemyVangaurd);
+    }
+
     public Unit GetUnit(Position position, bool isPlayer)
     {
         switch (position)
