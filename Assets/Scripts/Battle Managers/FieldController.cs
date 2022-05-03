@@ -19,7 +19,8 @@ public class FieldController : Listener
     Vector3 selectedUnitPos;
     
 
-    bool[] supportUsed = new bool[4];
+    bool supportLeftUsed = false;
+    bool supportRightUsed = false;
 
     public static FieldController main;
     // Start is called before the first frame update

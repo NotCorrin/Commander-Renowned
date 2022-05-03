@@ -116,7 +116,11 @@ public abstract class Unit : Listener
 
             if (targetAbility != null)
             {
-                if (targetAbility.IsAbilityValid(caster, target)) targetAbility.UseAbility(this, target);
+                if (targetAbility.IsAbilityValid(caster, target)) 
+                {
+                    targetAbility.UseAbility(this, target);
+                    GameEvents.AbilityResolved(this);
+                }
                 else Debug.Log("Ability Can't be Used");
             }
 

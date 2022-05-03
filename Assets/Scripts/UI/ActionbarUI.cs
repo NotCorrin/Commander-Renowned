@@ -41,6 +41,8 @@ public class ActionbarUI : Listener
     private Unit selectedUnit;
     private int selectedAbility;
     private bool prompt;
+
+    private bool[] abilityActive = new bool[3];
     #endregion
 
     void Awake()
@@ -82,6 +84,8 @@ public class ActionbarUI : Listener
     void OnPromptCancelClicked()
     {
         prompt = false;
+        supportBarContainer.style.display = DisplayStyle.Flex;
+        promptBarContainer.style.display = DisplayStyle.None;
         Debug.Log("Prompt Cancel Clicked");
     }
 
@@ -113,17 +117,21 @@ public class ActionbarUI : Listener
         }
         else if(RoundController.phase == RoundController.Phase.PlayerSupport)
         {
-            if(selectedUnit.SupportAbilities[_selectedAbility] == null) return;
-            if(selectedUnit.SupportAbilities[_selectedAbility].IsAbilityValid(selectedUnit, selectedUnit))
-                GameEvents.UseAbility(selectedUnit, selectedUnit, _selectedAbility);
+            if(!abilityActive[_selectedAbility-1]) return;
+            if(selectedUnit.SupportAbilities[_selectedAbility-1].IsAbilityValid(selectedUnit, selectedUnit))
+                {
+                    GameEvents.UseAbility(selectedUnit, selectedUnit, _selectedAbility);
+                }
             else
             {
+                Debug.Log(selectedUnit.SupportAbilities[_selectedAbility-1].AbilityName + " needs a target!");
                 supportBarContainer.style.display = DisplayStyle.None;
-                promptBarContainer.style.display = DisplayStyle.None;
+                promptBarContainer.style.display = DisplayStyle.Flex;
                 prompt = true;
                 selectedAbility = _selectedAbility;
             }
         }
+        OnUnitSelected(selectedUnit);
         //else GameEvents.UseAbility(selectedUnit, SceneController.main.selectedUnit, 3);
     }
 
@@ -146,6 +154,7 @@ public class ActionbarUI : Listener
     }
     void OnUnitSelected(Unit unit)
     {
+        if(!unit) return;
         if(prompt)
         {
             GameEvents.UseAbility(  selectedUnit, unit, selectedAbility);
@@ -155,6 +164,29 @@ public class ActionbarUI : Listener
         selectedUnit = unit;
         Debug.Log(unit.VanguardAbilities[0]);
         Ability[] _abilities = FieldController.main.GetIsVanguard(unit)?unit.VanguardAbilities:unit.SupportAbilities;
+
+        for (int i = 0; i < _abilities.Length; i++)
+        {
+            if(!FieldController.main.IsUnitActive(unit)
+            || _abilities[i] == null)
+            {
+                abilityActive[i] = false;
+                continue;
+            }
+            if(!_abilities[i].IsCasterValid(unit))
+            {
+                abilityActive[i] = false;
+                continue;
+            }
+            abilityActive[i] = true;
+        }
+        if(abilityActive[0]) abilityOneBtn.style.backgroundColor = Color.white;
+        else abilityOneBtn.style.backgroundColor = Color.grey;
+        if(abilityActive[1]) abilityTwoBtn.style.backgroundColor = Color.white;
+        else abilityTwoBtn.style.backgroundColor = Color.grey;
+        if(abilityActive[2]) abilityThreeBtn.style.backgroundColor = Color.white;
+        else abilityThreeBtn.style.backgroundColor = Color.grey;
+
         if(_abilities[0])
         {
             abilityOneName.text = _abilities[0].AbilityName;

@@ -54,4 +54,12 @@ public class SoldierAbility : Ability
 
         return false;
     }
+    public override bool IsCasterValid (Unit Caster)
+    {
+		return IsAbilityValid(Caster, Caster);
+	}    
+	public override bool IsTargetValid (Unit Target)
+    {
+		return true;
+	}
 }
