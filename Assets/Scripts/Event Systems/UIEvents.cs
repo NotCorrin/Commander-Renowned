@@ -12,6 +12,7 @@ using System;
  * onUnitDefenseChanged(Unit, int)
  * onUnitAccuracyChanged(Unit, int)
  * onDisplayQTEResults(QTEController.QTEDisplayResult)
+ * menuClicked()
  */
 
 public static class UIEvents
@@ -85,6 +86,15 @@ public static class UIEvents
         if (onUnitSelected != null)
         {
             onUnitSelected(unit);
+        }
+    }
+
+    public static Action onMenuClicked;
+    public static void OnMenuClicked()
+    {
+        if (onMenuClicked != null)
+        {
+            onMenuClicked();
         }
     }
 }
