@@ -23,9 +23,9 @@ public class MageDefend : QTEAbility
 			return(casterUnit.Mana > Cost);
 		} else return false;
 	}    
-    public override bool IsTargetValid (Unit Target)
+    public override bool IsTargetValid (Unit Target, bool isPlayer)
     {
-		return (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && !FieldController.main.IsUnitPlayer(Target);
+		return (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(Target) != isPlayer);
 	}
 
     protected override QTEController.QTEType GetQTEType()
