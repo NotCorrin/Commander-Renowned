@@ -24,10 +24,10 @@ public abstract class Ability : MonoBehaviour
     public abstract void UseAbility(Unit Caster, Unit Target);
     public virtual bool IsAbilityValid(Unit Caster, Unit Target) 
     {
-        return IsCasterValid(Caster) && IsTargetValid(Target);
+        return IsCasterValid(Caster) && IsTargetValid(Target, FieldController.main.IsUnitPlayer(Caster));
     }
     public abstract bool IsCasterValid(Unit Caster);
-    public abstract bool IsTargetValid(Unit Target);
+    public abstract bool IsTargetValid(Unit Target, bool isPlayer);
     protected int GetDamageCalculation(Unit Caster, Unit Target, int Damage)
     {
         return Mathf.Max(Damage + Caster.Attack - Target.Defense, 0);

@@ -64,14 +64,14 @@ public class RoundController : Listener
 
     protected override void SubscribeListeners()
     {
-        GameEvents.onQTEResolved += SwapSupport;
+        //GameEvents.onQTEResolved += SwapSupport;
         GameEvents.onSwitchUnitEnd += SwapSupport;
         //throw new System.NotImplementedException();
     }
 
     protected override void UnsubscribeListeners()
     {
-        GameEvents.onQTEResolved -= SwapSupport;
+        //GameEvents.onQTEResolved -= SwapSupport;
         GameEvents.onSwitchUnitEnd -= SwapSupport;
 
         //throw new System.NotImplementedException();

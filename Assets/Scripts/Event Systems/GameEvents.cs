@@ -146,6 +146,7 @@ public static class GameEvents
         // {
         //     onSetPhase(phase);
         // }
+        Debug.Log(phase);
         if (onPhaseChanged != null)
         {
             onPhaseChanged(RoundController.phase);

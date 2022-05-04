@@ -8,7 +8,7 @@ public class EnemyController : Listener
 	[SerializeField] Unit enemySupportLeft;
 	[SerializeField] Unit enemySupportRight;
 
-	Ability vanguardBestAbility;
+	[SerializeField] Ability vanguardBestAbility;
 	Ability supportLeftBestAbility;
 	Ability supportRightBestAbility;
 
@@ -289,6 +289,7 @@ public class EnemyController : Listener
 			UseVanguardAbility();
 			break;
 			case RoundController.Phase.EnemySwap:
+			Debug.Log("Swapping enemy positions!");
 			SwitchPositions();
 			break;
 			case RoundController.Phase.EnemySupport:
@@ -301,9 +302,10 @@ public class EnemyController : Listener
 
 	void UseVanguardAbility () {
 		// UNCOMMENT LINES FOR TARGETING MULTIPLE CHARACTERS
+		FindBestVanguardAbilityIndex();
 		
 		// Use ability on single target
-		List<Unit> validTargets = fieldController.GetValidTargets(vanguardBestAbility);
+		List<Unit> validTargets = fieldController.GetValidTargets(enemyVanguard, vanguardBestAbility);
 		Unit target = validTargets[Random.Range(0, validTargets.Count)];
 		GameEvents.UseAbility(enemyVanguard, target, vanguardBestAbilityIndex);
 
@@ -315,14 +317,12 @@ public class EnemyController : Listener
 			validTargets.Remove(target);
 		}
 		*/
-
-		GameEvents.SetPhase();
 	}
 	void UseSupportAbility () {
 		// UNCOMMENT LINES FOR TARGETING MULTIPLE CHARACTERS
-
+		FindBestSupportLeftAbility();
 		// Support left ability on single target
-		List<Unit> leftAbilityValidTargets = fieldController.GetValidTargets(supportLeftBestAbility);
+		List<Unit> leftAbilityValidTargets = fieldController.GetValidTargets(enemySupportLeft, supportLeftBestAbility);
 		Unit leftTarget = leftAbilityValidTargets[Random.Range(0, leftAbilityValidTargets.Count)];
 		GameEvents.UseAbility(enemySupportLeft, leftTarget, supportLeftBestAbilityIndex); // Remove this line for multi targets
 
@@ -335,8 +335,10 @@ public class EnemyController : Listener
 		}
 		*/
 
+		FindBestSupportRightAbility();
+
 		// Support right ability on single target
-		List<Unit> rightAbilityValidTargets = fieldController.GetValidTargets(supportRightBestAbility);
+		List<Unit> rightAbilityValidTargets = fieldController.GetValidTargets(enemySupportRight, supportRightBestAbility);
 		Unit rightTarget = rightAbilityValidTargets[Random.Range(0, rightAbilityValidTargets.Count)];
 		GameEvents.UseAbility(enemySupportRight, rightTarget, supportRightBestAbilityIndex);  // Remove this line for multi targets
 

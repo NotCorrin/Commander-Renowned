@@ -105,6 +105,7 @@ public class QTEController : Listener
         //Inverting result if is enemy turn
         finalResult = InvertResultIfNotPlayer(finalResult);
         GameEvents.QTEResolved(finalResult);
+        Debug.Log("what the fuck");
 
         MenuEvents.onQTETriggered -= ResolveShrinkingCircle;
     }

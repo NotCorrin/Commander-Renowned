@@ -74,15 +74,17 @@ public class FieldController : Listener
         || (unit == EnemyVanguard && RoundController.phase == RoundController.Phase.EnemyVangaurd);
     }
 
-    public List<Unit> GetValidTargets(Ability ability)
+    public List<Unit> GetValidTargets(Unit Caster, Ability ability)
     {
+        if(!Caster) {Debug.Log("No Caster. wtf."); return null;}
         List<Unit> unitList = new List<Unit>();
-        if(ability.IsTargetValid(PlayerVanguard)) unitList.Add(PlayerVanguard);
-        if(ability.IsTargetValid(PlayerSupportLeft)) unitList.Add(PlayerSupportLeft);
-        if(ability.IsTargetValid(PlayerSupportRight)) unitList.Add(PlayerSupportRight);
-        if(ability.IsTargetValid(EnemyVanguard)) unitList.Add(EnemyVanguard);
-        if(ability.IsTargetValid(EnemySupportLeft)) unitList.Add(EnemySupportLeft);
-        if(ability.IsTargetValid(EnemySupportRight)) unitList.Add(EnemySupportRight);
+        if(ability.IsAbilityValid(Caster, PlayerVanguard)) unitList.Add(PlayerVanguard);
+        if(ability.IsAbilityValid(Caster, PlayerSupportLeft)) unitList.Add(PlayerSupportLeft);
+        if(ability.IsAbilityValid(Caster, PlayerSupportRight)) unitList.Add(PlayerSupportRight);
+        if(ability.IsAbilityValid(Caster, EnemyVanguard)) unitList.Add(EnemyVanguard);
+        if(ability.IsAbilityValid(Caster, EnemySupportLeft)) unitList.Add(EnemySupportLeft);
+        if(ability.IsAbilityValid(Caster, EnemySupportRight)) unitList.Add(EnemySupportRight);
+        Debug.Log(unitList[0]);
         return unitList;
     }
 

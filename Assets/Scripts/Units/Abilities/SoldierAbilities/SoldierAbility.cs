@@ -58,8 +58,8 @@ public class SoldierAbility : Ability
     {
 		return IsAbilityValid(Caster, Caster);
 	}    
-	public override bool IsTargetValid (Unit Target)
+	public override bool IsTargetValid (Unit Target, bool isPlayer)
     {
-		return true;
+		return (FieldController.main.IsUnitPlayer(Target) != isPlayer);
 	}
 }
