@@ -138,19 +138,22 @@ public class ActionbarUI : Listener
     void EndSupportTurnBtn_Clicked()
     {
         Debug.Log("End Support Turn Button Clicked");
-        GameEvents.SetPhase(RoundController.Phase.NextPhase);
+        if(RoundController.phase == RoundController.Phase.PlayerVanguard || RoundController.phase == RoundController.Phase.PlayerSupport) GameEvents.SetPhase();
+        else Debug.Log("Player does not have priority right now!");
     }
 
     void SwitchBtn_Clicked()
     {
         Debug.Log("Switch Button Clicked");
-        FieldController.main.SwapPlayerUnit();
+        if(RoundController.phase == RoundController.Phase.PlayerSwap) FieldController.main.SwapPlayerUnit();
+        else Debug.Log("Player cannot swap right now!");
     }
 
     void EndSwitchTurnBtn_Clicked()
     {
         Debug.Log("End Switch Turn Button Clicked");
-        GameEvents.SetPhase(RoundController.Phase.NextPhase);
+        if(RoundController.phase == RoundController.Phase.PlayerSwap) GameEvents.SetPhase(RoundController.Phase.NextPhase);
+        else Debug.Log("Player does not have priority right now!");
     }
     void OnUnitSelected(Unit unit)
     {

@@ -9,6 +9,8 @@ public class RoundController : Listener
     private int numUnitsUsed;
     public Unit unitSwitched;
     public Unit unitUsed;
+    [SerializeField]
+    private bool DEBUG_NextPhase;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +26,11 @@ public class RoundController : Listener
         if(Input.GetKeyDown(KeyCode.F2)) GameEvents.UseAbility(FieldController.main.GetUnit(FieldController.Position.Vanguard, true), FieldController.main.GetUnit(FieldController.Position.Vanguard, false), 1); //Use vanguard ability
         if(Input.GetKeyDown(KeyCode.F3)) MenuEvents.QTETriggered(); //QTE Triggered
         if(Input.GetKeyDown(KeyCode.Space)) Debug.Log(phase);
+        if(DEBUG_NextPhase)
+        {
+            GameEvents.SetPhase();
+            DEBUG_NextPhase = false;
+        }
     }
 
     void ChooseAttack()
