@@ -28,6 +28,7 @@ public class FieldController : Listener
     void Start()
     {
         sceneController = GetComponent<SceneController>();
+        this.enemyVisual();
     }
 
     // Update is called once per frame
@@ -190,6 +191,13 @@ public class FieldController : Listener
         }
 
         GameEvents.SetPhase(RoundController.Phase.PlayerSupport);
+    }
+
+    public void enemyVisual()
+    {
+        EnemyVanguard.UpdateEnemyVisual();
+        EnemySupportLeft.UpdateEnemyVisual();
+        EnemySupportRight.UpdateEnemyVisual();
     }
 
 }
