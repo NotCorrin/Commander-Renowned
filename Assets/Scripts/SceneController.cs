@@ -46,16 +46,18 @@ public class SceneController : Listener
                 if (selectedObject.CompareTag("Military"))
                 {
                     selectedUnit = selectedObject.GetComponent<MilitaryUnit>();
+                    UIEvents.onUnitSelected(selectedUnit);
                 }
                 else if (selectedObject.CompareTag("Magic"))
                 {
                     selectedUnit = selectedObject.GetComponent<MagicUnit>();
+                    UIEvents.onUnitSelected(selectedUnit);
                 }
                 else if (selectedObject.CompareTag("Renowned"))
                 {
                     selectedUnit = selectedObject.GetComponent<CommanderUnit>();
+                    UIEvents.onUnitSelected(selectedUnit);
                 }
-                if (selectedUnit) UIEvents.UnitSelected(selectedUnit);
             }
         }
     }

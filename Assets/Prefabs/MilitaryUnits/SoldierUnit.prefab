@@ -37,10 +37,11 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6523549065815484086}
-  - {fileID: 2768545230030365101}
   - {fileID: 6157778211172087098}
+  - {fileID: 2768545230030365101}
+  - {fileID: 644994270407902395}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2054312825494261375
 MonoBehaviour:
@@ -62,7 +63,7 @@ MonoBehaviour:
   - {fileID: 4694148546171231837}
   - {fileID: 0}
   - {fileID: 0}
-  maxHealth: 24
+  maxHealth: 30
   health: 0
   maxAmmo: 5
   ammo: 0
@@ -81,7 +82,7 @@ MonoBehaviour:
   abilityName: Attack Formation
   abilityDescription: Strike in an attack formation. Attack up, Damage 3
   cost: 1
-  Damage: 3
+  Damage: 6
   DamageVariation: 0
 --- !u!114 &7171566273673930400
 MonoBehaviour:
@@ -97,9 +98,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Defense Formation
   abilityDescription: Strike in a negative formation. Defense up, Damage 3
-  cost: 1
+  cost: 0
   Damage: 3
-  DefenseBoost: 1
+  DefenseBoost: 0
   DefenseVariation: 0
 --- !u!114 &4694148546171231837
 MonoBehaviour:
@@ -212,7 +213,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2, y: 2}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &2100299241834018016
 MonoBehaviour:
@@ -227,6 +228,69 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useStaticBillboard: 0
+--- !u!1 &192259678833514949
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 644994270407902395}
+  - component: {fileID: 4562665084222935648}
+  - component: {fileID: 7363573408919219729}
+  m_Layer: 0
+  m_Name: UnitSelection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &644994270407902395
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 192259678833514949}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2845072515036799076}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4562665084222935648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 192259678833514949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: 86f198fc749c0544eacacb79c90add95, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: aebba43871cae414896176f3a485ad20, type: 3}
+  m_SortingOrder: 0
+--- !u!114 &7363573408919219729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 192259678833514949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec5c216bab645c84aac0b4034d7312e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiDocument: {fileID: 4562665084222935648}
+  parent: {fileID: 0}
 --- !u!1 &808247373966991014
 GameObject:
   m_ObjectHideFlags: 0
