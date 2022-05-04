@@ -37,10 +37,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6523549065815484086}
-  - {fileID: 6157778211172087098}
   - {fileID: 2768545230030365101}
+  - {fileID: 6157778211172087098}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2054312825494261375
 MonoBehaviour:
@@ -62,7 +62,7 @@ MonoBehaviour:
   - {fileID: 4694148546171231837}
   - {fileID: 0}
   - {fileID: 0}
-  maxHealth: 30
+  maxHealth: 24
   health: 0
   maxAmmo: 5
   ammo: 0
@@ -81,7 +81,7 @@ MonoBehaviour:
   abilityName: Attack Formation
   abilityDescription: Strike in an attack formation. Attack up, Damage 3
   cost: 1
-  Damage: 6
+  Damage: 3
   DamageVariation: 0
 --- !u!114 &7171566273673930400
 MonoBehaviour:
@@ -97,9 +97,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Defense Formation
   abilityDescription: Strike in a negative formation. Defense up, Damage 3
-  cost: 0
+  cost: 1
   Damage: 3
-  DefenseBoost: 0
+  DefenseBoost: 1
   DefenseVariation: 0
 --- !u!114 &4694148546171231837
 MonoBehaviour:
@@ -212,7 +212,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
 --- !u!114 &2100299241834018016
 MonoBehaviour:

@@ -23,15 +23,17 @@ public class FieldController : Listener
     float timer;
     public float maxTime = 0.5f;
     public static bool disableInput;
+    List<Unit> deathNote = new List<Unit>();
 
-    bool supportLeftUsed = false;
-    bool supportRightUsed = false;
+    [SerializeField] bool supportLeftUsed = false;
+    [SerializeField] bool supportRightUsed = false;
 
     public static FieldController main;
     // Start is called before the first frame update
     void Start()
     {
         sceneController = GetComponent<SceneController>();
+        timer = maxTime;
     }
 
     // Update is called once per frame
@@ -48,6 +50,8 @@ public class FieldController : Listener
                 timer = maxTime;
                 disableInput = false;
                 GameEvents.SetPhase();
+                Debug.Log(VanguardToSupport);
+                Debug.Log(SupportToVanguard);
             }
             LerpSwap();
         }
@@ -66,6 +70,8 @@ public class FieldController : Listener
 
     public bool IsUnitActive(Unit unit)
     {
+        if(unit == PlayerSupportLeft && supportLeftUsed || unit == PlayerSupportRight && supportRightUsed) return false;
+
         return (unit == PlayerSupportLeft && RoundController.phase == RoundController.Phase.PlayerSupport)
         || (unit == PlayerSupportRight && RoundController.phase == RoundController.Phase.PlayerSupport)
         || (unit == PlayerVanguard && RoundController.phase == RoundController.Phase.PlayerVanguard)
@@ -84,7 +90,6 @@ public class FieldController : Listener
         if(ability.IsAbilityValid(Caster, EnemyVanguard)) unitList.Add(EnemyVanguard);
         if(ability.IsAbilityValid(Caster, EnemySupportLeft)) unitList.Add(EnemySupportLeft);
         if(ability.IsAbilityValid(Caster, EnemySupportRight)) unitList.Add(EnemySupportRight);
-        Debug.Log(unitList[0]);
         return unitList;
     }
 
@@ -134,12 +139,40 @@ public class FieldController : Listener
 
     protected override void SubscribeListeners()
     {
-        //throw new System.NotImplementedException();
+        GameEvents.resetBuffs += ResetSupportUsed;
+        GameEvents.onAbilityResolved += SupportUsed;
+        GameEvents.onKill += Kill;
     }
 
     protected override void UnsubscribeListeners()
     {
-        //throw new System.NotImplementedException();
+        GameEvents.resetBuffs -= ResetSupportUsed;
+        GameEvents.onAbilityResolved -= SupportUsed;
+        GameEvents.onKill -= Kill;
+    }
+
+    private void Kill(Unit unit)
+    {
+        //vanguardPos = PlayerVanguard.transform.position;
+        deathNote.Add(unit);
+        //https://i.kym-cdn.com/entries/icons/original/000/034/833/snapchat_kill.jpg
+    }
+
+    public void ActivateKill()
+    {
+
+    }
+
+    private void ResetSupportUsed()
+    {
+        supportLeftUsed = false;
+        supportRightUsed = false;
+    }
+
+    private void SupportUsed(Unit unit)
+    {
+        if(GetIsSupportLeft(unit)) supportLeftUsed = true;
+        if(GetIsSupportRight(unit)) supportRightUsed = true;
     }
 
     private void Awake()
@@ -153,7 +186,10 @@ public class FieldController : Listener
         vanguardPos = PlayerVanguard.transform.position;
         selectedUnitPos = chosenUnit.transform.position;
         
-
+        VanguardToSupport = PlayerVanguard.transform;
+        SupportToVanguard = chosenUnit.transform;
+        disableInput = true;
+        timer = 0;
         //chosenUnit.transform.position = vanguardPos;
         //PlayerVanguard.transform.position = selectedUnitPos;
 
@@ -177,18 +213,20 @@ public class FieldController : Listener
             //Debug.Log("Player Support Left: " + PlayerSupportLeft.transform.position);
             //Debug.Log("Player Support Right: " + PlayerSupportRight.transform.position);
         }
-        disableInput = true;
-        timer = 0;
         //GameEvents.SetPhase(RoundController.Phase.EnemySwap);
     }
 
     public void SwapEnemyUnit(Unit chosenUnit = null)
     {
+        Debug.Log("swapping enemy units B)");
         if(!chosenUnit) chosenUnit = sceneController.selectedUnit;
         vanguardPos = EnemyVanguard.transform.position;
         selectedUnitPos = chosenUnit.transform.position;
         
-
+        VanguardToSupport = EnemyVanguard.transform;
+        SupportToVanguard = chosenUnit.transform;
+        disableInput = true;
+        timer = 0;
         //chosenUnit.transform.position = vanguardPos;
         //EnemyVanguard.transform.position = selectedUnitPos;
 
@@ -212,8 +250,6 @@ public class FieldController : Listener
             //Debug.Log("Enemy Support Left: " + PlayerSupportLeft.transform.position);
             //Debug.Log("Enemy Support Right: " + PlayerSupportRight.transform.position);
         }
-        disableInput = true;
-        timer = 0;
         //GameEvents.SetPhase(RoundController.Phase.PlayerSupport);
     }
 

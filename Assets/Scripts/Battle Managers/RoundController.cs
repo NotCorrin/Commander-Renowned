@@ -52,7 +52,7 @@ public class RoundController : Listener
     {
         if(_phase == Phase.NextPhase) phase++;
         else phase = _phase;
-        if(((int)phase) >= 6) phase = Phase.PlayerVanguard;
+        if(((int)phase) >= 6) {phase = Phase.PlayerVanguard; Debug.Log("reached last phase, cycling back");}
 
         //if(phase == Phase.EnemyVangaurd) GameEvents.QTEStart(QTEController.QTEType.shrinkingCircle, 1);
     }
@@ -64,16 +64,11 @@ public class RoundController : Listener
 
     protected override void SubscribeListeners()
     {
-        //GameEvents.onQTEResolved += SwapSupport;
-        GameEvents.onSwitchUnitEnd += SwapSupport;
         //throw new System.NotImplementedException();
     }
 
     protected override void UnsubscribeListeners()
     {
-        //GameEvents.onQTEResolved -= SwapSupport;
-        GameEvents.onSwitchUnitEnd -= SwapSupport;
-
         //throw new System.NotImplementedException();
     }
 

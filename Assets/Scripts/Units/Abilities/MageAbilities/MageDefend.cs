@@ -35,7 +35,7 @@ public class MageDefend : QTEAbility
 
     public override int GetMoveWeight (Unit caster)
     {
-        int HealthWeight = Mathf.FloorToInt(1 - (caster.Health / caster.MaxHealth) * 100);
+        int HealthWeight = Mathf.FloorToInt((1 - (caster.Health / caster.MaxHealth)) * 100);
         int ManaWeight;
         if (caster is MageUnit)
         {
