@@ -15,10 +15,14 @@ public class FieldController : Listener
     [SerializeField] Unit EnemySupportRight;
 
     SceneController sceneController;
-    Vector3 PlayerVanguardPos;
-    Vector3 EnemyVanguardPos;
+    Vector3 vanguardPos;
     Vector3 selectedUnitPos;
     
+    Transform VanguardToSupport;
+    Transform SupportToVanguard;
+    float timer;
+    public float maxTime = 0.5f;
+    public static bool disableInput;
 
     bool supportLeftUsed = false;
     bool supportRightUsed = false;
@@ -36,6 +40,23 @@ public class FieldController : Listener
         if(Input.GetKeyDown(KeyCode.G) && RoundController.phase == RoundController.Phase.PlayerSwap) {
             SwapPlayerUnit();
         }
+        if(timer < maxTime)
+        {
+            timer += Time.deltaTime;
+            if(timer >= maxTime)
+            {
+                timer = maxTime;
+                disableInput = false;
+                GameEvents.SetPhase();
+            }
+            LerpSwap();
+        }
+    }
+
+    private void LerpSwap()
+    {
+        VanguardToSupport.position = Vector3.Lerp(vanguardPos, selectedUnitPos, timer/maxTime);
+        SupportToVanguard.position = Vector3.Lerp(selectedUnitPos, vanguardPos, timer/maxTime);        
     }
 
     public bool IsUnitPlayer(Unit unit)
@@ -127,12 +148,12 @@ public class FieldController : Listener
     public void SwapPlayerUnit(Unit chosenUnit = null)
     {
         if(!chosenUnit) chosenUnit = sceneController.selectedUnit;
-        PlayerVanguardPos = PlayerVanguard.transform.position;
+        vanguardPos = PlayerVanguard.transform.position;
         selectedUnitPos = chosenUnit.transform.position;
         
 
-        chosenUnit.transform.position = PlayerVanguardPos;
-        PlayerVanguard.transform.position = selectedUnitPos;
+        //chosenUnit.transform.position = vanguardPos;
+        //PlayerVanguard.transform.position = selectedUnitPos;
 
         if (GetIsSupportLeft(chosenUnit))
         {
@@ -154,19 +175,20 @@ public class FieldController : Listener
             //Debug.Log("Player Support Left: " + PlayerSupportLeft.transform.position);
             //Debug.Log("Player Support Right: " + PlayerSupportRight.transform.position);
         }
-
-        GameEvents.SetPhase(RoundController.Phase.EnemySwap);
+        disableInput = true;
+        timer = 0;
+        //GameEvents.SetPhase(RoundController.Phase.EnemySwap);
     }
 
     public void SwapEnemyUnit(Unit chosenUnit = null)
     {
         if(!chosenUnit) chosenUnit = sceneController.selectedUnit;
-        EnemyVanguardPos = EnemyVanguard.transform.position;
+        vanguardPos = EnemyVanguard.transform.position;
         selectedUnitPos = chosenUnit.transform.position;
         
 
-        chosenUnit.transform.position = EnemyVanguardPos;
-        EnemyVanguard.transform.position = selectedUnitPos;
+        //chosenUnit.transform.position = vanguardPos;
+        //EnemyVanguard.transform.position = selectedUnitPos;
 
         if (GetIsSupportLeft(chosenUnit))
         {
@@ -188,8 +210,9 @@ public class FieldController : Listener
             //Debug.Log("Enemy Support Left: " + PlayerSupportLeft.transform.position);
             //Debug.Log("Enemy Support Right: " + PlayerSupportRight.transform.position);
         }
-
-        GameEvents.SetPhase(RoundController.Phase.PlayerSupport);
+        disableInput = true;
+        timer = 0;
+        //GameEvents.SetPhase(RoundController.Phase.PlayerSupport);
     }
 
 }
