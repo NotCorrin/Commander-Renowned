@@ -41,7 +41,7 @@ Transform:
   - {fileID: 2768545230030365101}
   - {fileID: 644994270407902395}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2054312825494261375
 MonoBehaviour:
@@ -82,7 +82,7 @@ MonoBehaviour:
   abilityName: Attack Formation
   abilityDescription: Strike in an attack formation. Attack up, Damage 3
   cost: 1
-  Damage: 6
+  Damage: 3
   DamageVariation: 0
 --- !u!114 &7171566273673930400
 MonoBehaviour:
