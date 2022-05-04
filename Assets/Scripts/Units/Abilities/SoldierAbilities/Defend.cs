@@ -64,25 +64,22 @@ public class Defend : QTEAbility
     {
         return QTEController.QTEType.shrinkingCircle;
     }
-
-    public override bool IsAbilityValid(Unit Caster, Unit Target)
+    
+    public override bool IsCasterValid (Unit Caster)
     {
-        bool casterValid;
-        bool targetValid;
-
-        if (Caster is MilitaryUnit)
-        {
-            MilitaryUnit casterUnit = Caster as MilitaryUnit;
-            casterValid = casterUnit.Ammo >= Cost;
-        }
-        else if (Caster is CommanderUnit)
-        {
-            CommanderUnit casterUnit = Caster as CommanderUnit;
-            casterValid = casterUnit.Ammo >= Cost;
-        }
-        else return false;
-        targetValid = (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && !FieldController.main.IsUnitPlayer(Target);
-
-        return casterValid && targetValid;
-    }
+		if (Caster is MilitaryUnit) 
+		{
+			MilitaryUnit casterUnit = Caster as MilitaryUnit;
+			return(casterUnit.Ammo >= Cost);
+		} 
+		else if (Caster is CommanderUnit) 
+		{
+			CommanderUnit casterUnit = Caster as CommanderUnit;
+			return(casterUnit.Ammo >= Cost);
+		} else return false;
+	}    
+	public override bool IsTargetValid (Unit Target)
+    {
+		return (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && !FieldController.main.IsUnitPlayer(Target);
+	}
 }

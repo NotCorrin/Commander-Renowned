@@ -26,12 +26,12 @@ public static class UIEvents
         }
     }
 
-    public static Action<Unit, int> onUnitAmmoChanged;
-    public static void UnitAmmoChanged(Unit unit, int newAmmo)
+    public static Action<Unit, int, int> onUnitAmmoChanged;
+    public static void UnitAmmoChanged(Unit unit, int newAmmo, int maxAmmo)
     {
         if (onUnitAmmoChanged != null)
         {
-            onUnitAmmoChanged(unit, newAmmo);
+            onUnitAmmoChanged(unit, newAmmo, maxAmmo);
         }
     }
 
