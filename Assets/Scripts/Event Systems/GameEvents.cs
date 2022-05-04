@@ -138,7 +138,7 @@ public static class GameEvents
 
     // public static Action<RoundController.Phase> onSetPhase;
     public static Action<RoundController.Phase> onPhaseChanged;
-    public static void SetPhase(RoundController.Phase phase)
+    public static void SetPhase(RoundController.Phase phase = RoundController.Phase.NextPhase)
     {
         RoundController.SetPhase(phase);
         // Additional event not needed
