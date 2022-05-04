@@ -71,12 +71,12 @@ public class QTEController : Listener
         shrinkingCircleMaxTime = shrinkingCircleBaseTime + (difficultyModifier * shrinkingCircleDifficultyStep);
         shrinkingCircleTimer = shrinkingCircleMaxTime;
         MenuEvents.onQTETriggered += ResolveShrinkingCircle;
-                            Debug.Log("AAAAAAAAA0");
+                            //Debug.Log("AAAAAAAAA0");
     }
 
     private void ResolveShrinkingCircle()
     {
-                            Debug.Log("AAAAAAAAA1");
+                            //Debug.Log("AAAAAAAAA1");
         //Placeholder default hit value
         UIEvents.DisplayQTEResults(QTEDisplayResult.Good);
         GameEvents.QTEResolved(QTEResult.Hit);
@@ -105,6 +105,7 @@ public class QTEController : Listener
         //Inverting result if is enemy turn
         finalResult = InvertResultIfNotPlayer(finalResult);
         GameEvents.QTEResolved(finalResult);
+        Debug.Log("what the fuck");
 
         MenuEvents.onQTETriggered -= ResolveShrinkingCircle;
     }

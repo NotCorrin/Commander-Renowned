@@ -21,7 +21,7 @@ public abstract class QTEAbility : Ability
 
     protected void OnQTEResolved(QTEController.QTEResult result)
     {
-                Debug.Log("AAAAAAAAA");
+                //Debug.Log("AAAAAAAAA");
 
         AbilityUsed(result);
         GameEvents.SetPhase(RoundController.Phase.NextPhase);

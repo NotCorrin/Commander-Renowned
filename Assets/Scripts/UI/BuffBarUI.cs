@@ -20,17 +20,17 @@ public class BuffBarUI : Listener
     protected override void SubscribeListeners()
     {
         // TODO : Add Event Listeners
-        // UIEvents.onUnitAttackBuffChanged += UpdateAttackBuff;
-        // UIEvents.onUnitDefenceBuffChanged += UpdateDefenceBuff;
-        // UIEvents.onUnitAccuracyBuffChanged += UpdateAccuracyBuff;
+        UIEvents.onUnitAttackChanged += UpdateAttackBuff;
+        UIEvents.onUnitDefenseChanged += UpdateDefenceBuff;
+        UIEvents.onUnitAccuracyChanged += UpdateAccuracyBuff;
     }
 
     protected override void UnsubscribeListeners()
     {
         // TODO : Remove Event Listeners
-        // UIEvents.onUnitAttackBuffChanged -= UpdateAttackBuff;
-        // UIEvents.onUnitDefenceBuffChanged -= UpdateDefenceBuff;
-        // UIEvents.onUnitAccuracyBuffChanged -= UpdateAccuracyBuff;
+        UIEvents.onUnitAttackChanged -= UpdateAttackBuff;
+        UIEvents.onUnitDefenseChanged -= UpdateDefenceBuff;
+        UIEvents.onUnitAccuracyChanged -= UpdateAccuracyBuff;
     }
 
     void Start()
@@ -64,8 +64,9 @@ public class BuffBarUI : Listener
         accuracyBuffContainer.style.opacity = 0;
     }
 
-    void UpdateAttackBuff(int buff)
+    void UpdateAttackBuff(Unit unit, int buff)
     {
+        if(unit != parent) return;
         if (buff == 0)
         {
             attackBuffContainer.style.opacity = 0;
@@ -86,8 +87,9 @@ public class BuffBarUI : Listener
         }
     }
 
-    void UpdateDefenceBuff(int buff)
+    void UpdateDefenceBuff(Unit unit, int buff)
     {
+        if(unit != parent) return;
         if (buff == 0)
         {
             defenceBuffContainer.style.opacity = 0;
@@ -108,8 +110,9 @@ public class BuffBarUI : Listener
         }
     }
 
-    void UpdateAccuracyBuff(int buff)
+    void UpdateAccuracyBuff(Unit unit, int buff)
     {
+        if(unit != parent) return;
         if (buff == 0)
         {
             accuracyBuffContainer.style.opacity = 0;

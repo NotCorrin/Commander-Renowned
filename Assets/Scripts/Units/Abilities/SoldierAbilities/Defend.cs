@@ -11,7 +11,7 @@ public class Defend : QTEAbility
 
     public override int GetMoveWeight(Unit caster)
     {
-        int HealthWeight = Mathf.FloorToInt(1 - (caster.Health / caster.MaxHealth) * 100);
+        int HealthWeight = Mathf.FloorToInt((1 - (caster.Health / caster.MaxHealth)) * 100);
         int AmmoWeight;
 
         if (caster is MilitaryUnit)
@@ -55,7 +55,7 @@ public class Defend : QTEAbility
                 }
         }
 
-        GameEvents.DefenseUp(Caster, DefenseBoost);
+        GameEvents.DefenseUp(Caster, FinalDefense);
         GameEvents.HealthChanged(Target, -GetDamageCalculation(Caster, Target, Damage));
         GameEvents.UseAmmo(Caster, Cost);
     }
@@ -78,8 +78,8 @@ public class Defend : QTEAbility
 			return(casterUnit.Ammo >= Cost);
 		} else return false;
 	}    
-	public override bool IsTargetValid (Unit Target)
+	public override bool IsTargetValid (Unit Target, bool isPlayer)
     {
-		return (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && !FieldController.main.IsUnitPlayer(Target);
+		return (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(Target) != isPlayer);
 	}
 }

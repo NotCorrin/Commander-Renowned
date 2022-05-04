@@ -8,9 +8,9 @@ public class EnemyController : Listener
 	[SerializeField] Unit enemySupportLeft;
 	[SerializeField] Unit enemySupportRight;
 
-	Ability vanguardBestAbility;
-	Ability supportLeftBestAbility;
-	Ability supportRightBestAbility;
+	[SerializeField] Ability vanguardBestAbility;
+	[SerializeField] Ability supportLeftBestAbility;
+	[SerializeField] Ability supportRightBestAbility;
 
 	int vanguardBestAbilityIndex;
 	int supportLeftBestAbilityIndex;
@@ -29,7 +29,8 @@ public class EnemyController : Listener
 		CalculateSwitchStickScores();
 		// No support enemies
 		if (enemySupportLeft == null && enemySupportRight == null) {
-			GameEvents.SetPhase();
+			//GameEvents.SetPhase();
+			fieldController.SwapEnemyUnit(enemyVanguard);
 			return;
 		}
 		// Only has left support
@@ -42,14 +43,16 @@ public class EnemyController : Listener
 			// If yes enemy vanguard
 			else {
 				if (vanguardStickScore > supportLeftSwitchScore) {
-					GameEvents.SetPhase();
+					//GameEvents.SetPhase();
+					fieldController.SwapEnemyUnit(enemyVanguard);
 					return;
 				} else if (vanguardStickScore < supportLeftSwitchScore) {
 					fieldController.SwapEnemyUnit(enemySupportLeft);
 					return;
 				} else {
 					if (Random.Range(0, 100) < 50) {
-						GameEvents.SetPhase();
+						//GameEvents.SetPhase();
+						fieldController.SwapEnemyUnit(enemyVanguard);
 						return;
 					} else {
 						fieldController.SwapEnemyUnit(enemySupportLeft);
@@ -68,14 +71,16 @@ public class EnemyController : Listener
 			// If yes enemy vanguard
 			else {
 				if (vanguardStickScore > supportRightSwitchScore) {
-					GameEvents.SetPhase();
+					//GameEvents.SetPhase();
+					fieldController.SwapEnemyUnit(enemyVanguard);
 					return;
 				} else if (vanguardStickScore < supportRightSwitchScore) {
 					fieldController.SwapEnemyUnit(enemySupportRight);
 					return;
 				} else {
 					if (Random.Range(0, 100) < 50) {
-						GameEvents.SetPhase();
+						//GameEvents.SetPhase();
+						fieldController.SwapEnemyUnit(enemyVanguard);
 						return;
 					} else {
 						fieldController.SwapEnemyUnit(enemySupportRight);
@@ -132,7 +137,7 @@ public class EnemyController : Listener
 		// Get the best ability's index
 		int highestAbilityWeight = 0;
 		int index = 0;
-		if (enemyVanguard.VanguardAbilities.Length > 1) {
+		if (enemyVanguard.VanguardAbilities[1] != null) {
 			for (int i = 0; i < enemyVanguard.VanguardAbilities.Length; i++) {
 				Ability currentAbility = enemyVanguard.VanguardAbilities[i];
 				if (currentAbility == null) {
@@ -167,7 +172,7 @@ public class EnemyController : Listener
 		// Get the best ability's index
 		int highestAbilityWeight = 0;
 		int index = 0;
-		if (enemySupportLeft.SupportAbilities.Length > 1) {
+		if (enemySupportLeft.SupportAbilities[1] != null) {
 			for (int i = 0; i < enemySupportLeft.SupportAbilities.Length; i++) {
 				Ability currentAbility = enemySupportLeft.SupportAbilities[i];
 				if (currentAbility == null) {
@@ -188,6 +193,7 @@ public class EnemyController : Listener
 				}
 			}
 		} else {
+			Debug.Log("only 1 support ability, what a loser");
 			supportLeftBestAbility = enemySupportLeft.SupportAbilities[0];
 			index = 0;
 		}
@@ -202,7 +208,7 @@ public class EnemyController : Listener
 		// Get the best ability's index
 		int highestAbilityWeight = 0;
 		int index = 0;
-		if (enemySupportRight.SupportAbilities.Length > 1) {
+		if (enemySupportRight.SupportAbilities[1] != null) {
 			for (int i = 0; i < enemySupportRight.SupportAbilities.Length; i++) {
 				Ability currentAbility = enemySupportRight.SupportAbilities[i];
 				if (currentAbility == null) {
@@ -284,15 +290,18 @@ public class EnemyController : Listener
 	}
 
 	void EnemyTurn (RoundController.Phase phase) {
+		Debug.Log("is enemy turn? " + phase);
 		switch (phase) {
 			case RoundController.Phase.EnemyVangaurd:
 			UseVanguardAbility();
 			break;
 			case RoundController.Phase.EnemySwap:
+			Debug.Log("Swapping enemy positions!");
 			SwitchPositions();
 			break;
 			case RoundController.Phase.EnemySupport:
-			UseSupportAbility();
+			//UseSupportAbility();
+			Invoke("UseSupportAbility", 0.1f);
 			break;
 			default:
 			break;
@@ -301,9 +310,10 @@ public class EnemyController : Listener
 
 	void UseVanguardAbility () {
 		// UNCOMMENT LINES FOR TARGETING MULTIPLE CHARACTERS
+		FindBestVanguardAbilityIndex();
 		
 		// Use ability on single target
-		List<Unit> validTargets = fieldController.GetValidTargets(vanguardBestAbility);
+		List<Unit> validTargets = fieldController.GetValidTargets(enemyVanguard, vanguardBestAbility);
 		Unit target = validTargets[Random.Range(0, validTargets.Count)];
 		GameEvents.UseAbility(enemyVanguard, target, vanguardBestAbilityIndex);
 
@@ -315,17 +325,17 @@ public class EnemyController : Listener
 			validTargets.Remove(target);
 		}
 		*/
-
-		GameEvents.SetPhase();
 	}
 	void UseSupportAbility () {
 		// UNCOMMENT LINES FOR TARGETING MULTIPLE CHARACTERS
-
+		FindBestSupportLeftAbility();
 		// Support left ability on single target
-		List<Unit> leftAbilityValidTargets = fieldController.GetValidTargets(supportLeftBestAbility);
-		Unit leftTarget = leftAbilityValidTargets[Random.Range(0, leftAbilityValidTargets.Count)];
-		GameEvents.UseAbility(enemySupportLeft, leftTarget, supportLeftBestAbilityIndex); // Remove this line for multi targets
-
+		List<Unit> leftAbilityValidTargets = fieldController.GetValidTargets(enemySupportLeft, supportLeftBestAbility);
+		if(leftAbilityValidTargets.Count > 0)
+		{
+			Unit leftTarget = leftAbilityValidTargets[Random.Range(0, leftAbilityValidTargets.Count)];
+			GameEvents.UseAbility(enemySupportLeft, leftTarget, supportLeftBestAbilityIndex); // Remove this line for multi targets
+		}
 		/*
 		int leftAbilityNumOfTargets = [SET VALUE HERE]; <<<<< IMPORTANT THING TO ADD
 		for (int i = 0; i < leftAbilityNumOfTargets; i++) {
@@ -335,10 +345,15 @@ public class EnemyController : Listener
 		}
 		*/
 
+		FindBestSupportRightAbility();
+
 		// Support right ability on single target
-		List<Unit> rightAbilityValidTargets = fieldController.GetValidTargets(supportRightBestAbility);
-		Unit rightTarget = rightAbilityValidTargets[Random.Range(0, rightAbilityValidTargets.Count)];
-		GameEvents.UseAbility(enemySupportRight, rightTarget, supportRightBestAbilityIndex);  // Remove this line for multi targets
+		List<Unit> rightAbilityValidTargets = fieldController.GetValidTargets(enemySupportRight, supportRightBestAbility);
+		if(rightAbilityValidTargets.Count > 0)
+		{
+			Unit rightTarget = rightAbilityValidTargets[Random.Range(0, rightAbilityValidTargets.Count)];
+			GameEvents.UseAbility(enemySupportRight, rightTarget, supportRightBestAbilityIndex);  // Remove this line for multi targets
+		}
 
 		/*
 		int rightAbilityNumOfTargets = [SET VALUE HERE]; <<<<< IMPORTANT THING TO ADD

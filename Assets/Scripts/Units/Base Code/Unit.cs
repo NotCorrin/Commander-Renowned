@@ -30,6 +30,10 @@ public abstract class Unit : Listener
         {
             health = value;
             UIEvents.UnitHealthChanged(this, health);
+            if(value <= 0) 
+            {
+                GameEvents.Kill(this);
+            }
         }
     }
 
@@ -121,7 +125,7 @@ public abstract class Unit : Listener
                     targetAbility.UseAbility(this, target);
                     GameEvents.AbilityResolved(this);
                 }
-                else Debug.Log("Ability Can't be Used");
+                else Debug.Log("Caster = " + caster + "\n" + "Target = " + target);
             }
 
         }
@@ -135,6 +139,10 @@ public abstract class Unit : Listener
     protected virtual void ResetUnit()
     {
         Health = MaxHealth;
+        ResetBuffs();
+    }
+    protected virtual void ResetBuffs()
+    {
         Attack = 0;
         Defense = 0;
         Accuracy = 0;
@@ -177,6 +185,7 @@ public abstract class Unit : Listener
         GameEvents.onAttackUp += OnAttackChanged;
         GameEvents.onAccuracyUp += OnAccuracyChanged;
         GameEvents.onUseAbility += UseAbility;
+        GameEvents.resetBuffs += ResetBuffs;
 
         GameEvents.onPhaseChanged += UpdateBillboard;
         
@@ -190,6 +199,7 @@ public abstract class Unit : Listener
         GameEvents.onAttackUp -= OnAttackChanged;
         GameEvents.onAccuracyUp -= OnAccuracyChanged;
         GameEvents.onUseAbility -= UseAbility;
+        GameEvents.resetBuffs -= ResetBuffs;
 
         GameEvents.onPhaseChanged -= UpdateBillboard;
 

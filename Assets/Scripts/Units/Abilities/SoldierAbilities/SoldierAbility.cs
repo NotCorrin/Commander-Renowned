@@ -6,7 +6,7 @@ public class SoldierAbility : Ability
 {
     public override int GetMoveWeight(Unit caster)
     {
-        int HealthWeight = Mathf.FloorToInt(1 - (caster.Health / caster.MaxHealth) * 100);
+        int HealthWeight = Mathf.FloorToInt((1 - (caster.Health / caster.MaxHealth)) * 100);
         int AmmoWeight;
 
         if (caster is MilitaryUnit)
@@ -58,8 +58,8 @@ public class SoldierAbility : Ability
     {
 		return IsAbilityValid(Caster, Caster);
 	}    
-	public override bool IsTargetValid (Unit Target)
+	public override bool IsTargetValid (Unit Target, bool isPlayer)
     {
-		return true;
+		return (FieldController.main.IsUnitPlayer(Target) != isPlayer);
 	}
 }

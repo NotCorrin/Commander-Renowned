@@ -18,9 +18,9 @@ public class MageBuff : Ability
 			return(casterUnit.Mana > Cost);
 		} else return false;
 	}    
-	public override bool IsTargetValid (Unit Target)
+	public override bool IsTargetValid (Unit Target, bool isPlayer)
     {
-		return (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && FieldController.main.IsUnitPlayer(Target);
+		return (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(Target) == isPlayer);
 	}
 	public override void UseAbility (Unit Caster, Unit Target) {
 		if (IsAbilityValid(Caster, Target)) {
@@ -30,7 +30,7 @@ public class MageBuff : Ability
 	}
 	public override int GetMoveWeight (Unit caster) {
 
-        int HealthWeight = Mathf.FloorToInt( 1 - (caster.Health / caster.MaxHealth) * 100);
+        int HealthWeight = Mathf.FloorToInt((1 - (caster.Health / caster.MaxHealth)) * 100);
         int ManaWeight;
 
         if (caster is MageUnit)

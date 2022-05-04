@@ -252,7 +252,7 @@ MonoBehaviour:
   - {fileID: 1145748182108536317}
   - {fileID: 2294820338508900456}
   - {fileID: 0}
-  maxHealth: 10
+  maxHealth: 18
   health: 0
   maxAmmo: 5
   maxMana: 5
@@ -419,7 +419,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
 --- !u!114 &4681837390009795012
 MonoBehaviour:
