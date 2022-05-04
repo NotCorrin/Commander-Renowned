@@ -1,0 +1,3 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="container" style="background-image: url(&apos;project://database/Assets/UI/Images/Select_Unit.svg?fileID=7388822144124034973&amp;guid=dd58093be90181b429ccdac88fb59133&amp;type=3#Select_Unit&apos;); height: 130px; width: 110px; opacity: 1; transition-property: opacity; transition-duration: 200ms; transition-timing-function: ease-in-sine;" />
+</ui:UXML>
