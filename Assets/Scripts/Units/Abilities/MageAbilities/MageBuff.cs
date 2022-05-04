@@ -5,24 +5,22 @@ using UnityEngine;
 public class MageBuff : Ability
 {
 	[SerializeField] int buffAmount;
-	public override bool IsAbilityValid (Unit Caster, Unit Target) {
-		bool casterValid;
-		bool targetValid;
-
+	public override bool IsCasterValid (Unit Caster)
+    {
 		if (Caster is MagicUnit) 
 		{
 			MagicUnit magicUnit = Caster as MagicUnit;
-			casterValid = magicUnit.Mana > Cost;
+			return(magicUnit.Mana > Cost);
 		} 
 		else if (Caster is CommanderUnit) 
 		{
 			CommanderUnit casterUnit = Caster as CommanderUnit;
-			casterValid = casterUnit.Mana > Cost;
+			return(casterUnit.Mana > Cost);
 		} else return false;
-
-		targetValid = (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && FieldController.main.IsUnitPlayer(Target);
-
-		return casterValid && targetValid;
+	}    
+	public override bool IsTargetValid (Unit Target)
+    {
+		return (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && FieldController.main.IsUnitPlayer(Target);
 	}
 	public override void UseAbility (Unit Caster, Unit Target) {
 		if (IsAbilityValid(Caster, Target)) {

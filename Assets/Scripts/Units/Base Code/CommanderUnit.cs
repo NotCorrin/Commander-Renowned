@@ -17,7 +17,7 @@ public abstract class CommanderUnit : Unit
         set
         {
             ammo = value;
-            UIEvents.UnitAmmoChanged(this, ammo);
+            UIEvents.UnitAmmoChanged(this, ammo, maxAmmo);
         }
     }
 

@@ -22,7 +22,12 @@ public abstract class Ability : MonoBehaviour
 
     public abstract int GetMoveWeight(Unit Caster);
     public abstract void UseAbility(Unit Caster, Unit Target);
-    public abstract bool IsAbilityValid(Unit Caster, Unit Target);
+    public virtual bool IsAbilityValid(Unit Caster, Unit Target) 
+    {
+        return IsCasterValid(Caster) && IsTargetValid(Target);
+    }
+    public abstract bool IsCasterValid(Unit Caster);
+    public abstract bool IsTargetValid(Unit Target);
     protected int GetDamageCalculation(Unit Caster, Unit Target, int Damage)
     {
         return Mathf.Max(Damage + Caster.Attack - Target.Defense, 0);

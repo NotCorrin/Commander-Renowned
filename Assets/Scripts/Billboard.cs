@@ -56,6 +56,6 @@ public class Billboard : MonoBehaviour
         useStaticBillboard = toSwitch;
 
         // Lerp 
-        transform.rotation = Quaternion.Lerp(transform.rotation, camTransform.rotation, Time.deltaTime);
+        //transform.rotation = Quaternion.Lerp(transform.rotation, camTransform.rotation, Time.deltaTime);
     }
 }
