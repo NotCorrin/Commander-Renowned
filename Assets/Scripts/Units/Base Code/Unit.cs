@@ -214,4 +214,16 @@ public abstract class Unit : Listener
     {
         billboard.SwitchBillboardState(((int)_phase)>=2);
     }
+
+    public void UpdateEnemyVisual()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if(spriteRenderer)
+        {
+            spriteRenderer.color = new Color(0.85f, 0.66f, 1, 1);
+            spriteRenderer.flipX = true;
+        }
+        
+    }
 }

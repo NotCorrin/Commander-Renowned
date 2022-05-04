@@ -34,6 +34,7 @@ public class FieldController : Listener
     {
         sceneController = GetComponent<SceneController>();
         timer = maxTime;
+        this.enemyVisual();
     }
 
     // Update is called once per frame
@@ -251,6 +252,13 @@ public class FieldController : Listener
             //Debug.Log("Enemy Support Right: " + PlayerSupportRight.transform.position);
         }
         //GameEvents.SetPhase(RoundController.Phase.PlayerSupport);
+    }
+
+    public void enemyVisual()
+    {
+        EnemyVanguard.UpdateEnemyVisual();
+        EnemySupportLeft.UpdateEnemyVisual();
+        EnemySupportRight.UpdateEnemyVisual();
     }
 
 }
