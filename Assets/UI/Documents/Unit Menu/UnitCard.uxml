@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
-<engine:UXML
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:engine="UnityEngine.UIElements"
-    xmlns:editor="UnityEditor.UIElements"
-    xsi:noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd"
->
-    
-</engine:UXML>
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Button tabindex="-1" display-tooltip-when-elided="true" name="card-button" style="overflow: visible; width: 200px; height: 296px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; background-color: rgba(255, 255, 255, 0); border-left-color: rgba(255, 255, 255, 0); border-right-color: rgba(255, 255, 255, 0); border-top-color: rgba(255, 255, 255, 0); border-bottom-color: rgba(255, 255, 255, 0); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;">
+        <ui:VisualElement name="white-background" style="background-color: rgba(255, 255, 255, 0.69); width: 100%; height: 94%; position: absolute;" />
+        <ui:VisualElement name="frame-background" style="position: absolute; width: 100%; height: 100%; background-image: url(&apos;project://database/Assets/UI/Images/NameBanner.svg?fileID=7388822144124034973&amp;guid=ddc4633dcc9c5394b842be8359a431cb&amp;type=3#NameBanner&apos;); -unity-slice-left: 30; -unity-slice-top: 30; -unity-slice-right: 30; -unity-slice-bottom: 70;" />
+        <ui:VisualElement name="unit" style="position: absolute; left: 20px; width: auto; height: auto; bottom: 42px; top: 20px; right: 20px; background-image: url(&apos;project://database/Assets/Sprites/dummy_sprite.png?fileID=2800000&amp;guid=44070b5b53c31d6469345a7f0297e434&amp;type=3#dummy_sprite&apos;); -unity-background-scale-mode: scale-to-fit;" />
+        <ui:Label tabindex="-1" text="Ultimate Shaggy" display-tooltip-when-elided="true" name="name-label" style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; -unity-text-align: middle-center; position: absolute; bottom: 0; width: 100%; height: 32px; color: rgb(255, 255, 255); -unity-font: url(&apos;project://database/Assets/Fonts/Saira-Regular.ttf?fileID=12800000&amp;guid=251e77914a76b49a1ba8e99db3b89002&amp;type=3#Saira-Regular&apos;); -unity-font-definition: url(&apos;project://database/Assets/Fonts/Saira-Regular%20SDF.asset?fileID=11400000&amp;guid=94d2459b6274b4ed4809561a759f13c1&amp;type=2#Saira-Regular SDF&apos;); font-size: 20px;" />
+    </ui:Button>
+</ui:UXML>
