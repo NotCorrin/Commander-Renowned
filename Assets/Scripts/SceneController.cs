@@ -37,7 +37,8 @@ public class SceneController : Listener
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
+            RaycastHit hit;
+            Physics.Raycast(ray, out hit);
 
             if (hit.collider != null)
             {
