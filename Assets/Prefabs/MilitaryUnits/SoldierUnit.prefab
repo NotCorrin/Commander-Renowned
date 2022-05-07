@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3095930897375498056}
   - component: {fileID: 8284957678226594031}
   - component: {fileID: 2100299241834018016}
-  - component: {fileID: 2848616989477953315}
+  - component: {fileID: 2142396651377034397}
   m_Layer: 0
   m_Name: SoldierUnit
   m_TagString: Military
@@ -206,32 +206,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useStaticBillboard: 0
---- !u!61 &2848616989477953315
-BoxCollider2D:
+--- !u!65 &2142396651377034397
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 106158086360272526}
-  m_Enabled: 1
-  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Size: {x: 1, y: 1, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &192259678833514949
 GameObject:
   m_ObjectHideFlags: 0
