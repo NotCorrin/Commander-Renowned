@@ -78,3 +78,6 @@ UserSettings/EditorUserSettings.asset
 
 # UI Toolkit Schema - only needed for auto-complete
 UIElementsSchema/*
+
+# 2022 User Settings
+UserSettings/Layouts/*.dwlt
