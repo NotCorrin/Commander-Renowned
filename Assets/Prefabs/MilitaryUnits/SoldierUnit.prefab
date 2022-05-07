@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 4694148546171231837}
   - component: {fileID: 3095930897375498056}
   - component: {fileID: 8284957678226594031}
-  - component: {fileID: 1288096268}
   - component: {fileID: 2100299241834018016}
+  - component: {fileID: 2848616989477953315}
   m_Layer: 0
   m_Name: SoldierUnit
   m_TagString: Military
@@ -41,7 +41,7 @@ Transform:
   - {fileID: 2768545230030365101}
   - {fileID: 644994270407902395}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2054312825494261375
 MonoBehaviour:
@@ -80,10 +80,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityName: Attack Formation
-  abilityDescription: Strike in an attack formation. Attack up, Damage 3
+  abilityDescription: Strike twice in an attack formation. Attack up, Damage 4 over
+    2 hits
   cost: 1
-  Damage: 3
+  TotalBaseDamage: 4
   DamageVariation: 0
+  AttackBoost: 1
+  LaserShot: {fileID: 1533149051114980, guid: 14237ad61acba9345b53abf70e0cd027, type: 3}
+  secondShotDelay: 0.2
 --- !u!114 &7171566273673930400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,10 +101,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityName: Defense Formation
-  abilityDescription: Strike in a negative formation. Defense up, Damage 3
-  cost: 0
-  Damage: 3
-  DefenseBoost: 0
+  abilityDescription: Strike in a negative formation. Defense up, Damage 4
+  cost: 1
+  Damage: 4
+  DefenseBoost: 1
   DefenseVariation: 0
 --- !u!114 &4694148546171231837
 MonoBehaviour:
@@ -189,7 +193,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!61 &1288096268
+--- !u!114 &2100299241834018016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106158086360272526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e7971b15f0404c489e66ffe60a1a92d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useStaticBillboard: 0
+--- !u!61 &2848616989477953315
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -215,19 +232,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &2100299241834018016
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 106158086360272526}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e7971b15f0404c489e66ffe60a1a92d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  useStaticBillboard: 0
 --- !u!1 &192259678833514949
 GameObject:
   m_ObjectHideFlags: 0

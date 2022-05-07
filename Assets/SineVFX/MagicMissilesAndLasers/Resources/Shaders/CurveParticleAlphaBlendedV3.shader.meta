@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: c404480e98b04aa489d5f60201352c59
+timeCreated: 1507729851
+licenseType: Store
+ShaderImporter:
+  defaultTextures:
+  - _FireTexture: {fileID: 2800000, guid: c21d4a73d02870842be67f7332a4910c, type: 3}
+  - _Noise01: {fileID: 2800000, guid: b5fb2c87ff6949440be8a1420b9af71a, type: 3}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

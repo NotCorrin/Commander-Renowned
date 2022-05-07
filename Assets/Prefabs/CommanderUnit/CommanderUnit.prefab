@@ -203,8 +203,8 @@ GameObject:
   - component: {fileID: 2294820338508900456}
   - component: {fileID: 5145483213268070333}
   - component: {fileID: 3288217654638550077}
-  - component: {fileID: 1254211256}
   - component: {fileID: 4681837390009795012}
+  - component: {fileID: 8216779918204619310}
   m_Layer: 0
   m_Name: CommanderUnit
   m_TagString: Renowned
@@ -269,10 +269,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityName: Attack Formation
-  abilityDescription: Strike in an attack formation. Attack up, Damage 3
-  cost: 0
-  Damage: 3
+  abilityDescription: Strike twice in an attack formation. Attack up, Damage 4
+  cost: 1
+  TotalBaseDamage: 4
   DamageVariation: 0
+  AttackBoost: 1
+  LaserShot: {fileID: 1473406864193606, guid: 01feff8345c7a114aa1ea84c0034ee04, type: 3}
 --- !u!114 &1001161374790124703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,10 +289,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Wall of Plasma
   abilityDescription: Will form an invisible wall to protect the mage
-  cost: 0
+  cost: 1
   Damage: 1
-  DefenseBoost: 0
-  DefenseVariation: 0
+  DefenseBoost: 2
+  DefenseVariation: 1
   CostVariation: 0
 --- !u!114 &1145748182108536317
 MonoBehaviour:
@@ -395,32 +397,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!61 &1254211256
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6480894034537515106}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 2, y: 2}
-  m_EdgeRadius: 0
 --- !u!114 &4681837390009795012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -434,6 +410,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useStaticBillboard: 0
+--- !u!65 &8216779918204619310
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6480894034537515106}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8060413159524072052
 GameObject:
   m_ObjectHideFlags: 0
