@@ -106,6 +106,8 @@ MonoBehaviour:
   Damage: 4
   DefenseBoost: 1
   DefenseVariation: 0
+  Shield: {fileID: 7623948199654821406, guid: 6e79406ad65abb140b043c1e1ffcb170, type: 3}
+  LaserShot: {fileID: 1533149051114980, guid: 14237ad61acba9345b53abf70e0cd027, type: 3}
 --- !u!114 &4694148546171231837
 MonoBehaviour:
   m_ObjectHideFlags: 0

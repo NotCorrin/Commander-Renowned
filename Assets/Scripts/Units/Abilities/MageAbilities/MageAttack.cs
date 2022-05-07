@@ -8,6 +8,8 @@ public class MageAttack : QTEAbility
     [SerializeField] int DamageVariation;
     [SerializeField] int CostVariation;
 
+    [SerializeField] GameObject Explosion;
+
     public override bool IsCasterValid (Unit Caster)
     {
 		if (Caster is MagicUnit) 
@@ -73,8 +75,8 @@ public class MageAttack : QTEAbility
                 }
         }
 
+        if (Explosion) Instantiate(Explosion, Target.transform);
         GameEvents.onHealthChanged(Target, -GetDamageCalculation(Caster, Target, FinalDamage));
         GameEvents.onUseMana(Caster, -FinalCost);
     }
-    
 }
