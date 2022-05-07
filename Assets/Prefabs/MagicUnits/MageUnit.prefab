@@ -209,7 +209,7 @@ MonoBehaviour:
   Damage: 2
   DamageVariation: 0
   CostVariation: 0
-  Explosion: {fileID: 1116862508874840, guid: e2a5aa920757b9845b450b56e6b0f367, type: 3}
+  Explosion: {fileID: 1116862508874840, guid: 0156ac8bc7645f44fb571c716152b33a, type: 3}
 --- !u!114 &3921007691822419878
 MonoBehaviour:
   m_ObjectHideFlags: 0
