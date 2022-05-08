@@ -73,8 +73,6 @@ public class Attack : QTEAbility
         secondShotTimer = secondShotDelay;
         secondShotTrigger = true;
 
-        FireLaserAtTarget(Target.transform);
-
         GameEvents.UseAmmo(Caster, Cost);
     }
 
@@ -107,6 +105,14 @@ public class Attack : QTEAbility
         {
             GameObject SpawnedLaser = Instantiate(LaserShot, transform);
             SpawnedLaser.transform.LookAt(targetTransform);
+
+            SpawnedLaser.TryGetComponent<FullAutoFireAtTarget>(out FullAutoFireAtTarget MagicMissile);
+            if (MagicMissile)
+            {
+                Debug.Log(MagicMissile);
+                MagicMissile.SetSmallMissilesHoming(targetTransform);
+                MagicMissile.SetBigMissilesHoming(targetTransform);
+            }
         }
     }
 

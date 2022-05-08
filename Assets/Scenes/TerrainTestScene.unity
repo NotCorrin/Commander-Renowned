@@ -1412,7 +1412,7 @@ MonoBehaviour:
   isGlobal: 0
   blendDistance: 2
   weight: 1
-  priority: 0
+  priority: 1
 --- !u!65 &1968362045
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -229,6 +229,7 @@ MonoBehaviour:
   DefenseBoost: 1
   DefenseVariation: 0
   CostVariation: 0
+  BuffEffect: {fileID: 4795044506606789115, guid: 2be1c63ae2ded994fbd39ed42c46f6cb, type: 3}
 --- !u!114 &7274132632927612479
 MonoBehaviour:
   m_ObjectHideFlags: 0

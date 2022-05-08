@@ -230,7 +230,7 @@ Transform:
   - {fileID: 3171720690092299154}
   - {fileID: 1031591713662122339}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3425432388668474512
 MonoBehaviour:
@@ -274,7 +274,8 @@ MonoBehaviour:
   TotalBaseDamage: 4
   DamageVariation: 0
   AttackBoost: 1
-  LaserShot: {fileID: 1473406864193606, guid: 01feff8345c7a114aa1ea84c0034ee04, type: 3}
+  LaserShot: {fileID: 8959962781991663832, guid: 20f2104f74282474fa884d3a6e632a11, type: 3}
+  secondShotDelay: 0.2
 --- !u!114 &1001161374790124703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294,6 +295,7 @@ MonoBehaviour:
   DefenseBoost: 2
   DefenseVariation: 1
   CostVariation: 0
+  BuffEffect: {fileID: 0}
 --- !u!114 &1145748182108536317
 MonoBehaviour:
   m_ObjectHideFlags: 0

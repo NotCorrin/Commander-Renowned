@@ -9,7 +9,9 @@ public class MageDefend : QTEAbility
 
     [SerializeField] int DefenseVariation;
     [SerializeField] int CostVariation;
-    
+
+    [SerializeField] GameObject BuffEffect;
+
     public override bool IsCasterValid (Unit Caster)
     {
 		if (Caster is MagicUnit) 
@@ -75,6 +77,7 @@ public class MageDefend : QTEAbility
                 }
         }
 
+        if (BuffEffect) Instantiate(BuffEffect, transform);
         GameEvents.DefenseUp(Caster, FinalDefense);
         GameEvents.onHealthChanged(Target, -GetDamageCalculation(Caster, Target, Damage));
         GameEvents.onUseMana(Caster, -FinalCost);

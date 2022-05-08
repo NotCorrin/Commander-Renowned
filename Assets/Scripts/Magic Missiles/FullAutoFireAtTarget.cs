@@ -39,16 +39,14 @@ public class FullAutoFireAtTarget : MonoBehaviour
 
     void Awake()
     {
-        bigMissileFireTimer = -1;
-
         if (smallMissilesTarget)
         {
             SetSmallMissilesHoming(smallMissilesTarget);
         }
         else
         {
-            smallMissilesHoming.enabled = false;
-            smallMissiles.enableEmission = false;
+            if (smallMissilesHoming) smallMissilesHoming.enabled = false;
+            if (smallMissiles) smallMissiles.enableEmission = false;
         }
 
         if (bigMissilesTarget)
@@ -57,20 +55,20 @@ public class FullAutoFireAtTarget : MonoBehaviour
         }
         else
         {
-            bigMissile1Homing.enabled = false;
-            bigMissile2Homing.enabled = false;
-            bigMissile3Homing.enabled = false;
+            if (bigMissile1Homing) bigMissile1Homing.enabled = false;
+            if (bigMissile2Homing) bigMissile2Homing.enabled = false;
+            if (bigMissile3Homing) bigMissile3Homing.enabled = false;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if ( (smallMissileMaxFireTimer -= Time.deltaTime) <= 0 && limitedSmallMissileFireTime)
+        if ((smallMissileMaxFireTimer -= Time.deltaTime) <= 0 && limitedSmallMissileFireTime)
         {
             smallMissiles.enableEmission = false;
         }
-            smallMissiles.emissionRate = smallMissilesPerSecond;
+        if (smallMissiles) smallMissiles.emissionRate = smallMissilesPerSecond;
 
         if ((bigMissileMaxFireTimer -= Time.deltaTime) >= 0 || !limitedBigMissileFireTime)
         {
@@ -125,7 +123,10 @@ public class FullAutoFireAtTarget : MonoBehaviour
 
     public void SetBigMissilesHoming(Transform target)
     {
+        Debug.Log("Assigned target for big missiles");
+
         bigMissileMaxFireTimer = bigMissileMaxFireTime;
+        bigMissileFireTimer = -1;
         bigMissilesTarget = target;
         if (bigMissile1Homing)
         {
