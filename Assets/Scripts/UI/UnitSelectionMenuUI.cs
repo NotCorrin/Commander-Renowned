@@ -9,6 +9,10 @@ public class UnitSelectionMenuUI : MonoBehaviour
     [SerializeField] private UIDocument uiDocument;
     [SerializeField] private VisualTreeAsset unitCardUI;
     [SerializeField] private VisualTreeAsset unitCardCollectionUI;
+
+    // TODO : Remove this after unit scriptable objects are implemented.
+    [Range(0, 30), SerializeField] private int debugUnitCards = 10;
+    
     private VisualElement mainContainer;
     private TextElement mainTitleText;
     private ScrollView mainScrollView;
@@ -18,63 +22,32 @@ public class UnitSelectionMenuUI : MonoBehaviour
     {
         VerifyInitialVars();
 
-        TemplateContainer unitCard1 = unitCardUI.Instantiate();
-        TemplateContainer unitCard2 = unitCardUI.Instantiate();
-        TemplateContainer unitCard3 = unitCardUI.Instantiate();
-        TemplateContainer unitCard4 = unitCardUI.Instantiate();
-        TemplateContainer unitCard5 = unitCardUI.Instantiate();
+        VisualElement test = default;
+        VisualElement unitCard = default;
 
-        TemplateContainer unitCard6 = unitCardUI.Instantiate();
-        TemplateContainer unitCard7 = unitCardUI.Instantiate();
-        TemplateContainer unitCard8 = unitCardUI.Instantiate();
-        TemplateContainer unitCard9 = unitCardUI.Instantiate();
-        TemplateContainer unitCard10 = unitCardUI.Instantiate();
+        // TODO : Change to ScriptableObject Units instead of hardcoded values.
 
-        TemplateContainer unitCard11 = unitCardUI.Instantiate();
-        TemplateContainer unitCard12 = unitCardUI.Instantiate();
-        TemplateContainer unitCard13 = unitCardUI.Instantiate();
-        TemplateContainer unitCard14 = unitCardUI.Instantiate();
-        TemplateContainer unitCard15 = unitCardUI.Instantiate();
+        for (int i = 0; i < debugUnitCards; i++)
+        {
+            if (i % 5 == 0)
+            {
+                test = unitCardCollectionUI.Instantiate();
+                mainScrollViewContainer.Add(test);
+            }
+
+            unitCard = unitCardUI.Instantiate();
+            unitCard.Q<TextElement>("name-label").text = "Unit " + (i + 1);
+            test.Q<VisualElement>("container").Add(unitCard);
+        }
+
         
-        TemplateContainer unitCardCollection1 = unitCardCollectionUI.Instantiate();
-        TemplateContainer unitCardCollection2 = unitCardCollectionUI.Instantiate();
-        TemplateContainer unitCardCollection3 = unitCardCollectionUI.Instantiate();
-
-        VisualElement unitCardCollectionContainer1 = unitCardCollection1.Q<VisualElement>("container");
-        VisualElement unitCardCollectionContainer2 = unitCardCollection2.Q<VisualElement>("container");
-        VisualElement unitCardCollectionContainer3 = unitCardCollection3.Q<VisualElement>("container");
-
-        unitCardCollectionContainer1.Add(unitCard1);
-        unitCardCollectionContainer1.Add(unitCard2);
-        unitCardCollectionContainer1.Add(unitCard3);
-        unitCardCollectionContainer1.Add(unitCard4);
-        unitCardCollectionContainer1.Add(unitCard5);
-
-        unitCardCollectionContainer2.Add(unitCard6);
-        unitCardCollectionContainer2.Add(unitCard7);
-        unitCardCollectionContainer2.Add(unitCard8);
-        unitCardCollectionContainer2.Add(unitCard9);
-        unitCardCollectionContainer2.Add(unitCard10);
-
-        unitCardCollectionContainer3.Add(unitCard11);
-        unitCardCollectionContainer3.Add(unitCard12);
-        unitCardCollectionContainer3.Add(unitCard13);
-        unitCardCollectionContainer3.Add(unitCard14);
-        unitCardCollectionContainer3.Add(unitCard15);
-
-        mainScrollViewContainer.Add(unitCardCollection1);
-        mainScrollViewContainer.Add(unitCardCollection2);
-        mainScrollViewContainer.Add(unitCardCollection3);
-
         mainScrollViewContainer.Query<Button>().ForEach(button =>
         {
-            button.clicked += OnUnitCardClicked;
+            button.clickable.clicked += () =>
+            {
+                Debug.Log("Unit card clicked! : " + button.Q<TextElement>("name-label").text);
+            };
         });
-    }
-
-    void OnUnitCardClicked()
-    {
-        Debug.Log("UnitCardClicked");
     }
 
     void VerifyInitialVars()
