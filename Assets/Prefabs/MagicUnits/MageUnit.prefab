@@ -246,6 +246,7 @@ MonoBehaviour:
   abilityDescription: Increases attack damage
   cost: 1
   buffAmount: 1
+  buffEffect: {fileID: 782153884964200169, guid: 1f1522a624ccb0941a0f9405b9374e46, type: 3}
 --- !u!212 &1552070783684818511
 SpriteRenderer:
   m_ObjectHideFlags: 0
