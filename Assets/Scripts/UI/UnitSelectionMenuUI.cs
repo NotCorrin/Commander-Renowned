@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Linq;
 
 
 public class UnitSelectionMenuUI : MonoBehaviour
@@ -17,6 +18,8 @@ public class UnitSelectionMenuUI : MonoBehaviour
     private TextElement mainTitleText;
     private ScrollView mainScrollView;
     private VisualElement mainScrollViewContainer;
+
+    private List<Button> activeUnits = new List<Button>();
 
     void Start()
     {
@@ -36,16 +39,52 @@ public class UnitSelectionMenuUI : MonoBehaviour
             }
 
             unitCard = unitCardUI.Instantiate();
-            unitCard.Q<TextElement>("name-label").text = "Unit " + (i + 1);
+            unitCard.Q<TextElement>("name-label").text = "Unit " + (i + 1); // Use "i" as the index for future ScriptableObject arrays.
             test.Q<VisualElement>("container").Add(unitCard);
         }
 
-        
         mainScrollViewContainer.Query<Button>().ForEach(button =>
         {
             button.clickable.clicked += () =>
             {
-                Debug.Log("Unit card clicked! : " + button.Q<TextElement>("name-label").text);
+                if (activeUnits.Contains(button))
+                {
+                    activeUnits.Remove(button);
+                    if (activeUnits.Count < 3)
+                    {
+                        mainScrollViewContainer.Query<Button>().ForEach(subbutton =>
+                        {
+                            subbutton.Q<VisualElement>("unit").RemoveFromClassList("unit-card-image-null");
+                        });
+                    }
+                }
+                else
+                {
+                    if (activeUnits.Count < 3)
+                    {
+                        activeUnits.Add(button);
+                    }
+                    else
+                    {
+                        Debug.Log("Max units selected.");
+                        mainScrollViewContainer.Query<Button>().ForEach(subbutton =>
+                        {
+                            if (!(activeUnits.Contains(subbutton)))
+                            {
+                                subbutton.Q<VisualElement>("unit").AddToClassList("unit-card-image-null");
+                            }
+                        });
+                    }
+                }
+
+                if (activeUnits.Contains(button))
+                {
+                    button.Q<VisualElement>("white-background").style.backgroundColor = new StyleColor(Color.white);
+                }
+                else
+                {
+                     button.Q<VisualElement>("white-background").style.backgroundColor = new StyleColor(new Color(0.364f, 0.364f, 0.364f, 1));
+                }
             };
         });
     }

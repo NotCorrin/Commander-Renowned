@@ -25,3 +25,23 @@
     border-top-color: rgb(0, 0, 0);
     border-bottom-color: rgb(0, 0, 0);
 }
+
+/* .unit-card-frame-selected {
+    background-color: rgb(255, 255, 255);
+}
+
+.unit-card-frame-vanguard {
+    background-color: rgb(30, 30, 255);
+}
+
+.unit-card-frame-unselected {
+    background-color: rgb(93, 93, 93);
+}
+
+.unit-card-frame-null {
+    background-color: rgb(27, 27, 27);
+} */
+
+.unit-card-image-null {
+    -unity-background-image-tint-color: rgb(39, 39, 39);
+}
