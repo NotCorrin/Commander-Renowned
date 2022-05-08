@@ -141,7 +141,7 @@ GameObject:
   - component: {fileID: 1552070783684818511}
   - component: {fileID: 8971809245513799296}
   - component: {fileID: 3778618176164963972}
-  - component: {fileID: 1206939663}
+  - component: {fileID: 3070850118624894871}
   m_Layer: 0
   m_Name: MageUnit
   m_TagString: Magic
@@ -166,7 +166,7 @@ Transform:
   - {fileID: 8346454952453273265}
   - {fileID: 3003313333664172006}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1554396190189459016
 MonoBehaviour:
@@ -205,10 +205,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Spirit Burn
   abilityDescription: Will ignite a flame to smolder the clothing of the enemy.
-  cost: 0
+  cost: 1
   Damage: 2
   DamageVariation: 0
   CostVariation: 0
+  Explosion: {fileID: 1116862508874840, guid: 0156ac8bc7645f44fb571c716152b33a, type: 3}
 --- !u!114 &3921007691822419878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,11 +224,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Wall of Plasma
   abilityDescription: Will form an invisible wall to protect the mage
-  cost: 0
+  cost: 1
   Damage: 1
   DefenseBoost: 1
   DefenseVariation: 0
   CostVariation: 0
+  BuffEffect: {fileID: 4795044506606789115, guid: 2be1c63ae2ded994fbd39ed42c46f6cb, type: 3}
 --- !u!114 &7274132632927612479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,6 +246,7 @@ MonoBehaviour:
   abilityDescription: Increases attack damage
   cost: 1
   buffAmount: 1
+  buffEffect: {fileID: 782153884964200169, guid: 1f1522a624ccb0941a0f9405b9374e46, type: 3}
 --- !u!212 &1552070783684818511
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -329,8 +332,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useStaticBillboard: 0
---- !u!135 &1206939663
-SphereCollider:
+--- !u!65 &3070850118624894871
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -340,7 +343,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.6
+  m_Size: {x: 1, y: 1, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8305849730140176428
 GameObject:

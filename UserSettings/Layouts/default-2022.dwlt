@@ -74,7 +74,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 97
+  controlID: 55
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -126,7 +126,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 52
+  controlID: 56
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -177,7 +177,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 53
+  controlID: 57
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -323,16 +323,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 68
   m_LastFolders:
-  - Assets/Scenes
+  - Assets/Scenes/TerrainTestScene_Profiles
   m_LastFoldersGridSize: 68
-  m_LastProjectPath: C:\Users\hugoa\Documents\GitHub\New-Commander-Renowned
+  m_LastProjectPath: C:\Users\tntma\Documents\Uni\GDS1\Commander-Renowned\Commander-Renowned
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 67}
-    m_SelectedIDs: cc5d0000
-    m_LastClickedID: 24012
-    m_ExpandedIDs: 00000000a85d0000aa5d0000ac5d0000ce5d0000d65d000000ca9a3b
+    scrollPos: {x: 0, y: 255}
+    m_SelectedIDs: 3a830000
+    m_LastClickedID: 33594
+    m_ExpandedIDs: 000000000483000006830000088300000a8300000c8300000e8300001083000046830000ac8e000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -348,7 +348,7 @@ MonoBehaviour:
       m_IsRenaming: 0
       m_OriginalEventType: 11
       m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 0}
+      m_ClientGUIView: {fileID: 4}
     m_SearchString: 
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
@@ -360,7 +360,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000a85d0000aa5d0000ac5d0000
+    m_ExpandedIDs: 000000000483000006830000088300000a8300000c8300000e83000010830000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -404,7 +404,7 @@ MonoBehaviour:
       m_IsRenaming: 0
       m_OriginalEventType: 11
       m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 0}
+      m_ClientGUIView: {fileID: 4}
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
       m_InstanceID: 0
@@ -488,9 +488,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: d0eaffff
-      m_LastClickedID: -5424
-      m_ExpandedIDs: fceaffffeefaffff
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: fe4fffff7eccffff7ad9ffff04daffffe8f1ffff18f2ffff4cf2ffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -734,7 +734,7 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 0
-      snapOffset: {x: 0, y: 0}
+      snapOffset: {x: 0, y: 25}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
       id: Scene View/Particles
@@ -772,9 +772,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 27.130001, y: -0.35000002, z: 23.56}
+    m_Target: {x: 25.607758, y: 2.8799226, z: 21.46768}
     speed: 2
-    m_Value: {x: 27.130001, y: -0.35000002, z: 23.56}
+    m_Value: {x: 25.607758, y: 2.8799226, z: 21.46768}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -820,13 +820,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.252419, y: 0.030772844, z: -0.00803465, w: 0.9671026}
+    m_Target: {x: 0.21920595, y: 0.4026618, z: -0.099951446, w: 0.8830834}
     speed: 2
-    m_Value: {x: 0.25241718, y: 0.030772625, z: -0.0080345925, w: 0.9670957}
+    m_Value: {x: 0.21920438, y: 0.4026589, z: -0.09995073, w: 0.8830771}
   m_Size:
-    m_Target: 10
+    m_Target: 6.3763924
     speed: 2
-    m_Value: 10
+    m_Value: 6.3763924
   m_Ortho:
     m_Target: 0
     speed: 2

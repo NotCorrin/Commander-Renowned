@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: LaserCon_Blazing
+  m_Shader: {fileID: 4800000, guid: cad7b9ae0f77aaf4197f5d22ff39a75c, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _Core:
+        m_Texture: {fileID: 2800000, guid: 6ff1d2985fe572948ae3c87e7276d746, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Mask:
+        m_Texture: {fileID: 2800000, guid: 69c4a6898925c474c847db66695e96e6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Mask02:
+        m_Texture: {fileID: 2800000, guid: 0e912036b3dcd5e4ebc711263790aa08, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Mask03:
+        m_Texture: {fileID: 2800000, guid: 2c1d64400f238d8488bbf7752881ec6e, type: 3}
+        m_Scale: {x: 0.2, y: 0.2}
+        m_Offset: {x: 0, y: 0}
+    - _Noise:
+        m_Texture: {fileID: 2800000, guid: 28c7aad1372ff114b90d330f8a2dd938, type: 3}
+        m_Scale: {x: 0.2, y: 0.1}
+        m_Offset: {x: 0, y: 0}
+    - _Noise01:
+        m_Texture: {fileID: 2800000, guid: 1f256e8a66ea42c4ea6aa1c16a11c9e7, type: 3}
+        m_Scale: {x: 0.2, y: 0.2}
+        m_Offset: {x: 0, y: 0}
+    - _Noise02:
+        m_Texture: {fileID: 2800000, guid: f986102fe45487047a41d223288faa0a, type: 3}
+        m_Scale: {x: 0.1, y: 0.2}
+        m_Offset: {x: 0, y: 0}
+    - _Noise02Mask:
+        m_Texture: {fileID: 2800000, guid: 8346d34d7e685f7489590f471cfdf88b, type: 3}
+        m_Scale: {x: 0.1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OpacityCutoff:
+        m_Texture: {fileID: 2800000, guid: 1f256e8a66ea42c4ea6aa1c16a11c9e7, type: 3}
+        m_Scale: {x: 0.2, y: 0.2}
+        m_Offset: {x: 0, y: 0}
+    - _Ramp:
+        m_Texture: {fileID: 2800000, guid: 0c1654a137d7df741b6e1a143703a9a8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Ang: -0.5
+    - _Cutoff: 0.5
+    - _FinalPower: 2
+    - _OpacityBoost: 2
+    - _OpacityRemap1: 1
+    - _OpacityRemap2: 1.35
+    - _Popka: 0
+    - _PowerExp: 1.51
+    - _Progress: 1
+    - _ScrollSpeed: 5
+    - _ScrollSpeed01: 2
+    - _ScrollSpeed02: 3
+    - _UVStretch: 0.5
+    - _UVStretchBoost: 2
+    - _node_3710: 3.63
+    - _node_5248: 0.76
+    - _node_6884: 2.05
+    - _node_7455: 0
+    m_Colors:
+    - _Color: {r: 1, g: 0.74634886, b: 0.5514706, a: 1}
+    - _SmokeColor: {r: 0, g: 0, b: 0, a: 1}

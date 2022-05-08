@@ -4,9 +4,21 @@ using UnityEngine;
 
 public class Attack : QTEAbility
 {
-    [SerializeField] int Damage;
+    [SerializeField] int TotalBaseDamage;
 
     [SerializeField] int DamageVariation;
+
+    [SerializeField] int AttackBoost;
+
+    [SerializeField] GameObject LaserShot;
+
+    [SerializeField] float secondShotDelay = 0.2f;
+
+    int FinalDamage;
+
+    bool secondShotTrigger;
+
+    float secondShotTimer;
 
     public override int GetMoveWeight(Unit caster)
     {
@@ -37,7 +49,7 @@ public class Attack : QTEAbility
 
     protected override void AbilityUsed(QTEController.QTEResult result)
     {
-        int FinalDamage = Damage;
+        FinalDamage = TotalBaseDamage;
 
         switch (result)
         {
@@ -52,10 +64,15 @@ public class Attack : QTEAbility
                     break;
                 }
         }
-        
 
-        GameEvents.AttackUp(Caster, 1);
-        GameEvents.HealthChanged(Target, -GetDamageCalculation(Caster, Target, Damage));
+
+        GameEvents.AttackUp(Caster, AttackBoost);
+
+        AttackWithLaser(Mathf.FloorToInt(FinalDamage / 2));
+
+        secondShotTimer = secondShotDelay;
+        secondShotTrigger = true;
+
         GameEvents.UseAmmo(Caster, Cost);
     }
 
@@ -81,4 +98,40 @@ public class Attack : QTEAbility
     {
 		return (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(Target) != isPlayer);
 	}
+
+    void FireLaserAtTarget(Transform targetTransform)
+    {
+        if (LaserShot)
+        {
+            GameObject SpawnedLaser = Instantiate(LaserShot, transform);
+            SpawnedLaser.transform.LookAt(targetTransform);
+
+            SpawnedLaser.TryGetComponent<FullAutoFireAtTarget>(out FullAutoFireAtTarget MagicMissile);
+            if (MagicMissile)
+            {
+                Debug.Log(MagicMissile);
+                MagicMissile.SetSmallMissilesHoming(targetTransform);
+                MagicMissile.SetBigMissilesHoming(targetTransform);
+            }
+        }
+    }
+
+    void AttackWithLaser(int damage)
+    {
+        GameEvents.HealthChanged(Target, -GetDamageCalculation(Caster, Target, damage));
+        FireLaserAtTarget(Target.transform);
+    }
+
+    private void Update()
+    {
+        if (secondShotTrigger)
+        {
+            if ((secondShotTimer -= Time.deltaTime) <= 0)
+            {
+                AttackWithLaser(Mathf.CeilToInt(FinalDamage/2));
+                secondShotTrigger = false;
+            }
+        }
+        
+    }
 }

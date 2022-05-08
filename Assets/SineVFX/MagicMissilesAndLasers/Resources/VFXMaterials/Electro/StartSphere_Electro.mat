@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: StartSphere_Electro
+  m_Shader: {fileID: 4800000, guid: a5d85560d6a909f4aac3ccdfc50cebe7, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _Distortion:
+        m_Texture: {fileID: 2800000, guid: 1f256e8a66ea42c4ea6aa1c16a11c9e7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Mask:
+        m_Texture: {fileID: 2800000, guid: 4d1e98cacbba9ac40ab6290eb81181c9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Noise01:
+        m_Texture: {fileID: 2800000, guid: 7242d1eb544432f48b6cdaf30d7cf7ba, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Noise02:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseTest:
+        m_Texture: {fileID: 2800000, guid: 1746d72c8cbcebf4ebe6ab93898e2f61, type: 3}
+        m_Scale: {x: 1, y: 3}
+        m_Offset: {x: 0, y: 0}
+    - _OffsetNoise:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Ramp:
+        m_Texture: {fileID: 2800000, guid: 9bbbb7232e15acc439e708daec1f8cda, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpaceTex:
+        m_Texture: {fileID: 2800000, guid: 6899e2f8659fc544dbddd620ab88933a, type: 3}
+        m_Scale: {x: 2, y: 2}
+        m_Offset: {x: 0, y: 0}
+    - _Test:
+        m_Texture: {fileID: 2800000, guid: 08cbf484153642245abfa42a429bccc9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Wave:
+        m_Texture: {fileID: 2800000, guid: cfe985002915cc14d9f8a13a2f98f53f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _node_406:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _node_5193:
+        m_Texture: {fileID: 2800000, guid: 08cbf484153642245abfa42a429bccc9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _node_7918:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _node_842:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _node_8730:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Cutoff: 0.5
+    - _DistortionFresnelExp: 2.5
+    - _DistortionPower: 0.25
+    - _FinalPower: 2
+    - _FresnelExp: 2
+    - _MaskPower: 3.32
+    - _OffsetAdd: 9
+    - _OffsetPower: 0.08
+    - _OpacityPower: 4
+    - _ScrollSpeed: 1
+    - _node_1613: 0
+    - _node_1750: 2.08
+    - _node_1819: 0.12
+    - _node_9692: 0.14
+    - _node_978: 2.45
+    m_Colors:
+    - _Color: {r: 1, g: 0.85490197, b: 0.47843137, a: 1}
+    - _TintColor: {r: 1, g: 1, b: 1, a: 1}
