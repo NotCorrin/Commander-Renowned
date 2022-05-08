@@ -52,10 +52,7 @@ public class UnitSelectionMenuUI : MonoBehaviour
                     activeUnits.Remove(button);
                     if (activeUnits.Count < 3)
                     {
-                        mainScrollViewContainer.Query<Button>().ForEach(subbutton =>
-                        {
-                            subbutton.Q<VisualElement>("unit").RemoveFromClassList("unit-card-image-null");
-                        });
+                        EnableAllUnits();
                     }
                 }
                 else
@@ -64,28 +61,41 @@ public class UnitSelectionMenuUI : MonoBehaviour
                     {
                         activeUnits.Add(button);
                     }
-                    else
-                    {
-                        Debug.Log("Max units selected.");
-                        mainScrollViewContainer.Query<Button>().ForEach(subbutton =>
-                        {
-                            if (!(activeUnits.Contains(subbutton)))
-                            {
-                                subbutton.Q<VisualElement>("unit").AddToClassList("unit-card-image-null");
-                            }
-                        });
-                    }
                 }
 
                 if (activeUnits.Contains(button))
                 {
                     button.Q<VisualElement>("white-background").style.backgroundColor = new StyleColor(Color.white);
+
+                    if (activeUnits.Count == 3)
+                    {
+                        DisableAllUnits();
+                    }
                 }
                 else
                 {
                      button.Q<VisualElement>("white-background").style.backgroundColor = new StyleColor(new Color(0.364f, 0.364f, 0.364f, 1));
                 }
             };
+        });
+    }
+
+    void EnableAllUnits()
+    {
+        mainScrollViewContainer.Query<Button>().ForEach(subbutton =>
+        {
+            subbutton.Q<VisualElement>("unit").RemoveFromClassList("unit-card-image-null");
+        });
+    }
+
+    void DisableAllUnits()
+    {
+        mainScrollViewContainer.Query<Button>().ForEach(subbutton =>
+        {
+            if (!(activeUnits.Contains(subbutton)))
+            {
+                subbutton.Q<VisualElement>("unit").AddToClassList("unit-card-image-null");
+            }
         });
     }
 
