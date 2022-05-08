@@ -12,17 +12,8 @@ public class MageAttack : QTEAbility
 
     public override bool IsCasterValid (Unit Caster)
     {
-		if (Caster is MagicUnit) 
-		{
-			MagicUnit magicUnit = Caster as MagicUnit;
-			return(magicUnit.Mana > Cost);
-		} 
-		else if (Caster is CommanderUnit) 
-		{
-			CommanderUnit casterUnit = Caster as CommanderUnit;
-			return(casterUnit.Mana > Cost);
-		} else return false;
-	}    
+        return Caster is MagicUnit || Caster is CommanderUnit;
+    }    
     public override bool IsTargetValid (Unit Target, bool isPlayer)
     {
 		return (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(Target) != isPlayer);

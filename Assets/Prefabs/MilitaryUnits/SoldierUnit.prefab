@@ -123,6 +123,7 @@ MonoBehaviour:
   abilityName: Reload
   abilityDescription: Gain 3 ammo
   cost: 3
+  ReloadEffect: {fileID: 782153884964200169, guid: b8c56c2add686174dadacb682e6415ad, type: 3}
 --- !u!212 &3095930897375498056
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SoldierAbility : Ability
 {
+    [SerializeField] GameObject ReloadEffect;
+
     public override int GetMoveWeight(Unit caster)
     {
         int HealthWeight = Mathf.FloorToInt((1 - (caster.Health / caster.MaxHealth)) * 100);
@@ -32,6 +34,7 @@ public class SoldierAbility : Ability
     {
         if (IsAbilityValid(Caster, Target))
         {
+            Instantiate(ReloadEffect, transform);
             GameEvents.onUseAmmo(Target, -Cost);
         }
     }

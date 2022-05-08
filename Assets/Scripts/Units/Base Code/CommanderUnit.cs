@@ -16,7 +16,7 @@ public abstract class CommanderUnit : Unit
         get => ammo;
         set
         {
-            ammo = value;
+            ammo = Mathf.Min(Mathf.Max(value, 0), MaxAmmo);
             UIEvents.UnitAmmoChanged(this, ammo, maxAmmo);
         }
     }
@@ -33,7 +33,7 @@ public abstract class CommanderUnit : Unit
         get => mana;
         set
         {
-            mana = value;
+            mana = Mathf.Min(Mathf.Max(value, 0), MaxMana);
             UIEvents.UnitManaChanged(this, mana);
         }
     }
