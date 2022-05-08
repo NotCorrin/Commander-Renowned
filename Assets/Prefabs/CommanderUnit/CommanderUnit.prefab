@@ -295,7 +295,7 @@ MonoBehaviour:
   DefenseBoost: 2
   DefenseVariation: 1
   CostVariation: 0
-  BuffEffect: {fileID: 0}
+  BuffEffect: {fileID: 4795044506606789115, guid: e24947d56dd5bb14089df296b91fab13, type: 3}
 --- !u!114 &1145748182108536317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,7 +325,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Confidence
   abilityDescription: Increases attack damage
-  cost: 0
+  cost: 1
   buffAmount: 1
 --- !u!212 &5145483213268070333
 SpriteRenderer:
