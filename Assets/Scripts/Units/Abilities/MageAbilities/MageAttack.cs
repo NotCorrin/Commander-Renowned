@@ -8,16 +8,7 @@ public class MageAttack : QTEAbility
 
     public override bool IsCasterValid (Unit Caster)
     {
-		if (Caster is MagicUnit) 
-		{
-			MagicUnit magicUnit = Caster as MagicUnit;
-			return(magicUnit.Mana > Cost);
-		} 
-		else if (Caster is CommanderUnit) 
-		{
-			CommanderUnit casterUnit = Caster as CommanderUnit;
-			return(casterUnit.Mana > Cost);
-		} else return false;
+		return(Caster.Mana > Cost);
 	}    
     public override bool IsTargetValid (Unit Target, bool isPlayer)
     {
@@ -33,17 +24,9 @@ public class MageAttack : QTEAbility
     {   
         int HealthWeight = Mathf.FloorToInt((caster.Health / caster.MaxHealth) * 100);
         int ManaWeight;
-        if (caster is MageUnit)
+        if (caster.unitType == UnitType.Mage || caster.unitType == UnitType.Commander)
         {
-            MageUnit mageCaster = caster as MageUnit;
-            ManaWeight = Mathf.FloorToInt((1 - (mageCaster.Mana / mageCaster.MaxMana)) * 100);
-
-        }
-        else if (caster is CommanderUnit)
-        {
-            CommanderUnit commanderCaster = caster as CommanderUnit;
-            ManaWeight = Mathf.FloorToInt((1 - (commanderCaster.Mana / commanderCaster.MaxMana)) * 100);
-
+            ManaWeight = Mathf.FloorToInt((1 - (caster.Mana / caster.MaxMana)) * 100);
         }
         else return 0;
 

@@ -14,5 +14,5 @@ public class UnitScriptableObject : ScriptableObject
     public int MaxHealth;
     public int MaxAmmo;
     public int MaxMana;
-    public Animator animator;
+    public RuntimeAnimatorController animator;
 }

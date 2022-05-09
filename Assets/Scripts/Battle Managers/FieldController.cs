@@ -30,20 +30,21 @@ public class FieldController : Listener
 
     public static FieldController main;
     // Start is called before the first frame update
-    void SetupUnits(List<Unit> units)
+    void SetupUnits(List<Unit> playerUnits, List<Unit> enemyUnits)
     {
-        PlayerVanguard = units[0];
-        PlayerSupportLeft = units[1];
-        PlayerSupportRight = units[2];
-        EnemyVanguard = units[3];
-        EnemySupportLeft = units[4];
-        EnemySupportRight = units[5];
+        PlayerVanguard = playerUnits[0];
+        PlayerSupportLeft = playerUnits[1];
+        PlayerSupportRight = playerUnits[2];
+        EnemyVanguard = enemyUnits[0];
+        EnemySupportLeft = enemyUnits[1];
+        EnemySupportRight = enemyUnits[2];
+
+        this.enemyVisual();
     }
     void Start()
     {
         sceneController = GetComponent<SceneController>();
         timer = maxTime;
-        this.enemyVisual();
     }
 
     // Update is called once per frame
@@ -152,6 +153,7 @@ public class FieldController : Listener
         GameEvents.resetBuffs += ResetSupportUsed;
         GameEvents.onAbilityResolved += SupportUsed;
         GameEvents.onKill += Kill;
+        GameEvents.onSetupUnits += SetupUnits;
     }
 
     protected override void UnsubscribeListeners()
@@ -159,6 +161,7 @@ public class FieldController : Listener
         GameEvents.resetBuffs -= ResetSupportUsed;
         GameEvents.onAbilityResolved -= SupportUsed;
         GameEvents.onKill -= Kill;
+        GameEvents.onSetupUnits += SetupUnits;
     }
 
     private void Kill(Unit unit)
@@ -266,8 +269,8 @@ public class FieldController : Listener
     public void enemyVisual()
     {
         EnemyVanguard.UpdateEnemyVisual();
-        EnemySupportLeft.UpdateEnemyVisual();
-        EnemySupportRight.UpdateEnemyVisual();
+        if(EnemySupportLeft) EnemySupportLeft.UpdateEnemyVisual();
+        if(EnemySupportRight) EnemySupportRight.UpdateEnemyVisual();
     }
 
 }

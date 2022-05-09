@@ -169,6 +169,7 @@ public class ActionbarUI : Listener
     }
     void OnUnitSelected(Unit unit)
     {
+        Debug.Log(unit);
         if(!unit) return;
         if(prompt && selectedUnit && unit)
         {

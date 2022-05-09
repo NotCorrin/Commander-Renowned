@@ -10,28 +10,13 @@ public class Defend : QTEAbility
     {
         int HealthWeight = Mathf.FloorToInt((1 - (caster.Health / caster.MaxHealth)) * 100);
         int AmmoWeight;
-
-        if (caster is MilitaryUnit)
+        if (caster.unitType == UnitType.Military || caster.unitType == UnitType.Commander)
         {
-            MilitaryUnit militaryCaster = caster as MilitaryUnit;
-
-            if (militaryCaster.Ammo < Cost) return 0;
-
-            AmmoWeight = Mathf.FloorToInt((militaryCaster.Ammo / militaryCaster.MaxAmmo) * 100);
-
+            if (caster.Ammo < Cost) return 0;
+            AmmoWeight = Mathf.FloorToInt((caster.Ammo / caster.MaxAmmo) * 100);
+            return (2 * HealthWeight + AmmoWeight) / 3;
         }
-        else if (caster is CommanderUnit)
-        {
-            CommanderUnit commanderCaster = caster as CommanderUnit;
-            if (commanderCaster.Ammo < Cost) return 0;
-
-            AmmoWeight = Mathf.FloorToInt((commanderCaster.Ammo / commanderCaster.MaxAmmo) * 100);
-
-        }
-
         else return 0;
-
-        return (2 * HealthWeight + AmmoWeight) / 3;
     }
 
     protected override void AbilityUsed(QTEController.QTEResult result)
@@ -64,16 +49,7 @@ public class Defend : QTEAbility
     
     public override bool IsCasterValid (Unit Caster)
     {
-		if (Caster is MilitaryUnit) 
-		{
-			MilitaryUnit casterUnit = Caster as MilitaryUnit;
-			return(casterUnit.Ammo >= Cost);
-		} 
-		else if (Caster is CommanderUnit) 
-		{
-			CommanderUnit casterUnit = Caster as CommanderUnit;
-			return(casterUnit.Ammo >= Cost);
-		} else return false;
+		return(Caster.Ammo >= Cost);
 	}    
 	public override bool IsTargetValid (Unit Target, bool isPlayer)
     {

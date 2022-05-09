@@ -200,6 +200,7 @@ GameObject:
   - component: {fileID: 3288217654638550077}
   - component: {fileID: 4681837390009795012}
   - component: {fileID: 2446870166098908866}
+  - component: {fileID: 131403498249442632}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Renowned
@@ -325,6 +326,34 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.6
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &131403498249442632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6480894034537515106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf039b4dce8ade547a8f2363f82adab4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitType: 0
+  UnitName: 
+  vanguardAbilities:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  supportAbilities:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  AmmoBar: {fileID: 4515696426555026560}
+  ManaBar: {fileID: 1868323001065284391}
+  maxHealth: 0
+  health: 0
+  maxAmmo: 0
+  maxMana: 0
 --- !u!1 &8060413159524072052
 GameObject:
   m_ObjectHideFlags: 0

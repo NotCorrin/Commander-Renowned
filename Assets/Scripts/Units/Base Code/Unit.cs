@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Unit : Listener
+public class Unit : Listener
 {
     public UnitType unitType;
     public string UnitName;
@@ -188,21 +188,27 @@ public abstract class Unit : Listener
     }
 
     // Start is called before the first frame update
-    public abstract int GetStickScore();
+    public int GetStickScore()
+    {
+        return GetMoveScoreAIAlgorithm();
+    }
 
-    public abstract int GetSwitchScore();
+    public int GetSwitchScore()
+    {
+        return GetMoveScoreAIAlgorithm();
+    }
 
-    public void SetupUnit(UnitType uType, string uName, AbilitySetup[] vAbilities, AbilitySetup[] sAbilities, int mHealth, int mAmmo, int mMana, Animator anim)
+    public void SetupUnit(UnitType uType, string uName, AbilitySetup[] vAbilities, AbilitySetup[] sAbilities, int mHealth, int mAmmo, int mMana, RuntimeAnimatorController anim)
     {
         unitType = uType;
 
         switch (unitType)
         {
             case UnitType.Military:
-                Destroy(ManaBar);
+                Destroy(ManaBar.gameObject);
                 break;
             case UnitType.Mage:
-                Destroy(AmmoBar);
+                Destroy(AmmoBar.gameObject);
                 break;
             case UnitType.Commander:
                 AmmoBar.transform.position = Vector3.up * -1.5f;
@@ -229,7 +235,7 @@ public abstract class Unit : Listener
         maxHealth = mHealth;
         maxAmmo = mAmmo;
         maxMana = mMana;
-        animator = anim;
+        animator.runtimeAnimatorController = anim;
 
         ResetUnit();
     }

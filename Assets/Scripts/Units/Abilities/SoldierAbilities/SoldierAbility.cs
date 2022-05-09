@@ -8,24 +8,13 @@ public class SoldierAbility : Ability
     {
         int HealthWeight = Mathf.FloorToInt((1 - (caster.Health / caster.MaxHealth)) * 100);
         int AmmoWeight;
-
-        if (caster is MilitaryUnit)
+        if (caster.unitType == UnitType.Military || caster.unitType == UnitType.Commander)
         {
-            MilitaryUnit militaryCaster = caster as MilitaryUnit;
-
-            AmmoWeight = Mathf.FloorToInt((1 - (militaryCaster.Ammo / militaryCaster.MaxAmmo)) * 100);
-
-        }
-        else if (caster is CommanderUnit)
-        {
-            CommanderUnit commanderCaster = caster as CommanderUnit;
-
-            AmmoWeight = Mathf.FloorToInt((1 - (commanderCaster.Ammo / commanderCaster.MaxAmmo)) * 100);
-
+            if (caster.Ammo < Cost) return 0;
+            AmmoWeight = Mathf.FloorToInt((1 - (caster.Ammo / caster.MaxAmmo)) * 100);
+            return (2 * HealthWeight + AmmoWeight) / 3;
         }
         else return 0;
-
-        return (HealthWeight + 2 * AmmoWeight) / 3;
     }
 
     public override void UseAbility(Unit Caster, Unit Target)
@@ -40,16 +29,7 @@ public class SoldierAbility : Ability
     {
         if (Caster == Target)
         {
-            if (Caster is MilitaryUnit)
-            {
-                MilitaryUnit casterUnit = Caster as MilitaryUnit;
-                return casterUnit.Ammo < casterUnit.MaxAmmo;
-            }
-            else if (Caster is CommanderUnit)
-            {
-                CommanderUnit casterUnit = Caster as CommanderUnit;
-                return casterUnit.Ammo < casterUnit.MaxAmmo;
-            }
+            return Caster.Ammo < Caster.MaxAmmo;
         }
 
         return false;

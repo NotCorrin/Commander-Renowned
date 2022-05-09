@@ -24,6 +24,12 @@ public class EnemyController : Listener
 	void Start () {
 		fieldController = FieldController.main;
 	}
+	void SetupUnits(List<Unit> playerUnits, List<Unit> enemyUnits)
+    {
+        enemyVanguard = enemyUnits[0];
+        enemySupportLeft = enemyUnits[1];
+        enemySupportRight = enemyUnits[2];
+    }
 
 	void SwitchPositions () {
 		CalculateSwitchStickScores();
@@ -283,10 +289,12 @@ public class EnemyController : Listener
 
 	protected override void SubscribeListeners () {
 		GameEvents.onPhaseChanged += EnemyTurn;
+		GameEvents.onSetupUnits += SetupUnits;
 	}
 
 	protected override void UnsubscribeListeners () {
 		GameEvents.onPhaseChanged -= EnemyTurn;
+		GameEvents.onSetupUnits -= SetupUnits;
 	}
 
 	void EnemyTurn (RoundController.Phase phase) {
@@ -328,42 +336,45 @@ public class EnemyController : Listener
 	}
 	void UseSupportAbility () {
 		// UNCOMMENT LINES FOR TARGETING MULTIPLE CHARACTERS
-		FindBestSupportLeftAbility();
-		// Support left ability on single target
-		List<Unit> leftAbilityValidTargets = fieldController.GetValidTargets(enemySupportLeft, supportLeftBestAbility);
-		if(leftAbilityValidTargets.Count > 0)
+		if(enemySupportLeft)
 		{
-			Unit leftTarget = leftAbilityValidTargets[Random.Range(0, leftAbilityValidTargets.Count)];
-			GameEvents.UseAbility(enemySupportLeft, leftTarget, supportLeftBestAbilityIndex); // Remove this line for multi targets
+			FindBestSupportLeftAbility();
+			// Support left ability on single target
+			List<Unit> leftAbilityValidTargets = fieldController.GetValidTargets(enemySupportLeft, supportLeftBestAbility);
+			if(leftAbilityValidTargets.Count > 0)
+			{
+				Unit leftTarget = leftAbilityValidTargets[Random.Range(0, leftAbilityValidTargets.Count)];
+				GameEvents.UseAbility(enemySupportLeft, leftTarget, supportLeftBestAbilityIndex); // Remove this line for multi targets
+			}
+			/*
+			int leftAbilityNumOfTargets = [SET VALUE HERE]; <<<<< IMPORTANT THING TO ADD
+			for (int i = 0; i < leftAbilityNumOfTargets; i++) {
+			leftTarget = leftAbilityValidTargets[Random.Range(0, leftAbilityValidTargets.Count)];
+				GameEvents.UseAbility(enemySupportLeft, leftTarget, supportLeftBestAbilityIndex);
+				leftAbilityValidTargets.Remove(leftTarget);
+			}
+			*/
 		}
-		/*
-		int leftAbilityNumOfTargets = [SET VALUE HERE]; <<<<< IMPORTANT THING TO ADD
-		for (int i = 0; i < leftAbilityNumOfTargets; i++) {
-		leftTarget = leftAbilityValidTargets[Random.Range(0, leftAbilityValidTargets.Count)];
-			GameEvents.UseAbility(enemySupportLeft, leftTarget, supportLeftBestAbilityIndex);
-			leftAbilityValidTargets.Remove(leftTarget);
-		}
-		*/
-
-		FindBestSupportRightAbility();
-
-		// Support right ability on single target
-		List<Unit> rightAbilityValidTargets = fieldController.GetValidTargets(enemySupportRight, supportRightBestAbility);
-		if(rightAbilityValidTargets.Count > 0)
+		if(enemySupportRight)
 		{
-			Unit rightTarget = rightAbilityValidTargets[Random.Range(0, rightAbilityValidTargets.Count)];
-			GameEvents.UseAbility(enemySupportRight, rightTarget, supportRightBestAbilityIndex);  // Remove this line for multi targets
-		}
+			FindBestSupportRightAbility();
+			// Support right ability on single target
+			List<Unit> rightAbilityValidTargets = fieldController.GetValidTargets(enemySupportRight, supportRightBestAbility);
+			if(rightAbilityValidTargets.Count > 0)
+			{
+				Unit rightTarget = rightAbilityValidTargets[Random.Range(0, rightAbilityValidTargets.Count)];
+				GameEvents.UseAbility(enemySupportRight, rightTarget, supportRightBestAbilityIndex);  // Remove this line for multi targets
+			}
 
-		/*
-		int rightAbilityNumOfTargets = [SET VALUE HERE]; <<<<< IMPORTANT THING TO ADD
-		for (int i = 0; i < rightAbilityNumOfTargets; i++) {
-		rightTarget = rightAbilityValidTargets[Random.Range(0, rightAbilityValidTargets.Count)];
-			GameEvents.UseAbility(enemySupportRight, rightTarget, supportRightBestAbilityIndex);
-			rightAbilityValidTargets.Remove(rightTarget);
+			/*
+			int rightAbilityNumOfTargets = [SET VALUE HERE]; <<<<< IMPORTANT THING TO ADD
+			for (int i = 0; i < rightAbilityNumOfTargets; i++) {
+			rightTarget = rightAbilityValidTargets[Random.Range(0, rightAbilityValidTargets.Count)];
+				GameEvents.UseAbility(enemySupportRight, rightTarget, supportRightBestAbilityIndex);
+				rightAbilityValidTargets.Remove(rightTarget);
+			}
+			*/
 		}
-		*/
-
 		GameEvents.SetPhase();
 	}
 }
