@@ -1,9 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Unit : Listener
 {
+    public UnitType unitType;
+    public string UnitName;
+
     [SerializeField] protected Ability[] vanguardAbilities = new Ability[3];
     public Ability[] VanguardAbilities => vanguardAbilities;
     [SerializeField] protected Ability[] supportAbilities =  new Ability[3];
@@ -13,6 +17,8 @@ public abstract class Unit : Listener
     SpriteRenderer spriteRenderer;
     private Billboard billboard;
     private Animator animator;
+    public Transform AmmoBar;
+    public Transform ManaBar;
 
     [SerializeField] protected int maxHealth;
 
@@ -34,6 +40,40 @@ public abstract class Unit : Listener
             {
                 GameEvents.Kill(this);
             }
+        }
+    }
+
+    [SerializeField] private int maxAmmo;
+    public int MaxAmmo
+    {
+        get => maxAmmo;
+    }
+
+    private int ammo;
+    public int Ammo
+    {
+        get => ammo;
+        set
+        {
+            ammo = value;
+            UIEvents.UnitAmmoChanged(this, ammo, maxAmmo);
+        }
+    }
+
+    [SerializeField] private int maxMana;
+    public int MaxMana
+    {
+        get => maxMana;
+    }
+
+    private int mana;
+    public int Mana
+    {
+        get => mana;
+        set
+        {
+            mana = value;
+            UIEvents.UnitManaChanged(this, mana);
         }
     }
 
@@ -131,14 +171,73 @@ public abstract class Unit : Listener
         }
     }
 
+    private void OnUseAmmo(Unit caster, int cost)
+    {
+        if (caster == this)
+        {
+            Ammo -= cost;
+        }
+    }
+
+    private void OnUseMana(Unit caster, int cost)
+    {
+        if (caster == this)
+        {
+            Mana -= cost;
+        }
+    }
+
     // Start is called before the first frame update
     public abstract int GetStickScore();
 
     public abstract int GetSwitchScore();
 
+    public void SetupUnit(UnitType uType, string uName, AbilitySetup[] vAbilities, AbilitySetup[] sAbilities, int mHealth, int mAmmo, int mMana, Animator anim)
+    {
+        unitType = uType;
+
+        switch (unitType)
+        {
+            case UnitType.Military:
+                Destroy(ManaBar);
+                break;
+            case UnitType.Mage:
+                Destroy(AmmoBar);
+                break;
+            case UnitType.Commander:
+                AmmoBar.transform.position = Vector3.up * -1.5f;
+                break;
+            default:
+                break;
+        }
+
+        UnitName = uName;
+        for (int i = 1; i < vAbilities.Length; i++)
+        {
+            Type fuckyou = Type.GetType(vAbilities[i].AbilityType.ToString());
+            Ability newAbility = gameObject.AddComponent(fuckyou) as Ability;
+            newAbility.SetupParams(vAbilities[i]);
+            vanguardAbilities[i-1] = newAbility;
+        }
+        for (int i = 1; i < sAbilities.Length; i++)
+        {
+            Type fuckyou = Type.GetType(sAbilities[i].AbilityType.ToString());
+            Ability newAbility = gameObject.AddComponent(fuckyou) as Ability;
+            newAbility.SetupParams(sAbilities[i]);
+            supportAbilities[i-1] = newAbility;
+        }
+        maxHealth = mHealth;
+        maxAmmo = mAmmo;
+        maxMana = mMana;
+        animator = anim;
+
+        ResetUnit();
+    }
     protected virtual void ResetUnit()
     {
         Health = MaxHealth;
+        Ammo = MaxAmmo;
+        Mana = MaxMana;
         ResetBuffs();
     }
     protected virtual void ResetBuffs()
@@ -185,6 +284,8 @@ public abstract class Unit : Listener
         GameEvents.onAttackUp += OnAttackChanged;
         GameEvents.onAccuracyUp += OnAccuracyChanged;
         GameEvents.onUseAbility += UseAbility;
+        GameEvents.onUseMana += OnUseMana;
+        GameEvents.onUseAmmo += OnUseAmmo;
         GameEvents.resetBuffs += ResetBuffs;
 
         GameEvents.onPhaseChanged += UpdateBillboard;
@@ -199,6 +300,8 @@ public abstract class Unit : Listener
         GameEvents.onAttackUp -= OnAttackChanged;
         GameEvents.onAccuracyUp -= OnAccuracyChanged;
         GameEvents.onUseAbility -= UseAbility;
+        GameEvents.onUseMana -= OnUseMana;
+        GameEvents.onUseAmmo -= OnUseAmmo;
         GameEvents.resetBuffs -= ResetBuffs;
 
         GameEvents.onPhaseChanged -= UpdateBillboard;
@@ -226,4 +329,9 @@ public abstract class Unit : Listener
         }
         
     }
+}
+
+public enum UnitType
+{
+    Mage, Military, Commander
 }

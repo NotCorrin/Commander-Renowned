@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitScriptableObject : MonoBehaviour
+[CreateAssetMenu(fileName = "New Unit", menuName = "Unit", order = 1)]
+public class UnitScriptableObject : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public UnitType unitType;
+    public string UnitName;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public AbilitySetup[] VanguardAbilities;
+    public AbilitySetup[] SupportAbilities;
+
+    public int MaxHealth;
+    public int MaxAmmo;
+    public int MaxMana;
+    public Animator animator;
 }

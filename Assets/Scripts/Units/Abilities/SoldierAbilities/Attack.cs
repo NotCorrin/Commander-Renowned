@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class Attack : QTEAbility
 {
-    [SerializeField] int Damage;
-
-    [SerializeField] int DamageVariation;
-
     public override int GetMoveWeight(Unit caster)
     {
         int HealthWeight = Mathf.FloorToInt((caster.Health / caster.MaxHealth) * 100);
@@ -43,18 +39,18 @@ public class Attack : QTEAbility
         {
             case QTEController.QTEResult.Critical:
                 {
-                    FinalDamage += DamageVariation;
+                    FinalDamage += Variation;
                     break;
                 }
             case QTEController.QTEResult.Miss:
                 {
-                    FinalDamage -= DamageVariation;
+                    FinalDamage -= Variation;
                     break;
                 }
         }
         
 
-        GameEvents.AttackUp(Caster, 1);
+        GameEvents.AttackUp(Caster, StatBoost);
         GameEvents.HealthChanged(Target, -GetDamageCalculation(Caster, Target, Damage));
         GameEvents.UseAmmo(Caster, Cost);
     }

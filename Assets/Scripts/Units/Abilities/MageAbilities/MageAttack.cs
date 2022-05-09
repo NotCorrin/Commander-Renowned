@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class MageAttack : QTEAbility
 {
-	[SerializeField] int Damage;
-    [SerializeField] int DamageVariation;
     [SerializeField] int CostVariation;
 
     public override bool IsCasterValid (Unit Caster)
@@ -61,13 +59,13 @@ public class MageAttack : QTEAbility
         {
             case QTEController.QTEResult.Critical:
                 {
-                    FinalDamage += DamageVariation;
+                    FinalDamage += Variation;
                     FinalCost += CostVariation;
                     break;
                 }
             case QTEController.QTEResult.Miss:
                 {
-                    FinalDamage -= DamageVariation;
+                    FinalDamage -= Variation;
                     FinalCost -= CostVariation;
                     break;
                 }

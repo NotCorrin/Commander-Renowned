@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class MageDefend : QTEAbility
 {
-	[SerializeField] int Damage;
-    [SerializeField] int DefenseBoost;
-
-    [SerializeField] int DefenseVariation;
     [SerializeField] int CostVariation;
     
     public override bool IsCasterValid (Unit Caster)
@@ -56,20 +52,20 @@ public class MageDefend : QTEAbility
 
     protected override void AbilityUsed(QTEController.QTEResult result)
     {
-        int FinalDefense = DefenseBoost;
+        int FinalDefense = StatBoost;
         int FinalCost = Cost;
 
         switch (result)
         {
             case QTEController.QTEResult.Critical:
                 {
-                    FinalDefense += DefenseVariation;
+                    FinalDefense += Variation;
                     FinalCost += CostVariation;
                     break;
                 }
             case QTEController.QTEResult.Miss:
                 {
-                    FinalDefense = Mathf.Max(0, FinalDefense - DefenseVariation);
+                    FinalDefense = Mathf.Max(0, FinalDefense - Variation);
                     FinalCost -= CostVariation;
                     break;
                 }

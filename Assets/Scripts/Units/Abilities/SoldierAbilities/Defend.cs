@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Defend : QTEAbility
 {
-    [SerializeField] int Damage;
-    [SerializeField] int DefenseBoost;
-
     [SerializeField] int DefenseVariation;
 
     public override int GetMoveWeight(Unit caster)
@@ -39,7 +36,7 @@ public class Defend : QTEAbility
 
     protected override void AbilityUsed(QTEController.QTEResult result)
     {
-        int FinalDefense = DefenseBoost;
+        int FinalDefense = StatBoost;
 
         switch (result)
         {

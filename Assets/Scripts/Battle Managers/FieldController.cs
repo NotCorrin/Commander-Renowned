@@ -30,6 +30,15 @@ public class FieldController : Listener
 
     public static FieldController main;
     // Start is called before the first frame update
+    void SetupUnits(List<Unit> units)
+    {
+        PlayerVanguard = units[0];
+        PlayerSupportLeft = units[1];
+        PlayerSupportRight = units[2];
+        EnemyVanguard = units[3];
+        EnemySupportLeft = units[4];
+        EnemySupportRight = units[5];
+    }
     void Start()
     {
         sceneController = GetComponent<SceneController>();

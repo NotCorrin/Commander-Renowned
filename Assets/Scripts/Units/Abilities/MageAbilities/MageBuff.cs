@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MageBuff : Ability
 {
-	[SerializeField] int buffAmount;
 	public override bool IsCasterValid (Unit Caster)
     {
 		if (Caster is MagicUnit) 
@@ -24,7 +23,7 @@ public class MageBuff : Ability
 	}
 	public override void UseAbility (Unit Caster, Unit Target) {
 		if (IsAbilityValid(Caster, Target)) {
-			GameEvents.AttackUp(Target, buffAmount);
+			GameEvents.AttackUp(Target, StatBoost);
 			GameEvents.UseMana(Caster, Cost);
 		}
 	}
