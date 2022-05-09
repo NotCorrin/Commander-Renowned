@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MageBuff : Ability
 {
+    [SerializeField] GameObject buffEffect;
+
 	public override bool IsCasterValid (Unit Caster)
     {
 		return(Caster.Mana > Cost);
@@ -14,6 +16,7 @@ public class MageBuff : Ability
 	}
 	public override void UseAbility (Unit Caster, Unit Target) {
 		if (IsAbilityValid(Caster, Target)) {
+            Instantiate(buffEffect, Target.transform);
 			GameEvents.AttackUp(Target, StatBoost);
 			GameEvents.UseMana(Caster, Cost);
 		}

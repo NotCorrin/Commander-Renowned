@@ -7,9 +7,7 @@ public class UnitSelectionUI : Listener
 {
     [SerializeField] private UIDocument uiDocument;
     private VisualElement unitSelectionContainer;
-    private Camera cam;
     [SerializeField] private Unit parent;
-    private FieldController fieldController;
 
     protected override void SubscribeListeners()
     {
@@ -24,9 +22,7 @@ public class UnitSelectionUI : Listener
     // Start is called before the first frame update
     void Start()
     {
-        cam = Camera.main;
         parent = transform.parent.GetComponent<Unit>();
-        fieldController = GameObject.Find("GameManager").GetComponent<FieldController>();
 
         if (uiDocument == null)
         {
@@ -50,7 +46,7 @@ public class UnitSelectionUI : Listener
     {
         if (parent == unit)
         {
-            if (fieldController.IsUnitPlayer(unit))
+            if (FieldController.main.IsUnitPlayer(unit))
             {
                 if (unitSelectionContainer.style.opacity == 0)
                 {
@@ -71,7 +67,7 @@ public class UnitSelectionUI : Listener
     // Update is called once per frame
     void LateUpdate()
     {
-        Vector2 newPosition = RuntimePanelUtils.CameraTransformWorldToPanel(unitSelectionContainer.panel, transform.position, cam);
+        Vector2 newPosition = RuntimePanelUtils.CameraTransformWorldToPanel(unitSelectionContainer.panel, transform.position, Camera.main);
         unitSelectionContainer.transform.position = new Vector3(newPosition.x - unitSelectionContainer.layout.width / 2, newPosition.y - unitSelectionContainer.layout.height / 2, 0);
     }
 }

@@ -5,7 +5,9 @@ using UnityEngine;
 public class MageDefend : QTEAbility
 {
     [SerializeField] int CostVariation;
-    
+
+    [SerializeField] GameObject BuffEffect;
+
     public override bool IsCasterValid (Unit Caster)
     {
 		return(Caster.Mana > Cost);
@@ -54,6 +56,7 @@ public class MageDefend : QTEAbility
                 }
         }
 
+        if (BuffEffect) Instantiate(BuffEffect, transform);
         GameEvents.DefenseUp(Caster, FinalDefense);
         GameEvents.onHealthChanged(Target, -GetDamageCalculation(Caster, Target, Damage));
         GameEvents.onUseMana(Caster, -FinalCost);

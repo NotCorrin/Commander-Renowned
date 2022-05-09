@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: FireDarts
+  m_Shader: {fileID: 4800000, guid: 734898514f07a2e40a00ea0af6b30e15, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 3002
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _ComTex:
+        m_Texture: {fileID: 2800000, guid: 9d521e0513deef2438120ab8996f1f0c, type: 3}
+        m_Scale: {x: 0.5, y: 1}
+        m_Offset: {x: 0, y: 1}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 4a1f86422f16ed54ca6893164733eeea, type: 3}
+        m_Scale: {x: 0.25, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OffsetTex:
+        m_Texture: {fileID: 2800000, guid: 6e87a198e3ac6694293d579d53ed6a70, type: 3}
+        m_Scale: {x: 0.15, y: 0.1}
+        m_Offset: {x: 0, y: 0}
+    - _Ramp:
+        m_Texture: {fileID: 2800000, guid: 0c1654a137d7df741b6e1a143703a9a8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: -0.15, y: 0}
+    m_Floats:
+    - _CoreTiling: 2
+    - _Cutoff: 0.5
+    - _EdgeThickness: 1
+    - _FinalPower: 4
+    - _OffsetPower: 0.35
+    - _OpacityBoost: 4
+    - _ScrollSpeed: -6
+    - _intensityOffset: 1
+    - _intensityPower: 4
+    - _node_6001: 5
+    - _node_625: 1.45
+    m_Colors:
+    - _EdgeColor: {r: 1, g: 0.47002143, b: 0.16652247, a: 1}
+    - _TintColor: {r: 1, g: 1, b: 1, a: 1}

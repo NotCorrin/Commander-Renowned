@@ -6,6 +6,10 @@ public class Defend : QTEAbility
 {
     [SerializeField] int DefenseVariation;
 
+    [SerializeField] GameObject Shield;
+
+    [SerializeField] GameObject LaserShot;
+
     public override int GetMoveWeight(Unit caster)
     {
         int HealthWeight = Mathf.FloorToInt((1 - (caster.Health / caster.MaxHealth)) * 100);
@@ -37,8 +41,12 @@ public class Defend : QTEAbility
                 }
         }
 
+        if (Shield) Instantiate(Shield, transform);
         GameEvents.DefenseUp(Caster, FinalDefense);
+
         GameEvents.HealthChanged(Target, -GetDamageCalculation(Caster, Target, Damage));
+        FireLaserAtTarget(Target.transform);
+
         GameEvents.UseAmmo(Caster, Cost);
     }
 
@@ -55,4 +63,19 @@ public class Defend : QTEAbility
     {
 		return (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(Target) != isPlayer);
 	}
+
+    void FireLaserAtTarget(Transform targetTransform)
+    {
+        if (LaserShot)
+        {
+            GameObject SpawnedLaser = Instantiate(LaserShot, transform);
+            SpawnedLaser.transform.LookAt(targetTransform);
+        }
+    }
+
+    void AttackWithLaser(int damage)
+    {
+        GameEvents.HealthChanged(Target, -GetDamageCalculation(Caster, Target, damage));
+        FireLaserAtTarget(Target.transform);
+    }
 }

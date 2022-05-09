@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ExplosionSpriteLitCurveMesh_Blazing
+  m_Shader: {fileID: 4800000, guid: 2d8467c88357c8b45a46f319be8c452f, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _ExplosionMask:
+        m_Texture: {fileID: 2800000, guid: 31ddf938f0c213f44873588f38da0cf0, type: 3}
+        m_Scale: {x: 1, y: 3}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 61c0a1b11b99dd64787f69e90bf24840, type: 3}
+        m_Scale: {x: 1, y: 0.25}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 2800000, guid: fb20903f8ac131f48a929bac76063cb4, type: 3}
+        m_Scale: {x: 1, y: 0.25}
+        m_Offset: {x: 0, y: 0}
+    - _Ramp:
+        m_Texture: {fileID: 2800000, guid: 0c1654a137d7df741b6e1a143703a9a8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RampFire:
+        m_Texture: {fileID: 2800000, guid: 0c1654a137d7df741b6e1a143703a9a8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RampSmoke:
+        m_Texture: {fileID: 2800000, guid: 44988d280018aa44e8000e8eda5b2fad, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Cutoff: 0.5
+    - _FirePower: 1.15
+    - _OpacityBoost: 5
+    m_Colors:
+    - _FireColor: {r: 1, g: 1, b: 1, a: 1}

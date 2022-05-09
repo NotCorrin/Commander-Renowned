@@ -6,6 +6,8 @@ public class MageAttack : QTEAbility
 {
     [SerializeField] int CostVariation;
 
+    [SerializeField] GameObject Explosion;
+
     public override bool IsCasterValid (Unit Caster)
     {
 		return(Caster.Mana > Cost);
@@ -54,8 +56,8 @@ public class MageAttack : QTEAbility
                 }
         }
 
+        if (Explosion) Instantiate(Explosion, Target.transform);
         GameEvents.onHealthChanged(Target, -GetDamageCalculation(Caster, Target, FinalDamage));
         GameEvents.onUseMana(Caster, -FinalCost);
     }
-    
 }
