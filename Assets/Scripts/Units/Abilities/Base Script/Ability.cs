@@ -38,6 +38,12 @@ public abstract class Ability : MonoBehaviour
     {
         get => variation;
     }
+
+    [SerializeField] protected GameObject VFX1;
+    [SerializeField] protected GameObject VFX2;
+    [SerializeField] protected GameObject VFX3;
+
+
     public virtual void SetupParams(AbilitySetup setup)
     {
         abilityName = setup.AbilityName;
@@ -46,6 +52,9 @@ public abstract class Ability : MonoBehaviour
         damage = setup.Damage;
         statBoost = setup.StatBoost;
         variation = setup.Variation;
+        VFX1 = setup.VFX1;
+        VFX2 = setup.VFX2;
+        VFX3 = setup.VFX3;
     }
     public abstract int GetMoveWeight(Unit Caster);
     public abstract void UseAbility(Unit Caster, Unit Target);

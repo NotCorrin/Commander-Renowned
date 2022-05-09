@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class MageBuff : Ability
 {
-    [SerializeField] GameObject buffEffect;
-
+	public override void SetupParams(AbilitySetup setup)
+    {
+		base.SetupParams(setup);
+        if(!VFX1) VFX1 = Resources.Load("CustomLasers/Mage/BuffParticles") as GameObject;
+    }
 	public override bool IsCasterValid (Unit Caster)
     {
 		return(Caster.Mana > Cost);
@@ -16,7 +19,7 @@ public class MageBuff : Ability
 	}
 	public override void UseAbility (Unit Caster, Unit Target) {
 		if (IsAbilityValid(Caster, Target)) {
-            Instantiate(buffEffect, Target.transform);
+            Instantiate(VFX1, Target.transform);
 			GameEvents.AttackUp(Target, StatBoost);
 			GameEvents.UseMana(Caster, Cost);
 		}

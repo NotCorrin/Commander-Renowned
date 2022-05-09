@@ -12,6 +12,11 @@ public class AbilitySetup
     public int Damage;
     public int StatBoost;
     public int Variation;
+
+    public GameObject VFX1;
+    public GameObject VFX2;
+    public GameObject VFX3;
+
 }
 
 public enum AbilityScript

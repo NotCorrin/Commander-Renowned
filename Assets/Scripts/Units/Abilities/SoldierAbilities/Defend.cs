@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Defend : QTEAbility
 {
-    [SerializeField] int DefenseVariation;
-
-    [SerializeField] GameObject Shield;
-
-    [SerializeField] GameObject LaserShot;
+    
+    public override void SetupParams(AbilitySetup setup)
+    {
+        base.SetupParams(setup);
+        if(!VFX1) VFX1 = Resources.Load("CustomLasers/Soldier/Soldier_Laser") as GameObject;
+        if(!VFX2) VFX2 = Resources.Load("CustomLasers/Soldier/Shield") as GameObject;
+    }
 
     public override int GetMoveWeight(Unit caster)
     {
@@ -31,17 +33,17 @@ public class Defend : QTEAbility
         {
             case QTEController.QTEResult.Critical:
                 {
-                    FinalDefense += DefenseVariation;
+                    FinalDefense += Variation;
                     break;
                 }
             case QTEController.QTEResult.Miss:
                 {
-                    FinalDefense = Mathf.Max(0, FinalDefense - DefenseVariation);
+                    FinalDefense = Mathf.Max(0, FinalDefense - Variation);
                     break;
                 }
         }
 
-        if (Shield) Instantiate(Shield, transform);
+        if (VFX2) Instantiate(VFX2, transform);
         GameEvents.DefenseUp(Caster, FinalDefense);
 
         GameEvents.HealthChanged(Target, -GetDamageCalculation(Caster, Target, Damage));
@@ -66,9 +68,9 @@ public class Defend : QTEAbility
 
     void FireLaserAtTarget(Transform targetTransform)
     {
-        if (LaserShot)
+        if (VFX1)
         {
-            GameObject SpawnedLaser = Instantiate(LaserShot, transform);
+            GameObject SpawnedLaser = Instantiate(VFX1, transform);
             SpawnedLaser.transform.LookAt(targetTransform);
         }
     }

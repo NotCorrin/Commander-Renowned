@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class MageAttack : QTEAbility
 {
-    [SerializeField] int CostVariation;
+    [SerializeField] int CostVariation; //unused for now (cbf)
 
-    [SerializeField] GameObject Explosion;
+    public override void SetupParams(AbilitySetup setup)
+    {
+        VFX1 = Resources.Load("CustomLasers/Mage/Mage_Explosion") as GameObject;
+        base.SetupParams(setup);
+    }
 
     public override bool IsCasterValid (Unit Caster)
     {
@@ -56,7 +60,7 @@ public class MageAttack : QTEAbility
                 }
         }
 
-        if (Explosion) Instantiate(Explosion, Target.transform);
+        if (VFX1) Instantiate(VFX1, Target.transform);
         GameEvents.onHealthChanged(Target, -GetDamageCalculation(Caster, Target, FinalDamage));
         GameEvents.onUseMana(Caster, -FinalCost);
     }

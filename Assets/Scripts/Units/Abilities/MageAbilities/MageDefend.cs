@@ -6,7 +6,11 @@ public class MageDefend : QTEAbility
 {
     [SerializeField] int CostVariation;
 
-    [SerializeField] GameObject BuffEffect;
+    public override void SetupParams(AbilitySetup setup)
+    {
+        base.SetupParams(setup);
+        if(!VFX1) VFX1 = Resources.Load("CustomLasers/Mage/MageFlare") as GameObject;
+    }
 
     public override bool IsCasterValid (Unit Caster)
     {
@@ -56,7 +60,7 @@ public class MageDefend : QTEAbility
                 }
         }
 
-        if (BuffEffect) Instantiate(BuffEffect, transform);
+        if (VFX1) Instantiate(VFX1, transform);
         GameEvents.DefenseUp(Caster, FinalDefense);
         GameEvents.onHealthChanged(Target, -GetDamageCalculation(Caster, Target, Damage));
         GameEvents.onUseMana(Caster, -FinalCost);

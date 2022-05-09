@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Attack : QTEAbility
 {
-    [SerializeField] GameObject LaserShot;
-
     [SerializeField] float secondShotDelay = 0.2f;
 
     int FinalDamage;
@@ -16,17 +14,8 @@ public class Attack : QTEAbility
 
     public override void SetupParams(AbilitySetup setup)
     {
-        if(setup is AttackSetup)
-        {
-            AttackSetup attackSetup = setup as AttackSetup;
-            LaserShot = attackSetup.LaserShot;
-            secondShotDelay = attackSetup.secondShotDelay;
-        }
-        else
-        {
-            Debug.Log("tf");
-        }
         base.SetupParams(setup);
+        if(!VFX1) VFX1 = Resources.Load("CustomLasers/Soldier/Soldier_Laser") as GameObject;
     }
 
     public override int GetMoveWeight(Unit caster)
@@ -87,9 +76,9 @@ public class Attack : QTEAbility
 
     void FireLaserAtTarget(Transform targetTransform)
     {
-        if (LaserShot)
+        if (VFX1)
         {
-            GameObject SpawnedLaser = Instantiate(LaserShot, transform);
+            GameObject SpawnedLaser = Instantiate(VFX1, transform);
             SpawnedLaser.transform.LookAt(targetTransform);
 
             SpawnedLaser.TryGetComponent<FullAutoFireAtTarget>(out FullAutoFireAtTarget MagicMissile);

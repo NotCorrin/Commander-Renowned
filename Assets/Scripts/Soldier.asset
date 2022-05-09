@@ -22,13 +22,15 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
+    mainVFX: {fileID: 0}
   - AbilityType: 3
-    AbilityName: Attack Formation
+    AbilityName: Arcane Bullet
     AbilityDescription: Strike in an attack formation. Attack up, Damage 3
     Cost: 0
     Damage: 3
     StatBoost: 1
     Variation: 1
+    mainVFX: {fileID: 0}
   - AbilityType: 4
     AbilityName: Defense Formation
     AbilityDescription: Strike in a negative formation. Defense up, Damage 3
@@ -36,6 +38,7 @@ MonoBehaviour:
     Damage: 3
     StatBoost: 1
     Variation: 1
+    mainVFX: {fileID: 0}
   SupportAbilities:
   - AbilityType: 0
     AbilityName: 
@@ -44,6 +47,7 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
+    mainVFX: {fileID: 0}
   - AbilityType: 5
     AbilityName: Reload
     AbilityDescription: Gain 3 ammo
@@ -51,6 +55,8 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
+    mainVFX: {fileID: 0}
+  VanguardAbilities2: []
   MaxHealth: 24
   MaxAmmo: 5
   MaxMana: 0

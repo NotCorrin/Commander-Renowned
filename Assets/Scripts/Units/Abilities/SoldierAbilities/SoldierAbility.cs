@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class SoldierAbility : Ability
 {
-    [SerializeField] GameObject ReloadEffect;
+
+    public override void SetupParams(AbilitySetup setup)
+    {
+        base.SetupParams(setup);
+        if(!VFX1) VFX1 = Resources.Load("CustomLasers/Soldier/ReloadParticles") as GameObject;
+    }
 
     public override int GetMoveWeight(Unit caster)
     {
@@ -23,7 +28,7 @@ public class SoldierAbility : Ability
     {
         if (IsAbilityValid(Caster, Target))
         {
-            Instantiate(ReloadEffect, transform);
+            Instantiate(VFX1, transform);
             GameEvents.onUseAmmo(Target, -Cost);
         }
     }
