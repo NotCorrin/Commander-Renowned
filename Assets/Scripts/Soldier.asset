@@ -22,23 +22,29 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
-    mainVFX: {fileID: 0}
+    VFX1: {fileID: 0}
+    VFX2: {fileID: 0}
+    VFX3: {fileID: 0}
   - AbilityType: 3
     AbilityName: Arcane Bullet
-    AbilityDescription: Strike in an attack formation. Attack up, Damage 3
-    Cost: 0
-    Damage: 3
+    AbilityDescription: Strike the enemy with dual arcane bullets. Attack up.
+    Cost: 1
+    Damage: 2
     StatBoost: 1
     Variation: 1
-    mainVFX: {fileID: 0}
+    VFX1: {fileID: 0}
+    VFX2: {fileID: 0}
+    VFX3: {fileID: 0}
   - AbilityType: 4
     AbilityName: Defense Formation
     AbilityDescription: Strike in a negative formation. Defense up, Damage 3
-    Cost: 0
-    Damage: 3
+    Cost: 1
+    Damage: 2
     StatBoost: 1
     Variation: 1
-    mainVFX: {fileID: 0}
+    VFX1: {fileID: 0}
+    VFX2: {fileID: 0}
+    VFX3: {fileID: 0}
   SupportAbilities:
   - AbilityType: 0
     AbilityName: 
@@ -47,7 +53,9 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
-    mainVFX: {fileID: 0}
+    VFX1: {fileID: 0}
+    VFX2: {fileID: 0}
+    VFX3: {fileID: 0}
   - AbilityType: 5
     AbilityName: Reload
     AbilityDescription: Gain 3 ammo
@@ -55,7 +63,9 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
-    mainVFX: {fileID: 0}
+    VFX1: {fileID: 0}
+    VFX2: {fileID: 0}
+    VFX3: {fileID: 0}
   VanguardAbilities2: []
   MaxHealth: 24
   MaxAmmo: 5

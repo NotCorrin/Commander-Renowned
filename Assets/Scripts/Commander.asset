@@ -28,7 +28,7 @@ MonoBehaviour:
   - AbilityType: 3
     AbilityName: Attack Formation
     AbilityDescription: Strike in an attack formation. Attack up, Damage 3
-    Cost: 0
+    Cost: 1
     Damage: 3
     StatBoost: 1
     Variation: 1
