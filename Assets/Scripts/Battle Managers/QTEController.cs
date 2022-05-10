@@ -14,18 +14,18 @@ public class QTEController : Listener
     static private float shrinkingCircleMinCritical = 0.4f;
     static private float shrinkingCircleMaxCritical = 0.6f;
     static private float shrinkingCircleMinHit = 0.2f;
-    private float shrinkingCircleMaxTime;
-    public float ShrinkingCircleMaxTime
+    private static float shrinkingCircleMaxTime;
+    public static float ShrinkingCircleMaxTime
     {
         get => shrinkingCircleMaxTime;
     }
-    private float shrinkingCircleTimer;
-    public float ShrinkingCircleTimer
+    private static float shrinkingCircleTimer;
+    public static float ShrinkingCircleTimer
     {
         get => shrinkingCircleTimer;
     }
 
-    bool shrinkingCircleActive;
+    static bool shrinkingCircleActive;
 
     // Start is called before the first frame update
     void Start()
