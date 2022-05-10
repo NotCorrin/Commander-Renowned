@@ -21,8 +21,10 @@ public class EnemyController : Listener
 	int supportRightSwitchScore;
 
 	FieldController fieldController;
+	public static EnemyController main;
 	void Start () {
 		fieldController = FieldController.main;
+		main = this;
 	}
 	void SetupUnits(List<Unit> playerUnits, List<Unit> enemyUnits)
     {
@@ -31,7 +33,7 @@ public class EnemyController : Listener
         enemySupportRight = enemyUnits[2];
     }
 
-	void SwitchPositions () {
+	public void SwitchPositions () {
 		CalculateSwitchStickScores();
 		// No support enemies
 		if (enemySupportLeft == null && enemySupportRight == null) {
@@ -290,15 +292,24 @@ public class EnemyController : Listener
 	protected override void SubscribeListeners () {
 		GameEvents.onPhaseChanged += EnemyTurn;
 		GameEvents.onSetupUnits += SetupUnits;
+		GameEvents.onKill += Kill;
 	}
 
 	protected override void UnsubscribeListeners () {
 		GameEvents.onPhaseChanged -= EnemyTurn;
 		GameEvents.onSetupUnits -= SetupUnits;
+		GameEvents.onKill -= Kill;
+	}
+
+	void Kill(Unit unit)
+	{
+		if(!fieldController.IsUnitPlayer(unit)) 
+		{
+			Destroy(unit.gameObject);
+		}
 	}
 
 	void EnemyTurn (RoundController.Phase phase) {
-		Debug.Log("is enemy turn? " + phase);
 		switch (phase) {
 			case RoundController.Phase.EnemyVangaurd:
 			Invoke("UseVanguardAbility", Random.Range(0.8f, 2.5f));
@@ -320,21 +331,24 @@ public class EnemyController : Listener
 	void UseVanguardAbility () {
 		// UNCOMMENT LINES FOR TARGETING MULTIPLE CHARACTERS
 		FindBestVanguardAbilityIndex();
-		
-		// Use ability on single target
-		List<Unit> validTargets = fieldController.GetValidTargets(enemyVanguard, vanguardBestAbility);
-		Unit target = validTargets[Random.Range(0, validTargets.Count)];
-		GameEvents.UseAbility(enemyVanguard, target, vanguardBestAbilityIndex);
-		//Debug.Log("Enemy vanguard attack: Ability - " + vanguardBestAbility.AbilityName + " Target - " + target);
-		
-		/*
-		int numOfTargets = [SET VALUE HERE];
-		for (int i = 0; i < numOfTargets; i++) {
-			target = validTargets[Random.Range(0, validTargets.Count)];
+		if(enemyVanguard)
+		{			
+			// Use ability on single target
+			List<Unit> validTargets = fieldController.GetValidTargets(enemyVanguard, vanguardBestAbility);
+			Unit target = validTargets[Random.Range(0, validTargets.Count)];
 			GameEvents.UseAbility(enemyVanguard, target, vanguardBestAbilityIndex);
-			validTargets.Remove(target);
+			//Debug.Log("Enemy vanguard attack: Ability - " + vanguardBestAbility.AbilityName + " Target - " + target);
+			
+			/*
+			int numOfTargets = [SET VALUE HERE];
+			for (int i = 0; i < numOfTargets; i++) {
+				target = validTargets[Random.Range(0, validTargets.Count)];
+				GameEvents.UseAbility(enemyVanguard, target, vanguardBestAbilityIndex);
+				validTargets.Remove(target);
+			}
+			*/
 		}
-		*/
+		else SwitchPositions();
 	}
 	void UseSupportAbility () {
 		// UNCOMMENT LINES FOR TARGETING MULTIPLE CHARACTERS

@@ -7,10 +7,24 @@ public class FieldController : Listener
     public enum Position { Vanguard, SupportLeft, SupportRight };
 
     [SerializeField] Unit PlayerVanguard;
+    [SerializeField] Vector3 playerVanguardPos;
+    Vector3 PlayerVanguardPos {
+        get {
+            if(PlayerVanguard) playerVanguardPos = PlayerVanguard.transform.position;
+            return playerVanguardPos;
+        }
+    }
     [SerializeField] Unit PlayerSupportLeft;
     [SerializeField] Unit PlayerSupportRight;
 
     [SerializeField] Unit EnemyVanguard;
+    [SerializeField] Vector3 enemyVanguardPos;
+    Vector3 EnemyVanguardPos {
+        get {
+            if(EnemyVanguard) enemyVanguardPos = EnemyVanguard.transform.position;
+            return enemyVanguardPos;
+        }
+    }
     [SerializeField] Unit EnemySupportLeft;
     [SerializeField] Unit EnemySupportRight;
 
@@ -24,6 +38,7 @@ public class FieldController : Listener
     public float maxTime = 0.5f;
     public static bool disableInput;
     List<Unit> deathNote = new List<Unit>();
+    public static bool deathListEmpty => main.deathNote.Count == 0;
 
     [SerializeField] bool supportLeftUsed = false;
     [SerializeField] bool supportRightUsed = false;
@@ -38,7 +53,8 @@ public class FieldController : Listener
         EnemyVanguard = enemyUnits[0];
         EnemySupportLeft = enemyUnits[1];
         EnemySupportRight = enemyUnits[2];
-
+        if(PlayerVanguard) playerVanguardPos = PlayerVanguard.transform.position;
+        if(EnemyVanguard) enemyVanguardPos = EnemyVanguard.transform.position;
         this.enemyVisual();
     }
     void Start()
@@ -61,17 +77,20 @@ public class FieldController : Listener
                 timer = maxTime;
                 disableInput = false;
                 GameEvents.SetPhase();
-                Debug.Log(VanguardToSupport);
-                Debug.Log(SupportToVanguard);
+                LerpSwap();
+                //Debug.Log(VanguardToSupport);
+                //Debug.Log(SupportToVanguard);
+                if(PlayerVanguard) playerVanguardPos = PlayerVanguard.transform.position;
+                if(EnemyVanguard) enemyVanguardPos = EnemyVanguard.transform.position;
             }
-            LerpSwap();
+            else LerpSwap();
         }
     }
 
     private void LerpSwap()
     {
-        VanguardToSupport.position = Vector3.Lerp(vanguardPos, selectedUnitPos, timer/maxTime);
-        SupportToVanguard.position = Vector3.Lerp(selectedUnitPos, vanguardPos, timer/maxTime);        
+        if(VanguardToSupport) VanguardToSupport.position = Vector3.Lerp(vanguardPos, selectedUnitPos, timer/maxTime);
+        if(SupportToVanguard) SupportToVanguard.position = Vector3.Lerp(selectedUnitPos, vanguardPos, timer/maxTime);        
     }
 
     public bool IsUnitPlayer(Unit unit)
@@ -168,24 +187,47 @@ public class FieldController : Listener
     {
         //vanguardPos = PlayerVanguard.transform.position;
         deathNote.Add(unit);
+        if(unit == PlayerSupportLeft) PlayerSupportLeft = null;
+        if(unit == PlayerSupportRight) PlayerSupportRight = null;
+        if(unit == PlayerVanguard) PlayerVanguard = null;
+        if(unit == EnemySupportLeft) EnemySupportLeft = null;
+        if(unit == EnemySupportRight) EnemySupportRight = null;
+        if(unit == EnemyVanguard) EnemyVanguard = null;
+
+        Debug.LogWarning("this should happen first");
         //https://i.kym-cdn.com/entries/icons/original/000/034/833/snapchat_kill.jpg
     }
 
     public void ActivateKill()
     {
-
+        foreach (Unit unit in deathNote)
+        {
+            if(unit) Destroy(unit.gameObject);
+            Debug.LogWarning("this should happen second");
+        }
     }
 
     private void ResetSupportUsed()
     {
-        supportLeftUsed = false;
-        supportRightUsed = false;
+        if(((int)RoundController.phase)%2 == 1) 
+        {
+            supportLeftUsed = !EnemySupportLeft;
+            supportRightUsed = !EnemySupportRight;
+        }
+        else
+        {
+            supportLeftUsed = !PlayerSupportLeft;
+            supportRightUsed = !PlayerSupportRight;
+            Debug.Log(supportLeftUsed);
+            Debug.Log(supportRightUsed);
+        }
     }
 
     private void SupportUsed(Unit unit)
     {
         if(GetIsSupportLeft(unit)) supportLeftUsed = true;
         if(GetIsSupportRight(unit)) supportRightUsed = true;
+        if(supportLeftUsed && supportRightUsed) GameEvents.SetPhase();
     }
 
     private void Awake()
@@ -196,10 +238,10 @@ public class FieldController : Listener
     public void SwapPlayerUnit(Unit chosenUnit = null)
     {
         if(!chosenUnit) chosenUnit = sceneController.selectedUnit;
-        vanguardPos = PlayerVanguard.transform.position;
+        vanguardPos = PlayerVanguardPos;
         selectedUnitPos = chosenUnit.transform.position;
         
-        VanguardToSupport = PlayerVanguard.transform;
+        if (PlayerVanguard) VanguardToSupport = PlayerVanguard.transform;
         SupportToVanguard = chosenUnit.transform;
         disableInput = true;
         timer = 0;
@@ -233,10 +275,10 @@ public class FieldController : Listener
     {
         Debug.Log("swapping enemy units B)");
         if(!chosenUnit) chosenUnit = sceneController.selectedUnit;
-        vanguardPos = EnemyVanguard.transform.position;
+        vanguardPos = EnemyVanguardPos;
         selectedUnitPos = chosenUnit.transform.position;
         
-        VanguardToSupport = EnemyVanguard.transform;
+        if(EnemyVanguard) VanguardToSupport = EnemyVanguard.transform;
         SupportToVanguard = chosenUnit.transform;
         disableInput = true;
         timer = 0;

@@ -93,8 +93,11 @@ public class Attack : QTEAbility
 
     void AttackWithLaser(int damage)
     {
-        GameEvents.HealthChanged(Target, -GetDamageCalculation(Caster, Target, damage));
-        FireLaserAtTarget(Target.transform);
+        if(Target)
+        {
+            GameEvents.HealthChanged(Target, -GetDamageCalculation(Caster, Target, damage));
+            FireLaserAtTarget(Target.transform);
+        }
     }
 
     private void Update()

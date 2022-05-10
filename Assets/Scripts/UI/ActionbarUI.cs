@@ -40,7 +40,7 @@ public class ActionbarUI : Listener
 
     private Unit selectedUnit;
     private int selectedAbility;
-    private bool prompt = false;
+    private string prompt = "";
 
     private bool[] abilityActive = new bool[3];
     #endregion
@@ -67,6 +67,7 @@ public class ActionbarUI : Listener
         UIEvents.onUnitSelected += OnUnitSelected;
         GameEvents.onPhaseChanged += PhaseSwitchUI;
         GameEvents.onAbilityResolved += OnUnitSelected;
+        GameEvents.onKill += SwitchPrompt;
     }
 
     protected override void UnsubscribeListeners()
@@ -81,11 +82,12 @@ public class ActionbarUI : Listener
         UIEvents.onUnitSelected -= OnUnitSelected;
         GameEvents.onPhaseChanged -= PhaseSwitchUI;
         GameEvents.onAbilityResolved -= OnUnitSelected;
+        GameEvents.onKill -= SwitchPrompt;
     }
 
     void OnPromptCancelClicked()
     {
-        prompt = false;
+        prompt = "";
         supportBarContainer.style.display = DisplayStyle.Flex;
         promptBarContainer.style.display = DisplayStyle.None;
         Debug.Log("Prompt Cancel Clicked");
@@ -129,7 +131,7 @@ public class ActionbarUI : Listener
                 Debug.Log(selectedUnit.SupportAbilities[_selectedAbility-1].AbilityName + " needs a target!");
                 supportBarContainer.style.display = DisplayStyle.None;
                 promptBarContainer.style.display = DisplayStyle.Flex;
-                prompt = true;
+                prompt = "Ability";
                 selectedAbility = _selectedAbility;
             }
         }
@@ -143,6 +145,9 @@ public class ActionbarUI : Listener
         {
             supportBarContainer.style.display = DisplayStyle.None;
             promptBarContainer.style.display = DisplayStyle.Flex;
+            promptCancelBtn.style.display = DisplayStyle.None;
+            promptBarValue.text = "Swap in unit";
+            prompt = "Death";
             AbilityUI(selectedUnit, true);
         }
     }
@@ -169,20 +174,34 @@ public class ActionbarUI : Listener
     }
     void OnUnitSelected(Unit unit)
     {
-        Debug.Log(unit);
         if(!unit) return;
-        if(prompt && selectedUnit && unit)
+        Debug.Log(unit.UnitName + " was selected");
+        if(selectedUnit && unit)
         {
-            if(RoundController.phase != RoundController.Phase.PlayerSupport) prompt = false;
-            else if(selectedUnit.SupportAbilities[selectedAbility - 1].IsAbilityValid(selectedUnit, unit))
+            if(prompt == "Ability")
             {
-                Debug.Log("Caster = " + selectedUnit + "\n" + "Target = " + unit);
-                supportBarContainer.style.display = DisplayStyle.Flex;
-                promptBarContainer.style.display = DisplayStyle.None;
-                prompt = false;
-                GameEvents.UseAbility(selectedUnit, unit, selectedAbility);
+                if(RoundController.phase != RoundController.Phase.PlayerSupport) prompt = "";
+                else if(selectedUnit.SupportAbilities[selectedAbility - 1].IsAbilityValid(selectedUnit, unit))
+                {
+                    Debug.Log("Caster = " + selectedUnit + "\n" + "Target = " + unit);
+                    supportBarContainer.style.display = DisplayStyle.Flex;
+                    promptBarContainer.style.display = DisplayStyle.None;
+                    prompt = "";
+                    GameEvents.UseAbility(selectedUnit, unit, selectedAbility);
+                }
+                return;
             }
-            return;
+            else if (prompt == "Death")
+            {
+                if(FieldController.main.IsUnitPlayer(unit) && !FieldController.main.GetIsVanguard(unit))
+                {
+                    supportBarContainer.style.display = DisplayStyle.Flex;
+                    promptBarContainer.style.display = DisplayStyle.None;
+                    prompt = "";
+                    FieldController.main.SwapPlayerUnit(unit);
+                }
+                return;
+            }
         }
 
         selectedUnit = unit;

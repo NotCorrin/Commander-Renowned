@@ -166,7 +166,7 @@ public static class GameEvents
         //     onSetPhase(phase);
         // }
         Debug.Log(phase);
-        if(RoundController.phase == RoundController.Phase.PlayerSwap && resetBuffs != null)
+        if(RoundController.phase == RoundController.Phase.PlayerSupport && resetBuffs != null)
         {
             resetBuffs();
         }
