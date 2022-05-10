@@ -123,33 +123,12 @@ public class ActionbarUI : Listener
         {
             if(!abilityActive[_selectedAbility-1]) return;
             if(selectedUnit.SupportAbilities[_selectedAbility-1].IsAbilityValid(selectedUnit, selectedUnit))
-                {
-                    GameEvents.UseAbility(selectedUnit, selectedUnit, _selectedAbility);
-                }
-            else
             {
-                Debug.Log(selectedUnit.SupportAbilities[_selectedAbility-1].AbilityName + " needs a target!");
-                supportBarContainer.style.display = DisplayStyle.None;
-                promptBarContainer.style.display = DisplayStyle.Flex;
-                prompt = "Ability";
-                selectedAbility = _selectedAbility;
+                GameEvents.UseAbility(selectedUnit, selectedUnit, _selectedAbility);
             }
         }
         OnUnitSelected(selectedUnit);
         //else GameEvents.UseAbility(selectedUnit, SceneController.main.selectedUnit, 3);
-    }
-
-    void SwitchPrompt(Unit unit)
-    {
-        if(FieldController.main.IsUnitPlayer(unit) && FieldController.main.GetIsVanguard(unit))
-        {
-            supportBarContainer.style.display = DisplayStyle.None;
-            promptBarContainer.style.display = DisplayStyle.Flex;
-            promptCancelBtn.style.display = DisplayStyle.None;
-            promptBarValue.text = "Swap in unit";
-            prompt = "Death";
-            AbilityUI(selectedUnit, true);
-        }
     }
 
     void EndSupportTurnBtn_Clicked()
