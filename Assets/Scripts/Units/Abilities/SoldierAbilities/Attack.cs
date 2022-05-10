@@ -20,13 +20,13 @@ public class Attack : QTEAbility
 
     public override int GetMoveWeight(Unit caster)
     {
-        int HealthWeight = Mathf.FloorToInt((caster.Health / caster.MaxHealth) * 100);
+        int BuffWeight = caster.Attack * 30;
         int AmmoWeight;
         if (caster.unitType == UnitType.Military || caster.unitType == UnitType.Commander)
         {
             if (caster.Ammo < Cost) return 0;
             AmmoWeight = Mathf.FloorToInt((caster.Ammo / caster.MaxAmmo) * 100);
-            return (2 * HealthWeight + AmmoWeight) / 3;
+            return (2 * BuffWeight + AmmoWeight) / 3;
         }
         else return 0;
     }
