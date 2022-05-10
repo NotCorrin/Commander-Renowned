@@ -13,6 +13,7 @@ public class Unit : Listener
     [SerializeField] protected Ability[] supportAbilities =  new Ability[3];
     public Ability[] SupportAbilities => supportAbilities;
 
+    [SerializeField] GameObject DamageNumbers;
 
     SpriteRenderer spriteRenderer;
     private Billboard billboard;
@@ -110,6 +111,17 @@ public class Unit : Listener
         }
     }
 
+    protected int thorns;
+    public int Thorns
+    {
+        get => thorns;
+        set
+        {
+            thorns = value;
+            UIEvents.UnitThornsChanged(this, thorns);
+        }
+    }
+
     // End variables, Start Functions
 
     private void OnHealthChanged(Unit target, int healthChange)
@@ -117,6 +129,8 @@ public class Unit : Listener
         if (target == this)
         {
             Health += healthChange;
+            Instantiate(DamageNumbers, transform.position, Quaternion.identity).GetComponent<DamageNumbersController>().SetHealthChangeAmount(healthChange);
+
         }
     }
 
@@ -141,6 +155,14 @@ public class Unit : Listener
         if (target == this)
         {
             Accuracy += AccuracyChange;
+        }
+    }
+
+    private void OnThornsChanged(Unit target, int ThornsChange)
+    {
+        if (target == this)
+        {
+            Thorns += ThornsChange;
         }
     }
 
@@ -184,6 +206,17 @@ public class Unit : Listener
         if (caster == this)
         {
             Mana -= cost;
+        }
+    }
+
+    private void OnAttacked(Unit Attacker, Unit Defender, int Damage)
+    {
+        if (Defender == this)
+        {
+            if (Thorns != 0)
+            {
+                GameEvents.HealthChanged(Attacker, -Thorns);
+            }
         }
     }
 
@@ -248,9 +281,15 @@ public class Unit : Listener
     }
     protected virtual void ResetBuffs()
     {
-        Attack = 0;
-        Defense = 0;
-        Accuracy = 0;
+        if(RoundController.isPlayerPhase == FieldController.main.IsUnitPlayer(this))
+        {
+            Attack = 0;
+            Accuracy = 0;
+        }
+        else
+        {
+            Defense = 0;
+        }
     }
 
     protected int GetMoveScoreAIAlgorithm()
@@ -289,10 +328,12 @@ public class Unit : Listener
         GameEvents.onDefenseUp += OnDefenseChanged;
         GameEvents.onAttackUp += OnAttackChanged;
         GameEvents.onAccuracyUp += OnAccuracyChanged;
+        GameEvents.onThornsUp += OnThornsChanged;
         GameEvents.onUseAbility += UseAbility;
         GameEvents.onUseMana += OnUseMana;
         GameEvents.onUseAmmo += OnUseAmmo;
         GameEvents.resetBuffs += ResetBuffs;
+        GameEvents.onUnitAttack += OnAttacked;
 
         GameEvents.onPhaseChanged += UpdateBillboard;
         
@@ -305,10 +346,12 @@ public class Unit : Listener
         GameEvents.onDefenseUp -= OnDefenseChanged;
         GameEvents.onAttackUp -= OnAttackChanged;
         GameEvents.onAccuracyUp -= OnAccuracyChanged;
+        GameEvents.onThornsUp -= OnThornsChanged;
         GameEvents.onUseAbility -= UseAbility;
         GameEvents.onUseMana -= OnUseMana;
         GameEvents.onUseAmmo -= OnUseAmmo;
         GameEvents.resetBuffs -= ResetBuffs;
+        GameEvents.onUnitAttack -= OnAttacked;
 
         GameEvents.onPhaseChanged -= UpdateBillboard;
 
@@ -318,6 +361,8 @@ public class Unit : Listener
     {
         animator = GetComponent<Animator>();
         billboard = GetComponent<Billboard>();
+
+        DamageNumbers = Resources.Load("UIPrefabs/DamageText") as GameObject;
     }
     void UpdateBillboard(RoundController.Phase _phase)
     {

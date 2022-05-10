@@ -77,7 +77,7 @@ public class Defend : QTEAbility
 
     void AttackWithLaser(int damage)
     {
-        GameEvents.HealthChanged(Target, -GetDamageCalculation(Caster, Target, damage));
+        GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, damage));
         FireLaserAtTarget(Target.transform);
     }
 }

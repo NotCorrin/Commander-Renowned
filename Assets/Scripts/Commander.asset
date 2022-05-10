@@ -77,7 +77,7 @@ MonoBehaviour:
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   VanguardAbilities2: []
-  MaxHealth: 1
+  MaxHealth: 18
   MaxAmmo: 2
   MaxMana: 2
   animator: {fileID: 9100000, guid: 74b3c6f72f520a248965c52c6f97a33e, type: 2}

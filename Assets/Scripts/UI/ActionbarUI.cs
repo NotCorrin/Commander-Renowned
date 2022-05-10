@@ -67,7 +67,7 @@ public class ActionbarUI : Listener
         UIEvents.onUnitSelected += OnUnitSelected;
         GameEvents.onPhaseChanged += PhaseSwitchUI;
         GameEvents.onAbilityResolved += OnUnitSelected;
-        GameEvents.onKill += SwitchPrompt;
+        //GameEvents.onKill += SwitchPrompt;
     }
 
     protected override void UnsubscribeListeners()
@@ -82,7 +82,7 @@ public class ActionbarUI : Listener
         UIEvents.onUnitSelected -= OnUnitSelected;
         GameEvents.onPhaseChanged -= PhaseSwitchUI;
         GameEvents.onAbilityResolved -= OnUnitSelected;
-        GameEvents.onKill -= SwitchPrompt;
+        //GameEvents.onKill -= SwitchPrompt;
     }
 
     void OnPromptCancelClicked()
@@ -123,33 +123,12 @@ public class ActionbarUI : Listener
         {
             if(!abilityActive[_selectedAbility-1]) return;
             if(selectedUnit.SupportAbilities[_selectedAbility-1].IsAbilityValid(selectedUnit, selectedUnit))
-                {
-                    GameEvents.UseAbility(selectedUnit, selectedUnit, _selectedAbility);
-                }
-            else
             {
-                Debug.Log(selectedUnit.SupportAbilities[_selectedAbility-1].AbilityName + " needs a target!");
-                supportBarContainer.style.display = DisplayStyle.None;
-                promptBarContainer.style.display = DisplayStyle.Flex;
-                prompt = "Ability";
-                selectedAbility = _selectedAbility;
+                GameEvents.UseAbility(selectedUnit, selectedUnit, _selectedAbility);
             }
         }
         OnUnitSelected(selectedUnit);
         //else GameEvents.UseAbility(selectedUnit, SceneController.main.selectedUnit, 3);
-    }
-
-    void SwitchPrompt(Unit unit)
-    {
-        if(FieldController.main.IsUnitPlayer(unit) && FieldController.main.GetIsVanguard(unit))
-        {
-            supportBarContainer.style.display = DisplayStyle.None;
-            promptBarContainer.style.display = DisplayStyle.Flex;
-            promptCancelBtn.style.display = DisplayStyle.None;
-            promptBarValue.text = "Swap in unit";
-            prompt = "Death";
-            AbilityUI(selectedUnit, true);
-        }
     }
 
     void EndSupportTurnBtn_Clicked()
@@ -162,7 +141,7 @@ public class ActionbarUI : Listener
     void SwitchBtn_Clicked()
     {
         Debug.Log("Switch Button Clicked");
-        if(RoundController.phase == RoundController.Phase.PlayerSwap) FieldController.main.SwapPlayerUnit();
+        if(RoundController.phase == RoundController.Phase.PlayerSwap && FieldController.main.IsUnitPlayer(SceneController.main.selectedUnit)) FieldController.main.SwapPlayerUnit();
         else Debug.Log("Player cannot swap right now!");
     }
 
@@ -282,7 +261,15 @@ public class ActionbarUI : Listener
         switchBarContainer.style.display = DisplayStyle.None;
         promptBarContainer.style.display = DisplayStyle.None;
 
-        
+        if (!FieldController.main.GetUnit(FieldController.Position.Vanguard, true))
+        {
+            endSwitchTurnBtn.style.display = DisplayStyle.None;
+            switchBarContainer.style.display = DisplayStyle.Flex;
+            OnUnitSelected(selectedUnit);
+            return;
+        }
+        else endSwitchTurnBtn.style.display = DisplayStyle.Flex;
+
         switch (phase)
         {
             case RoundController.Phase.PlayerVanguard:
@@ -292,7 +279,7 @@ public class ActionbarUI : Listener
                 supportBarContainer.style.display = DisplayStyle.Flex;
                 break;
             case RoundController.Phase.PlayerSwap:
-                switchBarContainer.style.display = DisplayStyle.Flex;
+                switchBarContainer.style.display = DisplayStyle.Flex;                    
                 break;
             case RoundController.Phase.EnemySwap:
                 switchBarContainer.style.display = DisplayStyle.Flex;

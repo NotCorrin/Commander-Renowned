@@ -48,6 +48,16 @@ public static class GameEvents
         }
     }
 
+    public static Action<Unit, Unit, int> onUnitAttack;
+    public static void UnitAttack(Unit attacker, Unit defender, int Value)
+    {
+        HealthChanged(defender, Value);
+        if (onUnitAttack != null)
+        {
+            onUnitAttack(attacker, defender, Value);
+        }
+    }
+
     public static Action<Unit, int> onDefenseUp;
     public static void DefenseUp(Unit Caster, int Amount)
     {
@@ -72,6 +82,15 @@ public static class GameEvents
         if (onAccuracyUp != null)
         {
             onAccuracyUp(Caster, Amount);
+        }
+    }
+
+    public static Action<Unit, int> onThornsUp;
+    public static void ThornsUp(Unit Caster, int Amount)
+    {
+        if (onThornsUp != null)
+        {
+            onThornsUp(Caster, Amount);
         }
     }
 
@@ -159,6 +178,10 @@ public static class GameEvents
     public static Action resetBuffs;
     public static void SetPhase(RoundController.Phase phase = RoundController.Phase.NextPhase)
     {
+        if (RoundController.phase == RoundController.Phase.PlayerVanguard || RoundController.phase == RoundController.Phase.EnemyVangaurd && resetBuffs != null)
+        {
+            resetBuffs();
+        }
         RoundController.SetPhase(phase);
         // Additional event not needed
         // if (onSetPhase != null)
@@ -166,10 +189,6 @@ public static class GameEvents
         //     onSetPhase(phase);
         // }
         Debug.Log(phase);
-        if(RoundController.phase == RoundController.Phase.PlayerSupport && resetBuffs != null)
-        {
-            resetBuffs();
-        }
         if (onPhaseChanged != null)
         {
             onPhaseChanged(RoundController.phase);
