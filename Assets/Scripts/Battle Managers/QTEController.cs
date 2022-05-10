@@ -55,11 +55,22 @@ public class QTEController : Listener
 
     private void StartQTE(QTEType qteType, int difficultyModifier)
     {
+        int finalDifficultyModifier = difficultyModifier;
+
+        //Inverts difficulty modifier if not player turn
+        if (RoundController.main != null)
+        {
+            if (!RoundController.main.IsCurrentRoundPlayer())
+            {
+                finalDifficultyModifier = -difficultyModifier;
+            }
+        }
+
         switch (qteType)
         {
             case QTEType.shrinkingCircle:
                 {
-                    StartShrinkingCircle(difficultyModifier);
+                    StartShrinkingCircle(finalDifficultyModifier);
                     break;
                 }
         }
@@ -71,7 +82,7 @@ public class QTEController : Listener
         shrinkingCircleMaxTime = shrinkingCircleBaseTime + (difficultyModifier * shrinkingCircleDifficultyStep);
         shrinkingCircleTimer = shrinkingCircleMaxTime;
         MenuEvents.onQTETriggered += ResolveShrinkingCircle;
-                            //Debug.Log("AAAAAAAAA0");
+
     }
 
     private void ResolveShrinkingCircle()
@@ -79,26 +90,28 @@ public class QTEController : Listener
         //Possibly working code for shrinking circle backend. Not implemented currently.
 
         QTEResult finalResult;
-        if (shrinkingCircleTimer > shrinkingCircleMaxTime * shrinkingCircleMinCritical && shrinkingCircleTimer < shrinkingCircleTimer * shrinkingCircleMaxCritical)
-        {
-            finalResult = QTEResult.Critical;
-            UIEvents.onDisplayQTEResults(QTEDisplayResult.Perfect);
-        }
-        else if (shrinkingCircleTimer < shrinkingCircleMaxTime * shrinkingCircleMinHit || shrinkingCircleTimer > shrinkingCircleMaxTime * shrinkingCircleMaxCritical)
+
+        float finalPercentage = ShrinkingCircleTimer / ShrinkingCircleMaxTime;
+
+        if (finalPercentage <= shrinkingCircleMinHit || finalPercentage >= shrinkingCircleMaxCritical)
         {
             finalResult = QTEResult.Miss;
-            UIEvents.onDisplayQTEResults(QTEDisplayResult.Poor);
+            UIEvents.DisplayQTEResults(QTEDisplayResult.Poor);
+        }
+        else if (finalPercentage <= shrinkingCircleMinCritical)
+        {
+            finalResult = QTEResult.Hit;
+            UIEvents.DisplayQTEResults(QTEDisplayResult.Good);
         }
         else
         {
-            finalResult = QTEResult.Hit;
-            UIEvents.onDisplayQTEResults(QTEDisplayResult.Good);
+            finalResult = QTEResult.Critical;
+            UIEvents.DisplayQTEResults(QTEDisplayResult.Perfect);
         }
-
+        
         //Inverting result if is enemy turn
         finalResult = InvertResultIfNotPlayer(finalResult);
         GameEvents.QTEResolved(finalResult);
-        Debug.Log("what the fuck");
 
         MenuEvents.onQTETriggered -= ResolveShrinkingCircle;
     }
