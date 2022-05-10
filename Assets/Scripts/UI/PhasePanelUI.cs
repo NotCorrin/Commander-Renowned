@@ -13,12 +13,12 @@ public class PhasePanelUI : Listener
 
     protected override void SubscribeListeners()
     {
-        GameEvents.onPhaseChanged += setPhaseLabel;
+        GameEvents.onChangePhase += setPhaseLabel;
     }
 
     protected override void UnsubscribeListeners()
     {
-        GameEvents.onPhaseChanged -= setPhaseLabel;
+        GameEvents.onChangePhase -= setPhaseLabel;
     }
     void Start()
     {

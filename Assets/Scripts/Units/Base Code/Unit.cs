@@ -332,10 +332,10 @@ public class Unit : Listener
         GameEvents.onUseAbility += UseAbility;
         GameEvents.onUseMana += OnUseMana;
         GameEvents.onUseAmmo += OnUseAmmo;
-        GameEvents.resetBuffs += ResetBuffs;
+        GameEvents.onResetBuffs += ResetBuffs;
         GameEvents.onUnitAttack += OnAttacked;
 
-        GameEvents.onPhaseChanged += UpdateBillboard;
+        GameEvents.onChangePhase += UpdateBillboard;
         
     }
 
@@ -350,10 +350,10 @@ public class Unit : Listener
         GameEvents.onUseAbility -= UseAbility;
         GameEvents.onUseMana -= OnUseMana;
         GameEvents.onUseAmmo -= OnUseAmmo;
-        GameEvents.resetBuffs -= ResetBuffs;
+        GameEvents.onResetBuffs -= ResetBuffs;
         GameEvents.onUnitAttack -= OnAttacked;
 
-        GameEvents.onPhaseChanged -= UpdateBillboard;
+        GameEvents.onChangePhase -= UpdateBillboard;
 
     }
 

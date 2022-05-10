@@ -143,14 +143,14 @@ public class EnemyController : Listener
 			return;
 		} else {
 			if(vanguardStickScore > enemySupportToSwitchScore) {
-				Invoke("GoToNextPhase", 0.75f);
-				return;
+                GoToNextPhase();
+                return;
 			}else if (vanguardStickScore < enemySupportToSwitchScore) {
 				fieldController.SwapEnemyUnit(enemySupportToSwitch);
 				return;
 			}else {
 				if (Random.Range(0, 100) < 50) {
-					Invoke("GoToNextPhase", 0.75f);
+                    GoToNextPhase();
 					return;
 				} else {
 					fieldController.SwapEnemyUnit(enemySupportToSwitch);
@@ -318,13 +318,13 @@ public class EnemyController : Listener
 	}
 
 	protected override void SubscribeListeners () {
-		GameEvents.onPhaseChanged += EnemyTurn;
+		GameEvents.onChangePhase += EnemyTurn;
 		GameEvents.onSetupUnits += SetupUnits;
 		GameEvents.onKill += Kill;
 	}
 
 	protected override void UnsubscribeListeners () {
-		GameEvents.onPhaseChanged -= EnemyTurn;
+		GameEvents.onChangePhase -= EnemyTurn;
 		GameEvents.onSetupUnits -= SetupUnits;
 		GameEvents.onKill -= Kill;
 	}
@@ -340,16 +340,15 @@ public class EnemyController : Listener
 	void EnemyTurn (RoundController.Phase phase) {
 		switch (phase) {
 			case RoundController.Phase.EnemyVangaurd:
-			Invoke("UseVanguardAbility", Random.Range(0.8f, 2.5f));
-			
+			Invoke("UseVanguardAbility", 0.8f);
 			break;
 			case RoundController.Phase.EnemySwap:
-			Invoke("SwitchPositions", Random.Range(0.8f, 2.5f));
+			Invoke("SwitchPositions", 0.8f);
 			Debug.Log("Swapping enemy positions!");
 			break;
 			case RoundController.Phase.EnemySupport:
 			//UseSupportAbility();
-			Invoke("UseSupportAbility", Random.Range(0.8f, 2.5f));
+			Invoke("UseSupportAbility", 0.8f);
 			break;
 			default:
 			break;
@@ -399,18 +398,18 @@ public class EnemyController : Listener
 			}
 			*/
 		}
-		if(enemySupportRight)
-		{
-			FindBestSupportRightAbility();
-			// Support right ability on single target
-			List<Unit> rightAbilityValidTargets = fieldController.GetValidTargets(enemySupportRight, supportRightBestAbility);
-			if(rightAbilityValidTargets.Count > 0)
-			{
-				Unit rightTarget = rightAbilityValidTargets[Random.Range(0, rightAbilityValidTargets.Count)];
-				GameEvents.UseAbility(enemySupportRight, rightTarget, supportRightBestAbilityIndex);  // Remove this line for multi targets
-			}
+        if (enemySupportRight)
+        {
+            FindBestSupportRightAbility();
+            // Support right ability on single target
+            List<Unit> rightAbilityValidTargets = fieldController.GetValidTargets(enemySupportRight, supportRightBestAbility);
+            if (rightAbilityValidTargets.Count > 0)
+            {
+                Unit rightTarget = rightAbilityValidTargets[Random.Range(0, rightAbilityValidTargets.Count)];
+                GameEvents.UseAbility(enemySupportRight, rightTarget, supportRightBestAbilityIndex);  // Remove this line for multi targets
+            }
 
-			/*
+            /*
 			int rightAbilityNumOfTargets = [SET VALUE HERE]; <<<<< IMPORTANT THING TO ADD
 			for (int i = 0; i < rightAbilityNumOfTargets; i++) {
 			rightTarget = rightAbilityValidTargets[Random.Range(0, rightAbilityValidTargets.Count)];
@@ -418,12 +417,11 @@ public class EnemyController : Listener
 				rightAbilityValidTargets.Remove(rightTarget);
 			}
 			*/
-		}
-
-		Invoke("GoToNextPhase", 0.75f);
+        }
+        GoToNextPhase();
 	}
 	
 	void GoToNextPhase () {
-		GameEvents.SetPhase();
+		GameEvents.EndPhase();
 	}
 }
