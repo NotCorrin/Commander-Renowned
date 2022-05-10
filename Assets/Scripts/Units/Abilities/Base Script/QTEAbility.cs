@@ -24,8 +24,13 @@ public abstract class QTEAbility : Ability
                 //Debug.Log("AAAAAAAAA");
 
         AbilityUsed(result);
-        GameEvents.SetPhase(RoundController.Phase.NextPhase);
+        Invoke("SetPhase",0.5f);
         GameEvents.onQTEResolved -= OnQTEResolved;
+    }
+
+    protected void SetPhase()
+    {
+        GameEvents.SetPhase(RoundController.Phase.NextPhase);
     }
 
     // Use this to set the QTE type
