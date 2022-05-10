@@ -178,6 +178,10 @@ public static class GameEvents
     public static Action resetBuffs;
     public static void SetPhase(RoundController.Phase phase = RoundController.Phase.NextPhase)
     {
+        if (RoundController.phase == RoundController.Phase.PlayerVanguard || RoundController.phase == RoundController.Phase.EnemyVangaurd && resetBuffs != null)
+        {
+            resetBuffs();
+        }
         RoundController.SetPhase(phase);
         // Additional event not needed
         // if (onSetPhase != null)
@@ -185,10 +189,6 @@ public static class GameEvents
         //     onSetPhase(phase);
         // }
         Debug.Log(phase);
-        if(RoundController.phase == RoundController.Phase.PlayerSupport && resetBuffs != null)
-        {
-            resetBuffs();
-        }
         if (onPhaseChanged != null)
         {
             onPhaseChanged(RoundController.phase);

@@ -281,9 +281,15 @@ public class Unit : Listener
     }
     protected virtual void ResetBuffs()
     {
-        Attack = 0;
-        Defense = 0;
-        Accuracy = 0;
+        if(RoundController.isPlayerPhase == FieldController.main.IsUnitPlayer(this))
+        {
+            Attack = 0;
+            Accuracy = 0;
+        }
+        else
+        {
+            Defense = 0;
+        }
     }
 
     protected int GetMoveScoreAIAlgorithm()
