@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class MageDefend : QTEAbility
 {
-	[SerializeField] int Damage;
-    [SerializeField] int DefenseBoost;
-
-    [SerializeField] int DefenseVariation;
     [SerializeField] int CostVariation;
 
-    [SerializeField] GameObject BuffEffect;
+    public override void SetupParams(AbilitySetup setup)
+    {
+        base.SetupParams(setup);
+        if(!VFX1) VFX1 = Resources.Load("CustomLasers/Mage/MageFlare") as GameObject;
+    }
 
     public override bool IsCasterValid (Unit Caster)
     {
-        return Caster is MagicUnit || Caster is CommanderUnit;
+		return(Caster.Mana > Cost);
 	}    
     public override bool IsTargetValid (Unit Target, bool isPlayer)
     {
@@ -30,17 +30,9 @@ public class MageDefend : QTEAbility
     {
         int HealthWeight = Mathf.FloorToInt((1 - (caster.Health / caster.MaxHealth)) * 100);
         int ManaWeight;
-        if (caster is MageUnit)
+        if (caster.unitType == UnitType.Mage || caster.unitType == UnitType.Commander)
         {
-            MageUnit mageCaster = caster as MageUnit;
-            ManaWeight = Mathf.FloorToInt((1 - (mageCaster.Mana / mageCaster.MaxMana)) * 100);
-
-        }
-        else if (caster is CommanderUnit)
-        {
-            CommanderUnit commanderCaster = caster as CommanderUnit;
-            ManaWeight = Mathf.FloorToInt((1 - (commanderCaster.Mana / commanderCaster.MaxMana)) * 100);
-
+            ManaWeight = Mathf.FloorToInt((1 - (caster.Mana / caster.MaxMana)) * 100);
         }
         else return 0;
 
@@ -49,26 +41,26 @@ public class MageDefend : QTEAbility
 
     protected override void AbilityUsed(QTEController.QTEResult result)
     {
-        int FinalDefense = DefenseBoost;
+        int FinalDefense = StatBoost;
         int FinalCost = Cost;
 
         switch (result)
         {
             case QTEController.QTEResult.Critical:
                 {
-                    FinalDefense += DefenseVariation;
+                    FinalDefense += Variation;
                     FinalCost += CostVariation;
                     break;
                 }
             case QTEController.QTEResult.Miss:
                 {
-                    FinalDefense = Mathf.Max(0, FinalDefense - DefenseVariation);
+                    FinalDefense = Mathf.Max(0, FinalDefense - Variation);
                     FinalCost -= CostVariation;
                     break;
                 }
         }
 
-        if (BuffEffect) Instantiate(BuffEffect, transform);
+        if (VFX1) Instantiate(VFX1, transform);
         GameEvents.DefenseUp(Caster, FinalDefense);
         GameEvents.onHealthChanged(Target, -GetDamageCalculation(Caster, Target, Damage));
         GameEvents.onUseMana(Caster, -FinalCost);

@@ -30,6 +30,15 @@ public static class GameEvents
         }
     }
 
+    public static Action<List<Unit>, List<Unit>> onSetupUnits;
+    public static void SetupUnits(List<Unit> playerUnits, List<Unit> enemyUnits)
+    {
+        if (onSetupUnits != null)
+        {
+            onSetupUnits(playerUnits, enemyUnits);
+        }
+    }
+
     public static Action<Unit, int> onHealthChanged;
     public static void HealthChanged(Unit target, int Value)
     {
@@ -157,7 +166,7 @@ public static class GameEvents
         //     onSetPhase(phase);
         // }
         Debug.Log(phase);
-        if(RoundController.phase == RoundController.Phase.PlayerSwap && resetBuffs != null)
+        if(RoundController.phase == RoundController.Phase.PlayerSupport && resetBuffs != null)
         {
             resetBuffs();
         }

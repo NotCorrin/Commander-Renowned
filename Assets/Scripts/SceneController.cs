@@ -43,21 +43,11 @@ public class SceneController : Listener
             if (hit.collider != null)
             {
                 selectedObject = hit.transform.gameObject;
-
-                if (selectedObject.CompareTag("Military"))
+                if (selectedObject.GetComponent<Unit>())
                 {
-                    selectedUnit = selectedObject.GetComponent<MilitaryUnit>();
-                    UIEvents.onUnitSelected(selectedUnit);
-                }
-                else if (selectedObject.CompareTag("Magic"))
-                {
-                    selectedUnit = selectedObject.GetComponent<MagicUnit>();
-                    UIEvents.onUnitSelected(selectedUnit);
-                }
-                else if (selectedObject.CompareTag("Renowned"))
-                {
-                    selectedUnit = selectedObject.GetComponent<CommanderUnit>();
-                    UIEvents.onUnitSelected(selectedUnit);
+                    Debug.Log(hit.collider.name);
+                    selectedUnit = selectedObject.GetComponent<Unit>();
+                    UIEvents.UnitSelected(selectedUnit);
                 }
             }
         }
