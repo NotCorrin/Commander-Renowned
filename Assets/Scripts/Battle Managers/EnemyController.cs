@@ -143,7 +143,7 @@ public class EnemyController : Listener
 			return;
 		}
 		// Get the best ability's index
-		int highestAbilityWeight = 0;
+		int highestAbilityWeight = enemyVanguard.VanguardAbilities[0].GetMoveWeight(enemyVanguard);
 		int index = 0;
 		if (enemyVanguard.VanguardAbilities[1] != null) {
 			for (int i = 0; i < enemyVanguard.VanguardAbilities.Length; i++) {
@@ -169,7 +169,7 @@ public class EnemyController : Listener
 			vanguardBestAbility = enemyVanguard.VanguardAbilities[0];
 			index = 0;
 		}
-		vanguardBestAbilityIndex = index;
+		vanguardBestAbilityIndex = index + 1;
 	}
 
 	void FindBestSupportLeftAbility () {
@@ -180,7 +180,8 @@ public class EnemyController : Listener
 		// Get the best ability's index
 		int highestAbilityWeight = 0;
 		int index = 0;
-		if (enemySupportLeft.SupportAbilities[1] != null) {
+		if (enemySupportLeft.SupportAbilities.Length > 1) {
+            Debug.Log ("Has an ability");
 			for (int i = 0; i < enemySupportLeft.SupportAbilities.Length; i++) {
 				Ability currentAbility = enemySupportLeft.SupportAbilities[i];
 				if (currentAbility == null) {
@@ -205,7 +206,7 @@ public class EnemyController : Listener
 			supportLeftBestAbility = enemySupportLeft.SupportAbilities[0];
 			index = 0;
 		}
-		supportLeftBestAbilityIndex = index;
+		supportLeftBestAbilityIndex = index + 1;
 	}
 
 	void FindBestSupportRightAbility () {
@@ -240,7 +241,7 @@ public class EnemyController : Listener
 			supportRightBestAbility = enemySupportRight.SupportAbilities[0];
 			index = 0;
 		}
-		supportRightBestAbilityIndex = index;
+		supportRightBestAbilityIndex = index + 1;
 	}
 
 	bool SetEnemyVanguard () {
@@ -335,7 +336,7 @@ public class EnemyController : Listener
 		{			
 			// Use ability on single target
 			List<Unit> validTargets = fieldController.GetValidTargets(enemyVanguard, vanguardBestAbility);
-			Unit target = validTargets[Random.Range(0, validTargets.Count)];
+			Unit target = validTargets[Random.Range(0, validTargets.Count - 1)];
 			GameEvents.UseAbility(enemyVanguard, target, vanguardBestAbilityIndex);
 			//Debug.Log("Enemy vanguard attack: Ability - " + vanguardBestAbility.AbilityName + " Target - " + target);
 			
@@ -359,7 +360,7 @@ public class EnemyController : Listener
 			List<Unit> leftAbilityValidTargets = fieldController.GetValidTargets(enemySupportLeft, supportLeftBestAbility);
 			if(leftAbilityValidTargets.Count > 0)
 			{
-				Unit leftTarget = leftAbilityValidTargets[Random.Range(0, leftAbilityValidTargets.Count)];
+				Unit leftTarget = leftAbilityValidTargets[Random.Range(0, leftAbilityValidTargets.Count - 1)];
 				GameEvents.UseAbility(enemySupportLeft, leftTarget, supportLeftBestAbilityIndex); // Remove this line for multi targets
 			}
 			/*
@@ -378,7 +379,7 @@ public class EnemyController : Listener
 			List<Unit> rightAbilityValidTargets = fieldController.GetValidTargets(enemySupportRight, supportRightBestAbility);
 			if(rightAbilityValidTargets.Count > 0)
 			{
-				Unit rightTarget = rightAbilityValidTargets[Random.Range(0, rightAbilityValidTargets.Count)];
+				Unit rightTarget = rightAbilityValidTargets[Random.Range(0, rightAbilityValidTargets.Count - 1)];
 				GameEvents.UseAbility(enemySupportRight, rightTarget, supportRightBestAbilityIndex);  // Remove this line for multi targets
 			}
 
