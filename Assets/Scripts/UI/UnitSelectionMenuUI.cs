@@ -13,7 +13,7 @@ public class UnitSelectionMenuUI : MonoBehaviour
 
     // TODO : Remove this after unit scriptable objects are implemented.
     [Range(0, 30), SerializeField] private int debugUnitCards = 10;
-    
+    [SerializeField] private TeamScriptableObject teamScriptableObject;
     private VisualElement mainContainer;
     private TextElement mainTitleText;
     private ScrollView mainScrollView;
@@ -30,7 +30,7 @@ public class UnitSelectionMenuUI : MonoBehaviour
 
         // TODO : Change to ScriptableObject Units instead of hardcoded values.
 
-        for (int i = 0; i < debugUnitCards; i++)
+        for (int i = 0; i < teamScriptableObject.units.Count; i++)
         {
             if (i % 5 == 0)
             {
@@ -39,7 +39,7 @@ public class UnitSelectionMenuUI : MonoBehaviour
             }
 
             unitCard = unitCardUI.Instantiate();
-            unitCard.Q<TextElement>("name-label").text = "Unit " + (i + 1); // Use "i" as the index for future ScriptableObject arrays.
+            unitCard.Q<TextElement>("name-label").text = teamScriptableObject.units[i].UnitName;
             test.Q<VisualElement>("container").Add(unitCard);
         }
 
@@ -105,6 +105,12 @@ public class UnitSelectionMenuUI : MonoBehaviour
         {
             Debug.LogWarning($"{gameObject.name} : UnitSelectionMenuUI - has no UIDocument assigned in the inspector. Script will still work, but is not 100% safe.");
             uiDocument = GetComponentInParent<UIDocument>();
+        }
+
+        if (teamScriptableObject == null)
+        {
+            Debug.LogError($"{gameObject.name} : UnitSelectionMenuUI - has no TeamScriptableObject assigned in the inspector.");
+            // teamScriptableObject = Resources.Load<TeamScriptableObject>("ScriptableObjects/TeamScriptableObject"); TODO : Maybe come back to this.
         }
 
         if (unitCardUI == null)
