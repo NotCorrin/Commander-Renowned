@@ -241,8 +241,9 @@ public class FieldController : Listener
         if(!chosenUnit) chosenUnit = sceneController.selectedUnit;
         vanguardPos = PlayerVanguardPos;
         selectedUnitPos = chosenUnit.transform.position;
-        
+
         if (PlayerVanguard) VanguardToSupport = PlayerVanguard.transform;
+        else VanguardToSupport = null;
         SupportToVanguard = chosenUnit.transform;
         disableInput = true;
         timer = 0;

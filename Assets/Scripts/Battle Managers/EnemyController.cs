@@ -38,9 +38,32 @@ public class EnemyController : Listener
 		// No support enemies
 		if (enemySupportLeft == null && enemySupportRight == null) {
 			//GameEvents.SetPhase();
-			fieldController.SwapEnemyUnit(enemyVanguard);
 			return;
 		}
+
+        if (enemySupportLeft)
+        {
+            if (enemySupportRight)
+            {
+                if (enemySupportRight.GetSwitchScore() > enemySupportLeft.GetSwitchScore())
+                {
+                    //Has right, right > left
+                    fieldController.SwapEnemyUnit(enemySupportRight);
+                    return;
+                }
+            }
+            //Left > Right
+            fieldController.SwapEnemyUnit(enemySupportLeft);
+            return;
+        }
+        else
+        {
+            //Has only right
+            fieldController.SwapEnemyUnit(enemySupportRight);
+            return;
+        }
+
+        
 		// Only has left support
 		if (enemySupportLeft != null && enemySupportRight == null) {
 			// If no enemy vanguard
@@ -146,30 +169,31 @@ public class EnemyController : Listener
 		int highestAbilityWeight = enemyVanguard.VanguardAbilities[0].GetMoveWeight(enemyVanguard);
         vanguardBestAbility = enemyVanguard.VanguardAbilities[0];
 		int index = 0;
-		if (enemyVanguard.VanguardAbilities[1] != null) {
-			for (int i = 0; i < enemyVanguard.VanguardAbilities.Length; i++) {
-				Ability currentAbility = enemyVanguard.VanguardAbilities[i];
-				if (currentAbility == null) {
-					continue;
-				}
-				int currentWeight = currentAbility.GetMoveWeight(enemyVanguard);
-				if (currentWeight > highestAbilityWeight) {
-					highestAbilityWeight = currentWeight;
-					vanguardBestAbility = currentAbility;
-					index = i;
-				}
-				if (currentWeight == highestAbilityWeight) {
-					if (Random.Range(0, 100) < 50) {
-						highestAbilityWeight = currentWeight;
-						vanguardBestAbility = currentAbility;
-						index = i;
-					}
-				}
-			}
-		} else {
-			vanguardBestAbility = enemyVanguard.VanguardAbilities[0];
-			index = 0;
-		}
+        for (int i = 0; i < enemyVanguard.VanguardAbilities.Length; i++)
+        {
+            Ability currentAbility = enemyVanguard.VanguardAbilities[i];
+            if (currentAbility == null)
+            {
+                continue;
+            }
+            int currentWeight = currentAbility.GetMoveWeight(enemyVanguard);
+            if (currentWeight > highestAbilityWeight)
+            {
+                highestAbilityWeight = currentWeight;
+                vanguardBestAbility = currentAbility;
+                index = i;
+            }
+            if (currentWeight == highestAbilityWeight)
+            {
+                if (Random.Range(0, 100) < 50)
+                {
+                    highestAbilityWeight = currentWeight;
+                    vanguardBestAbility = currentAbility;
+                    index = i;
+                }
+            }
+
+        }
 		vanguardBestAbilityIndex = index + 1;
 	}
 

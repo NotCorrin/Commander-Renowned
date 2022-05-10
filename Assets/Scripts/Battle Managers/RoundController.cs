@@ -53,7 +53,7 @@ public class RoundController : Listener
     {
         if(!isPlayerPhase) FieldController.main.ActivateKill();
         Debug.LogWarning("this should happen third" + FieldController.main.GetUnit(FieldController.Position.Vanguard, true));
-        if(!FieldController.main.GetUnit(FieldController.Position.Vanguard, true)) Debug.LogError("It works");
+        //if(!FieldController.main.GetUnit(FieldController.Position.Vanguard, true)) Debug.LogError("It works");
         if(_phase == Phase.NextPhase) phase++;
         else phase = _phase;
         if(((int)phase) >= 6) {phase = Phase.PlayerVanguard; Debug.Log("reached last phase, cycling back");}

@@ -141,8 +141,16 @@ public class ActionbarUI : Listener
     void SwitchBtn_Clicked()
     {
         Debug.Log("Switch Button Clicked");
-        if(RoundController.phase == RoundController.Phase.PlayerSwap && FieldController.main.IsUnitPlayer(SceneController.main.selectedUnit)) FieldController.main.SwapPlayerUnit();
-        else Debug.Log("Player cannot swap right now!");
+        if (RoundController.phase == RoundController.Phase.PlayerSwap)
+        {
+            if (SceneController.main.selectedUnit)
+            {
+                if (FieldController.main.IsUnitPlayer(SceneController.main.selectedUnit)) FieldController.main.SwapPlayerUnit();
+                return;
+            }
+        }
+
+        Debug.Log("Player cannot swap right now!");
     }
 
     void EndSwitchTurnBtn_Clicked()
