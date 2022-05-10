@@ -113,6 +113,7 @@ public class FieldController : Listener
     public List<Unit> GetValidTargets(Unit Caster, Ability ability)
     {
         if(!Caster) {Debug.Log("No Caster. wtf."); return null;}
+        if (!ability) { Debug.LogError("No ability wtf"); return null; }
         List<Unit> unitList = new List<Unit>();
         if(ability.IsAbilityValid(Caster, PlayerVanguard)) unitList.Add(PlayerVanguard);
         if(ability.IsAbilityValid(Caster, PlayerSupportLeft)) unitList.Add(PlayerSupportLeft);
