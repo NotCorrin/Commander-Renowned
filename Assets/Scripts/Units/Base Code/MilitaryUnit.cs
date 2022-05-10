@@ -4,23 +4,6 @@ using UnityEngine;
 
 public abstract class MilitaryUnit : Unit
 {
-    [SerializeField] private int maxAmmo;
-    public int MaxAmmo
-    {
-        get => maxAmmo;
-    }
-
-    [SerializeField]
-    private int ammo;
-    public int Ammo
-    {
-        get => ammo;
-        set
-        {
-            ammo = Mathf.Min(Mathf.Max(value, 0), MaxAmmo);
-            UIEvents.UnitAmmoChanged(this, ammo, maxAmmo);
-        }
-    }
     // Start is called before the first frame update
     void Start()
     {

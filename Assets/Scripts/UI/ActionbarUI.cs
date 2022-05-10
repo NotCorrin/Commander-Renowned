@@ -40,7 +40,7 @@ public class ActionbarUI : Listener
 
     private Unit selectedUnit;
     private int selectedAbility;
-    private bool prompt;
+    private string prompt = "";
 
     private bool[] abilityActive = new bool[3];
     #endregion
@@ -66,6 +66,8 @@ public class ActionbarUI : Listener
         endSwitchTurnBtn.clickable.clicked += EndSwitchTurnBtn_Clicked;
         UIEvents.onUnitSelected += OnUnitSelected;
         GameEvents.onPhaseChanged += PhaseSwitchUI;
+        GameEvents.onAbilityResolved += OnUnitSelected;
+        GameEvents.onKill += SwitchPrompt;
     }
 
     protected override void UnsubscribeListeners()
@@ -79,11 +81,13 @@ public class ActionbarUI : Listener
         endSwitchTurnBtn.clickable.clicked -= EndSwitchTurnBtn_Clicked;
         UIEvents.onUnitSelected -= OnUnitSelected;
         GameEvents.onPhaseChanged -= PhaseSwitchUI;
+        GameEvents.onAbilityResolved -= OnUnitSelected;
+        GameEvents.onKill -= SwitchPrompt;
     }
 
     void OnPromptCancelClicked()
     {
-        prompt = false;
+        prompt = "";
         supportBarContainer.style.display = DisplayStyle.Flex;
         promptBarContainer.style.display = DisplayStyle.None;
         Debug.Log("Prompt Cancel Clicked");
@@ -127,12 +131,25 @@ public class ActionbarUI : Listener
                 Debug.Log(selectedUnit.SupportAbilities[_selectedAbility-1].AbilityName + " needs a target!");
                 supportBarContainer.style.display = DisplayStyle.None;
                 promptBarContainer.style.display = DisplayStyle.Flex;
-                prompt = true;
+                prompt = "Ability";
                 selectedAbility = _selectedAbility;
             }
         }
         OnUnitSelected(selectedUnit);
         //else GameEvents.UseAbility(selectedUnit, SceneController.main.selectedUnit, 3);
+    }
+
+    void SwitchPrompt(Unit unit)
+    {
+        if(FieldController.main.IsUnitPlayer(unit) && FieldController.main.GetIsVanguard(unit))
+        {
+            supportBarContainer.style.display = DisplayStyle.None;
+            promptBarContainer.style.display = DisplayStyle.Flex;
+            promptCancelBtn.style.display = DisplayStyle.None;
+            promptBarValue.text = "Swap in unit";
+            prompt = "Death";
+            AbilityUI(selectedUnit, true);
+        }
     }
 
     void EndSupportTurnBtn_Clicked()
@@ -158,17 +175,49 @@ public class ActionbarUI : Listener
     void OnUnitSelected(Unit unit)
     {
         if(!unit) return;
-        if(prompt)
+        Debug.Log(unit.UnitName + " was selected");
+        if(selectedUnit && unit)
         {
-            GameEvents.UseAbility(  selectedUnit, unit, selectedAbility);
-            return;
+            if(prompt == "Ability")
+            {
+                if(RoundController.phase != RoundController.Phase.PlayerSupport) prompt = "";
+                else if(selectedUnit.SupportAbilities[selectedAbility - 1].IsAbilityValid(selectedUnit, unit))
+                {
+                    Debug.Log("Caster = " + selectedUnit + "\n" + "Target = " + unit);
+                    supportBarContainer.style.display = DisplayStyle.Flex;
+                    promptBarContainer.style.display = DisplayStyle.None;
+                    prompt = "";
+                    GameEvents.UseAbility(selectedUnit, unit, selectedAbility);
+                }
+                return;
+            }
+            else if (prompt == "Death")
+            {
+                if(FieldController.main.IsUnitPlayer(unit) && !FieldController.main.GetIsVanguard(unit))
+                {
+                    supportBarContainer.style.display = DisplayStyle.Flex;
+                    promptBarContainer.style.display = DisplayStyle.None;
+                    prompt = "";
+                    FieldController.main.SwapPlayerUnit(unit);
+                }
+                return;
+            }
         }
 
         selectedUnit = unit;
+        AbilityUI(unit);
+    }
+    void AbilityUI(Unit unit, bool setAllFalse = false)
+    {
         Ability[] _abilities = FieldController.main.GetIsVanguard(unit)?unit.VanguardAbilities:unit.SupportAbilities;
 
         for (int i = 0; i < _abilities.Length; i++)
         {
+            if(setAllFalse)
+            {
+                abilityActive[i] = false;
+                continue;
+            }
             if(!FieldController.main.IsUnitActive(unit)
             || _abilities[i] == null)
             {

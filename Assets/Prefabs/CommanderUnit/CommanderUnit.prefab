@@ -1,5 +1,68 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1345905055652322996
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1031591713662122339}
+  - component: {fileID: 4091427836165009186}
+  - component: {fileID: 6176307495339603142}
+  m_Layer: 0
+  m_Name: UnitSelection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1031591713662122339
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345905055652322996}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6634830706548729550}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4091427836165009186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345905055652322996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: 86f198fc749c0544eacacb79c90add95, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: aebba43871cae414896176f3a485ad20, type: 3}
+  m_SortingOrder: 0
+--- !u!114 &6176307495339603142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345905055652322996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec5c216bab645c84aac0b4034d7312e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiDocument: {fileID: 4091427836165009186}
+  parent: {fileID: 0}
 --- !u!1 &3393461652469404059
 GameObject:
   m_ObjectHideFlags: 0
@@ -140,8 +203,8 @@ GameObject:
   - component: {fileID: 2294820338508900456}
   - component: {fileID: 5145483213268070333}
   - component: {fileID: 3288217654638550077}
-  - component: {fileID: 1254211256}
   - component: {fileID: 4681837390009795012}
+  - component: {fileID: 8216779918204619310}
   m_Layer: 0
   m_Name: CommanderUnit
   m_TagString: Renowned
@@ -165,8 +228,9 @@ Transform:
   - {fileID: 1868323001065284391}
   - {fileID: 4515696426555026560}
   - {fileID: 3171720690092299154}
+  - {fileID: 1031591713662122339}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3425432388668474512
 MonoBehaviour:
@@ -188,7 +252,7 @@ MonoBehaviour:
   - {fileID: 1145748182108536317}
   - {fileID: 2294820338508900456}
   - {fileID: 0}
-  maxHealth: 10
+  maxHealth: 18
   health: 0
   maxAmmo: 5
   maxMana: 5
@@ -205,10 +269,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityName: Attack Formation
-  abilityDescription: Strike in an attack formation. Attack up, Damage 3
-  cost: 0
-  Damage: 3
+  abilityDescription: Strike twice in an attack formation. Attack up, Damage 4
+  cost: 1
+  TotalBaseDamage: 4
   DamageVariation: 0
+  AttackBoost: 1
+  LaserShot: {fileID: 8959962781991663832, guid: 20f2104f74282474fa884d3a6e632a11, type: 3}
+  secondShotDelay: 0.2
 --- !u!114 &1001161374790124703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,11 +290,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Wall of Plasma
   abilityDescription: Will form an invisible wall to protect the mage
-  cost: 0
+  cost: 1
   Damage: 1
-  DefenseBoost: 0
-  DefenseVariation: 0
+  DefenseBoost: 2
+  DefenseVariation: 1
   CostVariation: 0
+  BuffEffect: {fileID: 4795044506606789115, guid: e24947d56dd5bb14089df296b91fab13, type: 3}
 --- !u!114 &1145748182108536317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,6 +311,7 @@ MonoBehaviour:
   abilityName: Reload
   abilityDescription: Gain 3 ammo
   cost: 3
+  ReloadEffect: {fileID: 782153884964200169, guid: b8c56c2add686174dadacb682e6415ad, type: 3}
 --- !u!114 &2294820338508900456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,8 +326,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Confidence
   abilityDescription: Increases attack damage
-  cost: 0
+  cost: 1
   buffAmount: 1
+  buffEffect: {fileID: 782153884964200169, guid: 1f1522a624ccb0941a0f9405b9374e46, type: 3}
 --- !u!212 &5145483213268070333
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -331,32 +401,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!61 &1254211256
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6480894034537515106}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!114 &4681837390009795012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -370,6 +414,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useStaticBillboard: 0
+--- !u!65 &8216779918204619310
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6480894034537515106}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8060413159524072052
 GameObject:
   m_ObjectHideFlags: 0

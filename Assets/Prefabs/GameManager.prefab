@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 8653105001587342317}
   - component: {fileID: 8653105001587342316}
   - component: {fileID: 8653105001587342319}
+  - component: {fileID: 1100034884}
+  - component: {fileID: 1100034891}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -31,9 +33,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8653105001587342312
 MonoBehaviour:
@@ -49,6 +52,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitSwitched: {fileID: 0}
   unitUsed: {fileID: 0}
+  DEBUG_NextPhase: 0
 --- !u!114 &8653105001587342314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,6 +95,9 @@ MonoBehaviour:
   EnemyVanguard: {fileID: 0}
   EnemySupportLeft: {fileID: 0}
   EnemySupportRight: {fileID: 0}
+  maxTime: 0.5
+  supportLeftUsed: 0
+  supportRightUsed: 0
 --- !u!114 &8653105001587342319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,3 +112,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedObject: {fileID: 0}
   selectedUnit: {fileID: 0}
+--- !u!114 &1100034884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8653105001587342313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74489aef8b66c8b46b08eb3b30113d20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyVanguard: {fileID: 0}
+  enemySupportLeft: {fileID: 0}
+  enemySupportRight: {fileID: 0}
+  vanguardBestAbility: {fileID: 0}
+  supportLeftBestAbility: {fileID: 0}
+  supportRightBestAbility: {fileID: 0}
+--- !u!114 &1100034891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8653105001587342313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f33124207217d9b43bb92600102c4c6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Team: {fileID: 11400000, guid: b7dab2c6d967bb64dbde10a52bb78ed4, type: 2}
+  EnemyTeam:
+  - {fileID: 11400000, guid: b21d54bddb21f7a419bd7a79ec36a958, type: 2}
+  - {fileID: 11400000, guid: edf88a06261f4ed4891c1b5cf94ad382, type: 2}
+  PositionParent: {fileID: 0}
+  UnitPrefab: {fileID: 6480894034537515106, guid: e64746209dcc14f4ab958e8e25afdceb, type: 3}

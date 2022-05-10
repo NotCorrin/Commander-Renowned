@@ -30,6 +30,15 @@ public static class GameEvents
         }
     }
 
+    public static Action<List<Unit>, List<Unit>> onSetupUnits;
+    public static void SetupUnits(List<Unit> playerUnits, List<Unit> enemyUnits)
+    {
+        if (onSetupUnits != null)
+        {
+            onSetupUnits(playerUnits, enemyUnits);
+        }
+    }
+
     public static Action<Unit, int> onHealthChanged;
     public static void HealthChanged(Unit target, int Value)
     {
@@ -112,7 +121,7 @@ public static class GameEvents
     {
         if (onQTEResolved != null)
         {
-                    Debug.Log("AAAAAAAAA2");
+                    //Debug.Log("AAAAAAAAA2");
 
             onQTEResolved(QTEResult);
         }
@@ -136,8 +145,18 @@ public static class GameEvents
         }
     }
 
+    public static Action<Unit> onKill;
+    public static void Kill(Unit source)
+    {
+        if (onKill != null)
+        {
+            onKill(source);
+        }
+    }
+
     // public static Action<RoundController.Phase> onSetPhase;
     public static Action<RoundController.Phase> onPhaseChanged;
+    public static Action resetBuffs;
     public static void SetPhase(RoundController.Phase phase = RoundController.Phase.NextPhase)
     {
         RoundController.SetPhase(phase);
@@ -146,6 +165,11 @@ public static class GameEvents
         // {
         //     onSetPhase(phase);
         // }
+        Debug.Log(phase);
+        if(RoundController.phase == RoundController.Phase.PlayerSupport && resetBuffs != null)
+        {
+            resetBuffs();
+        }
         if (onPhaseChanged != null)
         {
             onPhaseChanged(RoundController.phase);

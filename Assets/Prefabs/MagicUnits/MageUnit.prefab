@@ -62,6 +62,69 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 1c608280ba8c04102bd53fbeec577493, type: 3}
   m_SortingOrder: 0
+--- !u!1 &4110154227429262204
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3003313333664172006}
+  - component: {fileID: 3774532139949951816}
+  - component: {fileID: 6701618271567526349}
+  m_Layer: 0
+  m_Name: UnitSelection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3003313333664172006
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4110154227429262204}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7272801226209451332}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3774532139949951816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4110154227429262204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: 86f198fc749c0544eacacb79c90add95, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: aebba43871cae414896176f3a485ad20, type: 3}
+  m_SortingOrder: 0
+--- !u!114 &6701618271567526349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4110154227429262204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec5c216bab645c84aac0b4034d7312e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiDocument: {fileID: 3774532139949951816}
+  parent: {fileID: 0}
 --- !u!1 &6884881852785777201
 GameObject:
   m_ObjectHideFlags: 0
@@ -77,8 +140,8 @@ GameObject:
   - component: {fileID: 7274132632927612479}
   - component: {fileID: 1552070783684818511}
   - component: {fileID: 8971809245513799296}
-  - component: {fileID: 1970550370}
   - component: {fileID: 3778618176164963972}
+  - component: {fileID: 3070850118624894871}
   m_Layer: 0
   m_Name: MageUnit
   m_TagString: Magic
@@ -101,6 +164,7 @@ Transform:
   - {fileID: 603531683453886698}
   - {fileID: 320707671779490654}
   - {fileID: 8346454952453273265}
+  - {fileID: 3003313333664172006}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -141,10 +205,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Spirit Burn
   abilityDescription: Will ignite a flame to smolder the clothing of the enemy.
-  cost: 0
+  cost: 1
   Damage: 2
   DamageVariation: 0
   CostVariation: 0
+  Explosion: {fileID: 1116862508874840, guid: 0156ac8bc7645f44fb571c716152b33a, type: 3}
 --- !u!114 &3921007691822419878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,11 +224,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Wall of Plasma
   abilityDescription: Will form an invisible wall to protect the mage
-  cost: 0
+  cost: 1
   Damage: 1
   DefenseBoost: 1
   DefenseVariation: 0
   CostVariation: 0
+  BuffEffect: {fileID: 4795044506606789115, guid: 2be1c63ae2ded994fbd39ed42c46f6cb, type: 3}
 --- !u!114 &7274132632927612479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,6 +246,7 @@ MonoBehaviour:
   abilityDescription: Increases attack damage
   cost: 1
   buffAmount: 1
+  buffEffect: {fileID: 782153884964200169, guid: 1f1522a624ccb0941a0f9405b9374e46, type: 3}
 --- !u!212 &1552070783684818511
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -252,32 +319,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!61 &1970550370
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6884881852785777201}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!114 &3778618176164963972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,6 +332,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useStaticBillboard: 0
+--- !u!65 &3070850118624894871
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6884881852785777201}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8305849730140176428
 GameObject:
   m_ObjectHideFlags: 0
