@@ -46,7 +46,7 @@ public class FullAutoFireAtTarget : MonoBehaviour
         else
         {
             if (smallMissilesHoming) smallMissilesHoming.enabled = false;
-            if (smallMissiles) smallMissiles.enableEmission = false;
+            if (smallMissiles) DisableSmallMissileEmission();
         }
 
         if (bigMissilesTarget)
@@ -66,9 +66,12 @@ public class FullAutoFireAtTarget : MonoBehaviour
     {
         if ((smallMissileMaxFireTimer -= Time.deltaTime) <= 0 && limitedSmallMissileFireTime)
         {
-            smallMissiles.enableEmission = false;
+            DisableSmallMissileEmission();
         }
-        if (smallMissiles) smallMissiles.emissionRate = smallMissilesPerSecond;
+        if (smallMissiles)
+        {
+            SetSmallMissileRate();
+        }
 
         if ((bigMissileMaxFireTimer -= Time.deltaTime) >= 0 || !limitedBigMissileFireTime)
         {
@@ -115,8 +118,8 @@ public class FullAutoFireAtTarget : MonoBehaviour
             smallMissilesHoming.enabled = true;
 
             EmitFiringParticles();
-            smallMissiles.enableEmission = true;
-            smallMissiles.emissionRate = smallMissilesPerSecond;
+            EnableSmallMissileEmission();
+            SetSmallMissileRate();
             smallMissileMaxFireTimer = smallMissileMaxFireTime;
         }
     }
@@ -145,5 +148,23 @@ public class FullAutoFireAtTarget : MonoBehaviour
             bigMissile3Homing.target = target;
             bigMissile3Homing.enabled = true;
         }
+    }
+
+    void DisableSmallMissileEmission()
+    {
+        var em = smallMissiles.emission;
+        em.enabled = false;
+    }
+
+    void EnableSmallMissileEmission()
+    {
+        var em = smallMissiles.emission;
+        em.enabled = true;
+    }
+
+    void SetSmallMissileRate()
+    {
+        var em = smallMissiles.emission;
+        em.rateOverTime = smallMissilesPerSecond;
     }
 }
