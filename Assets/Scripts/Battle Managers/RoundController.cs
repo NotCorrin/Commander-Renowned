@@ -68,12 +68,12 @@ public class RoundController : Listener
 
     protected override void SubscribeListeners()
     {
-        //throw new System.NotImplementedException();
+        GameEvents.onBattleStarted += StartBattle;
     }
 
     protected override void UnsubscribeListeners()
     {
-        //throw new System.NotImplementedException();
+        GameEvents.onBattleStarted -= StartBattle;
     }
 
     public bool IsCurrentRoundPlayer()
@@ -84,6 +84,12 @@ public class RoundController : Listener
     private void Awake()
     {
         main = this;
+    }
+
+    private void StartBattle()
+    {
+        Debug.LogWarning("Battle Started");
+        phase = Phase.PlayerVanguard;
     }
 
     public enum Phase
