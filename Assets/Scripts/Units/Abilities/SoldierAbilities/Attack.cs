@@ -4,14 +4,6 @@ using UnityEngine;
 
 public class Attack : QTEAbility
 {
-    [SerializeField] int TotalBaseDamage;
-
-    [SerializeField] int DamageVariation;
-
-    [SerializeField] int AttackBoost;
-
-    [SerializeField] GameObject LaserShot;
-
     [SerializeField] float secondShotDelay = 0.2f;
 
     int FinalDamage;
@@ -20,53 +12,45 @@ public class Attack : QTEAbility
 
     float secondShotTimer;
 
+    public override void SetupParams(AbilitySetup setup)
+    {
+        base.SetupParams(setup);
+        if(!VFX1) VFX1 = Resources.Load("CustomLasers/Soldier/Soldier_Laser") as GameObject;
+    }
+
     public override int GetMoveWeight(Unit caster)
     {
         int HealthWeight = Mathf.FloorToInt((caster.Health / caster.MaxHealth) * 100);
         int AmmoWeight;
-        if (caster is MilitaryUnit)
+        if (caster.unitType == UnitType.Military || caster.unitType == UnitType.Commander)
         {
-            MilitaryUnit militaryCaster = caster as MilitaryUnit;
-
-            if (militaryCaster.Ammo < Cost) return 0;
-
-            AmmoWeight = Mathf.FloorToInt((militaryCaster.Ammo / militaryCaster.MaxAmmo) * 100);
-
+            if (caster.Ammo < Cost) return 0;
+            AmmoWeight = Mathf.FloorToInt((caster.Ammo / caster.MaxAmmo) * 100);
+            return (2 * HealthWeight + AmmoWeight) / 3;
         }
-        else if (caster is CommanderUnit)
-        {
-            CommanderUnit commanderCaster = caster as CommanderUnit;
-            if (commanderCaster.Ammo < Cost) return 0;
-
-            AmmoWeight = Mathf.FloorToInt((commanderCaster.Ammo / commanderCaster.MaxAmmo) * 100);
-
-        }
-
         else return 0;
-
-        return (2 * HealthWeight + AmmoWeight) / 3;
     }
 
     protected override void AbilityUsed(QTEController.QTEResult result)
     {
-        FinalDamage = TotalBaseDamage;
+        FinalDamage = Damage;
 
         switch (result)
         {
             case QTEController.QTEResult.Critical:
                 {
-                    FinalDamage += DamageVariation;
+                    FinalDamage += base.Variation;
                     break;
                 }
             case QTEController.QTEResult.Miss:
                 {
-                    FinalDamage -= DamageVariation;
+                    FinalDamage -= base.Variation;
                     break;
                 }
         }
 
-
-        GameEvents.AttackUp(Caster, AttackBoost);
+        GameEvents.AttackUp(Caster, StatBoost);
+        GameEvents.HealthChanged(Target, -GetDamageCalculation(Caster, Target, base.Damage));
 
         AttackWithLaser(Mathf.FloorToInt(FinalDamage / 2));
 
@@ -83,16 +67,7 @@ public class Attack : QTEAbility
 
     public override bool IsCasterValid (Unit Caster)
     {
-		if (Caster is MilitaryUnit) 
-		{
-			MilitaryUnit casterUnit = Caster as MilitaryUnit;
-			return(casterUnit.Ammo >= Cost);
-		} 
-		else if (Caster is CommanderUnit) 
-		{
-			CommanderUnit casterUnit = Caster as CommanderUnit;
-			return(casterUnit.Ammo >= Cost);
-		} else return false;
+		return(Caster.Ammo >= Cost);
 	}    
 	public override bool IsTargetValid (Unit Target, bool isPlayer)
     {
@@ -101,9 +76,9 @@ public class Attack : QTEAbility
 
     void FireLaserAtTarget(Transform targetTransform)
     {
-        if (LaserShot)
+        if (VFX1)
         {
-            GameObject SpawnedLaser = Instantiate(LaserShot, transform);
+            GameObject SpawnedLaser = Instantiate(VFX1, transform);
             SpawnedLaser.transform.LookAt(targetTransform);
 
             SpawnedLaser.TryGetComponent<FullAutoFireAtTarget>(out FullAutoFireAtTarget MagicMissile);
@@ -118,8 +93,11 @@ public class Attack : QTEAbility
 
     void AttackWithLaser(int damage)
     {
-        GameEvents.HealthChanged(Target, -GetDamageCalculation(Caster, Target, damage));
-        FireLaserAtTarget(Target.transform);
+        if(Target)
+        {
+            GameEvents.HealthChanged(Target, -GetDamageCalculation(Caster, Target, damage));
+            FireLaserAtTarget(Target.transform);
+        }
     }
 
     private void Update()
