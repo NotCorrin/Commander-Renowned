@@ -48,6 +48,16 @@ public static class GameEvents
         }
     }
 
+    public static Action<Unit, Unit, int> onUnitAttack;
+    public static void UnitAttack(Unit attacker, Unit defender, int Value)
+    {
+        HealthChanged(defender, Value);
+        if (onUnitAttack != null)
+        {
+            onUnitAttack(attacker, defender, Value);
+        }
+    }
+
     public static Action<Unit, int> onDefenseUp;
     public static void DefenseUp(Unit Caster, int Amount)
     {
@@ -72,6 +82,15 @@ public static class GameEvents
         if (onAccuracyUp != null)
         {
             onAccuracyUp(Caster, Amount);
+        }
+    }
+
+    public static Action<Unit, int> onThornsUp;
+    public static void ThornsUp(Unit Caster, int Amount)
+    {
+        if (onThornsUp != null)
+        {
+            onThornsUp(Caster, Amount);
         }
     }
 
