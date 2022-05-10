@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7953051100106199006}
   - component: {fileID: 7953051100106199005}
   - component: {fileID: 7953051100106199001}
-  - component: {fileID: 7953051100106199000}
   m_Layer: 0
   m_Name: DamageText
   m_TagString: Untagged
@@ -28,17 +27,17 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7953051100106199004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 24.02}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7953051100648279216}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 22.715, y: 2.424}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 2, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &7953051100106199006
@@ -89,22 +88,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeToDestroy: 5
---- !u!111 &7953051100106199000
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7953051100106199004}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 16be30bab86fd7d4998f9ce531d7ae43, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 16be30bab86fd7d4998f9ce531d7ae43, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!1 &7953051100648279221
 GameObject:
   m_ObjectHideFlags: 0
@@ -116,6 +99,7 @@ GameObject:
   - component: {fileID: 7953051100648279216}
   - component: {fileID: 7953051100648279223}
   - component: {fileID: 7953051100648279222}
+  - component: {fileID: 6791371011259786949}
   m_Layer: 0
   m_Name: DamageText
   m_TagString: Untagged
@@ -268,7 +252,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 9.001678, y: 2.0106902, z: 9.0100155, w: 1.9959207}
+  m_margin: {x: 9.001678, y: 2.0118499, z: 5.887274, w: 2.0006814}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0
@@ -277,3 +261,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 7953051100648279223}
   m_maskType: 0
+--- !u!111 &6791371011259786949
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7953051100648279221}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 16be30bab86fd7d4998f9ce531d7ae43, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 16be30bab86fd7d4998f9ce531d7ae43, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0

@@ -49,8 +49,7 @@ public class Attack : QTEAbility
                 }
         }
 
-        GameEvents.AttackUp(Caster, StatBoost);
-        GameEvents.HealthChanged(Target, -GetDamageCalculation(Caster, Target, base.Damage));
+        GameEvents.AccuracyUp(Caster, StatBoost);
 
         AttackWithLaser(Mathf.FloorToInt(FinalDamage / 2));
 

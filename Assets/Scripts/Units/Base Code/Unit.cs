@@ -13,6 +13,7 @@ public class Unit : Listener
     [SerializeField] protected Ability[] supportAbilities =  new Ability[3];
     public Ability[] SupportAbilities => supportAbilities;
 
+    [SerializeField] GameObject DamageNumbers;
 
     SpriteRenderer spriteRenderer;
     private Billboard billboard;
@@ -117,6 +118,8 @@ public class Unit : Listener
         if (target == this)
         {
             Health += healthChange;
+            Instantiate(DamageNumbers, transform.position, Quaternion.identity).GetComponent<DamageNumbersController>().SetHealthChangeAmount(healthChange);
+
         }
     }
 
@@ -318,6 +321,8 @@ public class Unit : Listener
     {
         animator = GetComponent<Animator>();
         billboard = GetComponent<Billboard>();
+
+        DamageNumbers = Resources.Load("UIPrefabs/DamageText") as GameObject;
     }
     void UpdateBillboard(RoundController.Phase _phase)
     {

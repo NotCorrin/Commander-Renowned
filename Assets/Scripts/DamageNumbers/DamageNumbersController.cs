@@ -20,7 +20,7 @@ public class DamageNumbersController : MonoBehaviour
 
     public void SetHealthChangeAmount(int healthChanged)
     {
-        damageText.text = healthChanged.ToString();
+        damageText.text = Mathf.Abs(healthChanged).ToString();
         SetColour(healthChanged);
     }
 
