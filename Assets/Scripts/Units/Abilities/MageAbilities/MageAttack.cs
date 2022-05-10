@@ -61,7 +61,7 @@ public class MageAttack : QTEAbility
         }
 
         if (VFX1) Instantiate(VFX1, Target.transform);
-        GameEvents.onHealthChanged(Target, -GetDamageCalculation(Caster, Target, FinalDamage));
+        GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, FinalDamage));
         GameEvents.onUseMana(Caster, -FinalCost);
     }
 }

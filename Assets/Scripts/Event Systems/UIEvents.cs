@@ -44,6 +44,15 @@ public static class UIEvents
         }
     }
 
+    public static Action<Unit, int> onUnitThornsChanged;
+    public static void UnitThornsChanged(Unit unit, int newThorns)
+    {
+        if (onUnitThornsChanged != null)
+        {
+            onUnitThornsChanged(unit, newThorns);
+        }
+    }
+
     public static Action<Unit, int> onUnitAttackChanged;
     public static void UnitAttackChanged(Unit unit, int attackChange)
     {
