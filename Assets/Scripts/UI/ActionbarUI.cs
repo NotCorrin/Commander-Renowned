@@ -67,7 +67,7 @@ public class ActionbarUI : Listener
         UIEvents.onUnitSelected += OnUnitSelected;
         GameEvents.onPhaseChanged += PhaseSwitchUI;
         GameEvents.onAbilityResolved += OnUnitSelected;
-        GameEvents.onKill += SwitchPrompt;
+        //GameEvents.onKill += SwitchPrompt;
     }
 
     protected override void UnsubscribeListeners()
@@ -82,7 +82,7 @@ public class ActionbarUI : Listener
         UIEvents.onUnitSelected -= OnUnitSelected;
         GameEvents.onPhaseChanged -= PhaseSwitchUI;
         GameEvents.onAbilityResolved -= OnUnitSelected;
-        GameEvents.onKill -= SwitchPrompt;
+        //GameEvents.onKill -= SwitchPrompt;
     }
 
     void OnPromptCancelClicked()
@@ -162,7 +162,7 @@ public class ActionbarUI : Listener
     void SwitchBtn_Clicked()
     {
         Debug.Log("Switch Button Clicked");
-        if(RoundController.phase == RoundController.Phase.PlayerSwap) FieldController.main.SwapPlayerUnit();
+        if(RoundController.phase == RoundController.Phase.PlayerSwap && FieldController.main.IsUnitPlayer(SceneController.main.selectedUnit)) FieldController.main.SwapPlayerUnit();
         else Debug.Log("Player cannot swap right now!");
     }
 
@@ -282,7 +282,15 @@ public class ActionbarUI : Listener
         switchBarContainer.style.display = DisplayStyle.None;
         promptBarContainer.style.display = DisplayStyle.None;
 
-        
+        if (!FieldController.main.GetUnit(FieldController.Position.Vanguard, true))
+        {
+            endSwitchTurnBtn.style.display = DisplayStyle.None;
+            switchBarContainer.style.display = DisplayStyle.Flex;
+            OnUnitSelected(selectedUnit);
+            return;
+        }
+        else endSwitchTurnBtn.style.display = DisplayStyle.Flex;
+
         switch (phase)
         {
             case RoundController.Phase.PlayerVanguard:
@@ -292,7 +300,7 @@ public class ActionbarUI : Listener
                 supportBarContainer.style.display = DisplayStyle.Flex;
                 break;
             case RoundController.Phase.PlayerSwap:
-                switchBarContainer.style.display = DisplayStyle.Flex;
+                switchBarContainer.style.display = DisplayStyle.Flex;                    
                 break;
             case RoundController.Phase.EnemySwap:
                 switchBarContainer.style.display = DisplayStyle.Flex;
