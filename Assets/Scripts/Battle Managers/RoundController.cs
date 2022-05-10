@@ -6,6 +6,7 @@ public class RoundController : Listener
 {
     public static RoundController main;
     public static Phase phase;
+    public static bool isPlayerPhase => ((int)phase) % 2 == 0;
     private int numUnitsUsed;
     public Unit unitSwitched;
     public Unit unitUsed;
@@ -50,7 +51,7 @@ public class RoundController : Listener
 
     public static void SetPhase(Phase _phase)
     {
-        if(((int)phase)%2 == 1) FieldController.main.ActivateKill();
+        if(!isPlayerPhase) FieldController.main.ActivateKill();
         Debug.LogWarning("this should happen third" + FieldController.main.GetUnit(FieldController.Position.Vanguard, true));
         if(!FieldController.main.GetUnit(FieldController.Position.Vanguard, true)) Debug.LogError("It works");
         if(_phase == Phase.NextPhase) phase++;
