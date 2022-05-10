@@ -144,6 +144,7 @@ public class EnemyController : Listener
 		}
 		// Get the best ability's index
 		int highestAbilityWeight = enemyVanguard.VanguardAbilities[0].GetMoveWeight(enemyVanguard);
+        vanguardBestAbility = enemyVanguard.VanguardAbilities[0];
 		int index = 0;
 		if (enemyVanguard.VanguardAbilities[1] != null) {
 			for (int i = 0; i < enemyVanguard.VanguardAbilities.Length; i++) {
@@ -178,8 +179,9 @@ public class EnemyController : Listener
 			return;
 		}
 		// Get the best ability's index
-		int highestAbilityWeight = 0;
-		int index = 0;
+		int highestAbilityWeight = enemySupportLeft.SupportAbilities[0].GetMoveWeight(enemySupportLeft);
+        supportLeftBestAbility = enemySupportLeft.SupportAbilities[0];
+        int index = 0;
 		if (enemySupportLeft.SupportAbilities.Length > 1) {
             Debug.Log ("Has an ability");
 			for (int i = 0; i < enemySupportLeft.SupportAbilities.Length; i++) {
@@ -214,9 +216,10 @@ public class EnemyController : Listener
 		if (SetEnemySupportRight() == false) {
 			return;
 		}
-		// Get the best ability's index
-		int highestAbilityWeight = 0;
-		int index = 0;
+        // Get the best ability's index
+        int highestAbilityWeight = enemySupportRight.SupportAbilities[0].GetMoveWeight(enemySupportRight);
+        supportRightBestAbility = enemySupportRight.SupportAbilities[0];
+        int index = 0;
 		if (enemySupportRight.SupportAbilities[1] != null) {
 			for (int i = 0; i < enemySupportRight.SupportAbilities.Length; i++) {
 				Ability currentAbility = enemySupportRight.SupportAbilities[i];
