@@ -61,7 +61,7 @@ public class MouseQTEUI : Listener
 
         if (!IsClicked)
         {
-            qteCircle.style.scale = new Scale(new Vector2(QTEController.ShrinkingCircleTimer / QTEController.ShrinkingCircleMaxTime, QTEController.ShrinkingCircleTimer / QTEController.ShrinkingCircleMaxTime));
+            qteCircle.style.scale = new Scale(new Vector2(0, 0));
 
             if (qteCircle.style.scale == new Scale(new Vector2(0f, 0f)))
             {
