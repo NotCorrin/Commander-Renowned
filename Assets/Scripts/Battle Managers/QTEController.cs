@@ -121,7 +121,6 @@ public class QTEController : Listener
 
         MenuEvents.onQTETriggered -= ResolveShrinkingCircle;
 
-        Destroy(GameObject.Find("QTE"));
     }
 
     private QTEResult InvertResultIfNotPlayer(QTEResult baseResult)
@@ -131,6 +130,7 @@ public class QTEController : Listener
         {
             if (!RoundController.main.IsCurrentRoundPlayer())
             {
+                Debug.Log("Not player, inverting");
                 switch (baseResult)
                 {
                     case QTEResult.Critical:
