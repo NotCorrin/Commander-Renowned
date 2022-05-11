@@ -49,20 +49,19 @@ public class MageDefend : QTEAbility
             case QTEController.QTEResult.Critical:
                 {
                     FinalDefense = 5;
-                    FinalCost += CostVariation;
                     break;
                 }
             case QTEController.QTEResult.Miss:
                 {
                     FinalDefense = Mathf.Max(0, FinalDefense - Variation);
-                    FinalCost -= CostVariation;
+                    FinalCost = Mathf.Max(0, FinalCost - CostVariation);
                     break;
                 }
         }
 
         if (VFX1) Instantiate(VFX1, transform);
         GameEvents.DefenseUp(Caster, FinalDefense);
-        GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, Damage));
+        //GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, Damage));
         GameEvents.onUseMana(Caster, -FinalCost);
     }
 
