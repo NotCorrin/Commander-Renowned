@@ -9,7 +9,7 @@ public class WorldMenuController : Listener
     // Start is called before the first frame update
     void EndScene(bool win)
     {
-        SceneManager.LoadScene(win?winScene:"");
+        SceneManager.LoadScene(win?winScene:"EndScene");
     }
 
     // Update is called once per frame

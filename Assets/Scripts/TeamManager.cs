@@ -48,7 +48,7 @@ public class TeamManager : Listener
     void SetEnemyTeam()
     {
         CurrentEnemyTeam.Add(EnemyTeam[0]);
-        CurrentEnemyTeam.Add(EnemyTeam[1]);
+        //CurrentEnemyTeam.Add(EnemyTeam[1]);
     }
 
     // Update is called once per frame

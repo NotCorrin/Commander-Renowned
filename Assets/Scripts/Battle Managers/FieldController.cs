@@ -44,8 +44,6 @@ public class FieldController : Listener
     [SerializeField] bool supportRightUsed = false;
 
     public static FieldController main;
-    private int playersDead;
-    private int enemyDead;    
     // Start is called before the first frame update
     void SetupUnits(List<Unit> playerUnits, List<Unit> enemyUnits)
     {
@@ -190,17 +188,14 @@ public class FieldController : Listener
     {
         //vanguardPos = PlayerVanguard.transform.position;
         deathNote.Add(unit);
-        if(IsUnitPlayer(unit)) playersDead++;
-        else enemyDead++;
-        if(playersDead >= 3) GameEvents.GameEnd(false);
-        else if(enemyDead >= 3) GameEvents.GameEnd(true);
         if(unit == PlayerSupportLeft) PlayerSupportLeft = null;
         if(unit == PlayerSupportRight) PlayerSupportRight = null;
         if(unit == PlayerVanguard) PlayerVanguard = null;
         if(unit == EnemySupportLeft) EnemySupportLeft = null;
         if(unit == EnemySupportRight) EnemySupportRight = null;
         if(unit == EnemyVanguard) EnemyVanguard = null;
-
+        if(!PlayerSupportLeft && !PlayerSupportRight && !PlayerVanguard) GameEvents.GameEnd(false);
+        else if(!EnemySupportLeft && !EnemySupportRight && !EnemyVanguard) GameEvents.GameEnd(true);
         Debug.LogWarning("this should happen first");
         //https://i.kym-cdn.com/entries/icons/original/000/034/833/snapchat_kill.jpg
     }
