@@ -17,10 +17,10 @@ public class TeamManager : Listener
         List<Unit> playerUnits = new List<Unit>();
         List<Unit> enemyUnits = new List<Unit>();
         int i = 0;
-        for (i = 0; i < Team.units.Count; i++)
+        for (i = 0; i < Team.activeUnits.Count; i++)
         {
             if(i == 3) break;
-            playerUnits.Add(SpawnUnit(PositionParent.GetChild(i).position, Team.units[i]));
+            playerUnits.Add(SpawnUnit(PositionParent.GetChild(i).position, Team.activeUnits[i]));
         }
         for (int j = i; j < 3; j++)
         {

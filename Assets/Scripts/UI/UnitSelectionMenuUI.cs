@@ -52,10 +52,6 @@ public class UnitSelectionMenuUI : MonoBehaviour
                 if (activeUnits.Contains(button))
                 {
                     activeUnits.Remove(button);
-                    if (activeUnits.Count < 3)
-                    {
-                        
-                    }
                 }
                 else
                 {
@@ -92,6 +88,18 @@ public class UnitSelectionMenuUI : MonoBehaviour
     void ConfirmButton_Clicked()
     {
         // TODO : Use the activeUnits list to set the player's team
+        teamScriptableObject.activeUnits.Clear();
+        foreach (Button button in activeUnits)
+        {
+            foreach(UnitScriptableObject unit in teamScriptableObject.units)
+            {
+                if(unit.UnitName == button.Q<TextElement>("name-label").text)
+                {
+                    teamScriptableObject.activeUnits.Add(unit);
+                    break;
+                }
+            }
+        }
         SceneManager.LoadScene("TerrainTestScene");
     }
 
