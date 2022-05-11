@@ -19,7 +19,7 @@ public class MageFireball : Ability
 	}
 	public override void UseAbility (Unit Caster, Unit Target) {
 		if (IsAbilityValid(Caster, Target)) {
-            Instantiate(VFX1, Target.transform);
+            Instantiate(VFX1, Target.transform.position, Quaternion.identity);
             GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, Damage));
 			GameEvents.AttackUp(Target, StatBoost);
 			GameEvents.UseMana(Caster, Cost);

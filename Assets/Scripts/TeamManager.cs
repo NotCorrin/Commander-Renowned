@@ -49,9 +49,13 @@ public class TeamManager : Listener
     {
         
         CurrentEnemyTeam.Add(EnemyTeam[0]);
-        for (int i = 0; i < 2; i++)
+
+        if (EnemyTeam.Count > 1)
         {
-            CurrentEnemyTeam.Add(EnemyTeam[Random.Range(1, EnemyTeam.Count)]);
+            for (int i = 0; i < 2; i++)
+            {
+                CurrentEnemyTeam.Add(EnemyTeam[Random.Range(1, EnemyTeam.Count)]);
+            }
         }
         //CurrentEnemyTeam.Add(EnemyTeam[1]);
     }
