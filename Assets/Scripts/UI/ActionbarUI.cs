@@ -131,6 +131,7 @@ public class ActionbarUI : Listener
                 supportBarContainer.style.display = DisplayStyle.None;
                 promptBarContainer.style.display = DisplayStyle.Flex;
                 prompt = "Ability";
+                promptBarValue.text = "Select target for " + selectedUnit.SupportAbilities[_selectedAbility-1].AbilityName;
                 selectedAbility = _selectedAbility;
             }
         }

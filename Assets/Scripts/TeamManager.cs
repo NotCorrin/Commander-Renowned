@@ -19,11 +19,7 @@ public class TeamManager : Listener
         int i = 0;
         for (i = 0; i < Team.units.Count; i++)
         {
-            Unit newUnit = Instantiate(UnitPrefab, PositionParent.GetChild(i).position, Quaternion.identity).GetComponent<Unit>();
-            newUnit.gameObject.name = newUnit.UnitName;
-            playerUnits.Add(newUnit);
-            UnitScriptableObject unitParams = Team.units[i];
-            newUnit.SetupUnit(unitParams.unitType, unitParams.UnitName, unitParams.VanguardAbilities, unitParams.SupportAbilities, unitParams.MaxHealth, unitParams.MaxAmmo, unitParams.MaxMana, unitParams.animator);
+            playerUnits.Add(SpawnUnit(PositionParent.GetChild(i).position, Team.units[i]));
         }
         for (int j = i; j < 3; j++)
         {
@@ -32,11 +28,7 @@ public class TeamManager : Listener
 
         for (i = 0; i < EnemyTeam.Count; i++)
         {
-            Unit newUnit = Instantiate(UnitPrefab, PositionParent.GetChild(i+3).position, Quaternion.identity).GetComponent<Unit>();
-            newUnit.gameObject.name = newUnit.UnitName;
-            enemyUnits.Add(newUnit);
-            UnitScriptableObject unitParams = EnemyTeam[i];
-            newUnit.SetupUnit(unitParams.unitType, unitParams.UnitName, unitParams.VanguardAbilities, unitParams.SupportAbilities, unitParams.MaxHealth, unitParams.MaxAmmo, unitParams.MaxMana, unitParams.animator);
+            enemyUnits.Add(SpawnUnit(PositionParent.GetChild(i+3).position, EnemyTeam[i]));
         }
         for (int j = i; j < 3; j++)
         {
@@ -44,6 +36,13 @@ public class TeamManager : Listener
         }
         GameEvents.SetupUnits(playerUnits, enemyUnits);
     }    
+    Unit SpawnUnit(Vector3 spawnPos, UnitScriptableObject teamUnit)
+    {
+        Unit newUnit = Instantiate(UnitPrefab, spawnPos, Quaternion.identity).GetComponent<Unit>();
+        newUnit.SetupUnit(teamUnit.unitType, teamUnit.UnitName, teamUnit.VanguardAbilities, teamUnit.SupportAbilities, teamUnit.MaxHealth, teamUnit.MaxAmmo, teamUnit.MaxMana, teamUnit.animator);
+            newUnit.gameObject.name =  teamUnit.UnitName;
+            return newUnit;
+    }
     // Start is called before the first frame update
     void SetEnemyTeam()
     {

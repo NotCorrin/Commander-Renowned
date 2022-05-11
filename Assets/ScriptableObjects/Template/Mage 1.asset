@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1315abb00406e0a458b2138c8363ac1c, type: 3}
-  m_Name: Mage
+  m_Name: Mage 1
   m_EditorClassIdentifier: 
   unitType: 0
   UnitName: :)
@@ -22,29 +22,20 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
-    VFX1: {fileID: 0}
-    VFX2: {fileID: 0}
-    VFX3: {fileID: 0}
   - AbilityType: 0
     AbilityName: Spirit Burn
-    AbilityDescription: Steal the enemy's flame to empower your own
-    Cost: 2
-    Damage: 2
-    StatBoost: 0
+    AbilityDescription: Will ignite a flame to smolder the clothing of the enemy.
+    Cost: 0
+    Damage: 3
+    StatBoost: 1
     Variation: 1
-    VFX1: {fileID: 1116862508874840, guid: 0156ac8bc7645f44fb571c716152b33a, type: 3}
-    VFX2: {fileID: 0}
-    VFX3: {fileID: 0}
   - AbilityType: 2
     AbilityName: Wall of Plasma
     AbilityDescription: Will form an invisible wall to protect the mage
-    Cost: 2
-    Damage: 0
+    Cost: 0
+    Damage: 1
     StatBoost: 2
     Variation: 1
-    VFX1: {fileID: 0}
-    VFX2: {fileID: 0}
-    VFX3: {fileID: 0}
   SupportAbilities:
   - AbilityType: 0
     AbilityName: 
@@ -53,9 +44,6 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
-    VFX1: {fileID: 0}
-    VFX2: {fileID: 0}
-    VFX3: {fileID: 0}
   - AbilityType: 1
     AbilityName: Confidence
     AbilityDescription: Increases attack damage
@@ -63,12 +51,7 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 2
     Variation: 0
-    VFX1: {fileID: 0}
-    VFX2: {fileID: 0}
-    VFX3: {fileID: 0}
-  VanguardAbilities2: []
   MaxHealth: 12
   MaxAmmo: 0
-  MaxMana: 5
+  MaxMana: 3
   animator: {fileID: 9100000, guid: 821cacc0ecea3eb47ad7c840089cad2a, type: 2}
-  sprite: {fileID: 1457491203435894738, guid: 2f0f1c5d280668f4fa4e4bb6e099f96a, type: 3}
