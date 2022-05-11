@@ -11,12 +11,12 @@ public class CameraController : Listener
 
     protected override void SubscribeListeners()
     {
-        GameEvents.onChangePhase += CameraHandler;
+        GameEvents.onPhaseChanged += CameraHandler;
     }
 
     protected override void UnsubscribeListeners()
     {
-        GameEvents.onChangePhase -= CameraHandler;
+        GameEvents.onPhaseChanged -= CameraHandler;
     }
 
     void Start()

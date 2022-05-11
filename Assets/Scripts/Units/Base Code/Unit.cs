@@ -244,7 +244,7 @@ public class Unit : Listener
                 Destroy(AmmoBar.gameObject);
                 break;
             case UnitType.Commander:
-                AmmoBar.transform.position = Vector3.up * -1.5f;
+                AmmoBar.transform.position += Vector3.up * -0.65f;
                 break;
             default:
                 break;
@@ -335,7 +335,7 @@ public class Unit : Listener
         GameEvents.onResetBuffs += ResetBuffs;
         GameEvents.onUnitAttack += OnAttacked;
 
-        GameEvents.onChangePhase += UpdateBillboard;
+        GameEvents.onPhaseChanged += UpdateBillboard;
         
     }
 
@@ -353,7 +353,7 @@ public class Unit : Listener
         GameEvents.onResetBuffs -= ResetBuffs;
         GameEvents.onUnitAttack -= OnAttacked;
 
-        GameEvents.onChangePhase -= UpdateBillboard;
+        GameEvents.onPhaseChanged -= UpdateBillboard;
 
     }
 

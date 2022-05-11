@@ -170,14 +170,13 @@ public static class GameEvents
         }
     }
 
-    // public static Action<RoundController.Phase> onSetPhase;
-    public static Action<RoundController.Phase> onChangePhase;
-
-    public static void ChangePhase(RoundController.Phase phase)
+    //public static Action<Unit> onUnitClick;
+    public static Action roundcontrollerEndPhase;
+    public static void EndPhase()
     {
-        if (onChangePhase != null)
+        if (roundcontrollerEndPhase != null)
         {
-            onChangePhase(phase);
+            roundcontrollerEndPhase();
         }
     }
 
@@ -189,14 +188,14 @@ public static class GameEvents
             onResetBuffs();
         }
     }
-    //public static Action<Unit> onUnitClick;
 
-    public static Action onEndPhase;
-    public static void EndPhase()
+    // public static Action<RoundController.Phase> onSetPhase;
+    public static Action<RoundController.Phase> onPhaseChanged;
+    public static void PhaseChanged(RoundController.Phase phase)
     {
-        if (onEndPhase != null)
+        if (onPhaseChanged != null)
         {
-            onEndPhase();
+            onPhaseChanged(phase);
         }
     }
 }

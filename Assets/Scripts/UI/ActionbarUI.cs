@@ -65,7 +65,7 @@ public class ActionbarUI : Listener
         switchBtn.clickable.clicked += SwitchBtn_Clicked;
         endSwitchTurnBtn.clickable.clicked += EndSwitchTurnBtn_Clicked;
         UIEvents.onUnitSelected += OnUnitSelected;
-        GameEvents.onChangePhase += PhaseSwitchUI;
+        GameEvents.onPhaseChanged += PhaseSwitchUI;
         GameEvents.onAbilityResolved += OnUnitSelected;
         //GameEvents.onKill += SwitchPrompt;
     }
@@ -80,7 +80,7 @@ public class ActionbarUI : Listener
         switchBtn.clickable.clicked -= SwitchBtn_Clicked;
         endSwitchTurnBtn.clickable.clicked -= EndSwitchTurnBtn_Clicked;
         UIEvents.onUnitSelected -= OnUnitSelected;
-        GameEvents.onChangePhase -= PhaseSwitchUI;
+        GameEvents.onPhaseChanged -= PhaseSwitchUI;
         GameEvents.onAbilityResolved -= OnUnitSelected;
         //GameEvents.onKill -= SwitchPrompt;
     }
@@ -125,6 +125,13 @@ public class ActionbarUI : Listener
             if(selectedUnit.SupportAbilities[_selectedAbility-1].IsAbilityValid(selectedUnit, selectedUnit))
             {
                 GameEvents.UseAbility(selectedUnit, selectedUnit, _selectedAbility);
+            }
+            else
+            {
+                supportBarContainer.style.display = DisplayStyle.None;
+                promptBarContainer.style.display = DisplayStyle.Flex;
+                prompt = "Ability";
+                selectedAbility = _selectedAbility;
             }
         }
         OnUnitSelected(selectedUnit);
@@ -196,6 +203,7 @@ public class ActionbarUI : Listener
     }
     void AbilityUI(Unit unit, bool setAllFalse = false)
     {
+        Debug.Log("Rendering abilities... ");
         Ability[] _abilities = FieldController.main.GetIsVanguard(unit)?unit.VanguardAbilities:unit.SupportAbilities;
 
         for (int i = 0; i < _abilities.Length; i++)
