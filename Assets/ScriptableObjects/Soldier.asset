@@ -71,3 +71,4 @@ MonoBehaviour:
   MaxAmmo: 5
   MaxMana: 0
   animator: {fileID: 9100000, guid: 290842611f5ef174cb1770e4e4ef610f, type: 2}
+  sprite: {fileID: -3868812660829053132, guid: ebe7b0c9921a1e840bf1ffd5ab6bb180, type: 3}
