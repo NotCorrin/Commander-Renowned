@@ -4,30 +4,21 @@ using UnityEngine;
 
 public class MageDefend : QTEAbility
 {
-	[SerializeField] int Damage;
-    [SerializeField] int DefenseBoost;
+    [SerializeField] int CostVariation = 1;
 
-    [SerializeField] int DefenseVariation;
-    [SerializeField] int CostVariation;
-    
+    public override void SetupParams(AbilitySetup setup)
+    {
+        base.SetupParams(setup);
+        if(!VFX1) VFX1 = Resources.Load("CustomLasers/Mage/MageFlare") as GameObject;
+    }
 
-    public override bool IsAbilityValid (Unit Caster, Unit Target) {
-		bool casterValid;
-		bool targetValid;
-
-		if (Caster is MagicUnit) {
-			MagicUnit magicUnit = Caster as MagicUnit;
-			casterValid = magicUnit.Mana > Cost;
-		} 
-		else if (Caster is CommanderUnit) 
-		{
-			CommanderUnit casterUnit = Caster as CommanderUnit;
-			casterValid = casterUnit.Mana > Cost;
-		} else return false;
-
-		targetValid = (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && !FieldController.main.IsUnitPlayer(Target);
-
-		return casterValid && targetValid;
+    public override bool IsCasterValid (Unit Caster)
+    {
+		return true;
+	}    
+    public override bool IsTargetValid (Unit Target, bool isPlayer)
+    {
+		return (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(Target) != isPlayer);
 	}
 
     protected override QTEController.QTEType GetQTEType()
@@ -37,19 +28,11 @@ public class MageDefend : QTEAbility
 
     public override int GetMoveWeight (Unit caster)
     {
-        int HealthWeight = Mathf.FloorToInt(1 - (caster.Health / caster.MaxHealth) * 100);
+        int HealthWeight = Mathf.FloorToInt((1 - (caster.Health / caster.MaxHealth)) * 100);
         int ManaWeight;
-        if (caster is MageUnit)
+        if (caster.unitType == UnitType.Mage || caster.unitType == UnitType.Commander)
         {
-            MageUnit mageCaster = caster as MageUnit;
-            ManaWeight = Mathf.FloorToInt((1 - (mageCaster.Mana / mageCaster.MaxMana)) * 100);
-
-        }
-        else if (caster is CommanderUnit)
-        {
-            CommanderUnit commanderCaster = caster as CommanderUnit;
-            ManaWeight = Mathf.FloorToInt((1 - (commanderCaster.Mana / commanderCaster.MaxMana)) * 100);
-
+            ManaWeight = Mathf.FloorToInt((1 - (caster.Mana / caster.MaxMana)) * 100);
         }
         else return 0;
 
@@ -58,27 +41,28 @@ public class MageDefend : QTEAbility
 
     protected override void AbilityUsed(QTEController.QTEResult result)
     {
-        int FinalDefense = DefenseBoost;
+        int FinalDefense = StatBoost;
         int FinalCost = Cost;
 
         switch (result)
         {
             case QTEController.QTEResult.Critical:
                 {
-                    FinalDefense += DefenseVariation;
+                    FinalDefense = 5;
                     FinalCost += CostVariation;
                     break;
                 }
             case QTEController.QTEResult.Miss:
                 {
-                    FinalDefense = Mathf.Max(0, FinalDefense - DefenseVariation);
+                    FinalDefense = Mathf.Max(0, FinalDefense - Variation);
                     FinalCost -= CostVariation;
                     break;
                 }
         }
 
+        if (VFX1) Instantiate(VFX1, transform);
         GameEvents.DefenseUp(Caster, FinalDefense);
-        GameEvents.onHealthChanged(Target, GetDamageCalculation(Caster, Target, Damage));
+        GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, Damage));
         GameEvents.onUseMana(Caster, -FinalCost);
     }
 

@@ -23,10 +23,18 @@ public static class GameEvents
     public static Action onBattleStarted;
     public static void BattleStart()
     {
-        RoundController.SetPhase(RoundController.Phase.PlayerVanguard);
         if (onBattleStarted != null)
         {
             onBattleStarted();
+        }
+    }
+
+    public static Action<List<Unit>, List<Unit>> onSetupUnits;
+    public static void SetupUnits(List<Unit> playerUnits, List<Unit> enemyUnits)
+    {
+        if (onSetupUnits != null)
+        {
+            onSetupUnits(playerUnits, enemyUnits);
         }
     }
 
@@ -34,8 +42,18 @@ public static class GameEvents
     public static void HealthChanged(Unit target, int Value)
     {
         if (onHealthChanged != null)
-        {   
+        {
             onHealthChanged(target, Value);
+        }
+    }
+
+    public static Action<Unit, Unit, int> onUnitAttack;
+    public static void UnitAttack(Unit attacker, Unit defender, int Value)
+    {
+        HealthChanged(defender, Value);
+        if (onUnitAttack != null)
+        {
+            onUnitAttack(attacker, defender, Value);
         }
     }
 
@@ -63,6 +81,15 @@ public static class GameEvents
         if (onAccuracyUp != null)
         {
             onAccuracyUp(Caster, Amount);
+        }
+    }
+
+    public static Action<Unit, int> onThornsUp;
+    public static void ThornsUp(Unit Caster, int Amount)
+    {
+        if (onThornsUp != null)
+        {
+            onThornsUp(Caster, Amount);
         }
     }
 
@@ -99,7 +126,7 @@ public static class GameEvents
     }
 
     public static Action<QTEController.QTEType, int> onQTEStart;
-    public static void QTEStart( QTEController.QTEType qteType, int difficultyModifier)
+    public static void QTEStart(QTEController.QTEType qteType, int difficultyModifier)
     {
         if (onQTEStart != null)
         {
@@ -112,12 +139,10 @@ public static class GameEvents
     {
         if (onQTEResolved != null)
         {
-                    Debug.Log("AAAAAAAAA2");
-
             onQTEResolved(QTEResult);
         }
     }
-    
+
     public static Action<Unit> onSwitchUnitEnd;
     public static void SwitchUnitEnd(Unit unitSwitched)
     {
@@ -136,21 +161,51 @@ public static class GameEvents
         }
     }
 
+    public static Action<Unit> onKill;
+    public static void Kill(Unit source)
+    {
+        if (onKill != null)
+        {
+            onKill(source);
+        }
+    }
+
+    public static Action<bool> onGameEnd;
+    public static void GameEnd(bool win)
+    {
+        if (onGameEnd != null)
+        {
+            onGameEnd(win);
+        }
+    }
+
+
+    //public static Action<Unit> onUnitClick;
+    public static Action roundcontrollerEndPhase;
+    public static void EndPhase()
+    {
+        if (roundcontrollerEndPhase != null)
+        {
+            roundcontrollerEndPhase();
+        }
+    }
+
+    public static Action onResetBuffs;
+    public static void ResetBuffs()
+    {
+        if (onResetBuffs != null)
+        {
+            onResetBuffs();
+        }
+    }
+
     // public static Action<RoundController.Phase> onSetPhase;
     public static Action<RoundController.Phase> onPhaseChanged;
-    public static void SetPhase(RoundController.Phase phase)
+    public static void PhaseChanged(RoundController.Phase phase)
     {
-        RoundController.SetPhase(phase);
-        // Additional event not needed
-        // if (onSetPhase != null)
-        // {
-        //     onSetPhase(phase);
-        // }
         if (onPhaseChanged != null)
         {
-            onPhaseChanged(RoundController.phase);
+            onPhaseChanged(phase);
         }
-    }    
-    
-    //public static Action<Unit> onUnitClick;
+    }
 }

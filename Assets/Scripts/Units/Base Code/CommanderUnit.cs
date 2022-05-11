@@ -4,40 +4,6 @@ using UnityEngine;
 
 public abstract class CommanderUnit : Unit
 {
-    [SerializeField] private int maxAmmo;
-    public int MaxAmmo
-    {
-        get => maxAmmo;
-    }
-
-    private int ammo;
-    public int Ammo
-    {
-        get => ammo;
-        set
-        {
-            ammo = value;
-            UIEvents.UnitAmmoChanged(this, ammo);
-        }
-    }
-
-    [SerializeField] private int maxMana;
-    public int MaxMana
-    {
-        get => maxMana;
-    }
-
-    private int mana;
-    public int Mana
-    {
-        get => mana;
-        set
-        {
-            mana = value;
-            UIEvents.UnitManaChanged(this, mana);
-        }
-    }
-
     protected override void ResetUnit()
     {
         Mana = MaxMana / 2;

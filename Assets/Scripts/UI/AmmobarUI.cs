@@ -21,9 +21,9 @@ public class AmmobarUI : Listener
     {
         UIEvents.onUnitAmmoChanged -= UpdateAmmo;
     }
-    void UpdateAmmo(Unit unit, int value)
+    void UpdateAmmo(Unit unit, int value, int maxValue)
     {
-        if(unit == parent) ammobarValue.text = value + "";
+        if(unit == parent) ammobarValue.text = value + "/" + maxValue;
     }
 
     void Start()

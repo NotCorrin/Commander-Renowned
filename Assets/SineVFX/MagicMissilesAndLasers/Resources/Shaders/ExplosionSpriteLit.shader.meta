@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 2d8467c88357c8b45a46f319be8c452f
+timeCreated: 1507729914
+licenseType: Store
+ShaderImporter:
+  defaultTextures:
+  - _RampFire: {fileID: 2800000, guid: dcb375ba5088410498ddb4ce61f48eb6, type: 3}
+  - _ExplosionMask: {fileID: 2800000, guid: 31ddf938f0c213f44873588f38da0cf0, type: 3}
+  - _RampSmoke: {fileID: 2800000, guid: 92765cf9390a9454fb52cd831a9aee88, type: 3}
+  - _MainTex: {fileID: 2800000, guid: 7f498ee65d4a1454b8582dff4b81a349, type: 3}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

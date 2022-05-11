@@ -4,59 +4,49 @@ using UnityEngine;
 
 public class Defend : QTEAbility
 {
-    [SerializeField] int Damage;
-    [SerializeField] int DefenseBoost;
-
-    [SerializeField] int DefenseVariation;
+    
+    public override void SetupParams(AbilitySetup setup)
+    {
+        base.SetupParams(setup);
+        if(!VFX1) VFX1 = Resources.Load("CustomLasers/Soldier/Soldier_Laser") as GameObject;
+        if(!VFX2) VFX2 = Resources.Load("CustomLasers/Soldier/Shield") as GameObject;
+    }
 
     public override int GetMoveWeight(Unit caster)
     {
-        int HealthWeight = Mathf.FloorToInt(1 - (caster.Health / caster.MaxHealth) * 100);
-        int AmmoWeight;
-
-        if (caster is MilitaryUnit)
+        int HealthWeight = Mathf.FloorToInt((1 - ((float)caster.Health / (float)caster.MaxHealth)) * 100);
+        if (caster.unitType == UnitType.Military || caster.unitType == UnitType.Commander)
         {
-            MilitaryUnit militaryCaster = caster as MilitaryUnit;
-
-            if (militaryCaster.Ammo < Cost) return 0;
-
-            AmmoWeight = Mathf.FloorToInt((militaryCaster.Ammo / militaryCaster.MaxAmmo) * 100);
-
+            if (caster.Ammo < Cost) return 0;
+            return (HealthWeight + 50) / 2;
         }
-        else if (caster is CommanderUnit)
-        {
-            CommanderUnit commanderCaster = caster as CommanderUnit;
-            if (commanderCaster.Ammo < Cost) return 0;
-
-            AmmoWeight = Mathf.FloorToInt((commanderCaster.Ammo / commanderCaster.MaxAmmo) * 100);
-
-        }
-
         else return 0;
-
-        return (2 * HealthWeight + AmmoWeight) / 3;
     }
 
     protected override void AbilityUsed(QTEController.QTEResult result)
     {
-        int FinalDefense = DefenseBoost;
+        int FinalDefense = StatBoost;
 
         switch (result)
         {
             case QTEController.QTEResult.Critical:
                 {
-                    FinalDefense += DefenseVariation;
+                    FinalDefense += Variation;
                     break;
                 }
             case QTEController.QTEResult.Miss:
                 {
-                    FinalDefense = Mathf.Max(0, FinalDefense - DefenseVariation);
+                    FinalDefense = Mathf.Max(0, FinalDefense - Variation);
                     break;
                 }
         }
 
-        GameEvents.DefenseUp(Caster, DefenseBoost);
+        if (VFX2) Instantiate(VFX2, transform);
+        GameEvents.DefenseUp(Caster, FinalDefense);
+
         GameEvents.HealthChanged(Target, -GetDamageCalculation(Caster, Target, Damage));
+        FireLaserAtTarget(Target.transform);
+
         GameEvents.UseAmmo(Caster, Cost);
     }
 
@@ -64,25 +54,28 @@ public class Defend : QTEAbility
     {
         return QTEController.QTEType.shrinkingCircle;
     }
-
-    public override bool IsAbilityValid(Unit Caster, Unit Target)
+    
+    public override bool IsCasterValid (Unit Caster)
     {
-        bool casterValid;
-        bool targetValid;
+		return(Caster.Ammo >= Cost);
+	}    
+	public override bool IsTargetValid (Unit Target, bool isPlayer)
+    {
+		return (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(Target) != isPlayer);
+	}
 
-        if (Caster is MilitaryUnit)
+    void FireLaserAtTarget(Transform targetTransform)
+    {
+        if (VFX1)
         {
-            MilitaryUnit casterUnit = Caster as MilitaryUnit;
-            casterValid = casterUnit.Ammo >= Cost;
+            GameObject SpawnedLaser = Instantiate(VFX1, transform);
+            SpawnedLaser.transform.LookAt(targetTransform);
         }
-        else if (Caster is CommanderUnit)
-        {
-            CommanderUnit casterUnit = Caster as CommanderUnit;
-            casterValid = casterUnit.Ammo >= Cost;
-        }
-        else return false;
-        targetValid = (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && !FieldController.main.IsUnitPlayer(Target);
+    }
 
-        return casterValid && targetValid;
+    void AttackWithLaser(int damage)
+    {
+        GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, damage));
+        FireLaserAtTarget(Target.transform);
     }
 }

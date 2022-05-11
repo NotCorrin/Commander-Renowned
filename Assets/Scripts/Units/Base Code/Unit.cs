@@ -1,18 +1,25 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Unit : Listener
+public class Unit : Listener
 {
+    public UnitType unitType;
+    public string UnitName;
+
     [SerializeField] protected Ability[] vanguardAbilities = new Ability[3];
     public Ability[] VanguardAbilities => vanguardAbilities;
     [SerializeField] protected Ability[] supportAbilities =  new Ability[3];
     public Ability[] SupportAbilities => supportAbilities;
 
+    [SerializeField] GameObject DamageNumbers;
 
     SpriteRenderer spriteRenderer;
     private Billboard billboard;
     private Animator animator;
+    public Transform AmmoBar;
+    public Transform ManaBar;
 
     [SerializeField] protected int maxHealth;
 
@@ -28,8 +35,46 @@ public abstract class Unit : Listener
         get => health;
         set
         {
-            health = value;
+            health = Mathf.Max(Mathf.Min(value, MaxHealth), 0);
             UIEvents.UnitHealthChanged(this, health);
+            if(value <= 0) 
+            {
+                GameEvents.Kill(this);
+            }
+        }
+    }
+
+    [SerializeField] private int maxAmmo;
+    public int MaxAmmo
+    {
+        get => maxAmmo;
+    }
+
+    private int ammo;
+    public int Ammo
+    {
+        get => ammo;
+        set
+        {
+            ammo = Mathf.Max(Mathf.Min(value, MaxAmmo), 0);
+            UIEvents.UnitAmmoChanged(this, ammo, maxAmmo);
+        }
+    }
+
+    [SerializeField] private int maxMana;
+    public int MaxMana
+    {
+        get => maxMana;
+    }
+
+    private int mana;
+    public int Mana
+    {
+        get => mana;
+        set
+        {
+            mana = Mathf.Max(Mathf.Min(value, MaxMana));
+            UIEvents.UnitManaChanged(this, mana);
         }
     }
 
@@ -66,6 +111,17 @@ public abstract class Unit : Listener
         }
     }
 
+    protected int thorns;
+    public int Thorns
+    {
+        get => thorns;
+        set
+        {
+            thorns = value;
+            UIEvents.UnitThornsChanged(this, thorns);
+        }
+    }
+
     // End variables, Start Functions
 
     private void OnHealthChanged(Unit target, int healthChange)
@@ -73,6 +129,8 @@ public abstract class Unit : Listener
         if (target == this)
         {
             Health += healthChange;
+            Instantiate(DamageNumbers, transform.position, Quaternion.identity).GetComponent<DamageNumbersController>().SetHealthChangeAmount(healthChange);
+
         }
     }
 
@@ -100,6 +158,14 @@ public abstract class Unit : Listener
         }
     }
 
+    private void OnThornsChanged(Unit target, int ThornsChange)
+    {
+        if (target == this)
+        {
+            Thorns += ThornsChange;
+        }
+    }
+
     protected void UseAbility(Unit caster, Unit target, int selectedAbility)
     {
         if (caster == this)
@@ -116,38 +182,140 @@ public abstract class Unit : Listener
 
             if (targetAbility != null)
             {
-                if (targetAbility.IsAbilityValid(caster, target)) targetAbility.UseAbility(this, target);
-                else Debug.Log("Ability Can't be Used");
+                if (targetAbility.IsAbilityValid(caster, target)) 
+                {
+                    targetAbility.UseAbility(this, target);
+                    GameEvents.AbilityResolved(this);
+                }
+                else Debug.Log("Caster = " + caster + "\n" + "Target = " + target);
             }
 
+        }
+    }
+
+    private void OnUseAmmo(Unit caster, int cost)
+    {
+        if (caster == this)
+        {
+            Ammo -= cost;
+        }
+    }
+
+    private void OnUseMana(Unit caster, int cost)
+    {
+        if (caster == this)
+        {
+            Mana -= cost;
+        }
+    }
+
+    private void OnAttacked(Unit Attacker, Unit Defender, int Damage)
+    {
+        if (Defender == this)
+        {
+            if (Thorns != 0)
+            {
+                GameEvents.HealthChanged(Attacker, -Thorns);
+            }
         }
     }
 
     // Start is called before the first frame update
-    public abstract int GetStickScore();
+    public int GetStickScore()
+    {
+        return GetStandardAlgorithm();
+    }
 
-    public abstract int GetSwitchScore();
+    public int GetSwitchScore()
+    {
+        return GetStandardAlgorithm();
+    }
 
+    public void SetupUnit(UnitType uType, string uName, AbilitySetup[] vAbilities, AbilitySetup[] sAbilities, int mHealth, int mAmmo, int mMana, RuntimeAnimatorController anim)
+    {
+        unitType = uType;
+
+        switch (unitType)
+        {
+            case UnitType.Military:
+                Destroy(ManaBar.gameObject);
+                break;
+            case UnitType.Mage:
+                Destroy(AmmoBar.gameObject);
+                break;
+            case UnitType.Commander:
+                AmmoBar.transform.position += Vector3.up * -0.65f;
+                break;
+            default:
+                break;
+        }
+
+        UnitName = uName;
+        for (int i = 1; i < vAbilities.Length; i++)
+        {
+            Type fuckyou = Type.GetType(vAbilities[i].AbilityType.ToString());
+            Ability newAbility = gameObject.AddComponent(fuckyou) as Ability;
+            newAbility.SetupParams(vAbilities[i]);
+            vanguardAbilities[i-1] = newAbility;
+        }
+        for (int i = 1; i < sAbilities.Length; i++)
+        {
+            Type fuckyou = Type.GetType(sAbilities[i].AbilityType.ToString());
+            Ability newAbility = gameObject.AddComponent(fuckyou) as Ability;
+            newAbility.SetupParams(sAbilities[i]);
+            supportAbilities[i-1] = newAbility;
+        }
+        maxHealth = mHealth;
+        maxAmmo = mAmmo;
+        maxMana = mMana;
+        animator.runtimeAnimatorController = anim;
+
+        ResetUnit();
+    }
     protected virtual void ResetUnit()
     {
         Health = MaxHealth;
-        Attack = 0;
-        Defense = 0;
-        Accuracy = 0;
+        Ammo = MaxAmmo;
+        Mana = MaxMana;
+        ResetBuffs();
+    }
+    protected virtual void ResetBuffs()
+    {
+        if(RoundController.isPlayerPhase == FieldController.main.IsUnitPlayer(this))
+        {
+            Attack = 0;
+            Accuracy = 0;
+        }
+        else
+        {
+            Defense = 0;
+        }
     }
 
-    protected int GetMoveScoreAIAlgorithm()
+    protected int GetStandardAlgorithm()
     {
+        int finalWeight;
+
+        int moveWeight = 0;
+        int healthWeight = 0;
+        int buffWeight = 0;
+        int resourceWeight = 0;
+
         int totalVanguardMoveScore = 0;
         int totalVanguardMoves = 0;
+
         foreach (Ability ability in vanguardAbilities)
         {
             if (ability)
             {
-                totalVanguardMoves++;
-                totalVanguardMoveScore += ability.GetMoveWeight(this);
+                if (ability.GetMoveWeight(this) > totalVanguardMoveScore)
+                {
+                    totalVanguardMoveScore = ability.GetMoveWeight(this);
+                }
             }
         }
+
+        if (totalVanguardMoves == 0) totalVanguardMoves = -100; 
 
         int totalSupportMoveScore = 0;
         int totalSupportMoves = 0;
@@ -155,12 +323,46 @@ public abstract class Unit : Listener
         {
             if (ability)
             {
-                totalSupportMoves++;
-                totalSupportMoveScore += ability.GetMoveWeight(this);
+                if (ability.GetMoveWeight(this) > totalSupportMoveScore)
+                {
+                    totalSupportMoveScore = ability.GetMoveWeight(this);
+                }
             }
         }
 
-        return (totalVanguardMoveScore / totalVanguardMoves) - (totalSupportMoveScore / totalSupportMoves);
+        moveWeight = totalVanguardMoveScore - totalSupportMoveScore ;
+
+        healthWeight = Mathf.RoundToInt(((float)Health / (float)MaxHealth) * 100);
+
+        if ((Attack + Defense + Thorns) > 0) buffWeight = 10;
+        buffWeight += (Attack + Defense + Thorns) * 20 + Accuracy * 10;
+
+        if (unitType == UnitType.Military || unitType == UnitType.Commander)
+        {
+            resourceWeight += Mathf.RoundToInt(100 * ((float)Ammo / (float)MaxAmmo));
+        }
+
+        if (unitType == UnitType.Mage || unitType == UnitType.Commander)
+        {
+            resourceWeight += Mathf.RoundToInt(100 * (1 - ((float)Mana / (float)MaxMana)));
+        }
+
+        if (unitType == UnitType.Commander)
+        {
+            resourceWeight = resourceWeight / 2;
+        }
+
+        finalWeight = (2 * moveWeight + healthWeight + resourceWeight) / 4 + buffWeight;
+        Debug.Log(UnitName
+        + "\n" + " final weight = " + finalWeight
+        + "\n" + " move weight = " + moveWeight
+        + "\n" + "health weight = " + healthWeight
+        + "\n" + "resource weight = " + resourceWeight
+        + "\n" + " weight - buffweight = " + ((2 * moveWeight + healthWeight + resourceWeight) / 4)
+        + "\n" + "buffweight = " + buffWeight
+        );
+
+        return finalWeight;
     }
 
 
@@ -172,7 +374,12 @@ public abstract class Unit : Listener
         GameEvents.onDefenseUp += OnDefenseChanged;
         GameEvents.onAttackUp += OnAttackChanged;
         GameEvents.onAccuracyUp += OnAccuracyChanged;
+        GameEvents.onThornsUp += OnThornsChanged;
         GameEvents.onUseAbility += UseAbility;
+        GameEvents.onUseMana += OnUseMana;
+        GameEvents.onUseAmmo += OnUseAmmo;
+        GameEvents.onResetBuffs += ResetBuffs;
+        GameEvents.onUnitAttack += OnAttacked;
 
         GameEvents.onPhaseChanged += UpdateBillboard;
         
@@ -185,7 +392,12 @@ public abstract class Unit : Listener
         GameEvents.onDefenseUp -= OnDefenseChanged;
         GameEvents.onAttackUp -= OnAttackChanged;
         GameEvents.onAccuracyUp -= OnAccuracyChanged;
+        GameEvents.onThornsUp -= OnThornsChanged;
         GameEvents.onUseAbility -= UseAbility;
+        GameEvents.onUseMana -= OnUseMana;
+        GameEvents.onUseAmmo -= OnUseAmmo;
+        GameEvents.onResetBuffs -= ResetBuffs;
+        GameEvents.onUnitAttack -= OnAttacked;
 
         GameEvents.onPhaseChanged -= UpdateBillboard;
 
@@ -195,9 +407,28 @@ public abstract class Unit : Listener
     {
         animator = GetComponent<Animator>();
         billboard = GetComponent<Billboard>();
+
+        DamageNumbers = Resources.Load("UIPrefabs/DamageText") as GameObject;
     }
     void UpdateBillboard(RoundController.Phase _phase)
     {
-        billboard.SwitchBillboardState(((int)_phase)<2);
+        billboard.SwitchBillboardState(((int)_phase)>=2);
     }
+
+    public void UpdateEnemyVisual()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if(spriteRenderer)
+        {
+            spriteRenderer.color = new Color(0.85f, 0.66f, 1, 1);
+            spriteRenderer.flipX = true;
+        }
+        
+    }
+}
+
+public enum UnitType
+{
+    Mage, Military, Commander
 }

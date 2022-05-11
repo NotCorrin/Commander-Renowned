@@ -9,28 +9,30 @@ public class QTEController : Listener
     public enum QTEDisplayResult { Perfect, Good, Poor }
 
     //Shrinking Circles QTE
-    static private float shrinkingCircleBaseTime = 0.5f; //5.0f
-    static private float shrinkingCircleDifficultyStep = 0.5f;
-    static private float shrinkingCircleMinCritical = 0.4f;
-    static private float shrinkingCircleMaxCritical = 0.6f;
-    static private float shrinkingCircleMinHit = 0.2f;
-    private float shrinkingCircleMaxTime;
-    public float ShrinkingCircleMaxTime
+    static private float shrinkingCircleBaseTime = 3.0f; //5.0f
+    static private float shrinkingCircleDifficultyStep = 0.6f;
+    static private float shrinkingCircleMaxCritical = 0.657f;
+    static private float shrinkingCircleMaxHit = 0.8f;
+    static private float shrinkingCircleMin = 0.57f;
+    private static float shrinkingCircleMaxTime;
+
+    public GameObject qtePrefab;
+    public static float ShrinkingCircleMaxTime
     {
         get => shrinkingCircleMaxTime;
     }
-    private float shrinkingCircleTimer;
-    public float ShrinkingCircleTimer
+    private static float shrinkingCircleTimer;
+    public static float ShrinkingCircleTimer
     {
         get => shrinkingCircleTimer;
     }
 
-    bool shrinkingCircleActive;
+    static bool shrinkingCircleActive;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        shrinkingCircleMaxTime = shrinkingCircleBaseTime * shrinkingCircleDifficultyStep;
     }
 
     // Update is called once per frame
@@ -55,11 +57,22 @@ public class QTEController : Listener
 
     private void StartQTE(QTEType qteType, int difficultyModifier)
     {
+        int finalDifficultyModifier = difficultyModifier;
+
+        //Inverts difficulty modifier if not player turn
+        if (RoundController.main != null)
+        {
+            if (!RoundController.main.IsCurrentRoundPlayer())
+            {
+                finalDifficultyModifier = -difficultyModifier;
+            }
+        }
+
         switch (qteType)
         {
             case QTEType.shrinkingCircle:
                 {
-                    StartShrinkingCircle(difficultyModifier);
+                    StartShrinkingCircle(finalDifficultyModifier);
                     break;
                 }
         }
@@ -71,50 +84,51 @@ public class QTEController : Listener
         shrinkingCircleMaxTime = shrinkingCircleBaseTime + (difficultyModifier * shrinkingCircleDifficultyStep);
         shrinkingCircleTimer = shrinkingCircleMaxTime;
         MenuEvents.onQTETriggered += ResolveShrinkingCircle;
-                            Debug.Log("AAAAAAAAA0");
+        Instantiate(qtePrefab, new Vector2(0f, 0f), Quaternion.identity);
     }
 
     private void ResolveShrinkingCircle()
     {
-                            Debug.Log("AAAAAAAAA1");
-        //Placeholder default hit value
-        UIEvents.DisplayQTEResults(QTEDisplayResult.Good);
-        GameEvents.QTEResolved(QTEResult.Hit);
-        MenuEvents.onQTETriggered -= ResolveShrinkingCircle;
-        return;
-
-        //Possibly working code for shrinking circle backend. Not implemented currently.
-
         QTEResult finalResult;
-        if (shrinkingCircleTimer > shrinkingCircleMaxTime * shrinkingCircleMinCritical && shrinkingCircleTimer < shrinkingCircleTimer * shrinkingCircleMaxCritical)
-        {
-            finalResult = QTEResult.Critical;
-            UIEvents.onDisplayQTEResults(QTEDisplayResult.Perfect);
-        }
-        else if (shrinkingCircleTimer < shrinkingCircleMaxTime * shrinkingCircleMinHit || shrinkingCircleTimer > shrinkingCircleMaxTime * shrinkingCircleMaxCritical)
+
+        float finalPercentage = ShrinkingCircleTimer / ShrinkingCircleMaxTime;
+
+        if (finalPercentage <= shrinkingCircleMin || finalPercentage >= shrinkingCircleMaxHit)
         {
             finalResult = QTEResult.Miss;
-            UIEvents.onDisplayQTEResults(QTEDisplayResult.Poor);
+            UIEvents.DisplayQTEResults(QTEDisplayResult.Poor);
+            //Debug.Log(finalPercentage + "Poor");
+        }
+        else if (finalPercentage <= shrinkingCircleMaxCritical)
+        {
+            finalResult = QTEResult.Critical;
+            UIEvents.DisplayQTEResults(QTEDisplayResult.Perfect);
+            //Debug.Log(finalPercentage + "Perfect");
+
         }
         else
         {
             finalResult = QTEResult.Hit;
-            UIEvents.onDisplayQTEResults(QTEDisplayResult.Good);
+            UIEvents.DisplayQTEResults(QTEDisplayResult.Good);
+            //Debug.Log(finalPercentage + "Good");
         }
-
+        
         //Inverting result if is enemy turn
         finalResult = InvertResultIfNotPlayer(finalResult);
         GameEvents.QTEResolved(finalResult);
 
         MenuEvents.onQTETriggered -= ResolveShrinkingCircle;
+
     }
 
     private QTEResult InvertResultIfNotPlayer(QTEResult baseResult)
     {
+
         if (RoundController.main != null)
         {
             if (!RoundController.main.IsCurrentRoundPlayer())
             {
+                //Debug.Log("Not player, inverting");
                 switch (baseResult)
                 {
                     case QTEResult.Critical:
@@ -133,7 +147,7 @@ public class QTEController : Listener
             Debug.Log("No RoundController Found, Defaulting to Player Turn");
         }
 
-        return QTEResult.Hit;
+        return baseResult;
     }
 
 }

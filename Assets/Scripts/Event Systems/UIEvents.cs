@@ -12,6 +12,8 @@ using System;
  * onUnitDefenseChanged(Unit, int)
  * onUnitAccuracyChanged(Unit, int)
  * onDisplayQTEResults(QTEController.QTEDisplayResult)
+ * onUnitSelected(Unit)
+ * menuClicked()
  */
 
 public static class UIEvents
@@ -25,12 +27,12 @@ public static class UIEvents
         }
     }
 
-    public static Action<Unit, int> onUnitAmmoChanged;
-    public static void UnitAmmoChanged(Unit unit, int newAmmo)
+    public static Action<Unit, int, int> onUnitAmmoChanged;
+    public static void UnitAmmoChanged(Unit unit, int newAmmo, int maxAmmo)
     {
         if (onUnitAmmoChanged != null)
         {
-            onUnitAmmoChanged(unit, newAmmo);
+            onUnitAmmoChanged(unit, newAmmo, maxAmmo);
         }
     }
 
@@ -40,6 +42,15 @@ public static class UIEvents
         if (onUnitManaChanged != null)
         {
             onUnitManaChanged(unit, newMana);
+        }
+    }
+
+    public static Action<Unit, int> onUnitThornsChanged;
+    public static void UnitThornsChanged(Unit unit, int newThorns)
+    {
+        if (onUnitThornsChanged != null)
+        {
+            onUnitThornsChanged(unit, newThorns);
         }
     }
 
@@ -85,6 +96,15 @@ public static class UIEvents
         if (onUnitSelected != null)
         {
             onUnitSelected(unit);
+        }
+    }
+
+    public static Action onMenuClicked;
+    public static void OnMenuClicked()
+    {
+        if (onMenuClicked != null)
+        {
+            onMenuClicked();
         }
     }
 }

@@ -37,25 +37,18 @@ public class SceneController : Listener
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
+            RaycastHit hit;
+            Physics.Raycast(ray, out hit);
 
             if (hit.collider != null)
             {
                 selectedObject = hit.transform.gameObject;
-
-                if (selectedObject.CompareTag("Military"))
+                if (selectedObject.GetComponent<Unit>())
                 {
-                    selectedUnit = selectedObject.GetComponent<MilitaryUnit>();
+                    //Debug.Log(hit.collider.name);
+                    selectedUnit = selectedObject.GetComponent<Unit>();
+                    UIEvents.UnitSelected(selectedUnit);
                 }
-                else if (selectedObject.CompareTag("Magic"))
-                {
-                    selectedUnit = selectedObject.GetComponent<MagicUnit>();
-                }
-                else if (selectedObject.CompareTag("Renowned"))
-                {
-                    selectedUnit = selectedObject.GetComponent<CommanderUnit>();
-                }
-                if (selectedUnit) UIEvents.UnitSelected(selectedUnit);
             }
         }
     }
