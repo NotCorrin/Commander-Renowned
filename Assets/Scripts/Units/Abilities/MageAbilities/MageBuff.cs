@@ -11,7 +11,7 @@ public class MageBuff : Ability
     }
 	public override bool IsCasterValid (Unit Caster)
     {
-		return(Caster.Mana >= Cost);
+        return Caster.Mana >= Cost;
 	}    
 	public override bool IsTargetValid (Unit Target, bool isPlayer)
     {
@@ -26,14 +26,14 @@ public class MageBuff : Ability
 	}
 	public override int GetMoveWeight (Unit caster) {
 
-        int HealthWeight = Mathf.FloorToInt((1 - (caster.Health / caster.MaxHealth)) * 100);
+        int HealthWeight = Mathf.FloorToInt((1 - ((float)caster.Health / (float)caster.MaxHealth)) * 100);
         int ManaWeight;
 
         if (caster.unitType == UnitType.Mage || caster.unitType == UnitType.Commander)
         {
             if (caster.Mana < Cost) return 0;
 
-            ManaWeight = Mathf.FloorToInt((caster.Mana / caster.MaxMana) * 100);
+            ManaWeight = Mathf.FloorToInt(((float)caster.Mana / (float)caster.MaxMana) * 100);
 
         }
         else return 0;
