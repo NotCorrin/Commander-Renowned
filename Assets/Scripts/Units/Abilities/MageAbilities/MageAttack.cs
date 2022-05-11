@@ -49,13 +49,15 @@ public class MageAttack : QTEAbility
             case QTEController.QTEResult.Critical:
                 {
                     FinalDamage += Variation;
-                    FinalCost += CostVariation;
+                    FinalCost = 5;
                     break;
+                    Debug.Log("Critical");
                 }
             case QTEController.QTEResult.Miss:
                 {
                     FinalDamage -= Variation;
-                    FinalCost -= CostVariation;
+                    FinalCost = 1;
+                    Debug.Log("Poor");
                     break;
                 }
         }
