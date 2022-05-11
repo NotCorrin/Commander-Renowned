@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
-using System.Linq;
+using UnityEngine.SceneManagement;
 
 
 public class UnitSelectionMenuUI : MonoBehaviour
@@ -11,13 +11,12 @@ public class UnitSelectionMenuUI : MonoBehaviour
     [SerializeField] private VisualTreeAsset unitCardUI;
     [SerializeField] private VisualTreeAsset unitCardCollectionUI;
 
-    // TODO : Remove this after unit scriptable objects are implemented.
-    [Range(0, 30), SerializeField] private int debugUnitCards = 10;
     [SerializeField] private TeamScriptableObject teamScriptableObject;
     private VisualElement mainContainer;
     private TextElement mainTitleText;
     private ScrollView mainScrollView;
     private VisualElement mainScrollViewContainer;
+    private Button confirmButton;
 
     private List<Button> activeUnits = new List<Button>();
 
@@ -25,10 +24,12 @@ public class UnitSelectionMenuUI : MonoBehaviour
     {
         VerifyInitialVars();
 
+        confirmButton.SetEnabled(false);
+        confirmButton.style.backgroundColor = new StyleColor(new Color(0.364f, 0.364f, 0.364f, 1));
+        confirmButton.clickable.clicked += ConfirmButton_Clicked;
+
         VisualElement test = default;
         VisualElement unitCard = default;
-
-        // TODO : Change to ScriptableObject Units instead of hardcoded values.
 
         for (int i = 0; i < teamScriptableObject.units.Count; i++)
         {
@@ -40,6 +41,7 @@ public class UnitSelectionMenuUI : MonoBehaviour
 
             unitCard = unitCardUI.Instantiate();
             unitCard.Q<TextElement>("name-label").text = teamScriptableObject.units[i].UnitName;
+            unitCard.Q<VisualElement>("unit").style.backgroundImage = new StyleBackground(teamScriptableObject.units[i].sprite);
             test.Q<VisualElement>("container").Add(unitCard);
         }
 
@@ -52,7 +54,7 @@ public class UnitSelectionMenuUI : MonoBehaviour
                     activeUnits.Remove(button);
                     if (activeUnits.Count < 3)
                     {
-                        EnableAllUnits();
+                        
                     }
                 }
                 else
@@ -66,18 +68,31 @@ public class UnitSelectionMenuUI : MonoBehaviour
                 if (activeUnits.Contains(button))
                 {
                     button.Q<VisualElement>("white-background").style.backgroundColor = new StyleColor(Color.white);
-
-                    if (activeUnits.Count == 3)
-                    {
-                        DisableAllUnits();
-                    }
                 }
                 else
                 {
                      button.Q<VisualElement>("white-background").style.backgroundColor = new StyleColor(new Color(0.364f, 0.364f, 0.364f, 1));
                 }
+
+                if (activeUnits.Count == 3)
+                {
+                    DisableAllUnits();
+                    confirmButton.SetEnabled(true);
+                    confirmButton.style.backgroundColor = new StyleColor(new Color(0.3529412f, 0.772549f, 0.3098039f, 1));
+                }
+                else {
+                    EnableAllUnits();
+                    confirmButton.SetEnabled(false);
+                    confirmButton.style.backgroundColor = new StyleColor(new Color(0.364f, 0.364f, 0.364f, 1));
+                }
             };
         });
+    }
+
+    void ConfirmButton_Clicked()
+    {
+        // TODO : Use the activeUnits list to set the player's team
+        SceneManager.LoadScene("TerrainTestScene");
     }
 
     void EnableAllUnits()
@@ -129,6 +144,7 @@ public class UnitSelectionMenuUI : MonoBehaviour
             mainTitleText = mainContainer.Q<TextElement>("title-label");
             mainScrollView = mainContainer.Q<ScrollView>("scroll-view");
             mainScrollViewContainer = mainContainer.Q<VisualElement>("unity-content-container");
+            confirmButton = mainContainer.Q<Button>("confirm-button");
         }
         catch
         {
