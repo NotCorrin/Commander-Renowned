@@ -19,6 +19,7 @@ public class TeamManager : Listener
         int i = 0;
         for (i = 0; i < Team.units.Count; i++)
         {
+            if(i == 3) break;
             playerUnits.Add(SpawnUnit(PositionParent.GetChild(i).position, Team.units[i]));
         }
         for (int j = i; j < 3; j++)
