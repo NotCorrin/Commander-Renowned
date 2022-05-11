@@ -126,6 +126,12 @@ public class ActionbarUI : Listener
             {
                 GameEvents.UseAbility(selectedUnit, selectedUnit, _selectedAbility);
             }
+            else
+            {
+                supportBarContainer.style.display = DisplayStyle.None;
+                promptBarContainer.style.display = DisplayStyle.Flex;
+                prompt = "Ability";
+            }
         }
         OnUnitSelected(selectedUnit);
         //else GameEvents.UseAbility(selectedUnit, SceneController.main.selectedUnit, 3);
