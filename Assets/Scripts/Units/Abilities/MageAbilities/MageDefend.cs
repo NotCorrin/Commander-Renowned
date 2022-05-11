@@ -61,7 +61,7 @@ public class MageDefend : QTEAbility
 
         if (VFX1) Instantiate(VFX1, transform);
         GameEvents.DefenseUp(Caster, FinalDefense);
-        GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, Damage));
+        //GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, Damage));
         GameEvents.onUseMana(Caster, -FinalCost);
     }
 
