@@ -2,16 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Attack : QTEAbility
+public class Charge : QTEAbility
 {
-    [SerializeField] float secondShotDelay = 0.2f;
-
-    int FinalDamage;
-
-    bool secondShotTrigger;
-
-    float secondShotTimer;
-
     public override void SetupParams(AbilitySetup setup)
     {
         base.SetupParams(setup);
@@ -31,7 +23,7 @@ public class Attack : QTEAbility
 
     protected override void AbilityUsed(QTEController.QTEResult result)
     {
-        FinalDamage = Damage;
+        int FinalDamage = Damage;
 
         switch (result)
         {
@@ -48,11 +40,9 @@ public class Attack : QTEAbility
         }
 
         GameEvents.AccuracyUp(Caster, StatBoost);
+        GameEvents.DefenseUp(Caster, -3);
 
-        AttackWithLaser(Mathf.FloorToInt(FinalDamage / 2));
-
-        secondShotTimer = secondShotDelay;
-        secondShotTrigger = true;
+        AttackWithLaser(Mathf.FloorToInt(FinalDamage));
 
         GameEvents.UseAmmo(Caster, Cost);
     }
@@ -77,14 +67,6 @@ public class Attack : QTEAbility
         {
             GameObject SpawnedLaser = Instantiate(VFX1, transform);
             SpawnedLaser.transform.LookAt(targetTransform);
-
-            SpawnedLaser.TryGetComponent<FullAutoFireAtTarget>(out FullAutoFireAtTarget MagicMissile);
-            if (MagicMissile)
-            {
-                Debug.Log(MagicMissile);
-                MagicMissile.SetSmallMissilesHoming(targetTransform);
-                MagicMissile.SetBigMissilesHoming(targetTransform);
-            }
         }
     }
 
@@ -96,17 +78,9 @@ public class Attack : QTEAbility
             FireLaserAtTarget(Target.transform);
         }
     }
-        
+
     private void Update()
     {
-        if (secondShotTrigger && Target)
-        {
-            if ((secondShotTimer -= Time.deltaTime) <= 0)
-            {
-                AttackWithLaser(Mathf.CeilToInt(FinalDamage/2));
-                secondShotTrigger = false;
-            }
-        }
         
     }
 }

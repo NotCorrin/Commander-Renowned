@@ -66,7 +66,7 @@ public class ActionbarUI : Listener
         endSwitchTurnBtn.clickable.clicked += EndSwitchTurnBtn_Clicked;
         UIEvents.onUnitSelected += OnUnitSelected;
         GameEvents.onPhaseChanged += PhaseSwitchUI;
-        GameEvents.onAbilityResolved += OnUnitSelected;
+        GameEvents.onAbilityResolved += AbilityUsed;
         //GameEvents.onKill += SwitchPrompt;
     }
 
@@ -81,7 +81,7 @@ public class ActionbarUI : Listener
         endSwitchTurnBtn.clickable.clicked -= EndSwitchTurnBtn_Clicked;
         UIEvents.onUnitSelected -= OnUnitSelected;
         GameEvents.onPhaseChanged -= PhaseSwitchUI;
-        GameEvents.onAbilityResolved -= OnUnitSelected;
+        GameEvents.onAbilityResolved -= AbilityUsed;
         //GameEvents.onKill -= SwitchPrompt;
     }
 
@@ -166,6 +166,11 @@ public class ActionbarUI : Listener
         Debug.Log("End Switch Turn Button Clicked");
         if (RoundController.phase == RoundController.Phase.PlayerSwap) GameEvents.EndPhase();
         else Debug.Log("Player does not have priority right now!");
+    }
+    void AbilityUsed(Unit unit)
+    {
+        FieldController.main.SupportUsed(unit);
+        OnUnitSelected(unit);
     }
     void OnUnitSelected(Unit unit)
     {
