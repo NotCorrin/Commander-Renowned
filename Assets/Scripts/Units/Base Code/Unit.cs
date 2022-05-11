@@ -223,12 +223,12 @@ public class Unit : Listener
     // Start is called before the first frame update
     public int GetStickScore()
     {
-        return GetMoveScoreAIAlgorithm();
+        return GetStandardAlgorithm();
     }
 
     public int GetSwitchScore()
     {
-        return GetMoveScoreAIAlgorithm();
+        return GetStandardAlgorithm();
     }
 
     public void SetupUnit(UnitType uType, string uName, AbilitySetup[] vAbilities, AbilitySetup[] sAbilities, int mHealth, int mAmmo, int mMana, RuntimeAnimatorController anim)
@@ -292,10 +292,18 @@ public class Unit : Listener
         }
     }
 
-    protected int GetMoveScoreAIAlgorithm()
+    protected int GetStandardAlgorithm()
     {
+        int finalWeight;
+
+        int moveWeight = 0;
+        int healthWeight = 0;
+        int buffWeight = 0;
+        int resourceWeight = 0;
+
         int totalVanguardMoveScore = 0;
         int totalVanguardMoves = 0;
+
         foreach (Ability ability in vanguardAbilities)
         {
             if (ability)
@@ -316,7 +324,31 @@ public class Unit : Listener
             }
         }
 
-        return (totalVanguardMoveScore / totalVanguardMoves) - (totalSupportMoveScore / totalSupportMoves);
+        moveWeight = (totalVanguardMoveScore / totalVanguardMoves) - (totalSupportMoveScore / totalSupportMoves);
+
+        healthWeight = (Health / MaxHealth) * 100;
+
+        if ((Attack + Defense + Thorns) > 1) buffWeight = 1000;
+        buffWeight += (Attack + Defense + Thorns) * 20 + Accuracy * 10;
+
+        if (unitType == UnitType.Military || unitType == UnitType.Commander)
+        {
+            resourceWeight += 100 * Ammo / MaxAmmo;
+        }
+
+        if (unitType == UnitType.Mage || unitType == UnitType.Commander)
+        {
+            resourceWeight += 100 * (1 - (Mana / MaxMana));
+        }
+
+        if (unitType == UnitType.Commander)
+        {
+            resourceWeight = resourceWeight / 2;
+        }
+
+        finalWeight = ( 2 * moveWeight + healthWeight + resourceWeight) / 4 + buffWeight;
+
+        return finalWeight;
     }
 
 
