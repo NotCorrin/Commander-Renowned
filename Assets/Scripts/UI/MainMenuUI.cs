@@ -61,6 +61,6 @@ public class MainMenuUI : Listener
         transitionElement.UnregisterCallback<TransitionEndEvent>(OnTransitionComplete);
 
         // Load the next scene
-        SceneManager.LoadScene("MenuSelectionScene");
+        SceneManager.LoadScene("StoryScene");
     }
 }
