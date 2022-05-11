@@ -69,6 +69,6 @@ MonoBehaviour:
   VanguardAbilities2: []
   MaxHealth: 12
   MaxAmmo: 0
-  MaxMana: 3
+  MaxMana: 5
   animator: {fileID: 9100000, guid: 821cacc0ecea3eb47ad7c840089cad2a, type: 2}
   sprite: {fileID: 0}
