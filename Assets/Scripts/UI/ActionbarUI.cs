@@ -227,17 +227,14 @@ public class ActionbarUI : Listener
             }
             abilityActive[i] = true;
         }
-        if(abilityActive[0]) abilityOneBtn.style.backgroundColor = Color.white;
-        else abilityOneBtn.style.backgroundColor = Color.grey;
-        abilityOneBtn.style.opacity = 0.69f;
+        if(abilityActive[0]) abilityOneBtn.style.backgroundColor = new StyleColor(new Color(1, 1, 1, 0.69f));
+        else abilityOneBtn.style.backgroundColor = new StyleColor(new Color(0.364f, 0.364f, 0.364f, 0.69f));
 
-        if(abilityActive[1]) abilityTwoBtn.style.backgroundColor = Color.white;
-        else abilityTwoBtn.style.backgroundColor = Color.grey;
-        abilityTwoBtn.style.opacity = 0.69f;
-        
-        if(abilityActive[2]) abilityThreeBtn.style.backgroundColor = Color.white;
-        else abilityThreeBtn.style.backgroundColor = Color.grey;
-        abilityThreeBtn.style.opacity = 0.69f;
+        if(abilityActive[1]) abilityTwoBtn.style.backgroundColor = new StyleColor(new Color(1, 1, 1, 0.69f));
+        else abilityTwoBtn.style.backgroundColor = new StyleColor(new Color(0.364f, 0.364f, 0.364f, 0.69f));
+
+        if(abilityActive[2]) abilityThreeBtn.style.backgroundColor = new StyleColor(new Color(1, 1, 1, 0.69f));
+        else abilityThreeBtn.style.backgroundColor = new StyleColor(new Color(0.364f, 0.364f, 0.364f, 0.69f));
 
         if(_abilities[0])
         {
