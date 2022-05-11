@@ -372,6 +372,10 @@ PrefabInstance:
       propertyPath: PlayerSupportRight
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8653105001587342317, guid: 0c4076252c8d19c4e9cfb4893d565a0a, type: 3}
+      propertyPath: qtePrefab
+      value: 
+      objectReference: {fileID: 4674050339876676031, guid: 33c3b2ee032d54442af7a881da7749b9, type: 3}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c4076252c8d19c4e9cfb4893d565a0a, type: 3}

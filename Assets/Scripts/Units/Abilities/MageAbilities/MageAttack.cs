@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MageAttack : QTEAbility
 {
-    [SerializeField] int CostVariation; //unused for now (cbf)
+    [SerializeField] int CostVariation = 1; //unused for now (cbf)
 
     public override void SetupParams(AbilitySetup setup)
     {
