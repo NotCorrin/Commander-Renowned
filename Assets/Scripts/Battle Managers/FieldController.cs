@@ -76,7 +76,7 @@ public class FieldController : Listener
             {
                 timer = maxTime;
                 disableInput = false;
-                GameEvents.SetPhase();
+                GameEvents.EndPhase();
                 LerpSwap();
                 //Debug.Log(VanguardToSupport);
                 //Debug.Log(SupportToVanguard);
@@ -210,17 +210,13 @@ public class FieldController : Listener
 
     private void ResetSupportUsed(RoundController.Phase phase)
     {
-        if(!RoundController.isPlayerPhase) 
-        {
-            supportLeftUsed = !EnemySupportLeft;
-            supportRightUsed = !EnemySupportRight;
-        }
-        else
+        //supportLeftUsed = false;
+        //supportRightUsed = false;
+
+        if(RoundController.isPlayerPhase) 
         {
             supportLeftUsed = !PlayerSupportLeft;
             supportRightUsed = !PlayerSupportRight;
-            Debug.Log(supportLeftUsed);
-            Debug.Log(supportRightUsed);
         }
     }
 
@@ -228,7 +224,7 @@ public class FieldController : Listener
     {
         if(GetIsSupportLeft(unit)) supportLeftUsed = true;
         if(GetIsSupportRight(unit)) supportRightUsed = true;
-        if(supportLeftUsed && supportRightUsed) GameEvents.SetPhase();
+        if(supportLeftUsed && supportRightUsed) GameEvents.EndPhase();
     }
 
     private void Awake()
@@ -241,8 +237,9 @@ public class FieldController : Listener
         if(!chosenUnit) chosenUnit = sceneController.selectedUnit;
         vanguardPos = PlayerVanguardPos;
         selectedUnitPos = chosenUnit.transform.position;
-        
+
         if (PlayerVanguard) VanguardToSupport = PlayerVanguard.transform;
+        else VanguardToSupport = null;
         SupportToVanguard = chosenUnit.transform;
         disableInput = true;
         timer = 0;
