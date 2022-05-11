@@ -1,0 +1,3 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="container" style="background-image: url(&apos;project://database/Assets/UI/Images/StoryContainer.svg?fileID=7388822144124034973&amp;guid=18ad79ede98c04b4bac9e4a84a9f5503&amp;type=3#StoryContainer&apos;); width: auto; height: auto; -unity-background-scale-mode: scale-to-fit; position: absolute; left: 10%; top: 10%; right: 10%; bottom: 10%; -unity-slice-left: 50; -unity-slice-top: 50; -unity-slice-right: 50; -unity-slice-bottom: 50;" />
+</ui:UXML>
