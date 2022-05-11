@@ -75,7 +75,7 @@ public class RoundController : Listener
 
     public bool IsCurrentRoundPlayer()
     {
-        return true;
+        return (phase == Phase.PlayerVanguard) || (phase == Phase.PlayerSwap) || (phase == Phase.PlayerSupport);
     }
 
     private void Awake()

@@ -10,10 +10,10 @@ public class QTEController : Listener
 
     //Shrinking Circles QTE
     static private float shrinkingCircleBaseTime = 3.0f; //5.0f
-    static private float shrinkingCircleDifficultyStep = 0.5f;
-    static private float shrinkingCircleMaxCritical = 0.4f;
-    static private float shrinkingCircleMaxHit = 0.6f;
-    static private float shrinkingCircleMin = 0.2f;
+    static private float shrinkingCircleDifficultyStep = 0.6f;
+    static private float shrinkingCircleMaxCritical = 0.657f;
+    static private float shrinkingCircleMaxHit = 0.8f;
+    static private float shrinkingCircleMin = 0.57f;
     private static float shrinkingCircleMaxTime;
 
     public GameObject qtePrefab;
@@ -57,8 +57,6 @@ public class QTEController : Listener
 
     private void StartQTE(QTEType qteType, int difficultyModifier)
     {
-        Instantiate(qtePrefab, new Vector2(0f, 0f), Quaternion.identity);
-
         int finalDifficultyModifier = difficultyModifier;
 
         //Inverts difficulty modifier if not player turn
@@ -86,7 +84,7 @@ public class QTEController : Listener
         shrinkingCircleMaxTime = shrinkingCircleBaseTime + (difficultyModifier * shrinkingCircleDifficultyStep);
         shrinkingCircleTimer = shrinkingCircleMaxTime;
         MenuEvents.onQTETriggered += ResolveShrinkingCircle;
-
+        Instantiate(qtePrefab, new Vector2(0f, 0f), Quaternion.identity);
     }
 
     private void ResolveShrinkingCircle()
@@ -99,20 +97,20 @@ public class QTEController : Listener
         {
             finalResult = QTEResult.Miss;
             UIEvents.DisplayQTEResults(QTEDisplayResult.Poor);
-            Debug.Log(finalPercentage + "Poor");
+            //Debug.Log(finalPercentage + "Poor");
         }
         else if (finalPercentage <= shrinkingCircleMaxCritical)
         {
             finalResult = QTEResult.Critical;
             UIEvents.DisplayQTEResults(QTEDisplayResult.Perfect);
-            Debug.Log(finalPercentage + "Perfect");
+            //Debug.Log(finalPercentage + "Perfect");
 
         }
         else
         {
             finalResult = QTEResult.Hit;
             UIEvents.DisplayQTEResults(QTEDisplayResult.Good);
-            Debug.Log(finalPercentage + "Good");
+            //Debug.Log(finalPercentage + "Good");
         }
         
         //Inverting result if is enemy turn
@@ -121,7 +119,6 @@ public class QTEController : Listener
 
         MenuEvents.onQTETriggered -= ResolveShrinkingCircle;
 
-        Destroy(GameObject.Find("QTE"));
     }
 
     private QTEResult InvertResultIfNotPlayer(QTEResult baseResult)
@@ -131,6 +128,7 @@ public class QTEController : Listener
         {
             if (!RoundController.main.IsCurrentRoundPlayer())
             {
+                //Debug.Log("Not player, inverting");
                 switch (baseResult)
                 {
                     case QTEResult.Critical:
