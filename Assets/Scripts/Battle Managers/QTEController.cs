@@ -87,7 +87,6 @@ public class QTEController : Listener
 
     private void ResolveShrinkingCircle()
     {
-        //Possibly working code for shrinking circle backend. Not implemented currently.
 
         QTEResult finalResult;
 

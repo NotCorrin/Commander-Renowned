@@ -76,7 +76,7 @@ public class FieldController : Listener
             {
                 timer = maxTime;
                 disableInput = false;
-                GameEvents.SetPhase();
+                GameEvents.EndPhase();
                 LerpSwap();
                 //Debug.Log(VanguardToSupport);
                 //Debug.Log(SupportToVanguard);
@@ -113,6 +113,7 @@ public class FieldController : Listener
     public List<Unit> GetValidTargets(Unit Caster, Ability ability)
     {
         if(!Caster) {Debug.Log("No Caster. wtf."); return null;}
+        if (!ability) { Debug.LogError("No ability wtf"); return null; }
         List<Unit> unitList = new List<Unit>();
         if(ability.IsAbilityValid(Caster, PlayerVanguard)) unitList.Add(PlayerVanguard);
         if(ability.IsAbilityValid(Caster, PlayerSupportLeft)) unitList.Add(PlayerSupportLeft);
@@ -169,7 +170,7 @@ public class FieldController : Listener
 
     protected override void SubscribeListeners()
     {
-        GameEvents.onPhaseChanged += ResetSupportUsed;
+        GameEvents.onChangePhase += ResetSupportUsed;
         GameEvents.onAbilityResolved += SupportUsed;
         GameEvents.onKill += Kill;
         GameEvents.onSetupUnits += SetupUnits;
@@ -177,7 +178,7 @@ public class FieldController : Listener
 
     protected override void UnsubscribeListeners()
     {
-        GameEvents.onPhaseChanged -= ResetSupportUsed;
+        GameEvents.onChangePhase -= ResetSupportUsed;
         GameEvents.onAbilityResolved -= SupportUsed;
         GameEvents.onKill -= Kill;
         GameEvents.onSetupUnits += SetupUnits;
@@ -209,6 +210,10 @@ public class FieldController : Listener
 
     private void ResetSupportUsed(RoundController.Phase phase)
     {
+        supportLeftUsed = false;
+        supportRightUsed = false;
+
+        /*
         if(!RoundController.isPlayerPhase) 
         {
             supportLeftUsed = !EnemySupportLeft;
@@ -221,13 +226,14 @@ public class FieldController : Listener
             Debug.Log(supportLeftUsed);
             Debug.Log(supportRightUsed);
         }
+        */
     }
 
     private void SupportUsed(Unit unit)
     {
         if(GetIsSupportLeft(unit)) supportLeftUsed = true;
         if(GetIsSupportRight(unit)) supportRightUsed = true;
-        if(supportLeftUsed && supportRightUsed) GameEvents.SetPhase();
+        if(supportLeftUsed && supportRightUsed) GameEvents.EndPhase();
     }
 
     private void Awake()
@@ -240,8 +246,9 @@ public class FieldController : Listener
         if(!chosenUnit) chosenUnit = sceneController.selectedUnit;
         vanguardPos = PlayerVanguardPos;
         selectedUnitPos = chosenUnit.transform.position;
-        
+
         if (PlayerVanguard) VanguardToSupport = PlayerVanguard.transform;
+        else VanguardToSupport = null;
         SupportToVanguard = chosenUnit.transform;
         disableInput = true;
         timer = 0;
