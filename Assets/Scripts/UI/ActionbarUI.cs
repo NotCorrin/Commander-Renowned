@@ -229,10 +229,15 @@ public class ActionbarUI : Listener
         }
         if(abilityActive[0]) abilityOneBtn.style.backgroundColor = Color.white;
         else abilityOneBtn.style.backgroundColor = Color.grey;
+        abilityOneBtn.style.opacity = 0.69f;
+
         if(abilityActive[1]) abilityTwoBtn.style.backgroundColor = Color.white;
         else abilityTwoBtn.style.backgroundColor = Color.grey;
+        abilityTwoBtn.style.opacity = 0.69f;
+        
         if(abilityActive[2]) abilityThreeBtn.style.backgroundColor = Color.white;
         else abilityThreeBtn.style.backgroundColor = Color.grey;
+        abilityThreeBtn.style.opacity = 0.69f;
 
         if(_abilities[0])
         {
