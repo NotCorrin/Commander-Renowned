@@ -63,7 +63,7 @@ public class MouseQTEUI : Listener
 
         if (!IsClicked)
         {
-            qteCircle.style.scale = new Scale(new Vector2(0.456f, 0.456f));
+            qteCircle.style.scale = new Scale(new Vector2(0f, 0));
 
             if (qteCircle.style.scale == new Scale(new Vector2(0f, 0f)))
             {

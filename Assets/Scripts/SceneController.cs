@@ -45,7 +45,7 @@ public class SceneController : Listener
                 selectedObject = hit.transform.gameObject;
                 if (selectedObject.GetComponent<Unit>())
                 {
-                    Debug.Log(hit.collider.name);
+                    //Debug.Log(hit.collider.name);
                     selectedUnit = selectedObject.GetComponent<Unit>();
                     UIEvents.UnitSelected(selectedUnit);
                 }

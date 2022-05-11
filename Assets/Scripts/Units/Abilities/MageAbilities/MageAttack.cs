@@ -14,7 +14,7 @@ public class MageAttack : QTEAbility
 
     public override bool IsCasterValid (Unit Caster)
     {
-		return(Caster.Mana > Cost);
+        return true;
 	}    
     public override bool IsTargetValid (Unit Target, bool isPlayer)
     {
