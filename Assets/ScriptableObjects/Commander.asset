@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Commander
   m_EditorClassIdentifier: 
   unitType: 2
-  UnitName: Jhonatahn
+  UnitName: The Renowned
   VanguardAbilities:
   - AbilityType: 0
     AbilityName: 

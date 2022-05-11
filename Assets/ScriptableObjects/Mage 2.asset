@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mage 2
   m_EditorClassIdentifier: 
   unitType: 0
-  UnitName: Fire mage
+  UnitName: Fire Mage
   VanguardAbilities:
   - AbilityType: 0
     AbilityName: 
