@@ -96,10 +96,10 @@ public class Attack : QTEAbility
             FireLaserAtTarget(Target.transform);
         }
     }
-
+        
     private void Update()
     {
-        if (secondShotTrigger)
+        if (secondShotTrigger && Target)
         {
             if ((secondShotTimer -= Time.deltaTime) <= 0)
             {
