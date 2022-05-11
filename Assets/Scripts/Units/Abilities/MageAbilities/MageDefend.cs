@@ -14,7 +14,7 @@ public class MageDefend : QTEAbility
 
     public override bool IsCasterValid (Unit Caster)
     {
-		return(Caster.Mana > Cost);
+		return(Caster.Mana >= Cost);
 	}    
     public override bool IsTargetValid (Unit Target, bool isPlayer)
     {
