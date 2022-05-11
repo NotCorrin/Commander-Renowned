@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/StartMenuScene.unity
     guid: b5689dec05cee274f8ca70153e3d59cc
   - enabled: 1
+    path: Assets/Scenes/MenuSelectionScene.unity
+    guid: 9282214db01112d4c9cf6fed79f13f30
+  - enabled: 1
     path: Assets/Scenes/TerrainTestScene.unity
     guid: 87b8e1c1e212c414bb5ae4e0d182717a
   m_configObjects: {}

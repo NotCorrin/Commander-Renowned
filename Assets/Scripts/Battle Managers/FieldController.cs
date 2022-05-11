@@ -171,7 +171,7 @@ public class FieldController : Listener
     protected override void SubscribeListeners()
     {
         GameEvents.onPhaseChanged += ResetSupportUsed;
-        GameEvents.onAbilityResolved += SupportUsed;
+        //GameEvents.onAbilityResolved += SupportUsed;
         GameEvents.onKill += Kill;
         GameEvents.onSetupUnits += SetupUnits;
     }
@@ -179,7 +179,7 @@ public class FieldController : Listener
     protected override void UnsubscribeListeners()
     {
         GameEvents.onPhaseChanged -= ResetSupportUsed;
-        GameEvents.onAbilityResolved -= SupportUsed;
+        //GameEvents.onAbilityResolved -= SupportUsed;
         GameEvents.onKill -= Kill;
         GameEvents.onSetupUnits += SetupUnits;
     }
@@ -210,14 +210,14 @@ public class FieldController : Listener
 
     private void ResetSupportUsed(RoundController.Phase phase)
     {
-        //supportLeftUsed = false;
-        //supportRightUsed = false;
+        supportLeftUsed = false;
+        supportRightUsed = false;
 
-        if(RoundController.isPlayerPhase) 
+        /*if(RoundController.isPlayerPhase) 
         {
             supportLeftUsed = !PlayerSupportLeft;
             supportRightUsed = !PlayerSupportRight;
-        }
+        }*/
     }
 
     private void SupportUsed(Unit unit)
@@ -277,6 +277,7 @@ public class FieldController : Listener
         selectedUnitPos = chosenUnit.transform.position;
         
         if(EnemyVanguard) VanguardToSupport = EnemyVanguard.transform;
+        else VanguardToSupport = null;
         SupportToVanguard = chosenUnit.transform;
         disableInput = true;
         timer = 0;
