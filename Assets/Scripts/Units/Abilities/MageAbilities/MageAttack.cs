@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MageAttack : QTEAbility
 {
-    [SerializeField] int CostVariation; //unused for now (cbf)
+    [SerializeField] int CostVariation = 1; //unused for now (cbf)
 
     public override void SetupParams(AbilitySetup setup)
     {
@@ -14,7 +14,7 @@ public class MageAttack : QTEAbility
 
     public override bool IsCasterValid (Unit Caster)
     {
-		return(Caster.Mana > Cost);
+		return(Caster.Mana >= Cost);
 	}    
     public override bool IsTargetValid (Unit Target, bool isPlayer)
     {
@@ -49,13 +49,15 @@ public class MageAttack : QTEAbility
             case QTEController.QTEResult.Critical:
                 {
                     FinalDamage += Variation;
-                    FinalCost += CostVariation;
+                    FinalCost = 5;
                     break;
+                    Debug.Log("Critical");
                 }
             case QTEController.QTEResult.Miss:
                 {
                     FinalDamage -= Variation;
-                    FinalCost -= CostVariation;
+                    FinalCost = 1;
+                    Debug.Log("Poor");
                     break;
                 }
         }

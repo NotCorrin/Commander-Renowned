@@ -11,9 +11,9 @@ public class QTEController : Listener
     //Shrinking Circles QTE
     static private float shrinkingCircleBaseTime = 3.0f; //5.0f
     static private float shrinkingCircleDifficultyStep = 0.5f;
-    static private float shrinkingCircleMinCritical = 0.4f;
-    static private float shrinkingCircleMaxCritical = 0.6f;
-    static private float shrinkingCircleMinHit = 0.2f;
+    static private float shrinkingCircleMaxCritical = 0.4f;
+    static private float shrinkingCircleMaxHit = 0.6f;
+    static private float shrinkingCircleMin = 0.2f;
     private static float shrinkingCircleMaxTime;
 
     public GameObject qtePrefab;
@@ -91,25 +91,28 @@ public class QTEController : Listener
 
     private void ResolveShrinkingCircle()
     {
-
         QTEResult finalResult;
 
         float finalPercentage = ShrinkingCircleTimer / ShrinkingCircleMaxTime;
 
-        if (finalPercentage <= shrinkingCircleMinHit || finalPercentage >= shrinkingCircleMaxCritical)
+        if (finalPercentage <= shrinkingCircleMin || finalPercentage >= shrinkingCircleMaxHit)
         {
             finalResult = QTEResult.Miss;
             UIEvents.DisplayQTEResults(QTEDisplayResult.Poor);
+            Debug.Log(finalPercentage + "Poor");
         }
-        else if (finalPercentage <= shrinkingCircleMinCritical)
-        {
-            finalResult = QTEResult.Hit;
-            UIEvents.DisplayQTEResults(QTEDisplayResult.Good);
-        }
-        else
+        else if (finalPercentage <= shrinkingCircleMaxCritical)
         {
             finalResult = QTEResult.Critical;
             UIEvents.DisplayQTEResults(QTEDisplayResult.Perfect);
+            Debug.Log(finalPercentage + "Perfect");
+
+        }
+        else
+        {
+            finalResult = QTEResult.Hit;
+            UIEvents.DisplayQTEResults(QTEDisplayResult.Good);
+            Debug.Log(finalPercentage + "Good");
         }
         
         //Inverting result if is enemy turn
@@ -123,6 +126,7 @@ public class QTEController : Listener
 
     private QTEResult InvertResultIfNotPlayer(QTEResult baseResult)
     {
+
         if (RoundController.main != null)
         {
             if (!RoundController.main.IsCurrentRoundPlayer())
@@ -145,7 +149,7 @@ public class QTEController : Listener
             Debug.Log("No RoundController Found, Defaulting to Player Turn");
         }
 
-        return QTEResult.Hit;
+        return baseResult;
     }
 
 }

@@ -210,21 +210,21 @@ public class FieldController : Listener
 
     private void ResetSupportUsed(RoundController.Phase phase)
     {
-        //supportLeftUsed = false;
-        //supportRightUsed = false;
+        supportLeftUsed = false;
+        supportRightUsed = false;
 
-        if(RoundController.isPlayerPhase) 
+        /*if(RoundController.isPlayerPhase) 
         {
             supportLeftUsed = !PlayerSupportLeft;
             supportRightUsed = !PlayerSupportRight;
-        }
+        }*/
     }
 
     private void SupportUsed(Unit unit)
     {
         if(GetIsSupportLeft(unit)) supportLeftUsed = true;
         if(GetIsSupportRight(unit)) supportRightUsed = true;
-        if(supportLeftUsed && supportRightUsed) GameEvents.EndPhase();
+        //if(supportLeftUsed && supportRightUsed) GameEvents.EndPhase();
     }
 
     private void Awake()
@@ -277,6 +277,7 @@ public class FieldController : Listener
         selectedUnitPos = chosenUnit.transform.position;
         
         if(EnemyVanguard) VanguardToSupport = EnemyVanguard.transform;
+        else VanguardToSupport = null;
         SupportToVanguard = chosenUnit.transform;
         disableInput = true;
         timer = 0;

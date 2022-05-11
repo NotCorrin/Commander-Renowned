@@ -13,11 +13,13 @@ public class MouseQTEUI : Listener
     protected override void SubscribeListeners()
     {
         GameEvents.onQTEStart += QTEAnimation;
+        GameEvents.onQTEResolved += EndQTE;
     }
 
     protected override void UnsubscribeListeners()
     {
         GameEvents.onQTEStart -= QTEAnimation;
+        GameEvents.onQTEResolved -= EndQTE;
     }
 
     void Start()
@@ -57,7 +59,7 @@ public class MouseQTEUI : Listener
     {
         qteCircle.style.transitionDuration = new StyleList<TimeValue>(new List<TimeValue> { new TimeValue(QTEController.ShrinkingCircleMaxTime, TimeUnit.Second) });
 
-        Debug.Log(qteCircle.style.scale);
+        //Debug.Log(qteCircle.style.scale);
 
         if (!IsClicked)
         {
@@ -81,5 +83,16 @@ public class MouseQTEUI : Listener
     void LateUpdate()
     {
         QTEAnimation(QTEController.QTEType.shrinkingCircle, 1);
+    }
+
+    void EndQTE(QTEController.QTEResult result)
+    {
+        Invoke("DestroyQTE", 0.2f);
+
+    }
+
+    void DestroyQTE()
+    {
+        Destroy(this.gameObject);
     }
 }
