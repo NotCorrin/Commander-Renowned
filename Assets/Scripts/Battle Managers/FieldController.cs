@@ -44,6 +44,8 @@ public class FieldController : Listener
     [SerializeField] bool supportRightUsed = false;
 
     public static FieldController main;
+    private int playersDead;
+    private int enemyDead;    
     // Start is called before the first frame update
     void SetupUnits(List<Unit> playerUnits, List<Unit> enemyUnits)
     {
@@ -188,6 +190,10 @@ public class FieldController : Listener
     {
         //vanguardPos = PlayerVanguard.transform.position;
         deathNote.Add(unit);
+        if(IsUnitPlayer(unit)) playersDead++;
+        else enemyDead++;
+        if(playersDead >= 3) GameEvents.GameEnd(false);
+        else if(enemyDead >= 3) GameEvents.GameEnd(true);
         if(unit == PlayerSupportLeft) PlayerSupportLeft = null;
         if(unit == PlayerSupportRight) PlayerSupportRight = null;
         if(unit == PlayerVanguard) PlayerVanguard = null;

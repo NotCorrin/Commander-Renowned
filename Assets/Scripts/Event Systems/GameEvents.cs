@@ -170,6 +170,16 @@ public static class GameEvents
         }
     }
 
+    public static Action<bool> onGameEnd;
+    public static void GameEnd(bool win)
+    {
+        if (onGameEnd != null)
+        {
+            onGameEnd(win);
+        }
+    }
+
+
     //public static Action<Unit> onUnitClick;
     public static Action roundcontrollerEndPhase;
     public static void EndPhase()
