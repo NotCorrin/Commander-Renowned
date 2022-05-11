@@ -65,7 +65,7 @@ public class ActionbarUI : Listener
         switchBtn.clickable.clicked += SwitchBtn_Clicked;
         endSwitchTurnBtn.clickable.clicked += EndSwitchTurnBtn_Clicked;
         UIEvents.onUnitSelected += OnUnitSelected;
-        GameEvents.onChangePhase += PhaseSwitchUI;
+        GameEvents.onPhaseChanged += PhaseSwitchUI;
         GameEvents.onAbilityResolved += OnUnitSelected;
         //GameEvents.onKill += SwitchPrompt;
     }
@@ -80,7 +80,7 @@ public class ActionbarUI : Listener
         switchBtn.clickable.clicked -= SwitchBtn_Clicked;
         endSwitchTurnBtn.clickable.clicked -= EndSwitchTurnBtn_Clicked;
         UIEvents.onUnitSelected -= OnUnitSelected;
-        GameEvents.onChangePhase -= PhaseSwitchUI;
+        GameEvents.onPhaseChanged -= PhaseSwitchUI;
         GameEvents.onAbilityResolved -= OnUnitSelected;
         //GameEvents.onKill -= SwitchPrompt;
     }

@@ -335,7 +335,7 @@ public class Unit : Listener
         GameEvents.onResetBuffs += ResetBuffs;
         GameEvents.onUnitAttack += OnAttacked;
 
-        GameEvents.onChangePhase += UpdateBillboard;
+        GameEvents.onPhaseChanged += UpdateBillboard;
         
     }
 
@@ -353,7 +353,7 @@ public class Unit : Listener
         GameEvents.onResetBuffs -= ResetBuffs;
         GameEvents.onUnitAttack -= OnAttacked;
 
-        GameEvents.onChangePhase -= UpdateBillboard;
+        GameEvents.onPhaseChanged -= UpdateBillboard;
 
     }
 

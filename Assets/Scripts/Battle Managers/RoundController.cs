@@ -49,18 +49,6 @@ public class RoundController : Listener
         GameEvents.SetPhase(Phase.NextPhase);
     }*/
 
-    public static void SetPhase(Phase _phase)
-    {
-        if (!isPlayerPhase) FieldController.main.ActivateKill();
-        //Debug.LogWarning("this should happen third" + FieldController.main.GetUnit(FieldController.Position.Vanguard, true));
-        //if(!FieldController.main.GetUnit(FieldController.Position.Vanguard, true)) Debug.LogError("It works");
-        if (_phase == Phase.NextPhase) phase++;
-        else phase = _phase;
-        if (phase == Phase.NextPhase) { phase = Phase.PlayerVanguard; Debug.Log("reached last phase, cycling back"); }
-        GameEvents.ChangePhase(phase);
-        //if(phase == Phase.EnemyVangaurd) GameEvents.QTEStart(QTEController.QTEType.shrinkingCircle, 1);
-    }
-
     void PhaseSwitchAbilityUsed(Unit caster, Unit target, int abilityNumber)
     {
         if (phase == Phase.PlayerVanguard) GameEvents.QTEStart(QTEController.QTEType.shrinkingCircle, 1);
@@ -69,13 +57,13 @@ public class RoundController : Listener
     protected override void SubscribeListeners()
     {
         GameEvents.onBattleStarted += StartBattle;
-        GameEvents.onEndPhase += ChangePhase;
+        GameEvents.roundcontrollerEndPhase += ChangePhase;
     }
 
     protected override void UnsubscribeListeners()
     {
         GameEvents.onBattleStarted -= StartBattle;
-        GameEvents.onEndPhase -= ChangePhase;
+        GameEvents.roundcontrollerEndPhase -= ChangePhase;
     }
 
     private void ChangePhase()
@@ -86,6 +74,18 @@ public class RoundController : Listener
         }
 
         RoundController.SetPhase(Phase.NextPhase);
+    }
+    
+    public static void SetPhase(Phase _phase)
+    {
+        if (!isPlayerPhase) FieldController.main.ActivateKill();
+        //Debug.LogWarning("this should happen third" + FieldController.main.GetUnit(FieldController.Position.Vanguard, true));
+        //if(!FieldController.main.GetUnit(FieldController.Position.Vanguard, true)) Debug.LogError("It works");
+        if (_phase == Phase.NextPhase) phase++;
+        else phase = _phase;
+        if (phase == Phase.NextPhase) { phase = Phase.PlayerVanguard; Debug.Log("reached last phase, cycling back"); }
+        GameEvents.PhaseChanged(phase);
+        //if(phase == Phase.EnemyVangaurd) GameEvents.QTEStart(QTEController.QTEType.shrinkingCircle, 1);
     }
 
     public bool IsCurrentRoundPlayer()
@@ -102,7 +102,7 @@ public class RoundController : Listener
     {
         //Debug.LogWarning("Battle Started");
         phase = Phase.PlayerVanguard;
-        GameEvents.ChangePhase(phase);
+        GameEvents.PhaseChanged(phase);
     }
 
     public enum Phase
