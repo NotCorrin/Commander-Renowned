@@ -13,13 +13,12 @@ public class SoldierAbility : Ability
 
     public override int GetMoveWeight(Unit caster)
     {
-        int HealthWeight = Mathf.FloorToInt((1 - (caster.Health / caster.MaxHealth)) * 100);
         int AmmoWeight;
         if (caster.unitType == UnitType.Military || caster.unitType == UnitType.Commander)
         {
-            if (caster.Ammo < Cost) return 0;
-            AmmoWeight = Mathf.FloorToInt((1 - (caster.Ammo / caster.MaxAmmo)) * 100);
-            return (2 * HealthWeight + AmmoWeight) / 3;
+            if (caster.Ammo >= caster.MaxAmmo) return 0;
+            AmmoWeight = Mathf.FloorToInt((1 - ((float)caster.Ammo / (float)caster.MaxAmmo)) * 50);
+            return AmmoWeight;
         }
         else return 0;
     }

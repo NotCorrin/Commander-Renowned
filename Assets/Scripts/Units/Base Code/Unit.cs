@@ -223,12 +223,12 @@ public class Unit : Listener
     // Start is called before the first frame update
     public int GetStickScore()
     {
-        return GetMoveScoreAIAlgorithm();
+        return GetStandardAlgorithm();
     }
 
     public int GetSwitchScore()
     {
-        return GetMoveScoreAIAlgorithm();
+        return GetStandardAlgorithm();
     }
 
     public void SetupUnit(UnitType uType, string uName, AbilitySetup[] vAbilities, AbilitySetup[] sAbilities, int mHealth, int mAmmo, int mMana, RuntimeAnimatorController anim)
@@ -292,18 +292,30 @@ public class Unit : Listener
         }
     }
 
-    protected int GetMoveScoreAIAlgorithm()
+    protected int GetStandardAlgorithm()
     {
+        int finalWeight;
+
+        int moveWeight = 0;
+        int healthWeight = 0;
+        int buffWeight = 0;
+        int resourceWeight = 0;
+
         int totalVanguardMoveScore = 0;
         int totalVanguardMoves = 0;
+
         foreach (Ability ability in vanguardAbilities)
         {
             if (ability)
             {
-                totalVanguardMoves++;
-                totalVanguardMoveScore += ability.GetMoveWeight(this);
+                if (ability.GetMoveWeight(this) > totalVanguardMoveScore)
+                {
+                    totalVanguardMoveScore = ability.GetMoveWeight(this);
+                }
             }
         }
+
+        if (totalVanguardMoves == 0) totalVanguardMoves = -100; 
 
         int totalSupportMoveScore = 0;
         int totalSupportMoves = 0;
@@ -311,12 +323,46 @@ public class Unit : Listener
         {
             if (ability)
             {
-                totalSupportMoves++;
-                totalSupportMoveScore += ability.GetMoveWeight(this);
+                if (ability.GetMoveWeight(this) > totalSupportMoveScore)
+                {
+                    totalSupportMoveScore = ability.GetMoveWeight(this);
+                }
             }
         }
 
-        return (totalVanguardMoveScore / totalVanguardMoves) - (totalSupportMoveScore / totalSupportMoves);
+        moveWeight = totalVanguardMoveScore - totalSupportMoveScore ;
+
+        healthWeight = Mathf.RoundToInt(((float)Health / (float)MaxHealth) * 100);
+
+        if ((Attack + Defense + Thorns) > 0) buffWeight = 10;
+        buffWeight += (Attack + Defense + Thorns) * 20 + Accuracy * 10;
+
+        if (unitType == UnitType.Military || unitType == UnitType.Commander)
+        {
+            resourceWeight += Mathf.RoundToInt(100 * ((float)Ammo / (float)MaxAmmo));
+        }
+
+        if (unitType == UnitType.Mage || unitType == UnitType.Commander)
+        {
+            resourceWeight += Mathf.RoundToInt(100 * (1 - ((float)Mana / (float)MaxMana)));
+        }
+
+        if (unitType == UnitType.Commander)
+        {
+            resourceWeight = resourceWeight / 2;
+        }
+
+        finalWeight = (2 * moveWeight + healthWeight + resourceWeight) / 4 + buffWeight;
+        Debug.Log(UnitName
+        + "\n" + " final weight = " + finalWeight
+        + "\n" + " move weight = " + moveWeight
+        + "\n" + "health weight = " + healthWeight
+        + "\n" + "resource weight = " + resourceWeight
+        + "\n" + " weight - buffweight = " + ((2 * moveWeight + healthWeight + resourceWeight) / 4)
+        + "\n" + "buffweight = " + buffWeight
+        );
+
+        return finalWeight;
     }
 
 

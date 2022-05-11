@@ -21,12 +21,10 @@ public class Attack : QTEAbility
     public override int GetMoveWeight(Unit caster)
     {
         int BuffWeight = caster.Attack * 30;
-        int AmmoWeight;
         if (caster.unitType == UnitType.Military || caster.unitType == UnitType.Commander)
         {
             if (caster.Ammo < Cost) return 0;
-            AmmoWeight = Mathf.FloorToInt((caster.Ammo / caster.MaxAmmo) * 100);
-            return (2 * BuffWeight + AmmoWeight) / 3;
+            return (2 * BuffWeight + 50) / 3;
         }
         else return 0;
     }
