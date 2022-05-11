@@ -171,7 +171,7 @@ public class FieldController : Listener
     protected override void SubscribeListeners()
     {
         GameEvents.onPhaseChanged += ResetSupportUsed;
-        //GameEvents.onAbilityResolved += SupportUsed;
+        GameEvents.onAbilityResolved += SupportUsed;
         GameEvents.onKill += Kill;
         GameEvents.onSetupUnits += SetupUnits;
     }
@@ -179,7 +179,7 @@ public class FieldController : Listener
     protected override void UnsubscribeListeners()
     {
         GameEvents.onPhaseChanged -= ResetSupportUsed;
-        //GameEvents.onAbilityResolved -= SupportUsed;
+        GameEvents.onAbilityResolved -= SupportUsed;
         GameEvents.onKill -= Kill;
         GameEvents.onSetupUnits += SetupUnits;
     }
@@ -224,7 +224,7 @@ public class FieldController : Listener
     {
         if(GetIsSupportLeft(unit)) supportLeftUsed = true;
         if(GetIsSupportRight(unit)) supportRightUsed = true;
-        if(supportLeftUsed && supportRightUsed) GameEvents.EndPhase();
+        //if(supportLeftUsed && supportRightUsed) GameEvents.EndPhase();
     }
 
     private void Awake()
