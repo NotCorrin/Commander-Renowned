@@ -202,6 +202,7 @@ public class ActionbarUI : Listener
     }
     void AbilityUI(Unit unit, bool setAllFalse = false)
     {
+        Debug.Log("Rendering abilities... ");
         Ability[] _abilities = FieldController.main.GetIsVanguard(unit)?unit.VanguardAbilities:unit.SupportAbilities;
 
         for (int i = 0; i < _abilities.Length; i++)
