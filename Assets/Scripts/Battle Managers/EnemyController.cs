@@ -37,9 +37,13 @@ public class EnemyController : Listener
 		CalculateSwitchStickScores();
 		// No support enemies
 		if (enemySupportLeft == null && enemySupportRight == null) {
-			//GameEvents.SetPhase();
+            //GameEvents.SetPhase();
+            GameEvents.EndPhase();
 			return;
 		}
+
+        int vanguardStickScore = -999;
+        if (enemyVanguard) vanguardStickScore = enemyVanguard.GetStickScore();
 
         if (enemySupportLeft)
         {
@@ -48,18 +52,27 @@ public class EnemyController : Listener
                 if (enemySupportRight.GetSwitchScore() > enemySupportLeft.GetSwitchScore())
                 {
                     //Has right, right > left
-                    fieldController.SwapEnemyUnit(enemySupportRight);
+                    if (enemySupportRight.GetSwitchScore() > vanguardStickScore)
+                        fieldController.SwapEnemyUnit(enemySupportRight);
+                    else
+                        GameEvents.EndPhase();
                     return;
                 }
             }
             //Left > Right
-            fieldController.SwapEnemyUnit(enemySupportLeft);
+            if (enemySupportLeft.GetSwitchScore() > vanguardStickScore)
+                fieldController.SwapEnemyUnit(enemySupportLeft);
+            else
+                GameEvents.EndPhase();
             return;
         }
         else
         {
             //Has only right
-            fieldController.SwapEnemyUnit(enemySupportRight);
+            if (enemySupportRight.GetSwitchScore() > vanguardStickScore)
+                fieldController.SwapEnemyUnit(enemySupportRight);
+            else
+                GameEvents.EndPhase();
             return;
         }
 
@@ -358,12 +371,15 @@ public class EnemyController : Listener
 	void UseVanguardAbility () {
 		// UNCOMMENT LINES FOR TARGETING MULTIPLE CHARACTERS
 		FindBestVanguardAbilityIndex();
-		if(enemyVanguard)
+		if(enemyVanguard && vanguardBestAbility)
 		{			
 			// Use ability on single target
 			List<Unit> validTargets = fieldController.GetValidTargets(enemyVanguard, vanguardBestAbility);
 			Unit target = validTargets[Random.Range(0, validTargets.Count)];
-			GameEvents.UseAbility(enemyVanguard, target, vanguardBestAbilityIndex);
+            if (vanguardBestAbility.IsAbilityValid(enemyVanguard, target))
+                GameEvents.UseAbility(enemyVanguard, target, vanguardBestAbilityIndex);
+            else
+                GoToNextPhase();
 			//Debug.Log("Enemy vanguard attack: Ability - " + vanguardBestAbility.AbilityName + " Target - " + target);
 			
 			/*
@@ -374,9 +390,10 @@ public class EnemyController : Listener
 				validTargets.Remove(target);
 			}
 			*/
+            
 		}
-		else SwitchPositions();
-	}
+		else GoToNextPhase();
+    }
 	void UseSupportAbility () {
 		// UNCOMMENT LINES FOR TARGETING MULTIPLE CHARACTERS
 		if(enemySupportLeft)

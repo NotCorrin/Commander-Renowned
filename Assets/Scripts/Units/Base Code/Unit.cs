@@ -308,10 +308,14 @@ public class Unit : Listener
         {
             if (ability)
             {
-                totalVanguardMoves++;
-                totalVanguardMoveScore += ability.GetMoveWeight(this);
+                if (ability.GetMoveWeight(this) > totalVanguardMoveScore)
+                {
+                    totalVanguardMoveScore = ability.GetMoveWeight(this);
+                }
             }
         }
+
+        if (totalVanguardMoves == 0) totalVanguardMoves = -100; 
 
         int totalSupportMoveScore = 0;
         int totalSupportMoves = 0;
@@ -319,26 +323,28 @@ public class Unit : Listener
         {
             if (ability)
             {
-                totalSupportMoves++;
-                totalSupportMoveScore += ability.GetMoveWeight(this);
+                if (ability.GetMoveWeight(this) > totalSupportMoveScore)
+                {
+                    totalSupportMoveScore = ability.GetMoveWeight(this);
+                }
             }
         }
 
-        moveWeight = (totalVanguardMoveScore / totalVanguardMoves) - (totalSupportMoveScore / totalSupportMoves);
+        moveWeight = totalVanguardMoveScore - totalSupportMoveScore ;
 
-        healthWeight = (Health / MaxHealth) * 100;
+        healthWeight = Mathf.RoundToInt(((float)Health / (float)MaxHealth) * 100);
 
-        if ((Attack + Defense + Thorns) > 1) buffWeight = 1000;
+        if ((Attack + Defense + Thorns) > 0) buffWeight = 10;
         buffWeight += (Attack + Defense + Thorns) * 20 + Accuracy * 10;
 
         if (unitType == UnitType.Military || unitType == UnitType.Commander)
         {
-            resourceWeight += 100 * Ammo / MaxAmmo;
+            resourceWeight += Mathf.RoundToInt(100 * ((float)Ammo / (float)MaxAmmo));
         }
 
         if (unitType == UnitType.Mage || unitType == UnitType.Commander)
         {
-            resourceWeight += 100 * (1 - (Mana / MaxMana));
+            resourceWeight += Mathf.RoundToInt(100 * (1 - ((float)Mana / (float)MaxMana)));
         }
 
         if (unitType == UnitType.Commander)
@@ -346,7 +352,15 @@ public class Unit : Listener
             resourceWeight = resourceWeight / 2;
         }
 
-        finalWeight = ( 2 * moveWeight + healthWeight + resourceWeight) / 4 + buffWeight;
+        finalWeight = (2 * moveWeight + healthWeight + resourceWeight) / 4 + buffWeight;
+        Debug.Log(UnitName
+        + "\n" + " final weight = " + finalWeight
+        + "\n" + " move weight = " + moveWeight
+        + "\n" + "health weight = " + healthWeight
+        + "\n" + "resource weight = " + resourceWeight
+        + "\n" + " weight - buffweight = " + ((2 * moveWeight + healthWeight + resourceWeight) / 4)
+        + "\n" + "buffweight = " + buffWeight
+        );
 
         return finalWeight;
     }
