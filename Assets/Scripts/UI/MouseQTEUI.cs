@@ -12,14 +12,11 @@ public class MouseQTEUI : Listener
 
     protected override void SubscribeListeners()
     {
-        //throw new System.NotImplementedException();
-
         GameEvents.onQTEStart += QTEAnimation;
     }
 
     protected override void UnsubscribeListeners()
     {
-        //throw new System.NotImplementedException();
         GameEvents.onQTEStart -= QTEAnimation;
     }
 
@@ -58,10 +55,20 @@ public class MouseQTEUI : Listener
 
     private void QTEAnimation(QTEController.QTEType qteType, int difficultyModifier)
     {
+        qteCircle.style.transitionDuration = new StyleList<TimeValue>(new List<TimeValue> { new TimeValue(QTEController.ShrinkingCircleMaxTime, TimeUnit.Second) });
+
+        Debug.Log(qteCircle.style.scale);
+
         if (!IsClicked)
         {
-            qteCircle.style.scale = new Scale(new Vector2(0.6f, 0.6f));
+            qteCircle.style.scale = new Scale(new Vector2(QTEController.ShrinkingCircleTimer / QTEController.ShrinkingCircleMaxTime, QTEController.ShrinkingCircleTimer / QTEController.ShrinkingCircleMaxTime));
 
+            if (qteCircle.style.scale == new Scale(new Vector2(0f, 0f)))
+            {
+                container.style.transitionDelay = new StyleList<TimeValue>(new List<TimeValue> { new TimeValue(QTEController.ShrinkingCircleMaxTime, TimeUnit.Second) });
+
+                container.style.opacity = 0;
+            }
         }
         else if (IsClicked)
         {
