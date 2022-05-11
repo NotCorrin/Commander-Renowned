@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +10,7 @@ public class TeamManager : Listener
     public Transform PositionParent;
     public GameObject UnitPrefab;
 
+    private bool enemyCommanderUsed;
     // Start is called before the first frame update
     void SpawnTeam()
     {
@@ -27,9 +27,9 @@ public class TeamManager : Listener
             playerUnits.Add(null);
         }
 
-        for (i = 0; i < EnemyTeam.Count; i++)
+        for (i = 0; i < CurrentEnemyTeam.Count; i++)
         {
-            enemyUnits.Add(SpawnUnit(PositionParent.GetChild(i+3).position, EnemyTeam[i]));
+            enemyUnits.Add(SpawnUnit(PositionParent.GetChild(i+3).position, CurrentEnemyTeam[i]));
         }
         for (int j = i; j < 3; j++)
         {
@@ -47,7 +47,12 @@ public class TeamManager : Listener
     // Start is called before the first frame update
     void SetEnemyTeam()
     {
+        
         CurrentEnemyTeam.Add(EnemyTeam[0]);
+        for (int i = 0; i < 2; i++)
+        {
+            CurrentEnemyTeam.Add(EnemyTeam[Random.Range(1, EnemyTeam.Count)]);
+        }
         //CurrentEnemyTeam.Add(EnemyTeam[1]);
     }
 
