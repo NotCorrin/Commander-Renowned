@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.8
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.65203047, g: 0.8602165, b: 0.9504369, a: 0.8}
+  m_IndirectSpecularColor: {r: 0.65194005, g: 0.86021996, b: 0.9504233, a: 0.8}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -280,26 +280,22 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 416161354, guid: 0c4076252c8d19c4e9cfb4893d565a0a, type: 3}
+      propertyPath: winScene
+      value: EndScene
+      objectReference: {fileID: 0}
     - target: {fileID: 1100034891, guid: 0c4076252c8d19c4e9cfb4893d565a0a, type: 3}
       propertyPath: PositionParent
       value: 
       objectReference: {fileID: 644303531}
     - target: {fileID: 1100034891, guid: 0c4076252c8d19c4e9cfb4893d565a0a, type: 3}
       propertyPath: EnemyTeam.Array.size
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1100034891, guid: 0c4076252c8d19c4e9cfb4893d565a0a, type: 3}
       propertyPath: EnemyTeam.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: edf88a06261f4ed4891c1b5cf94ad382, type: 2}
-    - target: {fileID: 1100034891, guid: 0c4076252c8d19c4e9cfb4893d565a0a, type: 3}
-      propertyPath: EnemyTeam.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: af8c8893720fd0d47aedfb25dc11f9a1, type: 2}
-    - target: {fileID: 1100034891, guid: 0c4076252c8d19c4e9cfb4893d565a0a, type: 3}
-      propertyPath: EnemyTeam.Array.data[2]
-      value: 
-      objectReference: {fileID: 11400000, guid: af8c8893720fd0d47aedfb25dc11f9a1, type: 2}
+      objectReference: {fileID: 11400000, guid: 5196e05f980e6154392d8db4f4d5968d, type: 2}
     - target: {fileID: 8653105001587342313, guid: 0c4076252c8d19c4e9cfb4893d565a0a, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -348,34 +344,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8653105001587342316, guid: 0c4076252c8d19c4e9cfb4893d565a0a, type: 3}
-      propertyPath: EnemyVanguard
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8653105001587342316, guid: 0c4076252c8d19c4e9cfb4893d565a0a, type: 3}
-      propertyPath: PlayerVanguard
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8653105001587342316, guid: 0c4076252c8d19c4e9cfb4893d565a0a, type: 3}
-      propertyPath: EnemySupportLeft
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8653105001587342316, guid: 0c4076252c8d19c4e9cfb4893d565a0a, type: 3}
-      propertyPath: EnemySupportRight
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8653105001587342316, guid: 0c4076252c8d19c4e9cfb4893d565a0a, type: 3}
-      propertyPath: PlayerSupportLeft
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8653105001587342316, guid: 0c4076252c8d19c4e9cfb4893d565a0a, type: 3}
-      propertyPath: PlayerSupportRight
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8653105001587342317, guid: 0c4076252c8d19c4e9cfb4893d565a0a, type: 3}
-      propertyPath: qtePrefab
-      value: 
-      objectReference: {fileID: 4674050339876676031, guid: 33c3b2ee032d54442af7a881da7749b9, type: 3}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c4076252c8d19c4e9cfb4893d565a0a, type: 3}

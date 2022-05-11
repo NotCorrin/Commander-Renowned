@@ -194,7 +194,8 @@ public class FieldController : Listener
         if(unit == EnemySupportLeft) EnemySupportLeft = null;
         if(unit == EnemySupportRight) EnemySupportRight = null;
         if(unit == EnemyVanguard) EnemyVanguard = null;
-
+        if(!PlayerSupportLeft && !PlayerSupportRight && !PlayerVanguard) GameEvents.GameEnd(false);
+        else if(!EnemySupportLeft && !EnemySupportRight && !EnemyVanguard) GameEvents.GameEnd(true);
         Debug.LogWarning("this should happen first");
         //https://i.kym-cdn.com/entries/icons/original/000/034/833/snapchat_kill.jpg
     }

@@ -6,4 +6,5 @@ using UnityEngine;
 public class TeamScriptableObject : ScriptableObject
 {
     public List<UnitScriptableObject> units;
+    public List<UnitScriptableObject> activeUnits;
 }

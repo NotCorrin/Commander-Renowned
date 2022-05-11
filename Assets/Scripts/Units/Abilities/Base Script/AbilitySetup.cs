@@ -26,5 +26,6 @@ public enum AbilityScript
     MageDefend,
     Attack,
     Defend,
-    SoldierAbility
+    SoldierAbility,
+    MageFireball
 }
