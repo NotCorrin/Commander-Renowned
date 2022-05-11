@@ -9,12 +9,14 @@ public class QTEController : Listener
     public enum QTEDisplayResult { Perfect, Good, Poor }
 
     //Shrinking Circles QTE
-    static private float shrinkingCircleBaseTime = 0.5f; //5.0f
+    static private float shrinkingCircleBaseTime = 3.0f; //5.0f
     static private float shrinkingCircleDifficultyStep = 0.5f;
     static private float shrinkingCircleMinCritical = 0.4f;
     static private float shrinkingCircleMaxCritical = 0.6f;
     static private float shrinkingCircleMinHit = 0.2f;
     private static float shrinkingCircleMaxTime;
+
+    public GameObject qtePrefab;
     public static float ShrinkingCircleMaxTime
     {
         get => shrinkingCircleMaxTime;
@@ -30,7 +32,7 @@ public class QTEController : Listener
     // Start is called before the first frame update
     void Start()
     {
-        
+        shrinkingCircleMaxTime = shrinkingCircleBaseTime * shrinkingCircleDifficultyStep;
     }
 
     // Update is called once per frame
@@ -55,6 +57,8 @@ public class QTEController : Listener
 
     private void StartQTE(QTEType qteType, int difficultyModifier)
     {
+        Instantiate(qtePrefab, new Vector2(0f, 0f), Quaternion.identity);
+
         int finalDifficultyModifier = difficultyModifier;
 
         //Inverts difficulty modifier if not player turn
@@ -113,6 +117,8 @@ public class QTEController : Listener
         GameEvents.QTEResolved(finalResult);
 
         MenuEvents.onQTETriggered -= ResolveShrinkingCircle;
+
+        Destroy(GameObject.Find("QTE"));
     }
 
     private QTEResult InvertResultIfNotPlayer(QTEResult baseResult)
