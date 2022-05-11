@@ -6,8 +6,14 @@ using UnityEngine.SceneManagement;
 public class WorldMenuController : Listener
 {
     public string winScene;
+    private bool win;
     // Start is called before the first frame update
-    void EndScene(bool win)
+    void EndScene(bool _win)
+    {
+        win = _win;
+        Invoke("EndSceneDelay", 3);
+    }
+    void EndSceneDelay()
     {
         SceneManager.LoadScene(win?winScene:"EndScene");
     }
