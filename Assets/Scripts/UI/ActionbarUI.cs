@@ -126,6 +126,13 @@ public class ActionbarUI : Listener
             {
                 GameEvents.UseAbility(selectedUnit, selectedUnit, _selectedAbility);
             }
+            else
+            {
+                supportBarContainer.style.display = DisplayStyle.None;
+                promptBarContainer.style.display = DisplayStyle.Flex;
+                prompt = "Ability";
+                selectedAbility = _selectedAbility;
+            }
         }
         OnUnitSelected(selectedUnit);
         //else GameEvents.UseAbility(selectedUnit, SceneController.main.selectedUnit, 3);
@@ -134,21 +141,29 @@ public class ActionbarUI : Listener
     void EndSupportTurnBtn_Clicked()
     {
         Debug.Log("End Support Turn Button Clicked");
-        if(RoundController.phase == RoundController.Phase.PlayerVanguard || RoundController.phase == RoundController.Phase.PlayerSupport) GameEvents.SetPhase();
+        if(RoundController.phase == RoundController.Phase.PlayerVanguard || RoundController.phase == RoundController.Phase.PlayerSupport) GameEvents.EndPhase();
         else Debug.Log("Player does not have priority right now!");
     }
 
     void SwitchBtn_Clicked()
     {
         Debug.Log("Switch Button Clicked");
-        if(RoundController.phase == RoundController.Phase.PlayerSwap && FieldController.main.IsUnitPlayer(SceneController.main.selectedUnit)) FieldController.main.SwapPlayerUnit();
-        else Debug.Log("Player cannot swap right now!");
+        if (RoundController.phase == RoundController.Phase.PlayerSwap)
+        {
+            if (SceneController.main.selectedUnit)
+            {
+                if (FieldController.main.IsUnitPlayer(SceneController.main.selectedUnit)) FieldController.main.SwapPlayerUnit();
+                return;
+            }
+        }
+
+        Debug.Log("Player cannot swap right now!");
     }
 
     void EndSwitchTurnBtn_Clicked()
     {
         Debug.Log("End Switch Turn Button Clicked");
-        if(RoundController.phase == RoundController.Phase.PlayerSwap) GameEvents.SetPhase(RoundController.Phase.NextPhase);
+        if (RoundController.phase == RoundController.Phase.PlayerSwap) GameEvents.EndPhase();
         else Debug.Log("Player does not have priority right now!");
     }
     void OnUnitSelected(Unit unit)
@@ -188,6 +203,7 @@ public class ActionbarUI : Listener
     }
     void AbilityUI(Unit unit, bool setAllFalse = false)
     {
+        Debug.Log("Rendering abilities... ");
         Ability[] _abilities = FieldController.main.GetIsVanguard(unit)?unit.VanguardAbilities:unit.SupportAbilities;
 
         for (int i = 0; i < _abilities.Length; i++)

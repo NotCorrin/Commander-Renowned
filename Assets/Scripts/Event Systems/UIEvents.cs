@@ -12,6 +12,7 @@ using System;
  * onUnitDefenseChanged(Unit, int)
  * onUnitAccuracyChanged(Unit, int)
  * onDisplayQTEResults(QTEController.QTEDisplayResult)
+ * onUnitSelected(Unit)
  * menuClicked()
  */
 

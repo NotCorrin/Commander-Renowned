@@ -23,7 +23,6 @@ public static class GameEvents
     public static Action onBattleStarted;
     public static void BattleStart()
     {
-        SetPhase(RoundController.Phase.PlayerVanguard);
         if (onBattleStarted != null)
         {
             onBattleStarted();
@@ -43,7 +42,7 @@ public static class GameEvents
     public static void HealthChanged(Unit target, int Value)
     {
         if (onHealthChanged != null)
-        {   
+        {
             onHealthChanged(target, Value);
         }
     }
@@ -127,7 +126,7 @@ public static class GameEvents
     }
 
     public static Action<QTEController.QTEType, int> onQTEStart;
-    public static void QTEStart( QTEController.QTEType qteType, int difficultyModifier)
+    public static void QTEStart(QTEController.QTEType qteType, int difficultyModifier)
     {
         if (onQTEStart != null)
         {
@@ -140,12 +139,10 @@ public static class GameEvents
     {
         if (onQTEResolved != null)
         {
-                    //Debug.Log("AAAAAAAAA2");
-
             onQTEResolved(QTEResult);
         }
     }
-    
+
     public static Action<Unit> onSwitchUnitEnd;
     public static void SwitchUnitEnd(Unit unitSwitched)
     {
@@ -173,27 +170,32 @@ public static class GameEvents
         }
     }
 
+    //public static Action<Unit> onUnitClick;
+    public static Action roundcontrollerEndPhase;
+    public static void EndPhase()
+    {
+        if (roundcontrollerEndPhase != null)
+        {
+            roundcontrollerEndPhase();
+        }
+    }
+
+    public static Action onResetBuffs;
+    public static void ResetBuffs()
+    {
+        if (onResetBuffs != null)
+        {
+            onResetBuffs();
+        }
+    }
+
     // public static Action<RoundController.Phase> onSetPhase;
     public static Action<RoundController.Phase> onPhaseChanged;
-    public static Action resetBuffs;
-    public static void SetPhase(RoundController.Phase phase = RoundController.Phase.NextPhase)
+    public static void PhaseChanged(RoundController.Phase phase)
     {
-        if (RoundController.phase == RoundController.Phase.PlayerVanguard || RoundController.phase == RoundController.Phase.EnemyVangaurd && resetBuffs != null)
-        {
-            resetBuffs();
-        }
-        RoundController.SetPhase(phase);
-        // Additional event not needed
-        // if (onSetPhase != null)
-        // {
-        //     onSetPhase(phase);
-        // }
-        Debug.Log(phase);
         if (onPhaseChanged != null)
         {
-            onPhaseChanged(RoundController.phase);
+            onPhaseChanged(phase);
         }
-    }    
-    
-    //public static Action<Unit> onUnitClick;
+    }
 }

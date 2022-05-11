@@ -35,7 +35,7 @@ public class Unit : Listener
         get => health;
         set
         {
-            health = value;
+            health = Mathf.Max(Mathf.Min(value, MaxHealth), 0);
             UIEvents.UnitHealthChanged(this, health);
             if(value <= 0) 
             {
@@ -56,7 +56,7 @@ public class Unit : Listener
         get => ammo;
         set
         {
-            ammo = value;
+            ammo = Mathf.Max(Mathf.Min(value, MaxAmmo), 0);
             UIEvents.UnitAmmoChanged(this, ammo, maxAmmo);
         }
     }
@@ -73,7 +73,7 @@ public class Unit : Listener
         get => mana;
         set
         {
-            mana = value;
+            mana = Mathf.Max(Mathf.Min(value, MaxMana));
             UIEvents.UnitManaChanged(this, mana);
         }
     }
@@ -244,7 +244,7 @@ public class Unit : Listener
                 Destroy(AmmoBar.gameObject);
                 break;
             case UnitType.Commander:
-                AmmoBar.transform.position = Vector3.up * -1.5f;
+                AmmoBar.transform.position += Vector3.up * -0.65f;
                 break;
             default:
                 break;
@@ -332,7 +332,7 @@ public class Unit : Listener
         GameEvents.onUseAbility += UseAbility;
         GameEvents.onUseMana += OnUseMana;
         GameEvents.onUseAmmo += OnUseAmmo;
-        GameEvents.resetBuffs += ResetBuffs;
+        GameEvents.onResetBuffs += ResetBuffs;
         GameEvents.onUnitAttack += OnAttacked;
 
         GameEvents.onPhaseChanged += UpdateBillboard;
@@ -350,7 +350,7 @@ public class Unit : Listener
         GameEvents.onUseAbility -= UseAbility;
         GameEvents.onUseMana -= OnUseMana;
         GameEvents.onUseAmmo -= OnUseAmmo;
-        GameEvents.resetBuffs -= ResetBuffs;
+        GameEvents.onResetBuffs -= ResetBuffs;
         GameEvents.onUnitAttack -= OnAttacked;
 
         GameEvents.onPhaseChanged -= UpdateBillboard;

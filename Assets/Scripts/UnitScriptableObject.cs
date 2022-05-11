@@ -18,4 +18,5 @@ public class UnitScriptableObject : ScriptableObject
     public int MaxAmmo;
     public int MaxMana;
     public RuntimeAnimatorController animator;
+    public Sprite sprite;
 }
