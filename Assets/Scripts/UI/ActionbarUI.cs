@@ -65,7 +65,7 @@ public class ActionbarUI : Listener
         switchBtn.clickable.clicked += SwitchBtn_Clicked;
         endSwitchTurnBtn.clickable.clicked += EndSwitchTurnBtn_Clicked;
         UIEvents.onUnitSelected += OnUnitSelected;
-        GameEvents.onPhaseChanged += PhaseSwitchUI;
+        GameEvents.onChangePhase += PhaseSwitchUI;
         GameEvents.onAbilityResolved += OnUnitSelected;
         //GameEvents.onKill += SwitchPrompt;
     }
@@ -80,7 +80,7 @@ public class ActionbarUI : Listener
         switchBtn.clickable.clicked -= SwitchBtn_Clicked;
         endSwitchTurnBtn.clickable.clicked -= EndSwitchTurnBtn_Clicked;
         UIEvents.onUnitSelected -= OnUnitSelected;
-        GameEvents.onPhaseChanged -= PhaseSwitchUI;
+        GameEvents.onChangePhase -= PhaseSwitchUI;
         GameEvents.onAbilityResolved -= OnUnitSelected;
         //GameEvents.onKill -= SwitchPrompt;
     }
@@ -134,21 +134,29 @@ public class ActionbarUI : Listener
     void EndSupportTurnBtn_Clicked()
     {
         Debug.Log("End Support Turn Button Clicked");
-        if(RoundController.phase == RoundController.Phase.PlayerVanguard || RoundController.phase == RoundController.Phase.PlayerSupport) GameEvents.SetPhase();
+        if(RoundController.phase == RoundController.Phase.PlayerVanguard || RoundController.phase == RoundController.Phase.PlayerSupport) GameEvents.EndPhase();
         else Debug.Log("Player does not have priority right now!");
     }
 
     void SwitchBtn_Clicked()
     {
         Debug.Log("Switch Button Clicked");
-        if(RoundController.phase == RoundController.Phase.PlayerSwap && FieldController.main.IsUnitPlayer(SceneController.main.selectedUnit)) FieldController.main.SwapPlayerUnit();
-        else Debug.Log("Player cannot swap right now!");
+        if (RoundController.phase == RoundController.Phase.PlayerSwap)
+        {
+            if (SceneController.main.selectedUnit)
+            {
+                if (FieldController.main.IsUnitPlayer(SceneController.main.selectedUnit)) FieldController.main.SwapPlayerUnit();
+                return;
+            }
+        }
+
+        Debug.Log("Player cannot swap right now!");
     }
 
     void EndSwitchTurnBtn_Clicked()
     {
         Debug.Log("End Switch Turn Button Clicked");
-        if(RoundController.phase == RoundController.Phase.PlayerSwap) GameEvents.SetPhase(RoundController.Phase.NextPhase);
+        if (RoundController.phase == RoundController.Phase.PlayerSwap) GameEvents.EndPhase();
         else Debug.Log("Player does not have priority right now!");
     }
     void OnUnitSelected(Unit unit)

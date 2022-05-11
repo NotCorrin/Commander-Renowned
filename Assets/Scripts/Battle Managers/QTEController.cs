@@ -76,7 +76,6 @@ public class QTEController : Listener
 
     private void ResolveShrinkingCircle()
     {
-                            //Debug.Log("AAAAAAAAA1");
         //Placeholder default hit value
         UIEvents.DisplayQTEResults(QTEDisplayResult.Good);
         GameEvents.QTEResolved(QTEResult.Hit);
