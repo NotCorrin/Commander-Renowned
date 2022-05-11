@@ -131,6 +131,7 @@ public class ActionbarUI : Listener
                 supportBarContainer.style.display = DisplayStyle.None;
                 promptBarContainer.style.display = DisplayStyle.Flex;
                 prompt = "Ability";
+                selectedAbility = _selectedAbility;
             }
         }
         OnUnitSelected(selectedUnit);
