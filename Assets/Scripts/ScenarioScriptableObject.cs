@@ -5,13 +5,15 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Scenario", menuName = "Scenario", order = 1)]
 public class ScenarioScriptableObject : ScriptableObject
 {
+    public int level;
     public Scenario[] story;
 }
 
 [System.Serializable]
 public class Scenario
 {
-    [TextArea(15,20)]
-    public string scenario;
+    public string title;
+    [TextArea(15,6)]
+    public string description;
     public List<UnitScriptableObject> enemies;
 }

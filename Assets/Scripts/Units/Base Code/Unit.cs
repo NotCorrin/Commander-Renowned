@@ -16,8 +16,10 @@ public class Unit : Listener
     [SerializeField] GameObject DamageNumbers;
 
     SpriteRenderer spriteRenderer;
+    Collider coll;
     private Billboard billboard;
     private Animator animator;
+    public Transform HealthBar;
     public Transform AmmoBar;
     public Transform ManaBar;
 
@@ -237,6 +239,19 @@ public class Unit : Listener
         }
     }
 
+    private void OnKill(Unit unit)
+    {
+        if(unit == this)
+        {
+            if(HealthBar) Destroy(HealthBar.gameObject);
+            if(ManaBar) Destroy(ManaBar.gameObject);
+            if(AmmoBar) Destroy(AmmoBar.gameObject);
+            spriteRenderer.sprite = null;
+            if(animator) Destroy(animator);
+            if(GetComponent<SphereCollider>()) Destroy(GetComponent<SphereCollider>());
+        }        
+    }
+
     // Start is called before the first frame update
     public int GetStickScore()
     {
@@ -300,11 +315,14 @@ public class Unit : Listener
     {
         if(RoundController.isPlayerPhase == FieldController.main.IsUnitPlayer(this))
         {
+            baseAttack = Mathf.Max(0,baseAttack--);
+            baseAccuracy = Mathf.Max(0, baseAccuracy--);
             Attack = baseAttack;
             Accuracy = baseAccuracy;
         }
         else
         {
+            baseDefense = Mathf.Max(0,baseDefense--);
             Defense = baseDefense;
         }
     }
@@ -399,6 +417,7 @@ public class Unit : Listener
         GameEvents.onUseAmmo += OnUseAmmo;
         GameEvents.onResetBuffs += ResetBuffs;
         GameEvents.onUnitAttack += OnAttacked;
+        GameEvents.onKill += OnKill;
 
         GameEvents.onPhaseChanged += UpdateBillboard;
         
@@ -419,6 +438,7 @@ public class Unit : Listener
         GameEvents.onUseAmmo -= OnUseAmmo;
         GameEvents.onResetBuffs -= ResetBuffs;
         GameEvents.onUnitAttack -= OnAttacked;
+        GameEvents.onKill += OnKill;
 
         GameEvents.onPhaseChanged -= UpdateBillboard;
 
@@ -428,6 +448,8 @@ public class Unit : Listener
     {
         animator = GetComponent<Animator>();
         billboard = GetComponent<Billboard>();
+        coll = GetComponent<Collider>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         DamageNumbers = Resources.Load("UIPrefabs/DamageText") as GameObject;
     }
@@ -438,8 +460,6 @@ public class Unit : Listener
 
     public void UpdateEnemyVisual()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-
         if(spriteRenderer)
         {
             spriteRenderer.color = new Color(0.85f, 0.66f, 1, 1);

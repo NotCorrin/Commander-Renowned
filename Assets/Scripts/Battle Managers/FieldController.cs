@@ -194,6 +194,7 @@ public class FieldController : Listener
         if(unit == EnemyVanguard) EnemyVanguard = null;
         if(!PlayerSupportLeft && !PlayerSupportRight && !PlayerVanguard) GameEvents.GameEnd(false);
         else if(!EnemySupportLeft && !EnemySupportRight && !EnemyVanguard) GameEvents.GameEnd(true);
+        UIEvents.UnitSelected(null);
         Debug.LogWarning("this should happen first");
         //https://i.kym-cdn.com/entries/icons/original/000/034/833/snapchat_kill.jpg
     }
@@ -202,7 +203,7 @@ public class FieldController : Listener
     {
         foreach (Unit unit in deathNote)
         {
-            if(unit) Destroy(unit.gameObject);
+            //if(unit) Destroy(unit.gameObject);
             Debug.LogWarning("this should happen second");
         }
     }

@@ -89,6 +89,7 @@ public class QTEController : Listener
 
     private void ResolveShrinkingCircle()
     {
+        Debug.Log("hell");
         QTEResult finalResult;
 
         float finalPercentage = ShrinkingCircleTimer / ShrinkingCircleMaxTime;

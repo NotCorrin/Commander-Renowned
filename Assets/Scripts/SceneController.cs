@@ -7,6 +7,7 @@ public class SceneController : Listener
     public static SceneController main;
     public GameObject selectedObject;
     public Unit selectedUnit;
+    public LayerMask clickLayer;
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +39,7 @@ public class SceneController : Listener
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             RaycastHit hit;
-            Physics.Raycast(ray, out hit);
+            Physics.Raycast(ray, out hit, clickLayer);
 
             if (hit.collider != null)
             {
