@@ -68,4 +68,13 @@ public abstract class Ability : MonoBehaviour
     {
         return Mathf.Max(Damage + Caster.Attack - Target.Defense, 0);
     }
+
+    protected int GetTotalDamageBuffs(Unit Caster)
+    {
+        int totalDamageBuffs = 0;
+        totalDamageBuffs += Caster.Attack;
+        /*Version made AI look at opponent defense buffs. Took away satisfaction of oursmarting AI
+        totalDamageBuffs -= FieldController.main.GetUnit(FieldController.Position.Vanguard, !FieldController.main.IsUnitPlayer(Caster)).Defense);*/
+        return totalDamageBuffs;
+    }
 }
