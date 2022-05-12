@@ -35,7 +35,7 @@ public class Unit : Listener
         get => health;
         set
         {
-            health = Mathf.Max(Mathf.Min(value, MaxHealth), 0);
+            health = Mathf.Clamp(value, 0, MaxHealth);
             UIEvents.UnitHealthChanged(this, health);
             if(value <= 0) 
             {
@@ -56,7 +56,7 @@ public class Unit : Listener
         get => ammo;
         set
         {
-            ammo = Mathf.Max(Mathf.Min(value, MaxAmmo), 0);
+            ammo = Mathf.Clamp(value, 0, MaxAmmo);
             UIEvents.UnitAmmoChanged(this, ammo, maxAmmo);
         }
     }
@@ -73,7 +73,7 @@ public class Unit : Listener
         get => mana;
         set
         {
-            mana = Mathf.Max(Mathf.Min(value, MaxMana));
+            mana = Mathf.Clamp(value, 0, MaxMana);
             UIEvents.UnitManaChanged(this, mana);
         }
     }

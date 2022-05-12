@@ -28,15 +28,17 @@ public class MageDefend : QTEAbility
 
     public override int GetMoveWeight (Unit caster)
     {
-        int HealthWeight = Mathf.FloorToInt((1 - (caster.Health / caster.MaxHealth)) * 100);
-        int ManaWeight;
-        if (caster.unitType == UnitType.Mage || caster.unitType == UnitType.Commander)
+        int HealthWeight = Mathf.FloorToInt((1 - (caster.Health / caster.MaxHealth)) * 30);
+        if (!(caster.unitType == UnitType.Mage || caster.unitType == UnitType.Commander))
         {
-            ManaWeight = Mathf.FloorToInt((1 - (caster.Mana / caster.MaxMana)) * 100);
+            return 0;
         }
-        else return 0;
+        else if (caster.Mana >= caster.MaxMana * 0.8f )
+        {
+            return HealthWeight - 10;
+        }
 
-        return (2 * HealthWeight + ManaWeight) / 3;
+        return HealthWeight + Random.Range(-10, 10);
     }
 
     protected override void AbilityUsed(QTEController.QTEResult result)
@@ -48,7 +50,7 @@ public class MageDefend : QTEAbility
         {
             case QTEController.QTEResult.Critical:
                 {
-                    FinalDefense = 5;
+                    FinalDefense = FinalDefense + Variation;
                     break;
                 }
             case QTEController.QTEResult.Miss:
