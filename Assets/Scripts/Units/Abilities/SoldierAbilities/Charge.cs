@@ -39,8 +39,8 @@ public class Charge : QTEAbility
                 }
         }
 
-        GameEvents.AccuracyUp(Caster, StatBoost);
-        GameEvents.DefenseUp(Caster, -3);
+        GameEvents.BaseAttackUp(Caster, 3);
+        GameEvents.BaseDefenseUp(Caster, -3);
 
         AttackWithLaser(Mathf.FloorToInt(FinalDamage));
 

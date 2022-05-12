@@ -78,6 +78,7 @@ public class Unit : Listener
         }
     }
 
+    protected int baseAttack;
     protected int attack;
     public int Attack
     {
@@ -89,17 +90,17 @@ public class Unit : Listener
         }
     }
 
+    protected int baseDefense;
     protected int defense;
-    public int Defense
-    {
+    public int Defense {
         get => defense;
-        set
-        {
+        set {
             defense = value;
             UIEvents.UnitDefenseChanged(this, defense);
         }
     }
 
+    protected int baseAccuracy;
     protected int accuracy;
     public int Accuracy
     {
@@ -141,11 +142,27 @@ public class Unit : Listener
             Attack += AttackChange;
         }
     }
+    private void OnBaseAttackChanged(Unit target, int AttackChange)
+    {
+        if (target == this)
+        {
+            baseAttack += AttackChange;
+            Attack += AttackChange;
+        }
+    }
 
     private void OnDefenseChanged(Unit target, int DefenseChange)
     {
         if (target == this)
         {
+            Defense += DefenseChange;
+        }
+    }
+    private void OnBaseDefenseChanged(Unit target, int DefenseChange)
+    {
+        if (target == this)
+        {
+            baseDefense += DefenseChange;
             Defense += DefenseChange;
         }
     }
@@ -283,12 +300,12 @@ public class Unit : Listener
     {
         if(RoundController.isPlayerPhase == FieldController.main.IsUnitPlayer(this))
         {
-            Attack = 0;
-            Accuracy = 0;
+            Attack = baseAttack;
+            Accuracy = baseAccuracy;
         }
         else
         {
-            Defense = 0;
+            Defense = baseDefense;
         }
     }
 
@@ -372,7 +389,9 @@ public class Unit : Listener
         GameEvents.onBattleStarted += ResetUnit;
         GameEvents.onHealthChanged += OnHealthChanged;
         GameEvents.onDefenseUp += OnDefenseChanged;
+        GameEvents.onBaseDefenseUp += OnBaseDefenseChanged;
         GameEvents.onAttackUp += OnAttackChanged;
+        GameEvents.onBaseAttackUp += OnBaseAttackChanged;
         GameEvents.onAccuracyUp += OnAccuracyChanged;
         GameEvents.onThornsUp += OnThornsChanged;
         GameEvents.onUseAbility += UseAbility;
@@ -390,7 +409,9 @@ public class Unit : Listener
         GameEvents.onBattleStarted -= ResetUnit;
         GameEvents.onHealthChanged -= OnHealthChanged;
         GameEvents.onDefenseUp -= OnDefenseChanged;
+        GameEvents.onBaseDefenseUp -= OnBaseDefenseChanged;
         GameEvents.onAttackUp -= OnAttackChanged;
+        GameEvents.onBaseAttackUp -= OnBaseAttackChanged;
         GameEvents.onAccuracyUp -= OnAccuracyChanged;
         GameEvents.onThornsUp -= OnThornsChanged;
         GameEvents.onUseAbility -= UseAbility;

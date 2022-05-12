@@ -114,10 +114,13 @@ public class ActionbarUI : Listener
     {
         if(RoundController.phase == RoundController.Phase.PlayerVanguard)
         {
-            if(FieldController.main.IsUnitActive(selectedUnit)) 
+            if (!abilityActive[_selectedAbility - 1]) return;
+            if (FieldController.main.IsUnitActive(selectedUnit)) 
             GameEvents.UseAbility(  selectedUnit, 
                                     FieldController.main.GetUnit(FieldController.Position.Vanguard, !FieldController.main.IsUnitPlayer(selectedUnit)),
                                     _selectedAbility);
+            AbilityUI(selectedUnit, true);
+            return;
         }
         else if(RoundController.phase == RoundController.Phase.PlayerSupport)
         {
