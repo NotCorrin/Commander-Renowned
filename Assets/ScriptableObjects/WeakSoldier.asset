@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1315abb00406e0a458b2138c8363ac1c, type: 3}
-  m_Name: Commander
+  m_Name: WeakSoldier
   m_EditorClassIdentifier: 
-  unitType: 2
-  UnitName: The Renowned
+  unitType: 1
+  UnitName: The Brute
   VanguardAbilities:
   - AbilityType: 0
     AbilityName: 
@@ -26,23 +26,23 @@ MonoBehaviour:
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   - AbilityType: 3
-    AbilityName: Attack Formation
-    AbilityDescription: Strike in an attack formation. Attack up, Damage 3
+    AbilityName: Arcane Bullet
+    AbilityDescription: Strike the enemy with dual arcane bullets. Attack up.
     Cost: 1
-    Damage: 3
+    Damage: 4
     StatBoost: 1
     Variation: 1
-    VFX1: {fileID: 1533149051114980, guid: 14237ad61acba9345b53abf70e0cd027, type: 3}
+    VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  - AbilityType: 2
-    AbilityName: Wall of Plasma
-    AbilityDescription: Will form an invisible wall to protect the mage
-    Cost: 2
-    Damage: 1
-    StatBoost: 3
+  - AbilityType: 4
+    AbilityName: Defense Formation
+    AbilityDescription: Strike in a negative formation. Defense up, Damage 3
+    Cost: 1
+    Damage: 4
+    StatBoost: 1
     Variation: 1
-    VFX1: {fileID: 4795044506606789115, guid: e24947d56dd5bb14089df296b91fab13, type: 3}
+    VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   SupportAbilities:
@@ -63,22 +63,12 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
-    VFX1: {fileID: 0}
-    VFX2: {fileID: 0}
-    VFX3: {fileID: 0}
-  - AbilityType: 1
-    AbilityName: Confidence
-    AbilityDescription: Increases attack damage
-    Cost: 1
-    Damage: 0
-    StatBoost: 2
-    Variation: 0
-    VFX1: {fileID: 0}
+    VFX1: {fileID: 782153884964200169, guid: b8c56c2add686174dadacb682e6415ad, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   VanguardAbilities2: []
-  MaxHealth: 18
-  MaxAmmo: 2
-  MaxMana: 2
-  animator: {fileID: 9100000, guid: 74b3c6f72f520a248965c52c6f97a33e, type: 2}
-  sprite: {fileID: -6852834596175607816, guid: 55e703a8ba1583a4987292f6d9806971, type: 3}
+  MaxHealth: 24
+  MaxAmmo: 5
+  MaxMana: 0
+  animator: {fileID: 9100000, guid: 290842611f5ef174cb1770e4e4ef610f, type: 2}
+  sprite: {fileID: -3868812660829053132, guid: ebe7b0c9921a1e840bf1ffd5ab6bb180, type: 3}

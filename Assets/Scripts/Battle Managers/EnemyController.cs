@@ -196,24 +196,23 @@ public class EnemyController : Listener
         for (int i = 0; i < enemyVanguard.VanguardAbilities.Length; i++)
         {
             Ability currentAbility = enemyVanguard.VanguardAbilities[i];
-            if (currentAbility == null)
+            if (currentAbility)
             {
-                continue;
-            }
-            int currentWeight = currentAbility.GetMoveWeight(enemyVanguard);
-            if (currentWeight > highestAbilityWeight)
-            {
-                highestAbilityWeight = currentWeight;
-                vanguardBestAbility = currentAbility;
-                index = i;
-            }
-            if (currentWeight == highestAbilityWeight)
-            {
-                if (Random.Range(0, 100) < 50)
+                int currentWeight = currentAbility.GetMoveWeight(enemyVanguard);
+                if (currentWeight > highestAbilityWeight)
                 {
                     highestAbilityWeight = currentWeight;
                     vanguardBestAbility = currentAbility;
                     index = i;
+                }
+                if (currentWeight == highestAbilityWeight)
+                {
+                    if (Random.Range(0, 100) < 50)
+                    {
+                        highestAbilityWeight = currentWeight;
+                        vanguardBestAbility = currentAbility;
+                        index = i;
+                    }
                 }
             }
 
@@ -386,11 +385,16 @@ public class EnemyController : Listener
         {
             // Use ability on single target
             List<Unit> validTargets = fieldController.GetValidTargets(enemyVanguard, vanguardBestAbility);
-            Unit target = validTargets[Random.Range(0, validTargets.Count)];
-            if (vanguardBestAbility.IsAbilityValid(enemyVanguard, target))
-                GameEvents.UseAbility(enemyVanguard, target, vanguardBestAbilityIndex);
-            else
-                GoToNextPhase();
+            if (validTargets.Count > 0)
+            {
+                Unit target = validTargets[Random.Range(0, validTargets.Count)];
+
+                if (vanguardBestAbility.IsAbilityValid(enemyVanguard, target))
+                    GameEvents.UseAbility(enemyVanguard, target, vanguardBestAbilityIndex);
+                else
+                    GoToNextPhase();
+            }
+            else GoToNextPhase();
             //Debug.Log("Enemy vanguard attack: Ability - " + vanguardBestAbility.AbilityName + " Target - " + target);
 
             /*

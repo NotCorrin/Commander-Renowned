@@ -28,15 +28,16 @@ public class MageAttack : QTEAbility
 
     public override int GetMoveWeight (Unit caster)
     {   
-        int HealthWeight = Mathf.FloorToInt((caster.Health / caster.MaxHealth) * 100);
+        int HealthWeight = Mathf.FloorToInt(1 - (caster.Health / caster.MaxHealth) * 100);
         int ManaWeight;
+        int BuffWeight = GetTotalDamageBuffs(caster) * 20;
         if (caster.unitType == UnitType.Mage || caster.unitType == UnitType.Commander)
         {
             ManaWeight = Mathf.FloorToInt((1 - (caster.Mana / caster.MaxMana)) * 100);
         }
         else return 0;
 
-        return (2 * HealthWeight+ManaWeight)/3;
+        return (HealthWeight+2 * ManaWeight)/3 + BuffWeight;
     }
 
     protected override void AbilityUsed(QTEController.QTEResult result)

@@ -10,7 +10,7 @@ public class QTEController : Listener
 
     //Shrinking Circles QTE
     static private float shrinkingCircleBaseTime = 3.0f; //5.0f
-    static private float shrinkingCircleDifficultyStep = 0.6f;
+    static private float shrinkingCircleDifficultyStep = 2f;
     static private float shrinkingCircleMaxCritical = 0.657f;
     static private float shrinkingCircleMaxHit = 0.8f;
     static private float shrinkingCircleMin = 0.57f;
@@ -32,7 +32,7 @@ public class QTEController : Listener
     // Start is called before the first frame update
     void Start()
     {
-        shrinkingCircleMaxTime = shrinkingCircleBaseTime * shrinkingCircleDifficultyStep;
+        //shrinkingCircleMaxTime = shrinkingCircleBaseTime * shrinkingCircleDifficultyStep;
     }
 
     // Update is called once per frame
@@ -81,7 +81,8 @@ public class QTEController : Listener
     private void StartShrinkingCircle(int difficultyModifier)
     {
         shrinkingCircleActive = true;
-        shrinkingCircleMaxTime = shrinkingCircleBaseTime + (difficultyModifier * shrinkingCircleDifficultyStep);
+        shrinkingCircleMaxTime = shrinkingCircleBaseTime - Mathf.Clamp(shrinkingCircleDifficultyStep * ( Mathf.Atan((float) difficultyModifier/2)), -shrinkingCircleBaseTime * 0.8f, shrinkingCircleBaseTime * 0.8f);
+        Debug.Log(ShrinkingCircleMaxTime);
         shrinkingCircleTimer = shrinkingCircleMaxTime;
         MenuEvents.onQTETriggered += ResolveShrinkingCircle;
         Instantiate(qtePrefab, new Vector2(0f, 0f), Quaternion.identity);

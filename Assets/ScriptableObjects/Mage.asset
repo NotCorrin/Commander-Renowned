@@ -40,7 +40,7 @@ MonoBehaviour:
     AbilityDescription: Will form an invisible wall to protect the mage
     Cost: 2
     Damage: 0
-    StatBoost: 2
+    StatBoost: 3
     Variation: 1
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}

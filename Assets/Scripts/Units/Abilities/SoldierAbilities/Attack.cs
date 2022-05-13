@@ -20,13 +20,19 @@ public class Attack : QTEAbility
 
     public override int GetMoveWeight(Unit caster)
     {
-        int BuffWeight = caster.Attack * 30;
+        int BuffWeight = GetTotalDamageBuffs(caster) * 30;
         if (caster.unitType == UnitType.Military || caster.unitType == UnitType.Commander)
         {
             if (caster.Ammo < Cost) return 0;
-            return (2 * BuffWeight + 50) / 3;
+            return BuffWeight + Damage * 10;
         }
         else return 0;
+    }
+
+    public override void UseAbility(Unit Caster, Unit Target)
+    {
+        GameEvents.AccuracyUp(Caster, StatBoost);
+        base.UseAbility(Caster, Target);
     }
 
     protected override void AbilityUsed(QTEController.QTEResult result)
@@ -47,9 +53,7 @@ public class Attack : QTEAbility
                 }
         }
 
-        GameEvents.AccuracyUp(Caster, StatBoost);
-
-        AttackWithLaser(Mathf.FloorToInt(FinalDamage / 2));
+        AttackWithLaser(Mathf.FloorToInt((float)FinalDamage / 2));
 
         secondShotTimer = secondShotDelay;
         secondShotTrigger = true;
@@ -92,18 +96,18 @@ public class Attack : QTEAbility
     {
         if(Target)
         {
-            GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, damage));
             FireLaserAtTarget(Target.transform);
+            GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, damage));
         }
     }
-
+        
     private void Update()
     {
-        if (secondShotTrigger)
+        if (secondShotTrigger && Target)
         {
             if ((secondShotTimer -= Time.deltaTime) <= 0)
             {
-                AttackWithLaser(Mathf.CeilToInt(FinalDamage/2));
+                AttackWithLaser(Mathf.CeilToInt((float)FinalDamage/2));
                 secondShotTrigger = false;
             }
         }
