@@ -15,5 +15,11 @@ public class Scenario
     public string title;
     [TextArea(15,6)]
     public string description;
-    public List<UnitScriptableObject> enemies;
+    public Enemies[] Enemies;
+}
+
+[System.Serializable]
+public class Enemies
+{
+    public UnitScriptableObject[] enemies;
 }

@@ -266,6 +266,7 @@ public class FieldController : Listener
             //Debug.Log("Player Support Left: " + PlayerSupportLeft.transform.position);
             //Debug.Log("Player Support Right: " + PlayerSupportRight.transform.position);
         }
+        else Debug.Log("what the fuck where did the unit go");
         //GameEvents.SetPhase(RoundController.Phase.EnemySwap);
     }
 

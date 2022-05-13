@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b12e751dbe26864a83de92a31c6d08e, type: 3}
   m_Name: New Scenario
   m_EditorClassIdentifier: 
-  level: 1
+  level: 0
   story:
   - title: 
     description: 
-    enemies: []
+    Enemies: []
   - title: Tutorial
     description: 'Welcome to Commander: Renowned.
 
@@ -28,13 +28,17 @@ MonoBehaviour:
       Command
       your carefully curated selection of 3 units to defeat the enemy and free the
       world from their grasp.'
-    enemies:
-    - {fileID: 11400000, guid: b324775af3c604543844ea014606c13a, type: 2}
-    - {fileID: 11400000, guid: 42004d4d2e829974d9885000d5a4611e, type: 2}
-    - {fileID: 11400000, guid: 64bc4d437666c8546b4403a49e3ce1ef, type: 2}
+    Enemies:
+    - enemies: []
+    - enemies:
+      - {fileID: 11400000, guid: b21d54bddb21f7a419bd7a79ec36a958, type: 2}
+      - {fileID: 11400000, guid: af8c8893720fd0d47aedfb25dc11f9a1, type: 2}
+      - {fileID: 11400000, guid: edf88a06261f4ed4891c1b5cf94ad382, type: 2}
+    - enemies:
+      - {fileID: 11400000, guid: b21d54bddb21f7a419bd7a79ec36a958, type: 2}
+      - {fileID: 11400000, guid: e7acd760f86d622409b684a33cad4664, type: 2}
+      - {fileID: 11400000, guid: edf88a06261f4ed4891c1b5cf94ad382, type: 2}
   - title: Plains
     description: You are ambushed by bandits.
-    enemies:
-    - {fileID: 11400000, guid: b324775af3c604543844ea014606c13a, type: 2}
-    - {fileID: 11400000, guid: 42004d4d2e829974d9885000d5a4611e, type: 2}
-    - {fileID: 11400000, guid: 64bc4d437666c8546b4403a49e3ce1ef, type: 2}
+    Enemies:
+    - enemies: []

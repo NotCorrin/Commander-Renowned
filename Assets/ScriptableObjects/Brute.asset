@@ -27,10 +27,11 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 7
     AbilityName: Charge
-    AbilityDescription: Charge at the enemy. Permanent ATT UP and DEF DOWN
+    AbilityDescription: Charge at the enemy \n+2 Permanant ATT (Decays by 1 each
+      turn)
     Cost: 1
     Damage: 4
-    StatBoost: 3
+    StatBoost: 2
     Variation: 1
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}

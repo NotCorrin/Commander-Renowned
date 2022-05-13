@@ -81,6 +81,8 @@ public class Unit : Listener
     }
 
     protected int baseAttack;
+        //[SerializeField]
+
     protected int attack;
     public int Attack
     {
@@ -315,14 +317,14 @@ public class Unit : Listener
     {
         if(RoundController.isPlayerPhase == FieldController.main.IsUnitPlayer(this))
         {
-            baseAttack = Mathf.Max(0,baseAttack--);
-            baseAccuracy = Mathf.Max(0, baseAccuracy--);
+            baseAttack = Mathf.Max(0, --baseAttack);
+            baseAccuracy = Mathf.Max(0, --baseAccuracy);
             Attack = baseAttack;
             Accuracy = baseAccuracy;
         }
         else
         {
-            baseDefense = Mathf.Max(0,baseDefense--);
+            baseDefense = Mathf.Max(0, --baseDefense);
             Defense = baseDefense;
         }
     }
@@ -463,9 +465,9 @@ public class Unit : Listener
         if(spriteRenderer)
         {
             spriteRenderer.color = new Color(0.85f, 0.66f, 1, 1);
+            //spriteRenderer.color = Color.black;
             spriteRenderer.flipX = true;
         }
-        
     }
 }
 
