@@ -149,6 +149,7 @@ public class ActionbarUI : Listener
     {
         if (abilityActive[0])
         {
+            AudioManager.instance.Play("OnMouseHover");
             abilityOneHover.style.height = new Length(100, LengthUnit.Percent);
             abilityOneActive.style.height = new Length(0, LengthUnit.Percent);
         }
@@ -166,6 +167,7 @@ public class ActionbarUI : Listener
     void AbilityOne_Clicked(ClickEvent evt)
     {
         UseAbility(1);
+        AudioManager.instance.Play("OnMousePressed");
         abilityOneHover.style.height = new Length(0, LengthUnit.Percent);
         abilityOneActive.style.height = new Length(100, LengthUnit.Percent);
         Debug.Log("Ability One Button Clicked");
@@ -175,6 +177,7 @@ public class ActionbarUI : Listener
     {
         if (abilityActive[1])
         {
+            AudioManager.instance.Play("OnMouseHover");
             abilityTwoHover.style.height = new Length(100, LengthUnit.Percent);
             abilityTwoActive.style.height = new Length(0, LengthUnit.Percent);
         }
@@ -192,6 +195,7 @@ public class ActionbarUI : Listener
     void AbilityTwo_Clicked(ClickEvent evt)
     {
         UseAbility(2);
+        AudioManager.instance.Play("OnMousePressed");
         abilityTwoHover.style.height = new Length(0, LengthUnit.Percent);
         abilityTwoActive.style.height = new Length(100, LengthUnit.Percent);
         Debug.Log("Ability Two Button Clicked");
