@@ -16,8 +16,10 @@ public class Unit : Listener
     [SerializeField] GameObject DamageNumbers;
 
     SpriteRenderer spriteRenderer;
+    Collider coll;
     private Billboard billboard;
     private Animator animator;
+    public Transform HealthBar;
     public Transform AmmoBar;
     public Transform ManaBar;
 
@@ -78,6 +80,9 @@ public class Unit : Listener
         }
     }
 
+    protected int baseAttack;
+        //[SerializeField]
+
     protected int attack;
     public int Attack
     {
@@ -89,17 +94,17 @@ public class Unit : Listener
         }
     }
 
+    protected int baseDefense;
     protected int defense;
-    public int Defense
-    {
+    public int Defense {
         get => defense;
-        set
-        {
+        set {
             defense = value;
             UIEvents.UnitDefenseChanged(this, defense);
         }
     }
 
+    protected int baseAccuracy;
     protected int accuracy;
     public int Accuracy
     {
@@ -141,11 +146,27 @@ public class Unit : Listener
             Attack += AttackChange;
         }
     }
+    private void OnBaseAttackChanged(Unit target, int AttackChange)
+    {
+        if (target == this)
+        {
+            baseAttack += AttackChange;
+            Attack += AttackChange;
+        }
+    }
 
     private void OnDefenseChanged(Unit target, int DefenseChange)
     {
         if (target == this)
         {
+            Defense += DefenseChange;
+        }
+    }
+    private void OnBaseDefenseChanged(Unit target, int DefenseChange)
+    {
+        if (target == this)
+        {
+            baseDefense += DefenseChange;
             Defense += DefenseChange;
         }
     }
@@ -220,6 +241,19 @@ public class Unit : Listener
         }
     }
 
+    private void OnKill(Unit unit)
+    {
+        if(unit == this)
+        {
+            if(HealthBar) Destroy(HealthBar.gameObject);
+            if(ManaBar) Destroy(ManaBar.gameObject);
+            if(AmmoBar) Destroy(AmmoBar.gameObject);
+            spriteRenderer.sprite = null;
+            if(animator) Destroy(animator);
+            if(GetComponent<SphereCollider>()) Destroy(GetComponent<SphereCollider>());
+        }        
+    }
+
     // Start is called before the first frame update
     public int GetStickScore()
     {
@@ -283,12 +317,15 @@ public class Unit : Listener
     {
         if(RoundController.isPlayerPhase == FieldController.main.IsUnitPlayer(this))
         {
-            Attack = 0;
-            Accuracy = 0;
+            baseAttack = Mathf.Max(0, --baseAttack);
+            baseAccuracy = Mathf.Max(0, --baseAccuracy);
+            Attack = baseAttack;
+            Accuracy = baseAccuracy;
         }
         else
         {
-            Defense = 0;
+            baseDefense = Mathf.Max(0, --baseDefense);
+            Defense = baseDefense;
         }
     }
 
@@ -372,7 +409,9 @@ public class Unit : Listener
         GameEvents.onBattleStarted += ResetUnit;
         GameEvents.onHealthChanged += OnHealthChanged;
         GameEvents.onDefenseUp += OnDefenseChanged;
+        GameEvents.onBaseDefenseUp += OnBaseDefenseChanged;
         GameEvents.onAttackUp += OnAttackChanged;
+        GameEvents.onBaseAttackUp += OnBaseAttackChanged;
         GameEvents.onAccuracyUp += OnAccuracyChanged;
         GameEvents.onThornsUp += OnThornsChanged;
         GameEvents.onUseAbility += UseAbility;
@@ -380,6 +419,7 @@ public class Unit : Listener
         GameEvents.onUseAmmo += OnUseAmmo;
         GameEvents.onResetBuffs += ResetBuffs;
         GameEvents.onUnitAttack += OnAttacked;
+        GameEvents.onKill += OnKill;
 
         GameEvents.onPhaseChanged += UpdateBillboard;
         
@@ -390,7 +430,9 @@ public class Unit : Listener
         GameEvents.onBattleStarted -= ResetUnit;
         GameEvents.onHealthChanged -= OnHealthChanged;
         GameEvents.onDefenseUp -= OnDefenseChanged;
+        GameEvents.onBaseDefenseUp -= OnBaseDefenseChanged;
         GameEvents.onAttackUp -= OnAttackChanged;
+        GameEvents.onBaseAttackUp -= OnBaseAttackChanged;
         GameEvents.onAccuracyUp -= OnAccuracyChanged;
         GameEvents.onThornsUp -= OnThornsChanged;
         GameEvents.onUseAbility -= UseAbility;
@@ -398,6 +440,7 @@ public class Unit : Listener
         GameEvents.onUseAmmo -= OnUseAmmo;
         GameEvents.onResetBuffs -= ResetBuffs;
         GameEvents.onUnitAttack -= OnAttacked;
+        GameEvents.onKill += OnKill;
 
         GameEvents.onPhaseChanged -= UpdateBillboard;
 
@@ -407,6 +450,8 @@ public class Unit : Listener
     {
         animator = GetComponent<Animator>();
         billboard = GetComponent<Billboard>();
+        coll = GetComponent<Collider>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         DamageNumbers = Resources.Load("UIPrefabs/DamageText") as GameObject;
     }
@@ -417,14 +462,12 @@ public class Unit : Listener
 
     public void UpdateEnemyVisual()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-
         if(spriteRenderer)
         {
             spriteRenderer.color = new Color(0.85f, 0.66f, 1, 1);
+            //spriteRenderer.color = Color.black;
             spriteRenderer.flipX = true;
         }
-        
     }
 }
 

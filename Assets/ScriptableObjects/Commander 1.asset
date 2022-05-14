@@ -46,6 +46,16 @@ MonoBehaviour:
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
+  - AbilityType: 1
+    AbilityName: test
+    AbilityDescription: test ability
+    Cost: 1
+    Damage: 1
+    StatBoost: 1
+    Variation: 1
+    VFX1: {fileID: 0}
+    VFX2: {fileID: 0}
+    VFX3: {fileID: 0}
   VanguardAbilities2: []
   MaxHealth: 1
   MaxAmmo: 2

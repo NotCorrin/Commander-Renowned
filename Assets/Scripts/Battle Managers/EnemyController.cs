@@ -307,10 +307,10 @@ public class EnemyController : Listener
 
 	bool SetEnemySupportLeft () {
 		Unit supportLeft = fieldController.GetUnit(FieldController.Position.SupportLeft, false);
+		enemySupportLeft = supportLeft;
 		// If there is a left support...
 		if (supportLeft != null) {
 			//... Set the left support
-			enemySupportLeft = supportLeft;
 			return true;
 		}
 		return false;
@@ -318,10 +318,10 @@ public class EnemyController : Listener
 
 	bool SetEnemySupportRight () {
 		Unit supportRight = fieldController.GetUnit(FieldController.Position.SupportRight, false);
+		enemySupportRight = supportRight;
 		// If there is a right support...
 		if (supportRight != null) {
 			//... Set the right support
-			enemySupportRight = supportRight;
 			return true;
 		}
 		return false;
@@ -356,7 +356,7 @@ public class EnemyController : Listener
 	{
 		if(!fieldController.IsUnitPlayer(unit)) 
 		{
-			Destroy(unit.gameObject);
+			//unit.DestroyUnit();
 		}
 	}
 
@@ -411,9 +411,9 @@ public class EnemyController : Listener
     }
 	void UseSupportAbility () {
 		// UNCOMMENT LINES FOR TARGETING MULTIPLE CHARACTERS
+		FindBestSupportLeftAbility();
 		if(enemySupportLeft)
 		{
-			FindBestSupportLeftAbility();
 			// Support left ability on single target
 			List<Unit> leftAbilityValidTargets = fieldController.GetValidTargets(enemySupportLeft, supportLeftBestAbility);
 			if(leftAbilityValidTargets.Count > 0)
@@ -430,9 +430,9 @@ public class EnemyController : Listener
 			}
 			*/
 		}
+        FindBestSupportRightAbility();
         if (enemySupportRight)
         {
-            FindBestSupportRightAbility();
             // Support right ability on single target
             List<Unit> rightAbilityValidTargets = fieldController.GetValidTargets(enemySupportRight, supportRightBestAbility);
             if (rightAbilityValidTargets.Count > 0)

@@ -65,6 +65,14 @@ public static class GameEvents
             onDefenseUp(Caster, Amount);
         }
     }
+    public static Action<Unit, int> onBaseDefenseUp;
+    public static void BaseDefenseUp(Unit Caster, int Amount)
+    {
+        if (onBaseDefenseUp != null)
+        {
+            onBaseDefenseUp(Caster, Amount);
+        }
+    }
 
     public static Action<Unit, int> onAttackUp;
     public static void AttackUp(Unit Caster, int Amount)
@@ -72,6 +80,14 @@ public static class GameEvents
         if (onAttackUp != null)
         {
             onAttackUp(Caster, Amount);
+        }
+    }
+    public static Action<Unit, int> onBaseAttackUp;
+    public static void BaseAttackUp(Unit Caster, int Amount)
+    {
+        if (onBaseAttackUp != null)
+        {
+            onBaseAttackUp(Caster, Amount);
         }
     }
 

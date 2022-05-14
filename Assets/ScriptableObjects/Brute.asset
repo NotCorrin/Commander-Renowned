@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Brute
   m_EditorClassIdentifier: 
   unitType: 1
-  UnitName: The Brute
+  UnitName: Brute
   VanguardAbilities:
   - AbilityType: 0
     AbilityName: 
@@ -25,12 +25,13 @@ MonoBehaviour:
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  - AbilityType: 3
-    AbilityName: Arcane Bullet
-    AbilityDescription: Strike the enemy with dual arcane bullets. Attack up.
+  - AbilityType: 7
+    AbilityName: Charge
+    AbilityDescription: Charge at the enemy \n+2 Permanant ATT (Decays by 1 each
+      turn)
     Cost: 1
     Damage: 4
-    StatBoost: 1
+    StatBoost: 2
     Variation: 1
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
@@ -67,8 +68,8 @@ MonoBehaviour:
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   VanguardAbilities2: []
-  MaxHealth: 24
-  MaxAmmo: 5
+  MaxHealth: 20
+  MaxAmmo: 6
   MaxMana: 0
   animator: {fileID: 9100000, guid: 290842611f5ef174cb1770e4e4ef610f, type: 2}
   sprite: {fileID: -3868812660829053132, guid: ebe7b0c9921a1e840bf1ffd5ab6bb180, type: 3}

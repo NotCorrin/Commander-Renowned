@@ -8,6 +8,9 @@ public class StoryContainerUI : MonoBehaviour
 {
     [SerializeField] private UIDocument uiDocument;
     private Button continueButton;
+    private TextElement storyTitle;
+    private TextElement storyDesc;
+    public ScenarioScriptableObject stories;
     void Start()
     {
         if (uiDocument == null)
@@ -19,11 +22,15 @@ public class StoryContainerUI : MonoBehaviour
         try
         {
             continueButton = uiDocument.rootVisualElement.Q<Button>("continue-button");
+            storyTitle = uiDocument.rootVisualElement.Q<TextElement>("title");
+            storyDesc = uiDocument.rootVisualElement.Q<TextElement>("description");
         }
         catch
         {
             Debug.LogError($"{gameObject.name} : MainMenuUI - Element Query Failed.");
         }
+        storyTitle.text = stories.story[stories.level].title;
+        storyDesc.text = stories.story[stories.level].description;
 
         continueButton.clickable.clicked += () => {
             SceneManager.LoadScene("MenuSelectionScene");

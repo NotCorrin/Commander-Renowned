@@ -7,6 +7,8 @@ public class SceneController : Listener
     public static SceneController main;
     public GameObject selectedObject;
     public Unit selectedUnit;
+    public bool selected;
+    public LayerMask clickLayer;
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +40,7 @@ public class SceneController : Listener
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             RaycastHit hit;
-            Physics.Raycast(ray, out hit);
+            Physics.Raycast(ray, out hit, clickLayer);
 
             if (hit.collider != null)
             {
@@ -46,10 +48,17 @@ public class SceneController : Listener
                 if (selectedObject.GetComponent<Unit>())
                 {
                     //Debug.Log(hit.collider.name);
-                    selectedUnit = selectedObject.GetComponent<Unit>();
-                    UIEvents.UnitSelected(selectedUnit);
+                    if(selectedUnit != selectedObject.GetComponent<Unit>() || selected == false)
+                    {
+                        selectedUnit = selectedObject.GetComponent<Unit>();
+                        UIEvents.UnitSelected(selectedUnit);
+                    }
+                    selected = true;
+                    return;
                 }
             }
+            UIEvents.UnitSelected(null);
+            selected = false;
         }
     }
 }
