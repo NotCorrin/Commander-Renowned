@@ -17,7 +17,7 @@ public class ActionbarUI : Listener
     [SerializeField] private GameObject supportBar;
     [SerializeField] private UIDocument supportBarUIDocument;
     private VisualElement supportBarContainer;
-    private Button abilityOneBtn;
+    private VisualElement abilityOne;
     private TextElement abilityOneName;
     private TextElement abilityOneCost;
     private TextElement abilityOneDesc;
@@ -58,7 +58,9 @@ public class ActionbarUI : Listener
     protected override void SubscribeListeners()
     {
         promptCancelBtn.clickable.clicked += OnPromptCancelClicked;
-        abilityOneBtn.clickable.clicked += AbilityOneBtn_Clicked;
+        abilityOne.RegisterCallback<MouseEnterEvent>(AbilityOne_Hover);
+        abilityOne.RegisterCallback<MouseLeaveEvent>(AbilityOne_Unhover);
+        abilityOne.RegisterCallback<ClickEvent>(AbilityOne_Clicked);
         abilityTwoBtn.clickable.clicked += AbilityTwoBtn_Clicked;
         abilityThreeBtn.clickable.clicked += AbilityThreeBtn_Clicked;
         endSupportTurnBtn.clickable.clicked += EndSupportTurnBtn_Clicked;
@@ -73,7 +75,9 @@ public class ActionbarUI : Listener
     protected override void UnsubscribeListeners()
     {
         promptCancelBtn.clickable.clicked -= OnPromptCancelClicked;
-        abilityOneBtn.clickable.clicked -= AbilityOneBtn_Clicked;
+        abilityOne.UnregisterCallback<MouseEnterEvent>(AbilityOne_Hover);
+        abilityOne.UnregisterCallback<MouseLeaveEvent>(AbilityOne_Unhover);
+        abilityOne.UnregisterCallback<ClickEvent>(AbilityOne_Clicked);
         abilityTwoBtn.clickable.clicked -= AbilityTwoBtn_Clicked;
         abilityThreeBtn.clickable.clicked -= AbilityThreeBtn_Clicked;
         endSupportTurnBtn.clickable.clicked -= EndSupportTurnBtn_Clicked;
@@ -93,7 +97,17 @@ public class ActionbarUI : Listener
         Debug.Log("Prompt Cancel Clicked");
     }
 
-    void AbilityOneBtn_Clicked()
+    void AbilityOne_Hover(MouseEnterEvent evt)
+    {
+
+    }
+
+    void AbilityOne_Unhover(MouseLeaveEvent evt)
+    {
+
+    }
+
+    void AbilityOne_Clicked(ClickEvent evt)
     {
         UseAbility(1);
         Debug.Log("Ability One Button Clicked");
@@ -232,8 +246,8 @@ public class ActionbarUI : Listener
             }
             abilityActive[i] = true;
         }
-        if(abilityActive[0]) abilityOneBtn.style.backgroundColor = new StyleColor(new Color(1, 1, 1, 0.69f));
-        else abilityOneBtn.style.backgroundColor = new StyleColor(new Color(0.364f, 0.364f, 0.364f, 0.69f));
+        // if(abilityActive[0]) abilityOneBtn.style.backgroundColor = new StyleColor(new Color(1, 1, 1, 0.69f));
+        // else abilityOneBtn.style.backgroundColor = new StyleColor(new Color(0.364f, 0.364f, 0.364f, 0.69f));
 
         if(abilityActive[1]) abilityTwoBtn.style.backgroundColor = new StyleColor(new Color(1, 1, 1, 0.69f));
         else abilityTwoBtn.style.backgroundColor = new StyleColor(new Color(0.364f, 0.364f, 0.364f, 0.69f));
@@ -371,10 +385,10 @@ public class ActionbarUI : Listener
 
             // Support Bar
             supportBarContainer = supportBarUIDocument.rootVisualElement.Query<VisualElement>("container");
-            abilityOneBtn = supportBarContainer.Query<Button>("ability-one");
-            abilityOneName = abilityOneBtn.Query<TextElement>("name");
-            abilityOneCost = abilityOneBtn.Query<TextElement>("cost");
-            abilityOneDesc = abilityOneBtn.Query<TextElement>("description");
+            abilityOne = supportBarContainer.Query<VisualElement>("ability-one");
+            abilityOneName = abilityOne.Query<TextElement>("name");
+            abilityOneCost = abilityOne.Query<TextElement>("cost");
+            abilityOneDesc = abilityOne.Query<TextElement>("description");
 
             abilityTwoBtn = supportBarContainer.Query<Button>("ability-two");
             abilityTwoName = abilityTwoBtn.Query<TextElement>("name");
