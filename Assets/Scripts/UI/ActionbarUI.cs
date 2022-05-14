@@ -277,21 +277,17 @@ public class ActionbarUI : Listener
     {
         if(!unit) 
         {
-            abilityOneName.text = "";
-            abilityOneCost.text = "";
-            abilityOneDesc.text = "";
+            abilityOneActive.style.display = DisplayStyle.None;
+            abilityOneHover.style.display = DisplayStyle.None;
+            abilityOneDisabled.style.display = DisplayStyle.None;
 
-            abilityTwoName.text = "";
-            abilityTwoCost.text = "";
-            abilityTwoDesc.text = "";
+            abilityTwoActive.style.display = DisplayStyle.None;
+            abilityTwoHover.style.display = DisplayStyle.None;
+            abilityTwoDisabled.style.display = DisplayStyle.None;
 
-            abilityThreeName.text = "";
-            abilityThreeCost.text = "";
-            abilityThreeDesc.text = "";
-
-            abilityOneBtn.style.backgroundColor = new StyleColor(new Color(0.364f, 0.364f, 0.364f, 0.69f));
-            abilityTwoBtn.style.backgroundColor = new StyleColor(new Color(0.364f, 0.364f, 0.364f, 0.69f));
-            abilityThreeBtn.style.backgroundColor = new StyleColor(new Color(0.364f, 0.364f, 0.364f, 0.69f));
+            abilityThreeActive.style.display = DisplayStyle.None;
+            abilityThreeHover.style.display = DisplayStyle.None;
+            abilityThreeDisabled.style.display = DisplayStyle.None;
             return;
         }
         //Debug.Log(unit.UnitName + " was selected");
