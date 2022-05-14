@@ -3,6 +3,7 @@ using UnityEngine;
 [System.Serializable]
 public abstract class Ability : MonoBehaviour
 {
+    protected bool isMagic;
     [SerializeField] protected string abilityName;
     public string AbilityName
     {
