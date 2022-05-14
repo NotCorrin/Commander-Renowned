@@ -4,6 +4,10 @@ using UnityEngine;
 public abstract class Ability : MonoBehaviour
 {
     protected bool isMagic;
+    public bool IsMagic
+    {
+        get => isMagic;
+    }
     [SerializeField] protected string abilityName;
     public string AbilityName
     {
