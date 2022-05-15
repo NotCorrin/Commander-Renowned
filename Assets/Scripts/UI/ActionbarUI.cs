@@ -3,6 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+struct AbilityButton
+{
+    public VisualElement ability, active, hover, disabled;
+    public TextElement activeName, activeCost, activeDesc;
+    public VisualElement activeManaIcon, activeAmmoIcon;
+    public TextElement hoverName, hoverCost, hoverDesc;
+    public VisualElement hoverManaIcon, hoverAmmoIcon;
+    public TextElement disabledName, disabledCost, disabledDesc;
+    public VisualElement disabledManaIcon, disabledAmmoIcon;
+}
+
 public class ActionbarUI : Listener
 {
     #region variables
@@ -17,76 +28,9 @@ public class ActionbarUI : Listener
     [SerializeField] private GameObject supportBar;
     [SerializeField] private UIDocument supportBarUIDocument;
     private VisualElement supportBarContainer;
-
-    #region Button 1
-    private VisualElement abilityOne;
-    private VisualElement abilityOneActive;
-    private VisualElement abilityOneHover;
-
-    private VisualElement abilityOneDisabled;
-
-    private TextElement abilityOneActiveName;
-    private TextElement abilityOneActiveCost;
-    private TextElement abilityOneActiveDesc;
-    private VisualElement abilityOneActiveManaIcon;
-    private VisualElement abilityOneActiveAmmoIcon;
-    private TextElement abilityOneHoverName;
-    private TextElement abilityOneHoverCost;
-    private TextElement abilityOneHoverDesc;
-    private VisualElement abilityOneHoverManaIcon;
-    private VisualElement abilityOneHoverAmmoIcon;
-    private TextElement abilityOneDisabledName;
-    private TextElement abilityOneDisabledCost;
-    private TextElement abilityOneDisabledDesc;
-    private VisualElement abilityOneDisabledManaIcon;
-    private VisualElement abilityOneDisabledAmmoIcon;
-    #endregion
-
-    #region Button 2
-    private VisualElement abilityTwo;
-    private VisualElement abilityTwoActive;
-    private VisualElement abilityTwoHover;
-
-    private VisualElement abilityTwoDisabled;
-
-    private TextElement abilityTwoActiveName;
-    private TextElement abilityTwoActiveCost;
-    private TextElement abilityTwoActiveDesc;
-    private VisualElement abilityTwoActiveManaIcon;
-    private VisualElement abilityTwoActiveAmmoIcon;
-    private TextElement abilityTwoHoverName;
-    private TextElement abilityTwoHoverCost;
-    private TextElement abilityTwoHoverDesc;
-    private VisualElement abilityTwoHoverManaIcon;
-    private VisualElement abilityTwoHoverAmmoIcon;
-    private TextElement abilityTwoDisabledName;
-    private TextElement abilityTwoDisabledCost;
-    private TextElement abilityTwoDisabledDesc;
-    private VisualElement abilityTwoDisabledManaIcon;
-    private VisualElement abilityTwoDisabledAmmoIcon;
-    #endregion
-
-    #region Button 3
-    private VisualElement abilityThree;
-    private VisualElement abilityThreeActive;
-    private VisualElement abilityThreeHover;
-    private VisualElement abilityThreeDisabled;
-    private TextElement abilityThreeActiveName;
-    private TextElement abilityThreeActiveCost;
-    private TextElement abilityThreeActiveDesc;
-    private VisualElement abilityThreeActiveManaIcon;
-    private VisualElement abilityThreeActiveAmmoIcon;
-    private TextElement abilityThreeHoverName;
-    private TextElement abilityThreeHoverCost;
-    private TextElement abilityThreeHoverDesc;
-    private VisualElement abilityThreeHoverManaIcon;
-    private VisualElement abilityThreeHoverAmmoIcon;
-    private TextElement abilityThreeDisabledName;
-    private TextElement abilityThreeDisabledCost;
-    private TextElement abilityThreeDisabledDesc;
-    private VisualElement abilityThreeDisabledManaIcon;
-    private VisualElement abilityThreeDisabledAmmoIcon;
-    #endregion
+    private AbilityButton abilityOne;
+    private AbilityButton abilityTwo;
+    private AbilityButton abilityThree;
     private Button endSupportTurnBtn;
 
     [Header("Switch Bar")]
@@ -118,17 +62,17 @@ public class ActionbarUI : Listener
         promptCancelBtn.clickable.clicked += OnPromptCancelClicked;
 
 
-        abilityOne.RegisterCallback<MouseEnterEvent>(AbilityOne_Hover);
-        abilityOne.RegisterCallback<MouseLeaveEvent>(AbilityOne_Unhover);
-        abilityOne.RegisterCallback<ClickEvent>(AbilityOne_Clicked);
+        abilityOne.ability.RegisterCallback<MouseEnterEvent>(AbilityOne_Hover);
+        abilityOne.ability.RegisterCallback<MouseLeaveEvent>(AbilityOne_Unhover);
+        abilityOne.ability.RegisterCallback<ClickEvent>(AbilityOne_Clicked);
 
-        abilityTwo.RegisterCallback<MouseEnterEvent>(AbilityTwo_Hover);
-        abilityTwo.RegisterCallback<MouseLeaveEvent>(AbilityTwo_Unhover);
-        abilityTwo.RegisterCallback<ClickEvent>(AbilityTwo_Clicked);
+        abilityTwo.ability.RegisterCallback<MouseEnterEvent>(AbilityTwo_Hover);
+        abilityTwo.ability.RegisterCallback<MouseLeaveEvent>(AbilityTwo_Unhover);
+        abilityTwo.ability.RegisterCallback<ClickEvent>(AbilityTwo_Clicked);
 
-        abilityThree.RegisterCallback<MouseEnterEvent>(AbilityThree_Hover);
-        abilityThree.RegisterCallback<MouseLeaveEvent>(AbilityThree_Unhover);
-        abilityThree.RegisterCallback<ClickEvent>(AbilityThree_Clicked);
+        abilityThree.ability.RegisterCallback<MouseEnterEvent>(AbilityThree_Hover);
+        abilityThree.ability.RegisterCallback<MouseLeaveEvent>(AbilityThree_Unhover);
+        abilityThree.ability.RegisterCallback<ClickEvent>(AbilityThree_Clicked);
 
         endSupportTurnBtn.clickable.clicked += EndSupportTurnBtn_Clicked;
         switchBtn.clickable.clicked += SwitchBtn_Clicked;
@@ -143,17 +87,17 @@ public class ActionbarUI : Listener
     {
         promptCancelBtn.clickable.clicked -= OnPromptCancelClicked;
 
-        abilityOne.UnregisterCallback<MouseEnterEvent>(AbilityOne_Hover);
-        abilityOne.UnregisterCallback<MouseLeaveEvent>(AbilityOne_Unhover);
-        abilityOne.UnregisterCallback<ClickEvent>(AbilityOne_Clicked);
+        abilityOne.ability.UnregisterCallback<MouseEnterEvent>(AbilityOne_Hover);
+        abilityOne.ability.UnregisterCallback<MouseLeaveEvent>(AbilityOne_Unhover);
+        abilityOne.ability.UnregisterCallback<ClickEvent>(AbilityOne_Clicked);
 
-        abilityTwo.UnregisterCallback<MouseEnterEvent>(AbilityTwo_Hover);
-        abilityTwo.UnregisterCallback<MouseLeaveEvent>(AbilityTwo_Unhover);
-        abilityTwo.UnregisterCallback<ClickEvent>(AbilityTwo_Clicked);
+        abilityTwo.ability.UnregisterCallback<MouseEnterEvent>(AbilityTwo_Hover);
+        abilityTwo.ability.UnregisterCallback<MouseLeaveEvent>(AbilityTwo_Unhover);
+        abilityTwo.ability.UnregisterCallback<ClickEvent>(AbilityTwo_Clicked);
 
-        abilityThree.UnregisterCallback<MouseEnterEvent>(AbilityThree_Hover);
-        abilityThree.UnregisterCallback<MouseLeaveEvent>(AbilityThree_Unhover);
-        abilityThree.UnregisterCallback<ClickEvent>(AbilityThree_Clicked);
+        abilityThree.ability.UnregisterCallback<MouseEnterEvent>(AbilityThree_Hover);
+        abilityThree.ability.UnregisterCallback<MouseLeaveEvent>(AbilityThree_Unhover);
+        abilityThree.ability.UnregisterCallback<ClickEvent>(AbilityThree_Clicked);
 
         endSupportTurnBtn.clickable.clicked -= EndSupportTurnBtn_Clicked;
         switchBtn.clickable.clicked -= SwitchBtn_Clicked;
@@ -177,8 +121,9 @@ public class ActionbarUI : Listener
         if (abilityActive[0])
         {
             AudioManager.instance.Play("OnMouseHover");
-            abilityOneHover.style.height = new Length(100, LengthUnit.Percent);
-            abilityOneActive.style.height = new Length(0, LengthUnit.Percent);
+            
+            abilityOne.hover.style.height = new Length(100, LengthUnit.Percent);
+            abilityOne.active.style.height = new Length(0, LengthUnit.Percent);
         }
     }
 
@@ -186,8 +131,8 @@ public class ActionbarUI : Listener
     {
         if (abilityActive[0])
         {
-            abilityOneHover.style.height = new Length(0, LengthUnit.Percent);
-            abilityOneActive.style.height = new Length(100, LengthUnit.Percent);
+            abilityOne.hover.style.height = new Length(0, LengthUnit.Percent);
+            abilityOne.active.style.height = new Length(100, LengthUnit.Percent);
         }
     }
 
@@ -195,8 +140,8 @@ public class ActionbarUI : Listener
     {
         UseAbility(1);
         AudioManager.instance.Play("OnMousePressed");
-        abilityOneHover.style.height = new Length(0, LengthUnit.Percent);
-        abilityOneActive.style.height = new Length(100, LengthUnit.Percent);
+        abilityOne.hover.style.height = new Length(0, LengthUnit.Percent);
+        abilityOne.active.style.height = new Length(100, LengthUnit.Percent);
         Debug.Log("Ability One Button Clicked");
     }
 
@@ -205,8 +150,8 @@ public class ActionbarUI : Listener
         if (abilityActive[1])
         {
             AudioManager.instance.Play("OnMouseHover");
-            abilityTwoHover.style.height = new Length(100, LengthUnit.Percent);
-            abilityTwoActive.style.height = new Length(0, LengthUnit.Percent);
+            abilityTwo.hover.style.height = new Length(100, LengthUnit.Percent);
+            abilityTwo.active.style.height = new Length(0, LengthUnit.Percent);
         }
     }
 
@@ -214,8 +159,8 @@ public class ActionbarUI : Listener
     {
         if (abilityActive[1])
         {
-            abilityTwoHover.style.height = new Length(0, LengthUnit.Percent);
-            abilityTwoActive.style.height = new Length(100, LengthUnit.Percent);
+            abilityTwo.hover.style.height = new Length(0, LengthUnit.Percent);
+            abilityTwo.active.style.height = new Length(100, LengthUnit.Percent);
         }
     }
 
@@ -223,8 +168,8 @@ public class ActionbarUI : Listener
     {
         UseAbility(2);
         AudioManager.instance.Play("OnMousePressed");
-        abilityTwoHover.style.height = new Length(0, LengthUnit.Percent);
-        abilityTwoActive.style.height = new Length(100, LengthUnit.Percent);
+        abilityTwo.hover.style.height = new Length(0, LengthUnit.Percent);
+        abilityTwo.active.style.height = new Length(100, LengthUnit.Percent);
         Debug.Log("Ability Two Button Clicked");
     }
 
@@ -233,8 +178,8 @@ public class ActionbarUI : Listener
         if (abilityActive[2])
         {
             AudioManager.instance.Play("OnMouseHover");
-            abilityThreeHover.style.height = new Length(100, LengthUnit.Percent);
-            abilityThreeActive.style.height = new Length(0, LengthUnit.Percent);
+            abilityThree.hover.style.height = new Length(100, LengthUnit.Percent);
+            abilityThree.active.style.height = new Length(0, LengthUnit.Percent);
         }
     }
 
@@ -242,8 +187,8 @@ public class ActionbarUI : Listener
     {
         if (abilityActive[2])
         {
-            abilityThreeHover.style.height = new Length(0, LengthUnit.Percent);
-            abilityThreeActive.style.height = new Length(100, LengthUnit.Percent);
+            abilityThree.hover.style.height = new Length(0, LengthUnit.Percent);
+            abilityThree.active.style.height = new Length(100, LengthUnit.Percent);
         }
     }
 
@@ -251,8 +196,8 @@ public class ActionbarUI : Listener
     {
         UseAbility(3);
         AudioManager.instance.Play("OnMousePressed");
-        abilityThreeHover.style.height = new Length(0, LengthUnit.Percent);
-        abilityThreeActive.style.height = new Length(100, LengthUnit.Percent);
+        abilityThree.hover.style.height = new Length(0, LengthUnit.Percent);
+        abilityThree.active.style.height = new Length(100, LengthUnit.Percent);
         Debug.Log("Ability Three Button Clicked");
     }
     void UseAbility(int _selectedAbility)
@@ -324,17 +269,17 @@ public class ActionbarUI : Listener
     {
         if(!unit) 
         {
-            abilityOneActive.style.display = DisplayStyle.None;
-            abilityOneHover.style.display = DisplayStyle.None;
-            abilityOneDisabled.style.display = DisplayStyle.None;
+            abilityOne.active.style.display = DisplayStyle.None;
+            abilityOne.hover.style.display = DisplayStyle.None;
+            abilityOne.disabled.style.display = DisplayStyle.None;
 
-            abilityTwoActive.style.display = DisplayStyle.None;
-            abilityTwoHover.style.display = DisplayStyle.None;
-            abilityTwoDisabled.style.display = DisplayStyle.None;
+            abilityTwo.active.style.display = DisplayStyle.None;
+            abilityTwo.hover.style.display = DisplayStyle.None;
+            abilityTwo.disabled.style.display = DisplayStyle.None;
 
-            abilityThreeActive.style.display = DisplayStyle.None;
-            abilityThreeHover.style.display = DisplayStyle.None;
-            abilityThreeDisabled.style.display = DisplayStyle.None;
+            abilityThree.active.style.display = DisplayStyle.None;
+            abilityThree.hover.style.display = DisplayStyle.None;
+            abilityThree.disabled.style.display = DisplayStyle.None;
             return;
         }
         //Debug.Log(unit.UnitName + " was selected");
@@ -399,215 +344,215 @@ public class ActionbarUI : Listener
 
         if (abilityActive[0])
         {
-            abilityOneActive.style.display = DisplayStyle.Flex;
-            abilityOneHover.style.display = DisplayStyle.Flex;
-            abilityOneDisabled.style.display = DisplayStyle.None;
+            abilityOne.active.style.display = DisplayStyle.Flex;
+            abilityOne.hover.style.display = DisplayStyle.Flex;
+            abilityOne.disabled.style.display = DisplayStyle.None;
         }
         else
         {
-            abilityOneActive.style.display = DisplayStyle.None;
-            abilityOneHover.style.display = DisplayStyle.None;
-            abilityOneDisabled.style.display = DisplayStyle.Flex;
+            abilityOne.active.style.display = DisplayStyle.None;
+            abilityOne.hover.style.display = DisplayStyle.None;
+            abilityOne.disabled.style.display = DisplayStyle.Flex;
         }
 
         if (abilityActive[1])
         {
-            abilityTwoActive.style.display = DisplayStyle.Flex;
-            abilityTwoHover.style.display = DisplayStyle.Flex;
-            abilityTwoDisabled.style.display = DisplayStyle.None;
+            abilityTwo.active.style.display = DisplayStyle.Flex;
+            abilityTwo.hover.style.display = DisplayStyle.Flex;
+            abilityTwo.disabled.style.display = DisplayStyle.None;
         }
         else
         {
-            abilityTwoActive.style.display = DisplayStyle.None;
-            abilityTwoHover.style.display = DisplayStyle.None;
-            abilityTwoDisabled.style.display = DisplayStyle.Flex;
+            abilityTwo.active.style.display = DisplayStyle.None;
+            abilityTwo.hover.style.display = DisplayStyle.None;
+            abilityTwo.disabled.style.display = DisplayStyle.Flex;
         }
 
         if (abilityActive[2])
         {
-            abilityThreeActive.style.display = DisplayStyle.Flex;
-            abilityThreeHover.style.display = DisplayStyle.Flex;
-            abilityThreeDisabled.style.display = DisplayStyle.None;
+            abilityThree.active.style.display = DisplayStyle.Flex;
+            abilityThree.hover.style.display = DisplayStyle.Flex;
+            abilityThree.disabled.style.display = DisplayStyle.None;
         }
         else
         {
-            abilityThreeActive.style.display = DisplayStyle.None;
-            abilityThreeHover.style.display = DisplayStyle.None;
-            abilityThreeDisabled.style.display = DisplayStyle.Flex;
+            abilityThree.active.style.display = DisplayStyle.None;
+            abilityThree.hover.style.display = DisplayStyle.None;
+            abilityThree.disabled.style.display = DisplayStyle.Flex;
         }
 
         if(_abilities[0])
         {
-            abilityOneActiveName.text = _abilities[0].AbilityName;
-            abilityOneActiveCost.text = _abilities[0].Cost + "";
-            abilityOneActiveDesc.text = _abilities[0].AbilityDescription;
+            abilityOne.activeName.text = _abilities[0].AbilityName;
+            abilityOne.activeCost.text = _abilities[0].Cost + "";
+            abilityOne.activeDesc.text = _abilities[0].AbilityDescription;
 
-            abilityOneHoverName.text = _abilities[0].AbilityName;
-            abilityOneHoverCost.text = _abilities[0].Cost + "";
-            abilityOneHoverDesc.text = _abilities[0].AbilityDescription;
+            abilityOne.hoverName.text = _abilities[0].AbilityName;
+            abilityOne.hoverCost.text = _abilities[0].Cost + "";
+            abilityOne.hoverDesc.text = _abilities[0].AbilityDescription;
 
-            abilityOneDisabledName.text = _abilities[0].AbilityName;
-            abilityOneDisabledCost.text = _abilities[0].Cost + "";
-            abilityOneDisabledDesc.text = _abilities[0].AbilityDescription;
+            abilityOne.disabledName.text = _abilities[0].AbilityName;
+            abilityOne.disabledCost.text = _abilities[0].Cost + "";
+            abilityOne.disabledDesc.text = _abilities[0].AbilityDescription;
 
             if (_abilities[0].IsMagic)
             {
-                abilityOneActiveAmmoIcon.style.display = DisplayStyle.None;
-                abilityOneHoverAmmoIcon.style.display = DisplayStyle.None;
-                abilityOneDisabledAmmoIcon.style.display = DisplayStyle.None;
+                abilityOne.activeAmmoIcon.style.display = DisplayStyle.None;
+                abilityOne.hoverAmmoIcon.style.display = DisplayStyle.None;
+                abilityOne.disabledAmmoIcon.style.display = DisplayStyle.None;
 
-                abilityOneActiveManaIcon.style.display = DisplayStyle.Flex;
-                abilityOneHoverManaIcon.style.display = DisplayStyle.Flex;
-                abilityOneDisabledManaIcon.style.display = DisplayStyle.Flex;
+                abilityOne.activeManaIcon.style.display = DisplayStyle.Flex;
+                abilityOne.hoverManaIcon.style.display = DisplayStyle.Flex;
+                abilityOne.disabledManaIcon.style.display = DisplayStyle.Flex;
             }
             else
             {
-                abilityOneActiveAmmoIcon.style.display = DisplayStyle.Flex;
-                abilityOneHoverAmmoIcon.style.display = DisplayStyle.Flex;
-                abilityOneDisabledAmmoIcon.style.display = DisplayStyle.Flex;
+                abilityOne.activeAmmoIcon.style.display = DisplayStyle.Flex;
+                abilityOne.hoverAmmoIcon.style.display = DisplayStyle.Flex;
+                abilityOne.disabledAmmoIcon.style.display = DisplayStyle.Flex;
 
-                abilityOneActiveManaIcon.style.display = DisplayStyle.None;
-                abilityOneHoverManaIcon.style.display = DisplayStyle.None;
-                abilityOneDisabledManaIcon.style.display = DisplayStyle.None;
+                abilityOne.activeManaIcon.style.display = DisplayStyle.None;
+                abilityOne.hoverManaIcon.style.display = DisplayStyle.None;
+                abilityOne.disabledManaIcon.style.display = DisplayStyle.None;
             }
         }
         else
         {
-            abilityOneActiveName.text = "";
-            abilityOneActiveCost.text = "";
-            abilityOneActiveDesc.text = "";
+            abilityOne.activeName.text = "";
+            abilityOne.activeCost.text = "";
+            abilityOne.activeDesc.text = "";
 
-            abilityOneHoverName.text = "";
-            abilityOneHoverCost.text = "";
-            abilityOneHoverDesc.text = "";
+            abilityOne.hoverName.text = "";
+            abilityOne.hoverCost.text = "";
+            abilityOne.hoverDesc.text = "";
 
-            abilityOneDisabledName.text = "";
-            abilityOneDisabledCost.text = "";
-            abilityOneDisabledDesc.text = "";
+            abilityOne.disabledName.text = "";
+            abilityOne.disabledCost.text = "";
+            abilityOne.disabledDesc.text = "";
 
-            abilityOneActiveAmmoIcon.style.display = DisplayStyle.None;
-            abilityOneHoverAmmoIcon.style.display = DisplayStyle.None;
-            abilityOneDisabledAmmoIcon.style.display = DisplayStyle.None;
+            abilityOne.activeAmmoIcon.style.display = DisplayStyle.None;
+            abilityOne.hoverAmmoIcon.style.display = DisplayStyle.None;
+            abilityOne.disabledAmmoIcon.style.display = DisplayStyle.None;
 
-            abilityOneActiveManaIcon.style.display = DisplayStyle.None;
-            abilityOneHoverManaIcon.style.display = DisplayStyle.None;
-            abilityOneDisabledManaIcon.style.display = DisplayStyle.None;
+            abilityOne.activeManaIcon.style.display = DisplayStyle.None;
+            abilityOne.hoverManaIcon.style.display = DisplayStyle.None;
+            abilityOne.disabledManaIcon.style.display = DisplayStyle.None;
         }
         if(_abilities[1])
         {
-            abilityTwoActiveName.text = _abilities[1].AbilityName;
-            abilityTwoActiveCost.text = _abilities[1].Cost + "";
-            abilityTwoActiveDesc.text = _abilities[1].AbilityDescription;
+            abilityTwo.activeName.text = _abilities[1].AbilityName;
+            abilityTwo.activeCost.text = _abilities[1].Cost + "";
+            abilityTwo.activeDesc.text = _abilities[1].AbilityDescription;
 
-            abilityTwoHoverName.text = _abilities[1].AbilityName;
-            abilityTwoHoverCost.text = _abilities[1].Cost + "";
-            abilityTwoHoverDesc.text = _abilities[1].AbilityDescription;
+            abilityTwo.hoverName.text = _abilities[1].AbilityName;
+            abilityTwo.hoverCost.text = _abilities[1].Cost + "";
+            abilityTwo.hoverDesc.text = _abilities[1].AbilityDescription;
 
-            abilityTwoDisabledName.text = _abilities[1].AbilityName;
-            abilityTwoDisabledCost.text = _abilities[1].Cost + "";
-            abilityTwoDisabledDesc.text = _abilities[1].AbilityDescription;
+            abilityTwo.disabledName.text = _abilities[1].AbilityName;
+            abilityTwo.disabledCost.text = _abilities[1].Cost + "";
+            abilityTwo.disabledDesc.text = _abilities[1].AbilityDescription;
 
             if (_abilities[1].IsMagic)
             {
-                abilityTwoActiveAmmoIcon.style.display = DisplayStyle.None;
-                abilityTwoHoverAmmoIcon.style.display = DisplayStyle.None;
-                abilityTwoDisabledAmmoIcon.style.display = DisplayStyle.None;
+                abilityTwo.activeAmmoIcon.style.display = DisplayStyle.None;
+                abilityTwo.hoverAmmoIcon.style.display = DisplayStyle.None;
+                abilityTwo.disabledAmmoIcon.style.display = DisplayStyle.None;
 
-                abilityTwoActiveManaIcon.style.display = DisplayStyle.Flex;
-                abilityTwoHoverManaIcon.style.display = DisplayStyle.Flex;
-                abilityTwoDisabledManaIcon.style.display = DisplayStyle.Flex;
+                abilityTwo.activeManaIcon.style.display = DisplayStyle.Flex;
+                abilityTwo.hoverManaIcon.style.display = DisplayStyle.Flex;
+                abilityTwo.disabledManaIcon.style.display = DisplayStyle.Flex;
             }
             else
             {
-                abilityTwoActiveAmmoIcon.style.display = DisplayStyle.Flex;
-                abilityTwoHoverAmmoIcon.style.display = DisplayStyle.Flex;
-                abilityTwoDisabledAmmoIcon.style.display = DisplayStyle.Flex;
+                abilityTwo.activeAmmoIcon.style.display = DisplayStyle.Flex;
+                abilityTwo.hoverAmmoIcon.style.display = DisplayStyle.Flex;
+                abilityTwo.disabledAmmoIcon.style.display = DisplayStyle.Flex;
 
-                abilityTwoActiveManaIcon.style.display = DisplayStyle.None;
-                abilityTwoHoverManaIcon.style.display = DisplayStyle.None;
-                abilityTwoDisabledManaIcon.style.display = DisplayStyle.None;
+                abilityTwo.activeManaIcon.style.display = DisplayStyle.None;
+                abilityTwo.hoverManaIcon.style.display = DisplayStyle.None;
+                abilityTwo.disabledManaIcon.style.display = DisplayStyle.None;
             }
         }
         else
         {
-            abilityTwoActiveName.text = "";
-            abilityTwoActiveCost.text = "";
-            abilityTwoActiveDesc.text = "";
+            abilityTwo.activeName.text = "";
+            abilityTwo.activeCost.text = "";
+            abilityTwo.activeDesc.text = "";
 
-            abilityTwoHoverName.text = "";
-            abilityTwoHoverCost.text = "";
-            abilityTwoHoverDesc.text = "";
+            abilityTwo.hoverName.text = "";
+            abilityTwo.hoverCost.text = "";
+            abilityTwo.hoverDesc.text = "";
 
-            abilityTwoDisabledName.text = "";
-            abilityTwoDisabledCost.text = "";
-            abilityTwoDisabledDesc.text = "";
+            abilityTwo.disabledName.text = "";
+            abilityTwo.disabledCost.text = "";
+            abilityTwo.disabledDesc.text = "";
 
-            abilityTwoActiveAmmoIcon.style.display = DisplayStyle.None;
-            abilityTwoHoverAmmoIcon.style.display = DisplayStyle.None;
-            abilityTwoDisabledAmmoIcon.style.display = DisplayStyle.None;
+            abilityTwo.activeAmmoIcon.style.display = DisplayStyle.None;
+            abilityTwo.hoverAmmoIcon.style.display = DisplayStyle.None;
+            abilityTwo.disabledAmmoIcon.style.display = DisplayStyle.None;
 
-            abilityTwoActiveManaIcon.style.display = DisplayStyle.None;
-            abilityTwoHoverManaIcon.style.display = DisplayStyle.None;
-            abilityTwoDisabledManaIcon.style.display = DisplayStyle.None;
+            abilityTwo.activeManaIcon.style.display = DisplayStyle.None;
+            abilityTwo.hoverManaIcon.style.display = DisplayStyle.None;
+            abilityTwo.disabledManaIcon.style.display = DisplayStyle.None;
         }
         if(_abilities[2])
         {
-            abilityThreeActiveName.text = _abilities[2].AbilityName;
-            abilityThreeActiveCost.text = _abilities[2].Cost + "";
-            abilityThreeActiveDesc.text = _abilities[2].AbilityDescription;
+            abilityThree.activeName.text = _abilities[2].AbilityName;
+            abilityThree.activeCost.text = _abilities[2].Cost + "";
+            abilityThree.activeDesc.text = _abilities[2].AbilityDescription;
 
-            abilityThreeHoverName.text = _abilities[2].AbilityName;
-            abilityThreeHoverCost.text = _abilities[2].Cost + "";
-            abilityThreeHoverDesc.text = _abilities[2].AbilityDescription;
+            abilityThree.hoverName.text = _abilities[2].AbilityName;
+            abilityThree.hoverCost.text = _abilities[2].Cost + "";
+            abilityThree.hoverDesc.text = _abilities[2].AbilityDescription;
 
-            abilityThreeDisabledName.text = _abilities[2].AbilityName;
-            abilityThreeDisabledCost.text = _abilities[2].Cost + "";
-            abilityThreeDisabledDesc.text = _abilities[2].AbilityDescription;
+            abilityThree.disabledName.text = _abilities[2].AbilityName;
+            abilityThree.disabledCost.text = _abilities[2].Cost + "";
+            abilityThree.disabledDesc.text = _abilities[2].AbilityDescription;
 
             if (_abilities[2].IsMagic)
             {
-                abilityThreeActiveAmmoIcon.style.display = DisplayStyle.None;
-                abilityThreeHoverAmmoIcon.style.display = DisplayStyle.None;
-                abilityThreeDisabledAmmoIcon.style.display = DisplayStyle.None;
+                abilityThree.activeAmmoIcon.style.display = DisplayStyle.None;
+                abilityThree.hoverAmmoIcon.style.display = DisplayStyle.None;
+                abilityThree.disabledAmmoIcon.style.display = DisplayStyle.None;
 
-                abilityThreeActiveManaIcon.style.display = DisplayStyle.Flex;
-                abilityThreeHoverManaIcon.style.display = DisplayStyle.Flex;
-                abilityThreeDisabledManaIcon.style.display = DisplayStyle.Flex;
+                abilityThree.activeManaIcon.style.display = DisplayStyle.Flex;
+                abilityThree.hoverManaIcon.style.display = DisplayStyle.Flex;
+                abilityThree.disabledManaIcon.style.display = DisplayStyle.Flex;
             }
             else
             {
-                abilityThreeActiveAmmoIcon.style.display = DisplayStyle.Flex;
-                abilityThreeHoverAmmoIcon.style.display = DisplayStyle.Flex;
-                abilityThreeDisabledAmmoIcon.style.display = DisplayStyle.Flex;
+                abilityThree.activeAmmoIcon.style.display = DisplayStyle.Flex;
+                abilityThree.hoverAmmoIcon.style.display = DisplayStyle.Flex;
+                abilityThree.disabledAmmoIcon.style.display = DisplayStyle.Flex;
 
-                abilityThreeActiveManaIcon.style.display = DisplayStyle.None;
-                abilityThreeHoverManaIcon.style.display = DisplayStyle.None;
-                abilityThreeDisabledManaIcon.style.display = DisplayStyle.None;
+                abilityThree.activeManaIcon.style.display = DisplayStyle.None;
+                abilityThree.hoverManaIcon.style.display = DisplayStyle.None;
+                abilityThree.disabledManaIcon.style.display = DisplayStyle.None;
             }
 
             
         }
         else
         {
-            abilityThreeActiveName.text = "";
-            abilityThreeActiveCost.text = "";
-            abilityThreeActiveDesc.text = "";
+            abilityThree.activeName.text = "";
+            abilityThree.activeCost.text = "";
+            abilityThree.activeDesc.text = "";
 
-            abilityThreeHoverName.text = "";
-            abilityThreeHoverCost.text = "";
-            abilityThreeHoverDesc.text = "";
+            abilityThree.hoverName.text = "";
+            abilityThree.hoverCost.text = "";
+            abilityThree.hoverDesc.text = "";
 
-            abilityThreeDisabledName.text = "";
-            abilityThreeDisabledCost.text = "";
-            abilityThreeDisabledDesc.text = "";
+            abilityThree.disabledName.text = "";
+            abilityThree.disabledCost.text = "";
+            abilityThree.disabledDesc.text = "";
 
-            abilityThreeActiveAmmoIcon.style.display = DisplayStyle.None;
-            abilityThreeHoverAmmoIcon.style.display = DisplayStyle.None;
-            abilityThreeDisabledAmmoIcon.style.display = DisplayStyle.None;
+            abilityThree.activeAmmoIcon.style.display = DisplayStyle.None;
+            abilityThree.hoverAmmoIcon.style.display = DisplayStyle.None;
+            abilityThree.disabledAmmoIcon.style.display = DisplayStyle.None;
 
-            abilityThreeActiveManaIcon.style.display = DisplayStyle.None;
-            abilityThreeHoverManaIcon.style.display = DisplayStyle.None;
-            abilityThreeDisabledManaIcon.style.display = DisplayStyle.None;
+            abilityThree.activeManaIcon.style.display = DisplayStyle.None;
+            abilityThree.hoverManaIcon.style.display = DisplayStyle.None;
+            abilityThree.disabledManaIcon.style.display = DisplayStyle.None;
         }
     }
 
@@ -704,65 +649,65 @@ public class ActionbarUI : Listener
             // Support Bar
             supportBarContainer = supportBarUIDocument.rootVisualElement.Query<VisualElement>("container");
 
-            abilityOne = supportBarContainer.Query<VisualElement>("ability-one");
-            abilityOneActive = abilityOne.Query<VisualElement>("active");
-            abilityOneHover = abilityOne.Query<VisualElement>("hover");
-            abilityOneDisabled = abilityOne.Query<VisualElement>("disabled");
-            abilityOneActiveName = abilityOneActive.Q<TextElement>("name");
-            abilityOneActiveCost = abilityOneActive.Q<TextElement>("cost");
-            abilityOneActiveDesc = abilityOneActive.Q<TextElement>("description");
-            abilityOneActiveAmmoIcon = abilityOneActive.Q<VisualElement>("ammo-icon");
-            abilityOneActiveManaIcon = abilityOneActive.Q<VisualElement>("mana-icon");
-            abilityOneHoverName = abilityOneHover.Q<TextElement>("name");
-            abilityOneHoverCost = abilityOneHover.Q<TextElement>("cost");
-            abilityOneHoverDesc = abilityOneHover.Q<TextElement>("description");
-            abilityOneHoverAmmoIcon = abilityOneHover.Q<VisualElement>("ammo-icon");
-            abilityOneHoverManaIcon = abilityOneHover.Q<VisualElement>("mana-icon");
-            abilityOneDisabledName = abilityOneDisabled.Q<TextElement>("name");
-            abilityOneDisabledCost = abilityOneDisabled.Q<TextElement>("cost");
-            abilityOneDisabledDesc = abilityOneDisabled.Q<TextElement>("description");
-            abilityOneDisabledAmmoIcon = abilityOneDisabled.Q<VisualElement>("ammo-icon");
-            abilityOneDisabledManaIcon = abilityOneDisabled.Q<VisualElement>("mana-icon");
+            abilityOne.ability = supportBarContainer.Query<VisualElement>("ability-one");
+            abilityOne.active = abilityOne.ability.Query<VisualElement>("active");
+            abilityOne.hover = abilityOne.ability.Query<VisualElement>("hover");
+            abilityOne.disabled = abilityOne.ability.Query<VisualElement>("disabled");
+            abilityOne.activeName = abilityOne.active.Q<TextElement>("name");
+            abilityOne.activeCost = abilityOne.active.Q<TextElement>("cost");
+            abilityOne.activeDesc = abilityOne.active.Q<TextElement>("description");
+            abilityOne.activeAmmoIcon = abilityOne.active.Q<VisualElement>("ammo-icon");
+            abilityOne.activeManaIcon = abilityOne.active.Q<VisualElement>("mana-icon");
+            abilityOne.hoverName = abilityOne.hover.Q<TextElement>("name");
+            abilityOne.hoverCost = abilityOne.hover.Q<TextElement>("cost");
+            abilityOne.hoverDesc = abilityOne.hover.Q<TextElement>("description");
+            abilityOne.hoverAmmoIcon = abilityOne.hover.Q<VisualElement>("ammo-icon");
+            abilityOne.hoverManaIcon = abilityOne.hover.Q<VisualElement>("mana-icon");
+            abilityOne.disabledName = abilityOne.disabled.Q<TextElement>("name");
+            abilityOne.disabledCost = abilityOne.disabled.Q<TextElement>("cost");
+            abilityOne.disabledDesc = abilityOne.disabled.Q<TextElement>("description");
+            abilityOne.disabledAmmoIcon = abilityOne.disabled.Q<VisualElement>("ammo-icon");
+            abilityOne.disabledManaIcon = abilityOne.disabled.Q<VisualElement>("mana-icon");
 
-            abilityTwo = supportBarContainer.Query<VisualElement>("ability-two");
-            abilityTwoActive = abilityTwo.Query<VisualElement>("active");
-            abilityTwoHover = abilityTwo.Query<VisualElement>("hover");
-            abilityTwoDisabled = abilityTwo.Query<VisualElement>("disabled");
-            abilityTwoActiveName = abilityTwoActive.Q<TextElement>("name");
-            abilityTwoActiveCost = abilityTwoActive.Q<TextElement>("cost");
-            abilityTwoActiveDesc = abilityTwoActive.Q<TextElement>("description");
-            abilityTwoActiveAmmoIcon = abilityTwoActive.Q<VisualElement>("ammo-icon");
-            abilityTwoActiveManaIcon = abilityTwoActive.Q<VisualElement>("mana-icon");
-            abilityTwoHoverName = abilityTwoHover.Q<TextElement>("name");
-            abilityTwoHoverCost = abilityTwoHover.Q<TextElement>("cost");
-            abilityTwoHoverDesc = abilityTwoHover.Q<TextElement>("description");
-            abilityTwoHoverAmmoIcon = abilityTwoHover.Q<VisualElement>("ammo-icon");
-            abilityTwoHoverManaIcon = abilityTwoHover.Q<VisualElement>("mana-icon");
-            abilityTwoDisabledName = abilityTwoDisabled.Q<TextElement>("name");
-            abilityTwoDisabledCost = abilityTwoDisabled.Q<TextElement>("cost");
-            abilityTwoDisabledDesc = abilityTwoDisabled.Q<TextElement>("description");
-            abilityTwoDisabledAmmoIcon = abilityTwoDisabled.Q<VisualElement>("ammo-icon");
-            abilityTwoDisabledManaIcon = abilityTwoDisabled.Q<VisualElement>("mana-icon");
+            abilityTwo.ability = supportBarContainer.Query<VisualElement>("ability-two");
+            abilityTwo.active = abilityTwo.ability.Query<VisualElement>("active");
+            abilityTwo.hover = abilityTwo.ability.Query<VisualElement>("hover");
+            abilityTwo.disabled = abilityTwo.ability.Query<VisualElement>("disabled");
+            abilityTwo.activeName = abilityTwo.active.Q<TextElement>("name");
+            abilityTwo.activeCost = abilityTwo.active.Q<TextElement>("cost");
+            abilityTwo.activeDesc = abilityTwo.active.Q<TextElement>("description");
+            abilityTwo.activeAmmoIcon = abilityTwo.active.Q<VisualElement>("ammo-icon");
+            abilityTwo.activeManaIcon = abilityTwo.active.Q<VisualElement>("mana-icon");
+            abilityTwo.hoverName = abilityTwo.hover.Q<TextElement>("name");
+            abilityTwo.hoverCost = abilityTwo.hover.Q<TextElement>("cost");
+            abilityTwo.hoverDesc = abilityTwo.hover.Q<TextElement>("description");
+            abilityTwo.hoverAmmoIcon = abilityTwo.hover.Q<VisualElement>("ammo-icon");
+            abilityTwo.hoverManaIcon = abilityTwo.hover.Q<VisualElement>("mana-icon");
+            abilityTwo.disabledName = abilityTwo.disabled.Q<TextElement>("name");
+            abilityTwo.disabledCost = abilityTwo.disabled.Q<TextElement>("cost");
+            abilityTwo.disabledDesc = abilityTwo.disabled.Q<TextElement>("description");
+            abilityTwo.disabledAmmoIcon = abilityTwo.disabled.Q<VisualElement>("ammo-icon");
+            abilityTwo.disabledManaIcon = abilityTwo.disabled.Q<VisualElement>("mana-icon");
 
-            abilityThree = supportBarContainer.Query<VisualElement>("ability-three");
-            abilityThreeActive = abilityThree.Query<VisualElement>("active");
-            abilityThreeHover = abilityThree.Query<VisualElement>("hover");
-            abilityThreeDisabled = abilityThree.Query<VisualElement>("disabled");
-            abilityThreeActiveName = abilityThreeActive.Q<TextElement>("name");
-            abilityThreeActiveCost = abilityThreeActive.Q<TextElement>("cost");
-            abilityThreeActiveDesc = abilityThreeActive.Q<TextElement>("description");
-            abilityThreeActiveAmmoIcon = abilityThreeActive.Q<VisualElement>("ammo-icon");
-            abilityThreeActiveManaIcon = abilityThreeActive.Q<VisualElement>("mana-icon");
-            abilityThreeHoverName = abilityThreeHover.Q<TextElement>("name");
-            abilityThreeHoverCost = abilityThreeHover.Q<TextElement>("cost");
-            abilityThreeHoverDesc = abilityThreeHover.Q<TextElement>("description");
-            abilityThreeHoverAmmoIcon = abilityThreeHover.Q<VisualElement>("ammo-icon");
-            abilityThreeHoverManaIcon = abilityThreeHover.Q<VisualElement>("mana-icon");
-            abilityThreeDisabledName = abilityThreeDisabled.Q<TextElement>("name");
-            abilityThreeDisabledCost = abilityThreeDisabled.Q<TextElement>("cost");
-            abilityThreeDisabledDesc = abilityThreeDisabled.Q<TextElement>("description");
-            abilityThreeDisabledAmmoIcon = abilityThreeDisabled.Q<VisualElement>("ammo-icon");
-            abilityThreeDisabledManaIcon = abilityThreeDisabled.Q<VisualElement>("mana-icon");
+            abilityThree.ability = supportBarContainer.Query<VisualElement>("ability-three");
+            abilityThree.active = abilityThree.ability.Query<VisualElement>("active");
+            abilityThree.hover = abilityThree.ability.Query<VisualElement>("hover");
+            abilityThree.disabled = abilityThree.ability.Query<VisualElement>("disabled");
+            abilityThree.activeName = abilityThree.active.Q<TextElement>("name");
+            abilityThree.activeCost = abilityThree.active.Q<TextElement>("cost");
+            abilityThree.activeDesc = abilityThree.active.Q<TextElement>("description");
+            abilityThree.activeAmmoIcon = abilityThree.active.Q<VisualElement>("ammo-icon");
+            abilityThree.activeManaIcon = abilityThree.active.Q<VisualElement>("mana-icon");
+            abilityThree.hoverName = abilityThree.hover.Q<TextElement>("name");
+            abilityThree.hoverCost = abilityThree.hover.Q<TextElement>("cost");
+            abilityThree.hoverDesc = abilityThree.hover.Q<TextElement>("description");
+            abilityThree.hoverAmmoIcon = abilityThree.hover.Q<VisualElement>("ammo-icon");
+            abilityThree.hoverManaIcon = abilityThree.hover.Q<VisualElement>("mana-icon");
+            abilityThree.disabledName = abilityThree.disabled.Q<TextElement>("name");
+            abilityThree.disabledCost = abilityThree.disabled.Q<TextElement>("cost");
+            abilityThree.disabledDesc = abilityThree.disabled.Q<TextElement>("description");
+            abilityThree.disabledAmmoIcon = abilityThree.disabled.Q<VisualElement>("ammo-icon");
+            abilityThree.disabledManaIcon = abilityThree.disabled.Q<VisualElement>("mana-icon");
 
             endSupportTurnBtn = supportBarContainer.Query<Button>("end-button");
 
