@@ -41,7 +41,7 @@ public class MageDefend : QTEAbility
         }
         else
         {
-            ManaWeight = Mathf.FloorToInt((1 - ((float)caster.Mana / (float)caster.MaxMana)) * 30);
+            ManaWeight = Mathf.FloorToInt((1 - ((float)caster.Mana / (float)caster.MaxMana)) * 60);
         }
 
         return (HealthWeight + ManaWeight)/2 + Random.Range(-10, 10);
