@@ -53,13 +53,13 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: OnMousePressed
     clip: {fileID: 8300000, guid: 572fee8cf87e87942a390f73c8485d03, type: 3}
-    volume: 0.5
+    volume: 0.2
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: OnMouseHover
     clip: {fileID: 8300000, guid: c14cb53a772b7b14cbff8b9be62f4381, type: 3}
-    volume: 0.5
+    volume: 0.2
     pitch: 1
     loop: 0
     source: {fileID: 0}

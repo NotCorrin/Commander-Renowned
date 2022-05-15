@@ -410,14 +410,17 @@ public class EnemyController : Listener
         else GoToNextPhase();
     }
 	void UseSupportAbility () {
+		UseSupportLeftAbility();
+		Invoke("UseSupportRightAbility", 0.5f);
+	}
+
+	void UseSupportLeftAbility () {
 		// UNCOMMENT LINES FOR TARGETING MULTIPLE CHARACTERS
 		FindBestSupportLeftAbility();
-		if(enemySupportLeft)
-		{
+		if (enemySupportLeft) {
 			// Support left ability on single target
 			List<Unit> leftAbilityValidTargets = fieldController.GetValidTargets(enemySupportLeft, supportLeftBestAbility);
-			if(leftAbilityValidTargets.Count > 0)
-			{
+			if (leftAbilityValidTargets.Count > 0) {
 				Unit leftTarget = leftAbilityValidTargets[Random.Range(0, leftAbilityValidTargets.Count)];
 				GameEvents.UseAbility(enemySupportLeft, leftTarget, supportLeftBestAbilityIndex); // Remove this line for multi targets
 			}
@@ -430,18 +433,20 @@ public class EnemyController : Listener
 			}
 			*/
 		}
-        FindBestSupportRightAbility();
-        if (enemySupportRight)
-        {
-            // Support right ability on single target
-            List<Unit> rightAbilityValidTargets = fieldController.GetValidTargets(enemySupportRight, supportRightBestAbility);
-            if (rightAbilityValidTargets.Count > 0)
-            {
-                Unit rightTarget = rightAbilityValidTargets[Random.Range(0, rightAbilityValidTargets.Count)];
-                GameEvents.UseAbility(enemySupportRight, rightTarget, supportRightBestAbilityIndex);  // Remove this line for multi targets
-            }
+	}
 
-            /*
+	void UseSupportRightAbility () {
+		// UNCOMMENT LINES FOR TARGETING MULTIPLE CHARACTERS
+		FindBestSupportRightAbility();
+		if (enemySupportRight) {
+			// Support right ability on single target
+			List<Unit> rightAbilityValidTargets = fieldController.GetValidTargets(enemySupportRight, supportRightBestAbility);
+			if (rightAbilityValidTargets.Count > 0) {
+				Unit rightTarget = rightAbilityValidTargets[Random.Range(0, rightAbilityValidTargets.Count)];
+				GameEvents.UseAbility(enemySupportRight, rightTarget, supportRightBestAbilityIndex);  // Remove this line for multi targets
+			}
+
+			/*
 			int rightAbilityNumOfTargets = [SET VALUE HERE]; <<<<< IMPORTANT THING TO ADD
 			for (int i = 0; i < rightAbilityNumOfTargets; i++) {
 			rightTarget = rightAbilityValidTargets[Random.Range(0, rightAbilityValidTargets.Count)];
@@ -449,10 +454,10 @@ public class EnemyController : Listener
 				rightAbilityValidTargets.Remove(rightTarget);
 			}
 			*/
-        }
-        GoToNextPhase();
+		}
+		Invoke("GoToNextPhase", 0.15f);
 	}
-	
+
 	void GoToNextPhase () {
 		GameEvents.EndPhase();
 	}
