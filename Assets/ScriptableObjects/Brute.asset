@@ -30,7 +30,7 @@ MonoBehaviour:
     AbilityDescription: Charge at the enemy \n+2 Permanant ATT (Decays by 1 each
       turn)
     Cost: 1
-    Damage: 4
+    Damage: 3
     StatBoost: 2
     Variation: 1
     VFX1: {fileID: 0}

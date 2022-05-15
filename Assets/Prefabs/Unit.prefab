@@ -315,7 +315,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -6852834596175607816, guid: 55e703a8ba1583a4987292f6d9806971, type: 3}
+  m_Sprite: {fileID: 3918824377256763825, guid: 55e703a8ba1583a4987292f6d9806971, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -401,6 +401,7 @@ MonoBehaviour:
   HealthBar: {fileID: 3859971787798797249}
   AmmoBar: {fileID: 4515696426555026560}
   ManaBar: {fileID: 1868323001065284391}
+  BuffBar: {fileID: 3171720690092299154}
   visibleElements: {fileID: 0}
   maxHealth: 0
   health: 0

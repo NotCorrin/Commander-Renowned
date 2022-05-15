@@ -22,6 +22,8 @@ public class Unit : Listener
     public Transform HealthBar;
     public Transform AmmoBar;
     public Transform ManaBar;
+    public Transform BuffBar;
+
 
     public GameObject visibleElements;
 
@@ -273,6 +275,7 @@ public class Unit : Listener
         if (HealthBar) Destroy(HealthBar.gameObject);
         if (ManaBar) Destroy(ManaBar.gameObject);
         if (AmmoBar) Destroy(AmmoBar.gameObject);
+        if(BuffBar) Destroy(BuffBar.gameObject);
         spriteRenderer.sprite = null;
         if (animator) Destroy(animator);
 

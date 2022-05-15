@@ -29,8 +29,10 @@ public class StoryContainerUI : MonoBehaviour
         {
             Debug.LogError($"{gameObject.name} : MainMenuUI - Element Query Failed.");
         }
-        storyTitle.text = stories.story[stories.level].title;
-        storyDesc.text = stories.story[stories.level].description;
+        storyTitle.text = stories.story[stories.level+1].title;
+        Debug.Log(storyDesc);
+        Debug.Log(stories.story[stories.level+1].description);
+        storyDesc.text = stories.story[stories.level+1].description;
 
         continueButton.clickable.clicked += () => {
             SceneManager.LoadScene("MenuSelectionScene");
