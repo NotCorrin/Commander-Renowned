@@ -30,7 +30,7 @@ MonoBehaviour:
     AbilityDescription: Strike in an attack formation. Attack up, Damage 3
     Cost: 1
     Damage: 3
-    StatBoost: 2
+    StatBoost: 1
     Variation: 1
     VFX1: {fileID: 1533149051114980, guid: 14237ad61acba9345b53abf70e0cd027, type: 3}
     VFX2: {fileID: 0}
@@ -59,7 +59,7 @@ MonoBehaviour:
   - AbilityType: 5
     AbilityName: Reload
     AbilityDescription: Gain 3 ammo
-    Cost: 3
+    Cost: -3
     Damage: 0
     StatBoost: 0
     Variation: 0
