@@ -127,6 +127,15 @@ public static class GameEvents
         }
     }
 
+    public static Action<Ability, bool> onGreyOut;
+    public static void GreyOut(Ability ability, bool disable)
+    {
+        if (onGreyOut != null)
+        {
+            onGreyOut(ability, disable);
+        }
+    }
+
     public static Action<Unit, Unit, int> onUseAbility;
     public static void UseAbility(Unit caster, Unit target, int abilityNumber)
     {

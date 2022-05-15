@@ -398,7 +398,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 5145483213268070333}
   billboard: {fileID: 4681837390009795012}
   animator: {fileID: 3288217654638550077}
-  HealthBar: {fileID: 6634830706548729550}
+  HealthBar: {fileID: 3859971787798797249}
   AmmoBar: {fileID: 4515696426555026560}
   ManaBar: {fileID: 1868323001065284391}
   visibleElements: {fileID: 0}

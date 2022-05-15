@@ -297,9 +297,9 @@ public class EnemyController : Listener
 	bool SetEnemyVanguard () {
 		Unit vanguard = fieldController.GetUnit(FieldController.Position.Vanguard, false);
 		// If there is a vanguard...
+		enemyVanguard = vanguard;
 		if (vanguard != null) {
 			//... Set the vanguard
-			enemyVanguard = vanguard;
 			return true;
 		}
 		return false;

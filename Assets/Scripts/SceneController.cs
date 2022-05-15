@@ -24,11 +24,13 @@ public class SceneController : Listener
 
     protected override void SubscribeListeners()
     {
+        UIEvents.onUnitSelected += UnitSelected;
         //throw new System.NotImplementedException();
     }
 
     protected override void UnsubscribeListeners()
     {
+        UIEvents.onUnitSelected -= UnitSelected;
         //throw new System.NotImplementedException();
     }
 
@@ -53,12 +55,14 @@ public class SceneController : Listener
                         selectedUnit = selectedObject.GetComponent<Unit>();
                         UIEvents.UnitSelected(selectedUnit);
                     }
-                    selected = true;
                     return;
                 }
             }
             UIEvents.UnitSelected(null);
-            selected = false;
         }
+    }
+    private void UnitSelected(Unit unit)
+    {
+        selected = unit;
     }
 }

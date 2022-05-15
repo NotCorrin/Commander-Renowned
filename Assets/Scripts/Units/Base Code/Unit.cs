@@ -78,7 +78,7 @@ public class Unit : Listener
         set
         {
             mana = Mathf.Clamp(value, 0, MaxMana);
-            UIEvents.UnitManaChanged(this, mana);
+            UIEvents.UnitManaChanged(this, mana, MaxMana);
         }
     }
 
@@ -189,6 +189,19 @@ public class Unit : Listener
         }
     }
 
+    void GreyOut(Ability ability, bool isPlayer)
+    {
+        if(!ability)
+        {
+            if(!FieldController.main.IsUnitPlayer(this)) UpdateEnemyVisual();
+            else spriteRenderer.color = Color.white;
+        }
+        else if(!ability.IsTargetValid(this, isPlayer))
+        {
+            spriteRenderer.color -= new Color(0.5f,0.5f,0.5f,0.2f);
+        }
+    }
+
     protected void UseAbility(Unit caster, Unit target, int selectedAbility)
     {
         if (caster == this)
@@ -214,6 +227,7 @@ public class Unit : Listener
             }
 
         }
+        if(!FieldController.main.IsUnitPlayer(this)) UpdateEnemyVisual();
     }
 
     private void OnUseAmmo(Unit caster, int cost)
@@ -312,6 +326,7 @@ public class Unit : Listener
         maxHealth = mHealth;
         maxAmmo = mAmmo;
         maxMana = mMana;
+        spriteRenderer.sprite = sprite;
         animator.runtimeAnimatorController = anim;
 
         ResetUnit();
@@ -432,6 +447,7 @@ public class Unit : Listener
         GameEvents.onKill += OnKill;
 
         GameEvents.onPhaseChanged += UpdateBillboard;
+        GameEvents.onGreyOut += GreyOut;
         
     }
 

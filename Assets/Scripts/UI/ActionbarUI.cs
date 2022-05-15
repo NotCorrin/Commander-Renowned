@@ -119,6 +119,7 @@ public class ActionbarUI : Listener
         prompt = "";
         supportBarContainer.style.display = DisplayStyle.Flex;
         promptBarContainer.style.display = DisplayStyle.None;
+        GameEvents.GreyOut(null, false);
         Debug.Log("Prompt Cancel Clicked");
     }
 
@@ -241,6 +242,7 @@ public class ActionbarUI : Listener
                 prompt = "Ability";
                 promptBarValue.text = "Select target for " + selectedUnit.SupportAbilities[_selectedAbility-1].AbilityName;
                 selectedAbility = _selectedAbility;
+                GameEvents.GreyOut(selectedUnit.SupportAbilities[_selectedAbility-1], FieldController.main.IsUnitPlayer(selectedUnit));
             }
         }
         OnUnitSelected(selectedUnit);
@@ -303,6 +305,7 @@ public class ActionbarUI : Listener
     {
         FieldController.main.SupportUsed(unit);
         OnUnitSelected(unit);
+        GameEvents.GreyOut(null, false);
     }
     void OnUnitSelected(Unit unit)
     {
@@ -662,6 +665,7 @@ public class ActionbarUI : Listener
         {
             case RoundController.Phase.PlayerVanguard:
                 supportBarContainer.style.display = DisplayStyle.Flex;
+                UIEvents.UnitSelected(FieldController.main.GetUnit(FieldController.Position.Vanguard, true));
                 break;
             case RoundController.Phase.EnemyVangaurd:
                 supportBarContainer.style.display = DisplayStyle.Flex;
@@ -681,7 +685,6 @@ public class ActionbarUI : Listener
             default:
                 break;
         }
-        OnUnitSelected(selectedUnit);
         // endSupportTurnBtn.text = phase.ToString() + "\nEnd Phase";
     }
 
