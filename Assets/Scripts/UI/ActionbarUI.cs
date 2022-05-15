@@ -119,6 +119,7 @@ public class ActionbarUI : Listener
         prompt = "";
         supportBarContainer.style.display = DisplayStyle.Flex;
         promptBarContainer.style.display = DisplayStyle.None;
+        GameEvents.GreyOut(null, false);
         Debug.Log("Prompt Cancel Clicked");
     }
 
@@ -241,6 +242,7 @@ public class ActionbarUI : Listener
                 prompt = "Ability";
                 promptBarValue.text = "Select target for " + selectedUnit.SupportAbilities[_selectedAbility-1].AbilityName;
                 selectedAbility = _selectedAbility;
+                GameEvents.GreyOut(selectedUnit.SupportAbilities[_selectedAbility-1], FieldController.main.IsUnitPlayer(selectedUnit));
             }
         }
         OnUnitSelected(selectedUnit);
@@ -303,6 +305,7 @@ public class ActionbarUI : Listener
     {
         FieldController.main.SupportUsed(unit);
         OnUnitSelected(unit);
+        GameEvents.GreyOut(null, false);
     }
     void OnUnitSelected(Unit unit)
     {
