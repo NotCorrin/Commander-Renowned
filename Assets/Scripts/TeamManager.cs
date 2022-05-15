@@ -40,7 +40,7 @@ public class TeamManager : Listener
     Unit SpawnUnit(Vector3 spawnPos, UnitScriptableObject teamUnit)
     {
         Unit newUnit = Instantiate(UnitPrefab, spawnPos, Quaternion.identity).GetComponent<Unit>();
-        newUnit.SetupUnit(teamUnit.unitType, teamUnit.UnitName, teamUnit.VanguardAbilities, teamUnit.SupportAbilities, teamUnit.MaxHealth, teamUnit.MaxAmmo, teamUnit.MaxMana, teamUnit.animator);
+        newUnit.SetupUnit(teamUnit.unitType, teamUnit.UnitName, teamUnit.VanguardAbilities, teamUnit.SupportAbilities, teamUnit.MaxHealth, teamUnit.MaxAmmo, teamUnit.MaxMana, teamUnit.animator, teamUnit.sprite);
             newUnit.gameObject.name =  teamUnit.UnitName;
             return newUnit;
     }

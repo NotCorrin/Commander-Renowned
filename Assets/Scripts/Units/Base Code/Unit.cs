@@ -289,7 +289,7 @@ public class Unit : Listener
         return GetStandardAlgorithm();
     }
 
-    public void SetupUnit(UnitType uType, string uName, AbilitySetup[] vAbilities, AbilitySetup[] sAbilities, int mHealth, int mAmmo, int mMana, RuntimeAnimatorController anim)
+    public void SetupUnit(UnitType uType, string uName, AbilitySetup[] vAbilities, AbilitySetup[] sAbilities, int mHealth, int mAmmo, int mMana, RuntimeAnimatorController anim, Sprite sprite)
     {
         unitType = uType;
 
