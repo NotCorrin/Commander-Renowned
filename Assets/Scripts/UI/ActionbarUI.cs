@@ -6,11 +6,11 @@ using UnityEngine.UIElements;
 struct AbilityButton
 {
     public VisualElement ability, active, hover, disabled;
-    public TextElement activeName, activeCost, activeDesc;
+    public TextElement activeName, activeCost, activeDesc, activeOperation;
     public VisualElement activeManaIcon, activeAmmoIcon;
-    public TextElement hoverName, hoverCost, hoverDesc;
+    public TextElement hoverName, hoverCost, hoverDesc, hoverOperation;
     public VisualElement hoverManaIcon, hoverAmmoIcon;
-    public TextElement disabledName, disabledCost, disabledDesc;
+    public TextElement disabledName, disabledCost, disabledDesc, disabledOperation;
     public VisualElement disabledManaIcon, disabledAmmoIcon;
 }
 
@@ -31,7 +31,7 @@ public class ActionbarUI : Listener
     private AbilityButton abilityOne;
     private AbilityButton abilityTwo;
     private AbilityButton abilityThree;
-    private Button endSupportTurnBtn;
+    private VisualElement endSupportTurnBtn;
 
     [Header("Switch Bar")]
     [SerializeField] private GameObject switchBar;
@@ -74,7 +74,10 @@ public class ActionbarUI : Listener
         abilityThree.ability.RegisterCallback<MouseLeaveEvent>(AbilityThree_Unhover);
         abilityThree.ability.RegisterCallback<ClickEvent>(AbilityThree_Clicked);
 
-        endSupportTurnBtn.clickable.clicked += EndSupportTurnBtn_Clicked;
+        endSupportTurnBtn.RegisterCallback<MouseEnterEvent>(EndSupportTurn_Hover);
+        endSupportTurnBtn.RegisterCallback<MouseLeaveEvent>(EndSupportTurn_Unhover);
+        endSupportTurnBtn.RegisterCallback<ClickEvent>(EndSupportTurn_Clicked);
+
         switchBtn.clickable.clicked += SwitchBtn_Clicked;
         endSwitchTurnBtn.clickable.clicked += EndSwitchTurnBtn_Clicked;
         UIEvents.onUnitSelected += OnUnitSelected;
@@ -99,7 +102,10 @@ public class ActionbarUI : Listener
         abilityThree.ability.UnregisterCallback<MouseLeaveEvent>(AbilityThree_Unhover);
         abilityThree.ability.UnregisterCallback<ClickEvent>(AbilityThree_Clicked);
 
-        endSupportTurnBtn.clickable.clicked -= EndSupportTurnBtn_Clicked;
+        endSupportTurnBtn.UnregisterCallback<MouseEnterEvent>(EndSupportTurn_Hover);
+        endSupportTurnBtn.UnregisterCallback<MouseLeaveEvent>(EndSupportTurn_Unhover);
+        endSupportTurnBtn.UnregisterCallback<ClickEvent>(EndSupportTurn_Clicked);
+
         switchBtn.clickable.clicked -= SwitchBtn_Clicked;
         endSwitchTurnBtn.clickable.clicked -= EndSwitchTurnBtn_Clicked;
         UIEvents.onUnitSelected -= OnUnitSelected;
@@ -138,11 +144,14 @@ public class ActionbarUI : Listener
 
     void AbilityOne_Clicked(ClickEvent evt)
     {
-        UseAbility(1);
-        AudioManager.instance.Play("OnMousePressed");
-        abilityOne.hover.style.height = new Length(0, LengthUnit.Percent);
-        abilityOne.active.style.height = new Length(100, LengthUnit.Percent);
-        Debug.Log("Ability One Button Clicked");
+        if (abilityActive[0])
+        {
+            UseAbility(1);
+            AudioManager.instance.Play("OnMousePressed");
+            abilityOne.hover.style.height = new Length(0, LengthUnit.Percent);
+            abilityOne.active.style.height = new Length(100, LengthUnit.Percent);
+            Debug.Log("Ability One Button Clicked");
+        }
     }
 
     void AbilityTwo_Hover(MouseEnterEvent evt)
@@ -166,11 +175,14 @@ public class ActionbarUI : Listener
 
     void AbilityTwo_Clicked(ClickEvent evt)
     {
-        UseAbility(2);
-        AudioManager.instance.Play("OnMousePressed");
-        abilityTwo.hover.style.height = new Length(0, LengthUnit.Percent);
-        abilityTwo.active.style.height = new Length(100, LengthUnit.Percent);
-        Debug.Log("Ability Two Button Clicked");
+        if (abilityActive[1])
+        {
+            UseAbility(2);
+            AudioManager.instance.Play("OnMousePressed");
+            abilityTwo.hover.style.height = new Length(0, LengthUnit.Percent);
+            abilityTwo.active.style.height = new Length(100, LengthUnit.Percent);
+            Debug.Log("Ability Two Button Clicked");
+        }
     }
 
     void AbilityThree_Hover(MouseEnterEvent evt)
@@ -194,11 +206,14 @@ public class ActionbarUI : Listener
 
     void AbilityThree_Clicked(ClickEvent evt)
     {
-        UseAbility(3);
-        AudioManager.instance.Play("OnMousePressed");
-        abilityThree.hover.style.height = new Length(0, LengthUnit.Percent);
-        abilityThree.active.style.height = new Length(100, LengthUnit.Percent);
-        Debug.Log("Ability Three Button Clicked");
+        if (abilityActive[2])
+        {
+            UseAbility(3);
+            AudioManager.instance.Play("OnMousePressed");
+            abilityThree.hover.style.height = new Length(0, LengthUnit.Percent);
+            abilityThree.active.style.height = new Length(100, LengthUnit.Percent);
+            Debug.Log("Ability Three Button Clicked");
+        }
     }
     void UseAbility(int _selectedAbility)
     {
@@ -232,11 +247,35 @@ public class ActionbarUI : Listener
         //else GameEvents.UseAbility(selectedUnit, SceneController.main.selectedUnit, 3);
     }
 
-    void EndSupportTurnBtn_Clicked()
+    void EndSupportTurn_Hover(MouseEnterEvent evt)
+    {
+        if (RoundController.phase == RoundController.Phase.PlayerVanguard || RoundController.phase == RoundController.Phase.PlayerSupport)
+        {
+            AudioManager.instance.Play("OnMouseHover");
+            endSupportTurnBtn.style.width = new Length(92, LengthUnit.Percent);
+            endSupportTurnBtn.style.height = new Length(59, LengthUnit.Percent);
+        }
+    }
+
+    void EndSupportTurn_Unhover(MouseLeaveEvent evt)
+    {
+        endSupportTurnBtn.style.width = new Length(80, LengthUnit.Percent);
+        endSupportTurnBtn.style.height = new Length(42, LengthUnit.Percent);
+    }
+
+    void EndSupportTurn_Clicked(ClickEvent evt)
     {
         Debug.Log("End Support Turn Button Clicked");
-        if(RoundController.phase == RoundController.Phase.PlayerVanguard || RoundController.phase == RoundController.Phase.PlayerSupport) GameEvents.EndPhase();
-        else Debug.Log("Player does not have priority right now!");
+
+        if (RoundController.phase == RoundController.Phase.PlayerVanguard || RoundController.phase == RoundController.Phase.PlayerSupport)
+        {
+            AudioManager.instance.Play("OnMousePressed");
+            GameEvents.EndPhase();
+        }
+        else
+        {
+            Debug.Log("Player does not have priority right now!");
+        }
     }
 
     void SwitchBtn_Clicked()
@@ -395,6 +434,19 @@ public class ActionbarUI : Listener
             abilityOne.disabledCost.text = _abilities[0].Cost + "";
             abilityOne.disabledDesc.text = _abilities[0].AbilityDescription;
 
+            if (_abilities[0].Cost < 0)
+            {
+                abilityOne.activeOperation.text = "+";
+                abilityOne.hoverOperation.text = "+";
+                abilityOne.disabledOperation.text = "+";
+            }
+            else
+            {
+                abilityOne.activeOperation.text = "-";
+                abilityOne.hoverOperation.text = "-";
+                abilityOne.disabledOperation.text = "-";
+            }
+
             if (_abilities[0].IsMagic)
             {
                 abilityOne.activeAmmoIcon.style.display = DisplayStyle.None;
@@ -421,14 +473,17 @@ public class ActionbarUI : Listener
             abilityOne.activeName.text = "";
             abilityOne.activeCost.text = "";
             abilityOne.activeDesc.text = "";
+            abilityOne.activeOperation.text = "";
 
             abilityOne.hoverName.text = "";
             abilityOne.hoverCost.text = "";
             abilityOne.hoverDesc.text = "";
+            abilityOne.hoverOperation.text = "";
 
             abilityOne.disabledName.text = "";
             abilityOne.disabledCost.text = "";
             abilityOne.disabledDesc.text = "";
+            abilityOne.disabledOperation.text = "";
 
             abilityOne.activeAmmoIcon.style.display = DisplayStyle.None;
             abilityOne.hoverAmmoIcon.style.display = DisplayStyle.None;
@@ -451,6 +506,19 @@ public class ActionbarUI : Listener
             abilityTwo.disabledName.text = _abilities[1].AbilityName;
             abilityTwo.disabledCost.text = _abilities[1].Cost + "";
             abilityTwo.disabledDesc.text = _abilities[1].AbilityDescription;
+
+            if (_abilities[1].Cost < 0)
+            {
+                abilityTwo.activeOperation.text = "+";
+                abilityTwo.hoverOperation.text = "+";
+                abilityTwo.disabledOperation.text = "+";
+            }
+            else
+            {
+                abilityTwo.activeOperation.text = "-";
+                abilityTwo.hoverOperation.text = "-";
+                abilityTwo.disabledOperation.text = "-";
+            }
 
             if (_abilities[1].IsMagic)
             {
@@ -478,14 +546,17 @@ public class ActionbarUI : Listener
             abilityTwo.activeName.text = "";
             abilityTwo.activeCost.text = "";
             abilityTwo.activeDesc.text = "";
+            abilityTwo.activeOperation.text = "";
 
             abilityTwo.hoverName.text = "";
             abilityTwo.hoverCost.text = "";
             abilityTwo.hoverDesc.text = "";
+            abilityTwo.hoverOperation.text = "";
 
             abilityTwo.disabledName.text = "";
             abilityTwo.disabledCost.text = "";
             abilityTwo.disabledDesc.text = "";
+            abilityTwo.disabledOperation.text = "";
 
             abilityTwo.activeAmmoIcon.style.display = DisplayStyle.None;
             abilityTwo.hoverAmmoIcon.style.display = DisplayStyle.None;
@@ -508,6 +579,19 @@ public class ActionbarUI : Listener
             abilityThree.disabledName.text = _abilities[2].AbilityName;
             abilityThree.disabledCost.text = _abilities[2].Cost + "";
             abilityThree.disabledDesc.text = _abilities[2].AbilityDescription;
+
+            if (_abilities[2].Cost < 0)
+            {
+                abilityThree.activeOperation.text = "+";
+                abilityThree.hoverOperation.text = "+";
+                abilityThree.disabledOperation.text = "+";
+            }
+            else
+            {
+                abilityThree.activeOperation.text = "-";
+                abilityThree.hoverOperation.text = "-";
+                abilityThree.disabledOperation.text = "-";
+            }
 
             if (_abilities[2].IsMagic)
             {
@@ -537,14 +621,17 @@ public class ActionbarUI : Listener
             abilityThree.activeName.text = "";
             abilityThree.activeCost.text = "";
             abilityThree.activeDesc.text = "";
+            abilityThree.activeOperation.text = "";
 
             abilityThree.hoverName.text = "";
             abilityThree.hoverCost.text = "";
             abilityThree.hoverDesc.text = "";
+            abilityThree.hoverOperation.text = "";
 
             abilityThree.disabledName.text = "";
             abilityThree.disabledCost.text = "";
             abilityThree.disabledDesc.text = "";
+            abilityThree.disabledOperation.text = "";
 
             abilityThree.activeAmmoIcon.style.display = DisplayStyle.None;
             abilityThree.hoverAmmoIcon.style.display = DisplayStyle.None;
@@ -656,16 +743,19 @@ public class ActionbarUI : Listener
             abilityOne.activeName = abilityOne.active.Q<TextElement>("name");
             abilityOne.activeCost = abilityOne.active.Q<TextElement>("cost");
             abilityOne.activeDesc = abilityOne.active.Q<TextElement>("description");
+            abilityOne.activeOperation = abilityOne.active.Q<TextElement>("op");
             abilityOne.activeAmmoIcon = abilityOne.active.Q<VisualElement>("ammo-icon");
             abilityOne.activeManaIcon = abilityOne.active.Q<VisualElement>("mana-icon");
             abilityOne.hoverName = abilityOne.hover.Q<TextElement>("name");
             abilityOne.hoverCost = abilityOne.hover.Q<TextElement>("cost");
             abilityOne.hoverDesc = abilityOne.hover.Q<TextElement>("description");
+            abilityOne.hoverOperation = abilityOne.hover.Q<TextElement>("op");
             abilityOne.hoverAmmoIcon = abilityOne.hover.Q<VisualElement>("ammo-icon");
             abilityOne.hoverManaIcon = abilityOne.hover.Q<VisualElement>("mana-icon");
             abilityOne.disabledName = abilityOne.disabled.Q<TextElement>("name");
             abilityOne.disabledCost = abilityOne.disabled.Q<TextElement>("cost");
             abilityOne.disabledDesc = abilityOne.disabled.Q<TextElement>("description");
+            abilityOne.disabledOperation = abilityOne.disabled.Q<TextElement>("op");
             abilityOne.disabledAmmoIcon = abilityOne.disabled.Q<VisualElement>("ammo-icon");
             abilityOne.disabledManaIcon = abilityOne.disabled.Q<VisualElement>("mana-icon");
 
@@ -676,16 +766,19 @@ public class ActionbarUI : Listener
             abilityTwo.activeName = abilityTwo.active.Q<TextElement>("name");
             abilityTwo.activeCost = abilityTwo.active.Q<TextElement>("cost");
             abilityTwo.activeDesc = abilityTwo.active.Q<TextElement>("description");
+            abilityTwo.activeOperation = abilityTwo.active.Q<TextElement>("op");
             abilityTwo.activeAmmoIcon = abilityTwo.active.Q<VisualElement>("ammo-icon");
             abilityTwo.activeManaIcon = abilityTwo.active.Q<VisualElement>("mana-icon");
             abilityTwo.hoverName = abilityTwo.hover.Q<TextElement>("name");
             abilityTwo.hoverCost = abilityTwo.hover.Q<TextElement>("cost");
             abilityTwo.hoverDesc = abilityTwo.hover.Q<TextElement>("description");
+            abilityTwo.hoverOperation = abilityTwo.hover.Q<TextElement>("op");
             abilityTwo.hoverAmmoIcon = abilityTwo.hover.Q<VisualElement>("ammo-icon");
             abilityTwo.hoverManaIcon = abilityTwo.hover.Q<VisualElement>("mana-icon");
             abilityTwo.disabledName = abilityTwo.disabled.Q<TextElement>("name");
             abilityTwo.disabledCost = abilityTwo.disabled.Q<TextElement>("cost");
             abilityTwo.disabledDesc = abilityTwo.disabled.Q<TextElement>("description");
+            abilityTwo.disabledOperation = abilityTwo.disabled.Q<TextElement>("op");
             abilityTwo.disabledAmmoIcon = abilityTwo.disabled.Q<VisualElement>("ammo-icon");
             abilityTwo.disabledManaIcon = abilityTwo.disabled.Q<VisualElement>("mana-icon");
 
@@ -696,20 +789,23 @@ public class ActionbarUI : Listener
             abilityThree.activeName = abilityThree.active.Q<TextElement>("name");
             abilityThree.activeCost = abilityThree.active.Q<TextElement>("cost");
             abilityThree.activeDesc = abilityThree.active.Q<TextElement>("description");
+            abilityThree.activeOperation = abilityThree.active.Q<TextElement>("op");
             abilityThree.activeAmmoIcon = abilityThree.active.Q<VisualElement>("ammo-icon");
             abilityThree.activeManaIcon = abilityThree.active.Q<VisualElement>("mana-icon");
             abilityThree.hoverName = abilityThree.hover.Q<TextElement>("name");
             abilityThree.hoverCost = abilityThree.hover.Q<TextElement>("cost");
             abilityThree.hoverDesc = abilityThree.hover.Q<TextElement>("description");
+            abilityThree.hoverOperation = abilityThree.hover.Q<TextElement>("op");
             abilityThree.hoverAmmoIcon = abilityThree.hover.Q<VisualElement>("ammo-icon");
             abilityThree.hoverManaIcon = abilityThree.hover.Q<VisualElement>("mana-icon");
             abilityThree.disabledName = abilityThree.disabled.Q<TextElement>("name");
             abilityThree.disabledCost = abilityThree.disabled.Q<TextElement>("cost");
             abilityThree.disabledDesc = abilityThree.disabled.Q<TextElement>("description");
+            abilityThree.disabledOperation = abilityThree.disabled.Q<TextElement>("op");
             abilityThree.disabledAmmoIcon = abilityThree.disabled.Q<VisualElement>("ammo-icon");
             abilityThree.disabledManaIcon = abilityThree.disabled.Q<VisualElement>("mana-icon");
 
-            endSupportTurnBtn = supportBarContainer.Query<Button>("end-button");
+            endSupportTurnBtn = supportBarContainer.Query<VisualElement>("end-container");
 
             // Switch Bar
             switchBarContainer = switchBarUIDocument.rootVisualElement.Query<VisualElement>("container");
