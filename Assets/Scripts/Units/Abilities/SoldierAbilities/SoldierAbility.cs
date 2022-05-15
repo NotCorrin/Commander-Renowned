@@ -9,6 +9,7 @@ public class SoldierAbility : Ability
     {
         base.SetupParams(setup);
         if(!VFX1) VFX1 = Resources.Load("CustomLasers/Soldier/ReloadParticles") as GameObject;
+        isMagic = false;
     }
 
     public override int GetMoveWeight(Unit caster)
