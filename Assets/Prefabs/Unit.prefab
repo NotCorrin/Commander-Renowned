@@ -294,7 +294,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ff8dc9633e15c1c48a7b9d3eaeb6b749, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -394,9 +394,14 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  DamageNumbers: {fileID: 0}
+  DamageNumbers: {fileID: 7953051100106199004, guid: a8cdc11f374cd294da8b113ffc5c5281, type: 3}
+  spriteRenderer: {fileID: 5145483213268070333}
+  billboard: {fileID: 4681837390009795012}
+  animator: {fileID: 3288217654638550077}
+  HealthBar: {fileID: 6634830706548729550}
   AmmoBar: {fileID: 4515696426555026560}
   ManaBar: {fileID: 1868323001065284391}
+  visibleElements: {fileID: 0}
   maxHealth: 0
   health: 0
   maxAmmo: 0

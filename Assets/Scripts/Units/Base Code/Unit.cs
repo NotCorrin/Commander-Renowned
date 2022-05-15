@@ -15,13 +15,15 @@ public class Unit : Listener
 
     [SerializeField] GameObject DamageNumbers;
 
-    SpriteRenderer spriteRenderer;
+    [SerializeField] SpriteRenderer spriteRenderer;
     Collider coll;
-    private Billboard billboard;
-    private Animator animator;
+    [SerializeField] private Billboard billboard;
+    [SerializeField] private Animator animator;
     public Transform HealthBar;
     public Transform AmmoBar;
     public Transform ManaBar;
+
+    public GameObject visibleElements;
 
     [SerializeField] protected int maxHealth;
 
@@ -245,18 +247,21 @@ public class Unit : Listener
     {
         if (unit == this)
         {
-
+            animator.SetTrigger("killUnit");
+            if (GetComponent<SphereCollider>()) Destroy(GetComponent<SphereCollider>());
         }
     }
 
     private void KillUnit()
     {
+        if (visibleElements) Destroy(visibleElements);
+
         if (HealthBar) Destroy(HealthBar.gameObject);
         if (ManaBar) Destroy(ManaBar.gameObject);
         if (AmmoBar) Destroy(AmmoBar.gameObject);
         spriteRenderer.sprite = null;
         if (animator) Destroy(animator);
-        if (GetComponent<SphereCollider>()) Destroy(GetComponent<SphereCollider>());
+
     }
 
     // Start is called before the first frame update
@@ -453,12 +458,12 @@ public class Unit : Listener
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
-        billboard = GetComponent<Billboard>();
-        coll = GetComponent<Collider>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        if (!animator) animator = GetComponent<Animator>();
+        if (!billboard) billboard = GetComponent<Billboard>();
+        if (!coll) coll = GetComponent<Collider>();
+        if (!spriteRenderer) spriteRenderer = GetComponent<SpriteRenderer>();
 
-        DamageNumbers = Resources.Load("UIPrefabs/DamageText") as GameObject;
+        if (!DamageNumbers) DamageNumbers = Resources.Load("UIPrefabs/DamageText") as GameObject;
     }
     void UpdateBillboard(RoundController.Phase _phase)
     {
