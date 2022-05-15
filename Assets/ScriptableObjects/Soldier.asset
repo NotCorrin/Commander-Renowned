@@ -30,7 +30,7 @@ MonoBehaviour:
     AbilityDescription: Strike the enemy with dual arcane bullets. Attack up.
     Cost: 1
     Damage: 4
-    StatBoost: 2
+    StatBoost: 1
     Variation: 1
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
