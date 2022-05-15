@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1315abb00406e0a458b2138c8363ac1c, type: 3}
-  m_Name: Mage 2
+  m_Name: Support Mage
   m_EditorClassIdentifier: 
   unitType: 0
-  UnitName: Fire Mage
+  UnitName: Support Mage
   VanguardAbilities:
   - AbilityType: 0
     AbilityName: 
@@ -28,7 +28,7 @@ MonoBehaviour:
   - AbilityType: 0
     AbilityName: Spirit Burn
     AbilityDescription: Steal the enemy's flame to empower your own
-    Cost: 2
+    Cost: -3
     Damage: 2
     StatBoost: 0
     Variation: 1
@@ -38,9 +38,9 @@ MonoBehaviour:
   - AbilityType: 2
     AbilityName: Wall of Plasma
     AbilityDescription: Will form an invisible wall to protect the mage
-    Cost: 2
+    Cost: -2
     Damage: 0
-    StatBoost: 2
+    StatBoost: 3
     Variation: 1
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
@@ -56,15 +56,14 @@ MonoBehaviour:
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  - AbilityType: 6
-    AbilityName: Fireball
-    AbilityDescription: Send down an asteroid to destroy your foes. \nTargets enemy
-      support units.
-    Cost: 5
-    Damage: 8
-    StatBoost: 0
+  - AbilityType: 1
+    AbilityName: Confidence
+    AbilityDescription: Increases attack damage
+    Cost: 1
+    Damage: 0
+    StatBoost: 2
     Variation: 0
-    VFX1: {fileID: 8959962781991663832, guid: f1c8547dbd9935e4ba610a23c00f3c54, type: 3}
+    VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   VanguardAbilities2: []

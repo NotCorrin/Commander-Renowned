@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MageDefend : QTEAbility
 {
-    [SerializeField] int CostVariation = 1;
+    [SerializeField] int CostVariation = -1;
 
     public override void SetupParams(AbilitySetup setup)
     {
@@ -69,7 +69,7 @@ public class MageDefend : QTEAbility
         if (VFX1) Instantiate(VFX1, transform);
         GameEvents.DefenseUp(Caster, FinalDefense);
         //GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, Damage));
-        GameEvents.onUseMana(Caster, -FinalCost);
+        GameEvents.onUseMana(Caster, FinalCost);
     }
 
     

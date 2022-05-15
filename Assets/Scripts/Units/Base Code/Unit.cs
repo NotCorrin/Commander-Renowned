@@ -243,15 +243,20 @@ public class Unit : Listener
 
     private void OnKill(Unit unit)
     {
-        if(unit == this)
+        if (unit == this)
         {
-            if(HealthBar) Destroy(HealthBar.gameObject);
-            if(ManaBar) Destroy(ManaBar.gameObject);
-            if(AmmoBar) Destroy(AmmoBar.gameObject);
-            spriteRenderer.sprite = null;
-            if(animator) Destroy(animator);
-            if(GetComponent<SphereCollider>()) Destroy(GetComponent<SphereCollider>());
-        }        
+
+        }
+    }
+
+    private void KillUnit()
+    {
+        if (HealthBar) Destroy(HealthBar.gameObject);
+        if (ManaBar) Destroy(ManaBar.gameObject);
+        if (AmmoBar) Destroy(AmmoBar.gameObject);
+        spriteRenderer.sprite = null;
+        if (animator) Destroy(animator);
+        if (GetComponent<SphereCollider>()) Destroy(GetComponent<SphereCollider>());
     }
 
     // Start is called before the first frame update
