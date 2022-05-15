@@ -29,7 +29,7 @@ public class SoldierAbility : Ability
         if (IsAbilityValid(Caster, Target))
         {
             Instantiate(VFX1, transform);
-            GameEvents.onUseAmmo(Target, -Cost);
+            GameEvents.onUseAmmo(Target, Cost);
         }
     }
 
