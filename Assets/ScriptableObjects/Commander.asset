@@ -38,7 +38,7 @@ MonoBehaviour:
   - AbilityType: 2
     AbilityName: Wall of Plasma
     AbilityDescription: Will form an invisible wall to protect the mage
-    Cost: 2
+    Cost: -2
     Damage: 1
     StatBoost: 3
     Variation: 1

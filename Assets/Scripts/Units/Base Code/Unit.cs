@@ -392,7 +392,14 @@ public class Unit : Listener
             }
         }
 
-        moveWeight = totalVanguardMoveScore - totalSupportMoveScore ;
+        if (totalSupportMoveScore > totalVanguardMoveScore)
+        {
+            moveWeight = -totalSupportMoveScore;
+        }
+        else
+        {
+            moveWeight = totalVanguardMoveScore;
+        }
 
         healthWeight = Mathf.RoundToInt(((float)Health / (float)MaxHealth) * 100);
 
