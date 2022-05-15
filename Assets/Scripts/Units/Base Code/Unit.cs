@@ -316,6 +316,7 @@ public class Unit : Listener
         maxHealth = mHealth;
         maxAmmo = mAmmo;
         maxMana = mMana;
+        spriteRenderer.sprite = sprite;
         animator.runtimeAnimatorController = anim;
 
         ResetUnit();
