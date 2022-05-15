@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b12e751dbe26864a83de92a31c6d08e, type: 3}
   m_Name: New Scenario
   m_EditorClassIdentifier: 
-  level: 1
+  level: 0
   story:
   - title: 
     description: 

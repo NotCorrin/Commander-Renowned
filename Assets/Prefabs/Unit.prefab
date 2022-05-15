@@ -401,6 +401,7 @@ MonoBehaviour:
   HealthBar: {fileID: 3859971787798797249}
   AmmoBar: {fileID: 4515696426555026560}
   ManaBar: {fileID: 1868323001065284391}
+  BuffBar: {fileID: 3171720690092299154}
   visibleElements: {fileID: 0}
   maxHealth: 0
   health: 0

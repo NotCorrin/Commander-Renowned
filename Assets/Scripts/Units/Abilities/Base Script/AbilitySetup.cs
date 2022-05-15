@@ -28,5 +28,6 @@ public enum AbilityScript
     Defend,
     SoldierAbility,
     MageFireball,
-    Charge
+    Charge,
+    Trace
 }
