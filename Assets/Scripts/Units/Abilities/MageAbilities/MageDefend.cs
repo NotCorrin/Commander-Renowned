@@ -10,6 +10,7 @@ public class MageDefend : QTEAbility
     {
         base.SetupParams(setup);
         if(!VFX1) VFX1 = Resources.Load("CustomLasers/Mage/MageFlare") as GameObject;
+        isMagic = true;
     }
 
     public override bool IsCasterValid (Unit Caster)
