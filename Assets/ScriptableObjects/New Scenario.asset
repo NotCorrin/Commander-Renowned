@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b12e751dbe26864a83de92a31c6d08e, type: 3}
   m_Name: New Scenario
   m_EditorClassIdentifier: 
-  level: 0
+  level: 1
   story:
   - title: 
     description: 
@@ -42,3 +42,7 @@ MonoBehaviour:
     description: You are ambushed by bandits.
     Enemies:
     - enemies: []
+    - enemies:
+      - {fileID: 11400000, guid: 5196e05f980e6154392d8db4f4d5968d, type: 2}
+      - {fileID: 11400000, guid: 5196e05f980e6154392d8db4f4d5968d, type: 2}
+      - {fileID: 11400000, guid: 5196e05f980e6154392d8db4f4d5968d, type: 2}
