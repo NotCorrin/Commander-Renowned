@@ -662,6 +662,7 @@ public class ActionbarUI : Listener
         {
             case RoundController.Phase.PlayerVanguard:
                 supportBarContainer.style.display = DisplayStyle.Flex;
+                UIEvents.UnitSelected(FieldController.main.GetUnit(FieldController.Position.Vanguard, true));
                 break;
             case RoundController.Phase.EnemyVangaurd:
                 supportBarContainer.style.display = DisplayStyle.Flex;
@@ -681,7 +682,6 @@ public class ActionbarUI : Listener
             default:
                 break;
         }
-        OnUnitSelected(selectedUnit);
         // endSupportTurnBtn.text = phase.ToString() + "\nEnd Phase";
     }
 

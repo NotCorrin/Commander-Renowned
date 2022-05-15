@@ -48,14 +48,7 @@ public class UnitSelectionUI : Listener
         {
             if (FieldController.main.IsUnitPlayer(unit))
             {
-                if (unitSelectionContainer.style.opacity == 0)
-                {
-                    unitSelectionContainer.style.opacity = 1;
-                }
-                else
-                {
-                    unitSelectionContainer.style.opacity = 0;
-                }
+                unitSelectionContainer.style.opacity = 1;
             }
         }
         else
