@@ -9,7 +9,7 @@ public class QTEController : Listener
     public enum QTEDisplayResult { Perfect, Good, Poor }
 
     //Shrinking Circles QTE
-    static private float shrinkingCircleBaseTime = 3.0f; //5.0f
+    static private float shrinkingCircleBaseTime = 2.0f; //5.0f
     static private float shrinkingCircleDifficultyStep = 2f;
     static private float shrinkingCircleMaxCritical = 0.657f;
     static private float shrinkingCircleMaxHit = 0.8f;
@@ -90,7 +90,6 @@ public class QTEController : Listener
 
     private void ResolveShrinkingCircle()
     {
-        Debug.Log("hell");
         QTEResult finalResult;
 
         float finalPercentage = ShrinkingCircleTimer / ShrinkingCircleMaxTime;

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1315abb00406e0a458b2138c8363ac1c, type: 3}
-  m_Name: Commander 1
+  m_Name: Support Mage
   m_EditorClassIdentifier: 
-  unitType: 2
-  UnitName: Helpme
+  unitType: 0
+  UnitName: Support Mage
   VanguardAbilities:
   - AbilityType: 0
     AbilityName: 
@@ -25,14 +25,24 @@ MonoBehaviour:
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  - AbilityType: 3
-    AbilityName: I am going to fucking die
-    AbilityDescription: AAAAAAAAAAAA
-    Cost: 0
-    Damage: 1
-    StatBoost: 1
+  - AbilityType: 0
+    AbilityName: Spirit Burn
+    AbilityDescription: Steal the enemy's flame to empower your own
+    Cost: -3
+    Damage: 2
+    StatBoost: 0
     Variation: 1
-    VFX1: {fileID: 1533149051114980, guid: 14237ad61acba9345b53abf70e0cd027, type: 3}
+    VFX1: {fileID: 1116862508874840, guid: 0156ac8bc7645f44fb571c716152b33a, type: 3}
+    VFX2: {fileID: 0}
+    VFX3: {fileID: 0}
+  - AbilityType: 2
+    AbilityName: Wall of Plasma
+    AbilityDescription: Will form an invisible wall to protect the mage
+    Cost: -2
+    Damage: 0
+    StatBoost: 3
+    Variation: 1
+    VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   SupportAbilities:
@@ -47,18 +57,18 @@ MonoBehaviour:
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   - AbilityType: 1
-    AbilityName: test
-    AbilityDescription: test ability
+    AbilityName: Confidence
+    AbilityDescription: Increases attack damage
     Cost: 1
-    Damage: 1
-    StatBoost: 1
-    Variation: 1
+    Damage: 0
+    StatBoost: 2
+    Variation: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   VanguardAbilities2: []
-  MaxHealth: 1
-  MaxAmmo: 2
-  MaxMana: 2
-  animator: {fileID: 9100000, guid: 74b3c6f72f520a248965c52c6f97a33e, type: 2}
-  sprite: {fileID: -5285454066907298380, guid: 55e703a8ba1583a4987292f6d9806971, type: 3}
+  MaxHealth: 12
+  MaxAmmo: 0
+  MaxMana: 5
+  animator: {fileID: 9100000, guid: 821cacc0ecea3eb47ad7c840089cad2a, type: 2}
+  sprite: {fileID: 1457491203435894738, guid: 2f0f1c5d280668f4fa4e4bb6e099f96a, type: 3}
