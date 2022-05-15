@@ -28,12 +28,12 @@ public class MageAttack : QTEAbility
 
     public override int GetMoveWeight (Unit caster)
     {   
-        int HealthWeight = Mathf.FloorToInt(1 - (caster.Health / caster.MaxHealth) * 100);
+        int HealthWeight = Mathf.FloorToInt(1 - ((float)caster.Health / (float)caster.MaxHealth) * 100);
         int ManaWeight;
         int BuffWeight = GetTotalDamageBuffs(caster) * 20;
         if (caster.unitType == UnitType.Mage || caster.unitType == UnitType.Commander)
         {
-            ManaWeight = Mathf.FloorToInt((1 - (caster.Mana / caster.MaxMana)) * 100);
+            ManaWeight = Mathf.FloorToInt((1 - ((float)caster.Mana / (float)caster.MaxMana)) * 100);
         }
         else return 0;
 
@@ -50,14 +50,14 @@ public class MageAttack : QTEAbility
             case QTEController.QTEResult.Critical:
                 {
                     FinalDamage += Variation;
-                    FinalCost = 5;
+                    FinalCost += CostVariation;
                     break;
                     Debug.Log("Critical");
                 }
             case QTEController.QTEResult.Miss:
                 {
                     FinalDamage -= Variation;
-                    FinalCost = 1;
+                    FinalCost = Mathf.Max(0, Cost - CostVariation);
                     Debug.Log("Poor");
                     break;
                 }

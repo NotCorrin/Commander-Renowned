@@ -395,7 +395,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   DamageNumbers: {fileID: 0}
-  HealthBar: {fileID: 3859971787798797249}
   AmmoBar: {fileID: 4515696426555026560}
   ManaBar: {fileID: 1868323001065284391}
   maxHealth: 0

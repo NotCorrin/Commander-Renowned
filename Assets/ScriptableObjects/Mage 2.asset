@@ -64,7 +64,7 @@ MonoBehaviour:
     Damage: 8
     StatBoost: 0
     Variation: 0
-    VFX1: {fileID: 0}
+    VFX1: {fileID: 8959962781991663832, guid: f1c8547dbd9935e4ba610a23c00f3c54, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   VanguardAbilities2: []
