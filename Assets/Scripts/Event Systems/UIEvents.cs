@@ -36,12 +36,12 @@ public static class UIEvents
         }
     }
 
-    public static Action<Unit, int> onUnitManaChanged;
-    public static void UnitManaChanged(Unit unit, int newMana)
+    public static Action<Unit, int, int> onUnitManaChanged;
+    public static void UnitManaChanged(Unit unit, int newMana, int maxMana)
     {
         if (onUnitManaChanged != null)
         {
-            onUnitManaChanged(unit, newMana);
+            onUnitManaChanged(unit, newMana, maxMana);
         }
     }
 

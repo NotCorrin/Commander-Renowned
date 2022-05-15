@@ -76,7 +76,7 @@ public class Unit : Listener
         set
         {
             mana = Mathf.Clamp(value, 0, MaxMana);
-            UIEvents.UnitManaChanged(this, mana);
+            UIEvents.UnitManaChanged(this, mana, MaxMana);
         }
     }
 
@@ -251,7 +251,7 @@ public class Unit : Listener
             spriteRenderer.sprite = null;
             if(animator) Destroy(animator);
             if(GetComponent<SphereCollider>()) Destroy(GetComponent<SphereCollider>());
-        }        
+        }
     }
 
     // Start is called before the first frame update

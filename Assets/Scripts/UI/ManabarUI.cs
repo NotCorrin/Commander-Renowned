@@ -21,9 +21,9 @@ public class ManabarUI : Listener
     {
         UIEvents.onUnitManaChanged -= UpdateMana;
     }
-    void UpdateMana(Unit unit, int value)
+    void UpdateMana(Unit unit, int value, int maxValue)
     {
-        if(unit == parent) manabarValue.text = value + "";
+        if(unit == parent) manabarValue.text = value + "/" + maxValue;
     }
 
     void Start()
