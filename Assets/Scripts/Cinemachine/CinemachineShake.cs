@@ -50,7 +50,7 @@ public class CinemachineShake : Listener
 
 	void ShakeCameraBig () {
 		float intensity = 3f;
-		float duration = 0.3f;
+		float duration = 0.35f;
 		basicMultiChannelPerlin.m_AmplitudeGain = intensity;
 		shakeTimer = duration;
 		shakeTimerTotal = duration;
