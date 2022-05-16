@@ -23,7 +23,7 @@ public class StoryContainerUI : MonoBehaviour
         {
             continueButton = uiDocument.rootVisualElement.Q<Button>("continue-button");
             storyTitle = uiDocument.rootVisualElement.Q<TextElement>("title");
-            storyDesc = uiDocument.rootVisualElement.Q<TextElement>("description");
+            storyDesc = uiDocument.rootVisualElement.Q<TextElement>("descriotion");
         }
         catch
         {
