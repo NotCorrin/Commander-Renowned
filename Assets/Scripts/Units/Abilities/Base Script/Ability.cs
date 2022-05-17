@@ -44,6 +44,7 @@ public abstract class Ability : MonoBehaviour
         get => variation;
     }
 
+    public Icon[] buffs;
     [SerializeField] protected GameObject VFX1;
     [SerializeField] protected GameObject VFX2;
     [SerializeField] protected GameObject VFX3;
@@ -82,4 +83,23 @@ public abstract class Ability : MonoBehaviour
         totalDamageBuffs -= FieldController.main.GetUnit(FieldController.Position.Vanguard, !FieldController.main.IsUnitPlayer(Caster)).Defense);*/
         return totalDamageBuffs;
     }
+}
+
+[System.Serializable]
+public struct Icon
+{
+    public IconType iconType;
+    public int buffAmount;
+
+    public Icon(IconType t, int a)
+    {
+        iconType = t;
+        buffAmount = a;
+    }
+}
+
+public enum IconType
+{
+    Attack,
+    Defence
 }

@@ -16,7 +16,6 @@ public class AbilitySetup
     public GameObject VFX1;
     public GameObject VFX2;
     public GameObject VFX3;
-
 }
 
 public enum AbilityScript
