@@ -22,18 +22,18 @@ public class Charge : QTEAbility
         else return 0;
     }
 
-    protected override void AbilityUsed(QTEController.QTEResult result)
+    protected override void AbilityUsed(GameManager.QTEResult result)
     {
         int FinalDamage = Damage;
 
         switch (result)
         {
-            case QTEController.QTEResult.Critical:
+            case GameManager.QTEResult.Critical:
                 {
                     FinalDamage += base.Variation;
                     break;
                 }
-            case QTEController.QTEResult.Miss:
+            case GameManager.QTEResult.Miss:
                 {
                     FinalDamage -= base.Variation;
                     break;
@@ -47,9 +47,9 @@ public class Charge : QTEAbility
         GameEvents.UseAmmo(Caster, Cost);
     }
 
-    protected override QTEController.QTEType GetQTEType()
+    protected override GameManager.QTEType GetQTEType()
     {
-        return QTEController.QTEType.shrinkingCircle;
+        return GameManager.QTEType.shrinkingCircle;
     }
 
     public override bool IsCasterValid (Unit Caster)

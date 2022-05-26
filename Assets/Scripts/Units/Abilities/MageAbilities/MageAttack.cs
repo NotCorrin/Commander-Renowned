@@ -22,9 +22,9 @@ public class MageAttack : QTEAbility
 		return (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(Target) != isPlayer);
 	}
 
-    protected override QTEController.QTEType GetQTEType()
+    protected override GameManager.QTEType GetQTEType()
     {
-        return QTEController.QTEType.shrinkingCircle;
+        return GameManager.QTEType.shrinkingCircle;
     }
 
     public override int GetMoveWeight (Unit caster)
@@ -41,21 +41,21 @@ public class MageAttack : QTEAbility
         return (HealthWeight+2 * ManaWeight)/3 + BuffWeight;
     }
 
-    protected override void AbilityUsed(QTEController.QTEResult result)
+    protected override void AbilityUsed(GameManager.QTEResult result)
     {
         int FinalDamage = Damage;
         int FinalCost = Cost;
 
         switch (result)
         {
-            case QTEController.QTEResult.Critical:
+            case GameManager.QTEResult.Critical:
                 {
                     FinalDamage += Variation;
                     FinalCost += CostVariation;
                     break;
                     Debug.Log("Critical");
                 }
-            case QTEController.QTEResult.Miss:
+            case GameManager.QTEResult.Miss:
                 {
                     FinalDamage -= Variation;
                     FinalCost = Mathf.Min(0, Cost - CostVariation);

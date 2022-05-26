@@ -36,18 +36,18 @@ public class Attack : QTEAbility
         base.UseAbility(Caster, Target);
     }
 
-    protected override void AbilityUsed(QTEController.QTEResult result)
+    protected override void AbilityUsed(GameManager.QTEResult result)
     {
         FinalDamage = Damage;
 
         switch (result)
         {
-            case QTEController.QTEResult.Critical:
+            case GameManager.QTEResult.Critical:
                 {
                     FinalDamage += base.Variation;
                     break;
                 }
-            case QTEController.QTEResult.Miss:
+            case GameManager.QTEResult.Miss:
                 {
                     FinalDamage -= base.Variation;
                     break;
@@ -62,9 +62,9 @@ public class Attack : QTEAbility
         GameEvents.UseAmmo(Caster, Cost);
     }
 
-    protected override QTEController.QTEType GetQTEType()
+    protected override GameManager.QTEType GetQTEType()
     {
-        return QTEController.QTEType.shrinkingCircle;
+        return GameManager.QTEType.shrinkingCircle;
     }
 
     public override bool IsCasterValid (Unit Caster)

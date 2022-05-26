@@ -13,8 +13,8 @@ using System;
  * onUseAmmo(Unit, int)
  * onUseMana(Unit, int)
  * onUseAbility(Unit, Unit, int)
- * onQTEStart(QTEController.QTEType)
- * onQTEResolves(QTEController.QTEResult)
+ * onQTEStart(GameManager.QTEType)
+ * onQTEResolves(GameManager.QTEResult)
  */
 
 public static class GameEvents
@@ -150,8 +150,8 @@ public static class GameEvents
         }
     }
 
-    public static Action<QTEController.QTEType, int> onQTEStart;
-    public static void QTEStart(QTEController.QTEType qteType, int difficultyModifier)
+    public static Action<GameManager.QTEType, int> onQTEStart;
+    public static void QTEStart(GameManager.QTEType qteType, int difficultyModifier)
     {
         if (onQTEStart != null)
         {
@@ -159,8 +159,8 @@ public static class GameEvents
         }
     }
 
-    public static Action<QTEController.QTEResult> onQTEResolved;
-    public static void QTEResolved(QTEController.QTEResult QTEResult)
+    public static Action<GameManager.QTEResult> onQTEResolved;
+    public static void QTEResolved(GameManager.QTEResult QTEResult)
     {
         if (onQTEResolved != null)
         {
