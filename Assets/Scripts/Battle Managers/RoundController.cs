@@ -86,7 +86,7 @@ public class RoundController : Listener
     private void StartBattle()
     {
         //Debug.LogWarning("Battle Started");
-        phase = Phase.PlayerVanguard;
+        phase = Phase.PlayerSwap;
         GameEvents.PhaseChanged(phase);
     }
 
@@ -97,7 +97,6 @@ public class RoundController : Listener
         PlayerSwap,
         EnemySwap,
         PlayerSupport,
-        EnemySupport,
-        NextPhase
+        EnemySupport
     }
 }

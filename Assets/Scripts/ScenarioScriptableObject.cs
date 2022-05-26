@@ -16,6 +16,9 @@ public class Scenario
     [TextArea(15,6)]
     public string description;
     public Enemies[] Enemies;
+    [TextArea(15,6)]
+    public string windescription;
+    public UnitScriptableObject[] winunit;
 }
 
 [System.Serializable]
