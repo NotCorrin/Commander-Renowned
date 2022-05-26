@@ -9,6 +9,7 @@ public class MageBuff : Ability
 		base.SetupParams(setup);
         if(!VFX1) VFX1 = Resources.Load("CustomLasers/Mage/BuffParticles") as GameObject;
         isMagic = true;
+        //buffs.add(new Buff(BuffType.Attack))
     }
 	public override bool IsCasterValid (Unit Caster)
     {
