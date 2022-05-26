@@ -201,7 +201,8 @@ public class Unit : Listener
         }
         else if(!ability.IsTargetValid(this, isPlayer))
         {
-            spriteRenderer.color -= new Color(0.5f,0.5f,0.5f,0.2f);
+            //spriteRenderer.color -= new Color(0.5f,0.5f,0.5f,0.2f);
+            animator.SetBool("greyedOut", true);
         }
     }
 
