@@ -37,8 +37,8 @@ public class ActionbarUI : Listener
     [SerializeField] private GameObject switchBar;
     [SerializeField] private UIDocument switchBarUIDocument;
     private VisualElement switchBarContainer;
-    private Button switchBtn;
-    private Button endSwitchTurnBtn;
+    private VisualElement switchConfirmPanel;
+    private VisualElement switchEndPanel;
 
     private Unit selectedUnit;
     private int selectedAbility;
@@ -78,8 +78,14 @@ public class ActionbarUI : Listener
         endSupportTurnBtn.RegisterCallback<MouseLeaveEvent>(EndSupportTurn_Unhover);
         endSupportTurnBtn.RegisterCallback<ClickEvent>(EndSupportTurn_Clicked);
 
-        switchBtn.clickable.clicked += SwitchBtn_Clicked;
-        endSwitchTurnBtn.clickable.clicked += EndSwitchTurnBtn_Clicked;
+        // switchConfirmPanel.RegisterCallback<MouseEnterEvent>(SwitchConfirm_Hover);
+        // switchConfirmPanel.RegisterCallback<MouseLeaveEvent>(SwitchConfirm_Unhover);
+        switchConfirmPanel.RegisterCallback<ClickEvent>(SwitchConfirm_Clicked);
+
+        // switchEndPanel.RegisterCallback<MouseEnterEvent>(SwitchEnd_Hover);
+        // switchEndPanel.RegisterCallback<MouseLeaveEvent>(SwitchEnd_Unhover);
+        switchEndPanel.RegisterCallback<ClickEvent>(SwitchEnd_Clicked);
+
         UIEvents.onUnitSelected += OnUnitSelected;
         GameEvents.onPhaseChanged += PhaseSwitchUI;
         GameEvents.onAbilityResolved += AbilityUsed;
@@ -106,12 +112,28 @@ public class ActionbarUI : Listener
         endSupportTurnBtn.UnregisterCallback<MouseLeaveEvent>(EndSupportTurn_Unhover);
         endSupportTurnBtn.UnregisterCallback<ClickEvent>(EndSupportTurn_Clicked);
 
-        switchBtn.clickable.clicked -= SwitchBtn_Clicked;
-        endSwitchTurnBtn.clickable.clicked -= EndSwitchTurnBtn_Clicked;
+        // switchConfirmPanel.UnregisterCallback<MouseEnterEvent>(SwitchConfirm_Hover);
+        // switchConfirmPanel.UnregisterCallback<MouseLeaveEvent>(SwitchConfirm_Unhover);
+        switchConfirmPanel.UnregisterCallback<ClickEvent>(SwitchConfirm_Clicked);
+
+        // switchEndPanel.UnregisterCallback<MouseEnterEvent>(SwitchEnd_Hover);
+        // switchEndPanel.UnregisterCallback<MouseLeaveEvent>(SwitchEnd_Unhover);
+        switchEndPanel.UnregisterCallback<ClickEvent>(SwitchEnd_Clicked);
+
         UIEvents.onUnitSelected -= OnUnitSelected;
         GameEvents.onPhaseChanged -= PhaseSwitchUI;
         GameEvents.onAbilityResolved -= AbilityUsed;
         //GameEvents.onKill -= SwitchPrompt;
+    }
+
+    void SwitchConfirm_Clicked()
+    {
+
+    }
+
+    void SwitchEnd_Clicked()
+    {
+
     }
 
     void OnPromptCancelClicked()
@@ -280,7 +302,7 @@ public class ActionbarUI : Listener
         }
     }
 
-    void SwitchBtn_Clicked()
+    void SwitchConfirm_Clicked(ClickEvent evt)
     {
         Debug.Log("Switch Button Clicked");
         if (RoundController.phase == RoundController.Phase.PlayerSwap)
@@ -295,7 +317,7 @@ public class ActionbarUI : Listener
         Debug.Log("Player cannot swap right now!");
     }
 
-    void EndSwitchTurnBtn_Clicked()
+    void SwitchEnd_Clicked(ClickEvent evt)
     {
         Debug.Log("End Switch Turn Button Clicked");
         if (RoundController.phase == RoundController.Phase.PlayerSwap) GameEvents.EndPhase();
@@ -654,12 +676,12 @@ public class ActionbarUI : Listener
 
         if (!FieldController.main.GetUnit(FieldController.Position.Vanguard, true))
         {
-            endSwitchTurnBtn.style.display = DisplayStyle.None;
+            switchEndPanel.style.display = DisplayStyle.None;
             switchBarContainer.style.display = DisplayStyle.Flex;
             OnUnitSelected(selectedUnit);
             return;
         }
-        else endSwitchTurnBtn.style.display = DisplayStyle.Flex;
+        else switchEndPanel.style.display = DisplayStyle.Flex;
 
         switch (phase)
         {
@@ -813,8 +835,8 @@ public class ActionbarUI : Listener
             // Switch Bar
             switchBarContainer = switchBarUIDocument.rootVisualElement.Query<VisualElement>("container");
 
-            switchBtn = switchBarContainer.Query<Button>("switch-button");
-            endSwitchTurnBtn = switchBarContainer.Query<Button>("end-button");
+            switchConfirmPanel = switchBarContainer.Query<VisualElement>("switch");
+            switchEndPanel = switchBarContainer.Query<VisualElement>("skip");
 
         }
         catch
