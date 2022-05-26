@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class WorldMenuController : Listener
 {
-    public string winScene;
     // Start is called before the first frame update
     void EndScene(bool win)
     {
@@ -14,12 +13,12 @@ public class WorldMenuController : Listener
     }
     void WinSceneDelay()
     {
-        SceneManager.LoadScene("StoryScene");
+        LevelManager.instance.LoadScene(SceneIndex.EndScene);
     }
 
     void LoseSceneDelay()
     {
-        SceneManager.LoadScene("EndScene");
+        LevelManager.instance.LoadScene(SceneIndex.EndScene);
     }
 
     // Update is called once per frame
