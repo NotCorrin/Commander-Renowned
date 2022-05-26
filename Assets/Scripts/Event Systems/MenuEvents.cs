@@ -31,12 +31,12 @@ public static class MenuEvents
         }
     }
 
-    public static Action onQTETriggered;
-    public static void QTETriggered()
+    public static Action<GameManager.QTEResult> onQTETriggered;
+    public static void QTETriggered(GameManager.QTEResult result)
     {
         if (onQTETriggered != null)
         {
-            onQTETriggered();
+            onQTETriggered(result);
         }
     }
 }

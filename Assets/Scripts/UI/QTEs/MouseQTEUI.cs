@@ -7,8 +7,26 @@ public class MouseQTEUI : Listener
 {
     [Header("Debugging")]
     [Range(0, 100), SerializeField] private int critChance = 10;
+    public int CritChance
+    {
+        get => critChance;
+        set
+        {
+            critChance = Mathf.Clamp(value, 0, 100);
+            crit.style.width = new Length(critChance, LengthUnit.Percent);
+        }
+    }
     [Range(0, 100), SerializeField] private int normalChance = 50;
-    
+    public int NormalChance
+    {
+        get => normalChance;
+        set
+        {
+            normalChance = Mathf.Clamp(value, 0, 100);
+            normal.style.width = new Length(normalChance, LengthUnit.Percent);
+        }
+    }
+
     [Header("UI Elements")]
     [SerializeField] private UIDocument uiDocument;
     private VisualElement container, arrow, normal, crit;
@@ -76,18 +94,21 @@ public class MouseQTEUI : Listener
             Debug.Log("Crit");
             statusLabel.text = "CRIT!";
             statusLabel.style.color = new StyleColor(new Color((0f / 255f), (152f / 255f), (220f / 255f)));
+            MenuEvents.QTETriggered(GameManager.QTEResult.Critical);
         }
         else if (currentLocation >= 50 - (normalChance / 2) && currentLocation <= 50 + (normalChance / 2))
         {
             Debug.Log("Normal");
             statusLabel.text = "Hit!";
             statusLabel.style.color = new StyleColor(new Color(1f, 1f, 1f));
+            MenuEvents.QTETriggered(GameManager.QTEResult.Hit);
         }
         else
         {
             Debug.Log("Miss");
             statusLabel.text = "Miss...";
             statusLabel.style.color = new StyleColor(new Color(1f, 1f, 1f, 0.69f));
+            MenuEvents.QTETriggered(GameManager.QTEResult.Miss);
         }
 
         statusLabel.style.scale = new Scale(new Vector2(3, 3));
@@ -120,7 +141,7 @@ public class MouseQTEUI : Listener
     //     }
     // }
 
-    // private void QTEAnimation(QTEController.QTEType qteType, int difficultyModifier)
+    // private void QTEAnimation(GameManager.QTEType qteType, int difficultyModifier)
     // {
     //     qteCircle.style.transitionDuration = new StyleList<TimeValue>(new List<TimeValue> { new TimeValue(QTEController.ShrinkingCircleMaxTime, TimeUnit.Second) });
 
@@ -147,10 +168,10 @@ public class MouseQTEUI : Listener
 
     // void LateUpdate()
     // {
-    //     QTEAnimation(QTEController.QTEType.shrinkingCircle, 1);
+    //     QTEAnimation(GameManager.QTEType.shrinkingCircle, 1);
     // }
 
-    void EndQTE(QTEController.QTEResult result)
+    void EndQTE(GameManager.QTEResult result)
     {
         Invoke("DestroyQTE", 0.2f);
 
@@ -159,5 +180,11 @@ public class MouseQTEUI : Listener
     void DestroyQTE()
     {
         Destroy(this.gameObject);
+    }
+
+    public void SetQTEValues(int normalChance, int critChance)
+    {
+        this.NormalChance = normalChance;
+        this.CritChance = critChance;
     }
 }

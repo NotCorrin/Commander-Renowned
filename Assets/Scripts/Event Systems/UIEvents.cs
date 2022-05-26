@@ -81,8 +81,8 @@ public static class UIEvents
         }
     }
 
-    public static Action<QTEController.QTEDisplayResult> onDisplayQTEResults;
-    public static void DisplayQTEResults(QTEController.QTEDisplayResult DisplayResult)
+    public static Action<GameManager.QTEDisplayResult> onDisplayQTEResults;
+    public static void DisplayQTEResults(GameManager.QTEDisplayResult DisplayResult)
     {
         if (onDisplayQTEResults != null)
         {
