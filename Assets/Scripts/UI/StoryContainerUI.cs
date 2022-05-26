@@ -35,7 +35,7 @@ public class StoryContainerUI : MonoBehaviour
         storyDesc.text = stories.story[stories.level+1].description;
 
         continueButton.clickable.clicked += () => {
-            LevelManager.instance.LoadScene(SceneIndex.TerrainTestScene);
+            LevelManager.instance.LoadScene(SceneIndex.MenuSelectionScene);
         };
     }
 }
