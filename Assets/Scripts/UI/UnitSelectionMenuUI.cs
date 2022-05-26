@@ -100,7 +100,7 @@ public class UnitSelectionMenuUI : MonoBehaviour
                 }
             }
         }
-        SceneManager.LoadScene("TerrainTestScene");
+        LevelManager.instance.LoadScene(SceneIndex.TerrainTestScene);
     }
 
     void EnableAllUnits()

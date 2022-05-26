@@ -7,6 +7,9 @@ public abstract class QTEAbility : Ability
     protected Unit Caster;
     protected Unit Target;
 
+    public Icon[] critList;
+    public Icon[] missList;
+
     public override void UseAbility(Unit Caster, Unit Target)
     {
         //Overridable code snippet that starts the QTE sequence

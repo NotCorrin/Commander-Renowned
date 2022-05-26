@@ -195,6 +195,7 @@ public class Unit : Listener
     {
         if(!ability)
         {
+            Debug.Log(spriteRenderer.color);
             if(!FieldController.main.IsUnitPlayer(this)) UpdateEnemyVisual();
             else spriteRenderer.color = Color.white;
         }
