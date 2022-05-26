@@ -45,6 +45,8 @@ public class LevelManager : MonoBehaviour
             Debug.LogError($"{gameObject.name} : Level Manager - Element Query Failed.");
         }
 
+        container.RegisterCallback<TransitionEndEvent>(OnTransitionEnd);
+
     }
 
 	void LateStart()
@@ -53,8 +55,15 @@ public class LevelManager : MonoBehaviour
         loading.style.opacity = 0;
     }
 
+    void OnTransitionEnd(TransitionEndEvent evt)
+	{
+        container.style.scale = Vector2.zero;
+        container.UnregisterCallback<TransitionEndEvent>(OnTransitionEnd);
+    }
+
 	public void LoadScene(SceneIndex index)
     {
+        container.style.scale = new Vector2(1, 1);
         StartCoroutine(StartLoading((int)index));
 	}
 
