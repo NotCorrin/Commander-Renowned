@@ -149,6 +149,9 @@ public class HelpUI : MonoBehaviour
             overlay.RemoveFromClassList("help-enabled");
             overlay.AddToClassList("help-disabled");
             overlay.SetEnabled(false);
+
+            toggle.RemoveFromClassList("toggle-opened");
+            toggle.AddToClassList("toggle-closed");
         }
         else
         {
@@ -162,6 +165,9 @@ public class HelpUI : MonoBehaviour
             overlay.RemoveFromClassList("help-disabled");
             overlay.AddToClassList("help-enabled");
             overlay.SetEnabled(true);
+
+            toggle.RemoveFromClassList("toggle-closed");
+            toggle.AddToClassList("toggle-opened");
         }
     }
 

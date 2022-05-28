@@ -1,3 +1,29 @@
+.toggle-opened {
+    background-image: url('project://database/Assets/UI/Images/Help/helpClose.svg?fileID=7388822144124034973&guid=c0a491a757811be4387f1b12c92d61b4&type=3#helpClose');
+    -unity-background-scale-mode: scale-to-fit;
+    transition-duration: 0ms;
+}
+
+.toggle-opened:hover {
+    background-image: url('project://database/Assets/UI/Images/Help/helpClose.svg?fileID=7388822144124034973&guid=c0a491a757811be4387f1b12c92d61b4&type=3#helpClose');
+    -unity-background-scale-mode: scale-to-fit;
+    transition-duration: 0ms;
+    -unity-background-image-tint-color: rgba(234, 50, 60, 255);
+}
+
+.toggle-closed {
+    background-image: url('project://database/Assets/UI/Images/Help/helpOpen.svg?fileID=7388822144124034973&guid=c360cf4b7ab028341aab02668a04b60c&type=3#helpOpen');
+    -unity-background-scale-mode: scale-to-fit;
+    transition-duration: 0ms;
+}
+
+.toggle-closed:hover {
+    background-image: url('project://database/Assets/UI/Images/Help/helpOpen.svg?fileID=7388822144124034973&guid=c360cf4b7ab028341aab02668a04b60c&type=3#helpOpen');
+    -unity-background-scale-mode: scale-to-fit;
+    transition-duration: 0ms;
+    -unity-background-image-tint-color: rgba(255, 255, 255, 255);
+}
+
 .help-enabled {
     display: flex;
     opacity: 1;
