@@ -23,16 +23,21 @@ public class HelpUI : MonoBehaviour
     #endregion
 
     [SerializeField] UIDocument uiDocument;
-    VisualElement container, contentBar, contentContainer, toggle;
+    VisualElement container, contentBar, contentContainer, toggle, overlay;
     bool isOpen = false;
     List<Page> pages = new List<Page>();
-    Page phaseVanguard, phaseSupport, test;
+    Page welcome, units, abilities, buffs, phaseSwap, phaseSupport, phaseVanguard, qte;
 
     void Awake()
     {
-        phaseVanguard = new Page();
+        welcome = new Page();
+        units = new Page();
+        abilities = new Page();
+        buffs = new Page();
+        phaseSwap = new Page();
         phaseSupport = new Page();
-        test = new Page();
+        phaseVanguard = new Page();
+        qte = new Page();
         
         if (uiDocument == null)
         {
@@ -44,18 +49,30 @@ public class HelpUI : MonoBehaviour
         {
             toggle = uiDocument.rootVisualElement.Query<VisualElement>("toggle-container");
 
+            overlay = uiDocument.rootVisualElement.Query<VisualElement>("overlay");
+
             container = uiDocument.rootVisualElement.Query<VisualElement>("container");
             
             contentBar = container.Query<VisualElement>("content-bar");
-            contentContainer = container.Query<VisualElement>("content-container"); 
+            contentContainer = container.Query<VisualElement>("content-container");
 
-            phaseVanguard.titleButton = contentBar.Query<VisualElement>("phase-vanguard");
+            welcome.titleButton = contentBar.Query<VisualElement>("welcome");
+            units.titleButton = contentBar.Query<VisualElement>("units");
+            abilities.titleButton = contentBar.Query<VisualElement>("abilities");
+            buffs.titleButton = contentBar.Query<VisualElement>("buffs");
+            phaseSwap.titleButton = contentBar.Query<VisualElement>("phase-swap");
             phaseSupport.titleButton = contentBar.Query<VisualElement>("phase-support");
-            test.titleButton = contentBar.Query<VisualElement>("test");
+            phaseVanguard.titleButton = contentBar.Query<VisualElement>("phase-vanguard");
+            qte.titleButton = contentBar.Query<VisualElement>("qte");
 
-            phaseVanguard.container = contentContainer.Query<VisualElement>("phase-vanguard");
+            welcome.container = contentContainer.Query<VisualElement>("welcome");
+            units.container = contentContainer.Query<VisualElement>("units");
+            abilities.container = contentContainer.Query<VisualElement>("abilities");
+            buffs.container = contentContainer.Query<VisualElement>("buffs");
+            phaseSwap.container = contentContainer.Query<VisualElement>("phase-swap");
             phaseSupport.container = contentContainer.Query<VisualElement>("phase-support");
-            test.container = contentContainer.Query<VisualElement>("test");
+            phaseVanguard.container = contentContainer.Query<VisualElement>("phase-vanguard");
+            qte.container = contentContainer.Query<VisualElement>("qte");
         }
         catch
         {
@@ -64,33 +81,58 @@ public class HelpUI : MonoBehaviour
 
         toggle.RegisterCallback<ClickEvent>(Toggle_Clicked);
 
-        phaseVanguard.container.RegisterCallback<TransitionEndEvent, Page>(Page_TransitionEnd, phaseVanguard);
+        welcome.container.RegisterCallback<TransitionEndEvent, Page>(Page_TransitionEnd, welcome);
+        units.container.RegisterCallback<TransitionEndEvent, Page>(Page_TransitionEnd, units);
+        abilities.container.RegisterCallback<TransitionEndEvent, Page>(Page_TransitionEnd, abilities);
+        buffs.container.RegisterCallback<TransitionEndEvent, Page>(Page_TransitionEnd, buffs);
+        phaseSwap.container.RegisterCallback<TransitionEndEvent, Page>(Page_TransitionEnd, phaseSwap);
         phaseSupport.container.RegisterCallback<TransitionEndEvent, Page>(Page_TransitionEnd, phaseSupport);
-        test.container.RegisterCallback<TransitionEndEvent, Page>(Page_TransitionEnd, test);
+        phaseVanguard.container.RegisterCallback<TransitionEndEvent, Page>(Page_TransitionEnd, phaseVanguard);
+        qte.container.RegisterCallback<TransitionEndEvent, Page>(Page_TransitionEnd, qte);
 
-        phaseVanguard.titleButton.RegisterCallback<ClickEvent, Page>(PageButton_Clicked, phaseVanguard);
+        welcome.titleButton.RegisterCallback<ClickEvent, Page>(PageButton_Clicked, welcome);
+        units.titleButton.RegisterCallback<ClickEvent, Page>(PageButton_Clicked, units);
+        abilities.titleButton.RegisterCallback<ClickEvent, Page>(PageButton_Clicked, abilities);
+        buffs.titleButton.RegisterCallback<ClickEvent, Page>(PageButton_Clicked, buffs);
+        phaseSwap.titleButton.RegisterCallback<ClickEvent, Page>(PageButton_Clicked, phaseSwap);
         phaseSupport.titleButton.RegisterCallback<ClickEvent, Page>(PageButton_Clicked, phaseSupport);
-        test.titleButton.RegisterCallback<ClickEvent, Page>(PageButton_Clicked, test);
+        phaseVanguard.titleButton.RegisterCallback<ClickEvent, Page>(PageButton_Clicked, phaseVanguard);
+        qte.titleButton.RegisterCallback<ClickEvent, Page>(PageButton_Clicked, qte);
 
-        pages.Add(phaseVanguard);
+        pages.Add(welcome);
+        pages.Add(units);
+        pages.Add(abilities);
+        pages.Add(buffs);
+        pages.Add(phaseSwap);
         pages.Add(phaseSupport);
-        pages.Add(test);
+        pages.Add(phaseVanguard);
+        pages.Add(qte);
 
         // Set initial state
-        phaseVanguard.state = PageState.Enabled;
+        welcome.state = PageState.Enabled;
     }
 
     void OnDestroy()
     {
         toggle.UnregisterCallback<ClickEvent>(Toggle_Clicked);
 
-        phaseVanguard.container.UnregisterCallback<TransitionEndEvent, Page>(Page_TransitionEnd);
-        phaseSupport.container.UnregisterCallback<TransitionEndEvent, Page>(Page_TransitionEnd);
-        test.container.UnregisterCallback<TransitionEndEvent, Page>(Page_TransitionEnd);
+        welcome.container.RegisterCallback<TransitionEndEvent, Page>(Page_TransitionEnd, welcome);
+        units.container.RegisterCallback<TransitionEndEvent, Page>(Page_TransitionEnd, units);
+        abilities.container.RegisterCallback<TransitionEndEvent, Page>(Page_TransitionEnd, abilities);
+        buffs.container.RegisterCallback<TransitionEndEvent, Page>(Page_TransitionEnd, buffs);
+        phaseSwap.container.RegisterCallback<TransitionEndEvent, Page>(Page_TransitionEnd, phaseSwap);
+        phaseSupport.container.RegisterCallback<TransitionEndEvent, Page>(Page_TransitionEnd, phaseSupport);
+        phaseVanguard.container.RegisterCallback<TransitionEndEvent, Page>(Page_TransitionEnd, phaseVanguard);
+        qte.container.RegisterCallback<TransitionEndEvent, Page>(Page_TransitionEnd, qte);
 
-        phaseVanguard.titleButton.UnregisterCallback<ClickEvent, Page>(PageButton_Clicked);
-        phaseSupport.titleButton.UnregisterCallback<ClickEvent, Page>(PageButton_Clicked);
-        test.titleButton.UnregisterCallback<ClickEvent, Page>(PageButton_Clicked);
+        welcome.titleButton.RegisterCallback<ClickEvent, Page>(PageButton_Clicked, welcome);
+        units.titleButton.RegisterCallback<ClickEvent, Page>(PageButton_Clicked, units);
+        abilities.titleButton.RegisterCallback<ClickEvent, Page>(PageButton_Clicked, abilities);
+        buffs.titleButton.RegisterCallback<ClickEvent, Page>(PageButton_Clicked, buffs);
+        phaseSwap.titleButton.RegisterCallback<ClickEvent, Page>(PageButton_Clicked, phaseSwap);
+        phaseSupport.titleButton.RegisterCallback<ClickEvent, Page>(PageButton_Clicked, phaseSupport);
+        phaseVanguard.titleButton.RegisterCallback<ClickEvent, Page>(PageButton_Clicked, phaseVanguard);
+        qte.titleButton.RegisterCallback<ClickEvent, Page>(PageButton_Clicked, qte);
     }
 
     void Toggle_Clicked(ClickEvent evt)
@@ -103,6 +145,10 @@ public class HelpUI : MonoBehaviour
             container.RemoveFromClassList("help-enabled");
             container.AddToClassList("help-disabled");
             container.SetEnabled(false);
+
+            overlay.RemoveFromClassList("help-enabled");
+            overlay.AddToClassList("help-disabled");
+            overlay.SetEnabled(false);
         }
         else
         {
@@ -112,6 +158,10 @@ public class HelpUI : MonoBehaviour
             container.RemoveFromClassList("help-disabled");
             container.AddToClassList("help-enabled");
             container.SetEnabled(true);
+
+            overlay.RemoveFromClassList("help-disabled");
+            overlay.AddToClassList("help-enabled");
+            overlay.SetEnabled(true);
         }
     }
 
