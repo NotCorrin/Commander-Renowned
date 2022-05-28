@@ -54,7 +54,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 294d438f46b39374296d83ad3dceafa9, type: 2}
+  - {fileID: 2100000, guid: e8de03247dc23e249be7c340a0a4f727, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -207,7 +207,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 0
   globalProgressSpeed: 1.5
-  explosionPrefab: {fileID: 1024603297863526, guid: c66d60359eba34344997a12aa5d036d0, type: 3}
+  explosionPrefab: {fileID: 2243942806464773687, guid: 4406156615e309a4687883edc2f7b010, type: 3}
   psEmbers: {fileID: 198273211594814308}
   trailParticleCount: 5
   moveHitToSource: 0.5
@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 4038453137455666}
   - component: {fileID: 114739907808396914}
   m_Layer: 6
-  m_Name: Soldier_Laser
+  m_Name: Brute_Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -243,7 +243,7 @@ Transform:
   - {fileID: 4298072669872796}
   - {fileID: 4960026233680658}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &114739907808396914
 MonoBehaviour:
@@ -5091,7 +5091,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 76bdbd4f4837a7b45be2d4e37ea7285e, type: 2}
+  - {fileID: 2100000, guid: f202171396c31a64d8340d377d16609e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
