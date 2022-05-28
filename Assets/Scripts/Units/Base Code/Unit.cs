@@ -273,14 +273,7 @@ public class Unit : Listener
     private void KillUnit()
     {
         if (visibleElements) Destroy(visibleElements);
-
-        if (HealthBar) Destroy(HealthBar.gameObject);
-        if (ManaBar) Destroy(ManaBar.gameObject);
-        if (AmmoBar) Destroy(AmmoBar.gameObject);
-        if(BuffBar) Destroy(BuffBar.gameObject);
         spriteRenderer.sprite = null;
-        if (animator) Destroy(animator);
-
     }
 
     // Start is called before the first frame update

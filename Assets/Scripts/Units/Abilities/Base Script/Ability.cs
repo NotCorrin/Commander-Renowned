@@ -83,6 +83,15 @@ public abstract class Ability : MonoBehaviour
         totalDamageBuffs -= FieldController.main.GetUnit(FieldController.Position.Vanguard, !FieldController.main.IsUnitPlayer(Caster)).Defense);*/
         return totalDamageBuffs;
     }
+
+    protected int GetTotalDefenseBuffs(Unit Caster)
+    {
+        int totalDefenseBuffs = 0;
+        totalDefenseBuffs += Caster.Defense;
+        /*Version made AI look at opponent defense buffs. Took away satisfaction of oursmarting AI
+        totalDamageBuffs -= FieldController.main.GetUnit(FieldController.Position.Vanguard, !FieldController.main.IsUnitPlayer(Caster)).Defense);*/
+        return totalDefenseBuffs;
+    }
 }
 
 [System.Serializable]

@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b12e751dbe26864a83de92a31c6d08e, type: 3}
   m_Name: New Scenario
   m_EditorClassIdentifier: 
-  level: 0
+  level: 1
   story:
   - title: 
     description: 
     Enemies: []
+    windescription: 
+    winunit: []
   - title: Tutorial
     description: 'Welcome to Commander: Renowned.
 
@@ -38,6 +40,8 @@ MonoBehaviour:
       - {fileID: 11400000, guid: b21d54bddb21f7a419bd7a79ec36a958, type: 2}
       - {fileID: 11400000, guid: e7acd760f86d622409b684a33cad4664, type: 2}
       - {fileID: 11400000, guid: edf88a06261f4ed4891c1b5cf94ad382, type: 2}
+    windescription: 
+    winunit: []
   - title: Plains
     description: You are ambushed by bandits.
     Enemies:
@@ -46,3 +50,5 @@ MonoBehaviour:
       - {fileID: 11400000, guid: 5196e05f980e6154392d8db4f4d5968d, type: 2}
       - {fileID: 11400000, guid: 5196e05f980e6154392d8db4f4d5968d, type: 2}
       - {fileID: 11400000, guid: 5196e05f980e6154392d8db4f4d5968d, type: 2}
+    windescription: 
+    winunit: []
