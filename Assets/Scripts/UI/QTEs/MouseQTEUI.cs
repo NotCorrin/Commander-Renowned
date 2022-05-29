@@ -37,11 +37,19 @@ public class MouseQTEUI : Listener
     protected override void SubscribeListeners()
     {
         GameEvents.onQTEResolved += EndQTE;
+
+        container.RegisterCallback<ClickEvent>(OnClick);
+        statusLabel.RegisterCallback<TransitionEndEvent>(OnStatusTransitionEnd);
+        arrow.RegisterCallback<TransitionEndEvent>(OnTransitionEnd);
     }
 
     protected override void UnsubscribeListeners()
     {
         GameEvents.onQTEResolved -= EndQTE;
+
+        container.UnregisterCallback<ClickEvent>(OnClick);
+        statusLabel.UnregisterCallback<TransitionEndEvent>(OnStatusTransitionEnd);
+        arrow.UnregisterCallback<TransitionEndEvent>(OnTransitionEnd);
     }
 
     void Awake()
@@ -70,9 +78,6 @@ public class MouseQTEUI : Listener
         normal.style.width = new Length(normalChance, LengthUnit.Percent);
         crit.style.width = new Length(critChance, LengthUnit.Percent);
 
-        container.RegisterCallback<ClickEvent>(OnClick);
-        statusLabel.RegisterCallback<TransitionEndEvent>(OnStatusTransitionEnd);
-        arrow.RegisterCallback<TransitionEndEvent>(OnTransitionEnd);
         StartCoroutine(LateStart());
     }
 
@@ -174,7 +179,6 @@ public class MouseQTEUI : Listener
     void EndQTE(GameManager.QTEResult result)
     {
         Invoke("DestroyQTE", 0.2f);
-
     }
 
     void DestroyQTE()
