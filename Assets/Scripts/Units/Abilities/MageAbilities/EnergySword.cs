@@ -44,7 +44,7 @@ public class EnergySword : QTEAbility
     protected override void AbilityUsed(GameManager.QTEResult result)
     {
         int FinalDamage = Damage;
-        if(Caster.Defense >= 1) FinalDamage += 2;
+        if(Caster.Defense >= 1) FinalDamage += 3;
         int FinalCost = Cost;
 
         switch (result)

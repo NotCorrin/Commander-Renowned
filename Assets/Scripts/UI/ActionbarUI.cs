@@ -254,9 +254,10 @@ public class ActionbarUI : Listener
         else if(RoundController.phase == RoundController.Phase.PlayerSupport)
         {
             if(!abilityActive[_selectedAbility-1]) return;
-            if(selectedUnit.SupportAbilities[_selectedAbility-1].IsAbilityValid(selectedUnit, selectedUnit))
+            List<Unit> validTargets = FieldController.main.GetValidTargets(selectedUnit, selectedUnit.SupportAbilities[_selectedAbility - 1]);
+            if (validTargets.Count == 1)
             {
-                GameEvents.UseAbility(selectedUnit, selectedUnit, _selectedAbility);
+                GameEvents.UseAbility(selectedUnit, validTargets[0], _selectedAbility);
             }
             else
             {
@@ -266,6 +267,7 @@ public class ActionbarUI : Listener
                 promptBarValue.text = "Select target for " + selectedUnit.SupportAbilities[_selectedAbility-1].AbilityName;
                 selectedAbility = _selectedAbility;
                 GameEvents.GreyOut(selectedUnit.SupportAbilities[_selectedAbility-1], FieldController.main.IsUnitPlayer(selectedUnit));
+                return;
             }
         }
         OnUnitSelected(selectedUnit);
@@ -308,13 +310,19 @@ public class ActionbarUI : Listener
         Debug.Log("Switch Button Clicked");
         if (RoundController.phase == RoundController.Phase.PlayerSwap)
         {
+            if (selectedUnit)
+            {
+                if (FieldController.main.IsUnitPlayer(SceneController.main.selectedUnit)) FieldController.main.SwapPlayerUnit();
+            }
+            else
+            {
                 switchBarContainer.style.display = DisplayStyle.None;
                 promptBarContainer.style.display = DisplayStyle.Flex;
                 prompt = "Switch";
                 promptBarValue.text = "Select unit to swap into vanguard position";
+            }
         }
-
-        Debug.Log("Player cannot swap right now!");
+        else Debug.Log("Player cannot swap right now!");
     }
 
     void SwitchEnd_Clicked(ClickEvent evt)
@@ -457,15 +465,15 @@ public class ActionbarUI : Listener
         if(_abilities[0])
         {
             abilityOne.activeName.text = _abilities[0].AbilityName;
-            abilityOne.activeCost.text = Mathf.Abs(_abilities[0].Cost) + "";
+            abilityOne.activeCost.text = _abilities[0].xCost ? "X" : Mathf.Abs(_abilities[0].Cost) + "";
             abilityOne.activeDesc.text = _abilities[0].AbilityDescription;
 
             abilityOne.hoverName.text = _abilities[0].AbilityName;
-            abilityOne.hoverCost.text = Mathf.Abs(_abilities[0].Cost) + "";
+            abilityOne.hoverCost.text = _abilities[0].xCost ? "X" : Mathf.Abs(_abilities[0].Cost) + "";
             abilityOne.hoverDesc.text = _abilities[0].AbilityDescription;
 
             abilityOne.disabledName.text = _abilities[0].AbilityName;
-            abilityOne.disabledCost.text = Mathf.Abs(_abilities[0].Cost) + "";
+            abilityOne.disabledCost.text = _abilities[0].xCost ? "X" : Mathf.Abs(_abilities[0].Cost) + "";
             abilityOne.disabledDesc.text = _abilities[0].AbilityDescription;
 
             if (_abilities[0].Cost < 0)
@@ -530,15 +538,15 @@ public class ActionbarUI : Listener
         if(_abilities[1])
         {
             abilityTwo.activeName.text = _abilities[1].AbilityName;
-            abilityTwo.activeCost.text = Mathf.Abs(_abilities[1].Cost) + "";
+            abilityTwo.activeCost.text = _abilities[1].xCost ? "X" : Mathf.Abs(_abilities[1].Cost) + "";
             abilityTwo.activeDesc.text = _abilities[1].AbilityDescription;
 
             abilityTwo.hoverName.text = _abilities[1].AbilityName;
-            abilityTwo.hoverCost.text = Mathf.Abs(_abilities[1].Cost) + "";
+            abilityTwo.hoverCost.text = _abilities[1].xCost ? "X" : Mathf.Abs(_abilities[1].Cost) + "";
             abilityTwo.hoverDesc.text = _abilities[1].AbilityDescription;
 
             abilityTwo.disabledName.text = _abilities[1].AbilityName;
-            abilityTwo.disabledCost.text = Mathf.Abs(_abilities[1].Cost) + "";
+            abilityTwo.disabledCost.text = _abilities[1].xCost ? "X" : Mathf.Abs(_abilities[1].Cost) + "";
             abilityTwo.disabledDesc.text = _abilities[1].AbilityDescription;
 
             if (_abilities[1].Cost < 0)
@@ -603,15 +611,15 @@ public class ActionbarUI : Listener
         if(_abilities[2])
         {
             abilityThree.activeName.text = _abilities[2].AbilityName;
-            abilityThree.activeCost.text = Mathf.Abs(_abilities[2].Cost) + "";
+            abilityThree.activeCost.text = _abilities[2].xCost ? "X" : Mathf.Abs(_abilities[2].Cost) + "";
             abilityThree.activeDesc.text = _abilities[2].AbilityDescription;
 
             abilityThree.hoverName.text = _abilities[2].AbilityName;
-            abilityThree.hoverCost.text = Mathf.Abs(_abilities[2].Cost) + "";
+            abilityThree.hoverCost.text = _abilities[2].xCost ? "X" : Mathf.Abs(_abilities[2].Cost) + "";
             abilityThree.hoverDesc.text = _abilities[2].AbilityDescription;
 
             abilityThree.disabledName.text = _abilities[2].AbilityName;
-            abilityThree.disabledCost.text = Mathf.Abs(_abilities[2].Cost) + "";
+            abilityThree.disabledCost.text = _abilities[2].xCost ? "X" : Mathf.Abs(_abilities[2].Cost) + "";
             abilityThree.disabledDesc.text = _abilities[2].AbilityDescription;
 
             if (_abilities[2].Cost < 0)
@@ -702,7 +710,8 @@ public class ActionbarUI : Listener
                 supportBarContainer.style.display = DisplayStyle.Flex;
                 break;
             case RoundController.Phase.PlayerSwap:
-                switchBarContainer.style.display = DisplayStyle.Flex;                    
+                switchBarContainer.style.display = DisplayStyle.Flex;
+                selectedUnit = null;
                 break;
             case RoundController.Phase.EnemySwap:
                 switchBarContainer.style.display = DisplayStyle.Flex;

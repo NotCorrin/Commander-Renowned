@@ -16,7 +16,7 @@ public class DruidLeech : Ability
 	}    
 	public override bool IsTargetValid (Unit Target, bool isPlayer)
     {
-		return (FieldController.main.GetPosition(Target) != FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(Target) != isPlayer);
+		return (FieldController.main.IsUnitPlayer(Target) != isPlayer);
 	}
 	public override void UseAbility (Unit Caster, Unit Target) {
 		if (IsAbilityValid(Caster, Target)) {
@@ -25,8 +25,7 @@ public class DruidLeech : Ability
             fireball.transform.LookAt(Target.transform);
             fireball.GetComponent<FullAutoFireAtTarget>().SetBigMissilesHoming(Target.transform);
 
-            GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, Damage));
-			GameEvents.AttackUp(Target, StatBoost);
+            GameEvents.ThornsUp(Target, StatBoost);
 			GameEvents.UseMana(Caster, Cost);
 		}
 	}

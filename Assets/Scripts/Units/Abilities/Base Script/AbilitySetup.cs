@@ -31,5 +31,8 @@ public enum AbilityScript
     Trace,
     EnergySword,
     PaladinBuff,
-    LeechSeed
+    DruidLeech,
+    BrambleShield,
+    MechAttack,
+    OldAttack
 }

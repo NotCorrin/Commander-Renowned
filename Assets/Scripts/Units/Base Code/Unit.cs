@@ -332,8 +332,11 @@ public class Unit : Listener
     protected virtual void ResetUnit()
     {
         Health = MaxHealth;
-        Ammo = MaxAmmo;
-        Mana = MaxMana;
+        //Ammo = Mathf.CeilToInt(MaxAmmo/2);
+        Ammo = Mathf.Clamp(3, 0, MaxAmmo);
+        //Mana = Mathf.CeilToInt(MaxMana/2);
+        Mana = Mathf.Clamp(3, 0, MaxMana);
+
         ResetBuffs();
     }
     protected virtual void ResetBuffs()

@@ -31,6 +31,7 @@ public class UnitSelectionMenuUI : MonoBehaviour
         VisualElement test = default;
         VisualElement unitCard = default;
 
+        if (!teamScriptableObject.tutorialComplete) teamScriptableObject.Reset();
         for (int i = 0; i < teamScriptableObject.units.Count; i++)
         {
             if (i % 5 == 0)

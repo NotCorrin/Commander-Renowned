@@ -25,6 +25,7 @@ public abstract class Ability : MonoBehaviour
     {
         get => cost;
     }
+    public bool xCost;
 
     [SerializeField] protected int damage;
     public int Damage
@@ -55,6 +56,11 @@ public abstract class Ability : MonoBehaviour
         abilityName = setup.AbilityName;
         abilityDescription = setup.AbilityDescription;
         cost = setup.Cost;
+        if (setup.Cost == 999)
+        {
+            xCost = true;
+            cost = 0;
+        }
         damage = setup.Damage;
         statBoost = setup.StatBoost;
         variation = setup.Variation;
