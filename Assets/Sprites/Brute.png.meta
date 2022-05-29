@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e43ce0c7b4e703f4b83ae7abf63a9570
+guid: 7f10c4f9eea82124bb76d669fc687814
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -102,65 +102,11 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ClericSpritesheet_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c49c28cedbdc0dc41a64f1266f0ee015
-      internalID: 1517324202
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ClericSpritesheet_1
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e5d74f62e4b68664687fe801516ebc8a
-      internalID: -1345792893
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ClericSpritesheet_2
+      name: Brute_0
       rect:
         serializedVersion: 2
         x: 0
@@ -174,35 +120,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e05d2a9eeef287548868d248d6ce5310
-      internalID: 1561927517
+      spriteID: e3648a178a706964989b63e1c1fe19c6
+      internalID: -1922040017
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ClericSpritesheet_3
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b9250906850d8744390889c3ede18d37
-      internalID: -795224714
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ClericSpritesheet_4
+      name: Brute_1
       rect:
         serializedVersion: 2
         x: 0
@@ -216,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7c1b95153f88e184594c09b0e7953032
-      internalID: -210081337
+      spriteID: 043e5ebf3ab197241ad88921dd51232a
+      internalID: 748405939
       vertices: []
       indices: 
       edges: []
@@ -225,7 +150,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 7b1d811a445279a4fac39d7430bd1ce0
     internalID: 0
     vertices: []
     indices: 
@@ -233,11 +158,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      ClericSpritesheet_4: -210081337
-      ClericSpritesheet_1: -1345792893
-      ClericSpritesheet_2: 1561927517
-      ClericSpritesheet_0: 1517324202
-      ClericSpritesheet_3: -795224714
+      Brute_0: -1922040017
+      Brute_1: 748405939
   spritePackingTag: 
   pSDRemoveMatte: 0
   userData: 

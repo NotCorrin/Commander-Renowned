@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MageBuff : Ability
+public class PaladinBuff : Ability
 {
 	public override void SetupParams(AbilitySetup setup)
     {
@@ -20,16 +20,16 @@ public class MageBuff : Ability
         if (isPlayer) return FieldController.main.IsUnitPlayer(Target);
         else return (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(Target) == isPlayer);
     }
-    public override void UseAbility (Unit Caster, Unit Target) {
+	public override void UseAbility (Unit Caster, Unit Target) {
 		if (IsAbilityValid(Caster, Target)) {
             Instantiate(VFX1, Target.transform);
-			GameEvents.AttackUp(Target, StatBoost);
+            GameEvents.BaseDefenseUp(Target, StatBoost);
 			GameEvents.UseMana(Caster, Cost);
 		}
 	}
 	public override int GetMoveWeight (Unit caster) {
 
-        int HealthWeight = Mathf.FloorToInt((1 - ((float)caster.Health / (float)caster.MaxHealth)) * 100);
+        int HealthWeight = Mathf.FloorToInt(((float)caster.Health / (float)caster.MaxHealth) * 100);
         int ManaWeight;
 
         if (caster.unitType == UnitType.Mage || caster.unitType == UnitType.Commander)

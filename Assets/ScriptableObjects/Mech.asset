@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1315abb00406e0a458b2138c8363ac1c, type: 3}
-  m_Name: Soldier
+  m_Name: Mech
   m_EditorClassIdentifier: 
   unitType: 1
-  UnitName: Soldier
+  UnitName: Mech
   VanguardAbilities:
   - AbilityType: 0
     AbilityName: 
@@ -25,11 +25,11 @@ MonoBehaviour:
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  - AbilityType: 3
-    AbilityName: Arcane Bullet
-    AbilityDescription: Strike the enemy with dual arcane bullets.
+  - AbilityType: 14
+    AbilityName: Attack Formation
+    AbilityDescription: Strike in a positive formation. attack up, Damage 3
     Cost: 1
-    Damage: 4
+    Damage: 3
     StatBoost: 1
     Variation: 1
     VFX1: {fileID: 0}
@@ -37,10 +37,21 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 4
     AbilityName: Defense Formation
-    AbilityDescription: Strike in a negative formation. Defense up, Damage 4
+    AbilityDescription: Strike in a negative formation. Defense up, Damage 3
     Cost: 1
-    Damage: 4
+    Damage: 3
     StatBoost: 1
+    Variation: 1
+    VFX1: {fileID: 0}
+    VFX2: {fileID: 0}
+    VFX3: {fileID: 0}
+  - AbilityType: 13
+    AbilityName: Mech Attack
+    AbilityDescription: Expend all ammo. Deal damage equal to the amount of ammo
+      spent.
+    Cost: 999
+    Damage: 1
+    StatBoost: 0
     Variation: 1
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
@@ -67,7 +78,7 @@ MonoBehaviour:
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   MaxHealth: 24
-  MaxAmmo: 5
+  MaxAmmo: 9
   MaxMana: 0
-  animator: {fileID: 9100000, guid: 290842611f5ef174cb1770e4e4ef610f, type: 2}
-  sprite: {fileID: -3868812660829053132, guid: ebe7b0c9921a1e840bf1ffd5ab6bb180, type: 3}
+  animator: {fileID: 9100000, guid: 7bf3a48164c15e44aaef6fcee29c76db, type: 2}
+  sprite: {fileID: 1176800561, guid: 52b80979e6cdb5440a16013afce6fe05, type: 3}

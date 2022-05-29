@@ -98,7 +98,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: beaed376f50278c40abd760de8d1c76c, type: 2}
+  m_Motion: {fileID: 7400000, guid: 4eac9b075fa0ce14da3bf64a6c29767a, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -190,7 +190,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Cleric
+  m_Name: Druid
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: killUnit
