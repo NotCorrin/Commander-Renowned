@@ -25,9 +25,10 @@ MonoBehaviour:
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  - AbilityType: 0
-    AbilityName: Spirit Burn
-    AbilityDescription: Steal the enemy's flame to empower your own
+  - AbilityType: 9
+    AbilityName: Energy Sword
+    AbilityDescription: 3 Damage/nDeals bonus damage if i have at least 1 def. Small
+      mana boost
     Cost: -3
     Damage: 2
     StatBoost: 0
@@ -70,5 +71,5 @@ MonoBehaviour:
   MaxHealth: 12
   MaxAmmo: 0
   MaxMana: 5
-  animator: {fileID: 9100000, guid: 4f80504d0e3c5944b9e9a722e69a1a9b, type: 2}
-  sprite: {fileID: 1517324202, guid: e43ce0c7b4e703f4b83ae7abf63a9570, type: 3}
+  animator: {fileID: 9100000, guid: f30ec2216d9c56642b27c8e06645643d, type: 2}
+  sprite: {fileID: 101593814, guid: edbb65b9073b8b3408437d88a3821805, type: 3}

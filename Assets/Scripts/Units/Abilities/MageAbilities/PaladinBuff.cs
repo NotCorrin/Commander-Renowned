@@ -17,12 +17,13 @@ public class PaladinBuff : Ability
 	}    
 	public override bool IsTargetValid (Unit Target, bool isPlayer)
     {
-		return (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(Target) == isPlayer);
-	}
+        if (isPlayer) return FieldController.main.IsUnitPlayer(Target);
+        else return (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(Target) == isPlayer);
+    }
 	public override void UseAbility (Unit Caster, Unit Target) {
 		if (IsAbilityValid(Caster, Target)) {
             Instantiate(VFX1, Target.transform);
-			GameEvents.AttackUp(Target, StatBoost);
+            GameEvents.BaseDefenseUp(Target, StatBoost);
 			GameEvents.UseMana(Caster, Cost);
 		}
 	}
