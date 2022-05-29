@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 959022537}
   - component: {fileID: 959022536}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SFXController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,7 +70,7 @@ GameObject:
   - component: {fileID: 17935895647985081}
   - component: {fileID: 6057501032847299653}
   - component: {fileID: 1507099053419668459}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LightsOnly
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4975,7 +4975,7 @@ GameObject:
   - component: {fileID: 4422650731579155080}
   - component: {fileID: 2095309109728336121}
   - component: {fileID: 1579162338782334480}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BigMissile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9917,7 +9917,7 @@ GameObject:
   - component: {fileID: 9076386736465979103}
   - component: {fileID: 5069726930383274357}
   - component: {fileID: 788542262736228701}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Explosion_AfterFire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14811,7 +14811,7 @@ GameObject:
   - component: {fileID: 3854625552932367341}
   - component: {fileID: 1913220166590470643}
   - component: {fileID: 1191537321281377054}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BigMissileCore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19733,7 +19733,7 @@ GameObject:
   - component: {fileID: 6784217089084766638}
   - component: {fileID: 8889130263072481785}
   - component: {fileID: 4745809446306976848}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Explosion_SmokeLit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24633,7 +24633,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9012346983425674948}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BigMissiles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24668,7 +24668,7 @@ GameObject:
   - component: {fileID: 8610186711578611527}
   - component: {fileID: 2963102604126693906}
   - component: {fileID: 1431837056328747452}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Explosion_Embers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29550,7 +29550,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 484881088640251717}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29582,7 +29582,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3538115094808879709}
   - component: {fileID: 2820840399540393153}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point light For Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29676,7 +29676,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7970403349134341904}
   - component: {fileID: 4298468454177104881}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point light Particle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29773,7 +29773,7 @@ GameObject:
   - component: {fileID: 8959962781991663828}
   - component: {fileID: 8959962781991663829}
   - component: {fileID: 6934059016669861924}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Meteor
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4795044505494506297}
   - component: {fileID: 4795044505494506295}
   - component: {fileID: 4795044505494506294}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LightsOnly
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4914,7 +4914,7 @@ GameObject:
   - component: {fileID: 4795044505776681163}
   - component: {fileID: 4795044505776681161}
   - component: {fileID: 4795044505776681160}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Explosion_Curves
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9807,7 +9807,7 @@ GameObject:
   - component: {fileID: 4795044505924363857}
   - component: {fileID: 4795044505924363887}
   - component: {fileID: 4795044505924363886}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Explosion_Flare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14690,7 +14690,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4795044506606789112}
   - component: {fileID: 619221821035064039}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MageFlare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14740,7 +14740,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4795044506780423028}
   - component: {fileID: 4795044506780423029}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point light For Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14835,7 +14835,7 @@ GameObject:
   - component: {fileID: 4795044506875397859}
   - component: {fileID: 4795044506875397857}
   - component: {fileID: 4795044506875397856}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Explosion_FresnelSphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19737,6 +19737,10 @@ PrefabInstance:
     - target: {fileID: 1696384031815542, guid: 094d0c27b13f2c0449ea1847e78cea17, type: 3}
       propertyPath: m_Name
       value: Explosion_ArcaneEnergyPlasma02v2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1696384031815542, guid: 094d0c27b13f2c0449ea1847e78cea17, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4967866668816332, guid: 094d0c27b13f2c0449ea1847e78cea17, type: 3}
       propertyPath: m_RootOrder

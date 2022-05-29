@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7623948199654821379}
   - component: {fileID: 7623948199654821404}
   - component: {fileID: 7623948199654821376}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,7 +135,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7623948200003788277}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EnchantPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
