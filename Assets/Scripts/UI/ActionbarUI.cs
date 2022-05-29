@@ -312,12 +312,6 @@ public class ActionbarUI : Listener
                 promptBarContainer.style.display = DisplayStyle.Flex;
                 prompt = "Switch";
                 promptBarValue.text = "Select unit to swap into vanguard position";
-
-            if (SceneController.main.selectedUnit)
-            {
-                if (FieldController.main.IsUnitPlayer(SceneController.main.selectedUnit)) FieldController.main.SwapPlayerUnit();
-                return;
-            }
         }
 
         Debug.Log("Player cannot swap right now!");
@@ -370,7 +364,12 @@ public class ActionbarUI : Listener
             }
             else if (prompt == "Switch")
             {
-                
+                if (SceneController.main.selectedUnit)
+                {
+                    if (FieldController.main.IsUnitPlayer(SceneController.main.selectedUnit)) FieldController.main.SwapPlayerUnit();
+                }
+                prompt = "";
+                return;
             }
             else if (prompt == "Death")
             {
