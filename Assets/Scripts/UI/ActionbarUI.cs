@@ -355,7 +355,16 @@ public class ActionbarUI : Listener
             return;
         }
         //Debug.Log(unit.UnitName + " was selected");
-        if(selectedUnit && unit)
+        if (unit && prompt == "Switch")
+        {
+            if (SceneController.main.selectedUnit)
+            {
+                if (FieldController.main.IsUnitPlayer(SceneController.main.selectedUnit)) FieldController.main.SwapPlayerUnit();
+            }
+            prompt = "";
+            return;
+        }
+        if (selectedUnit && unit)
         {
             if(prompt == "Ability")
             {
@@ -368,15 +377,6 @@ public class ActionbarUI : Listener
                     prompt = "";
                     GameEvents.UseAbility(selectedUnit, unit, selectedAbility);
                 }
-                return;
-            }
-            else if (prompt == "Switch")
-            {
-                if (SceneController.main.selectedUnit)
-                {
-                    if (FieldController.main.IsUnitPlayer(SceneController.main.selectedUnit)) FieldController.main.SwapPlayerUnit();
-                }
-                prompt = "";
                 return;
             }
             else if (prompt == "Death")
