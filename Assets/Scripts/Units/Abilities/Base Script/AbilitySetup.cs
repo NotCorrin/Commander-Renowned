@@ -28,5 +28,8 @@ public enum AbilityScript
     SoldierAbility,
     MageFireball,
     Charge,
-    Trace
+    Trace,
+    EnergySword,
+    PaladinBuff,
+    LeechSeed
 }

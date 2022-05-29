@@ -139,7 +139,8 @@ public class ActionbarUI : Listener
     void OnPromptCancelClicked()
     {
         prompt = "";
-        supportBarContainer.style.display = DisplayStyle.Flex;
+        if(RoundController.phase == RoundController.Phase.PlayerSwap) switchBarContainer.style.display = DisplayStyle.Flex;
+        else supportBarContainer.style.display = DisplayStyle.Flex;
         promptBarContainer.style.display = DisplayStyle.None;
         GameEvents.GreyOut(null, false);
         Debug.Log("Prompt Cancel Clicked");
@@ -307,6 +308,11 @@ public class ActionbarUI : Listener
         Debug.Log("Switch Button Clicked");
         if (RoundController.phase == RoundController.Phase.PlayerSwap)
         {
+                switchBarContainer.style.display = DisplayStyle.None;
+                promptBarContainer.style.display = DisplayStyle.Flex;
+                prompt = "Switch";
+                promptBarValue.text = "Select unit to swap into vanguard position";
+
             if (SceneController.main.selectedUnit)
             {
                 if (FieldController.main.IsUnitPlayer(SceneController.main.selectedUnit)) FieldController.main.SwapPlayerUnit();
@@ -361,6 +367,10 @@ public class ActionbarUI : Listener
                     GameEvents.UseAbility(selectedUnit, unit, selectedAbility);
                 }
                 return;
+            }
+            else if (prompt == "Switch")
+            {
+                
             }
             else if (prompt == "Death")
             {
