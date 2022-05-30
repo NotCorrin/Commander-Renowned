@@ -195,7 +195,6 @@ public class Unit : Listener
     {
         if(!ability)
         {
-            Debug.Log(spriteRenderer.color);
             animator.SetBool("greyedOut", false);
             if (!FieldController.main.IsUnitPlayer(this)) UpdateEnemyVisual();
         }
@@ -352,6 +351,7 @@ public class Unit : Listener
         {
             baseDefense = Mathf.Max(0, --baseDefense);
             Defense = baseDefense;
+            Thorns = 0;
         }
     }
 

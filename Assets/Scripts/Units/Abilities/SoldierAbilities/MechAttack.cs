@@ -13,7 +13,7 @@ public class MechAttack : QTEAbility
 
     public override int GetMoveWeight(Unit caster)
     {
-        int BuffWeight = caster.Attack * 15 + caster.Ammo * 15;
+        int BuffWeight = caster.Attack * 15 + (caster.Ammo-2) * 15;
         if (caster.unitType == UnitType.Military || caster.unitType == UnitType.Commander)
         {
             if (caster.Ammo < Cost) return 0;
@@ -24,7 +24,7 @@ public class MechAttack : QTEAbility
 
     protected override void AbilityUsed(GameManager.QTEResult result)
     {
-        int FinalDamage = Damage * Caster.Ammo;        
+        int FinalDamage = Damage + Caster.Ammo;        
 
         switch (result)
         {
@@ -40,7 +40,7 @@ public class MechAttack : QTEAbility
                 }
         }
 
-        AttackWithLaser(Mathf.FloorToInt(FinalDamage));
+        AttackWithLaser(FinalDamage);
 
         GameEvents.UseAmmo(Caster, Caster.Ammo);
     }
@@ -72,6 +72,8 @@ public class MechAttack : QTEAbility
     {
         if(Target)
         {
+            GameEvents.BaseAttackUp(Caster, -2);
+            GameEvents.BaseDefenseUp(Caster, -2);
             GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, damage));
             FireLaserAtTarget(Target.transform);
         }
