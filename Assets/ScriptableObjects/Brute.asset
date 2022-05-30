@@ -33,7 +33,7 @@ MonoBehaviour:
     Damage: 3
     StatBoost: 2
     Variation: 1
-    VFX1: {fileID: 0}
+    VFX1: {fileID: 1533149051114980, guid: cfe6edf34664fd546afc07dd31a8447e, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   - AbilityType: 4
@@ -43,7 +43,7 @@ MonoBehaviour:
     Damage: 4
     StatBoost: 1
     Variation: 1
-    VFX1: {fileID: 0}
+    VFX1: {fileID: 1533149051114980, guid: cfe6edf34664fd546afc07dd31a8447e, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   SupportAbilities:
