@@ -44,7 +44,6 @@ public class EnergySword : QTEAbility
     protected override void AbilityUsed(GameManager.QTEResult result)
     {
         int FinalDamage = Damage;
-        if(Caster.Defense >= 1) FinalDamage += 3;
         int FinalCost = Cost;
 
         switch (result)
@@ -65,8 +64,18 @@ public class EnergySword : QTEAbility
                 }
         }
 
-        if (VFX1) Instantiate(VFX1, Target.transform);
+        if (Caster.Defense >= 1)
+        {
+            SpawnVFX(VFX1);
+            FinalDamage += 3;
+        }
+        else SpawnVFX(VFX2);
+
         GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, FinalDamage));
         GameEvents.onUseMana(Caster, FinalCost);
+    }
+    void SpawnVFX(GameObject VFXprefab)
+    {
+        if (VFXprefab) Instantiate(VFXprefab, Target.transform);
     }
 }

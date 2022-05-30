@@ -2,16 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
-using UnityEngine.SceneManagement;
 
 public class StoryContainerUI : MonoBehaviour
 {
-    [SerializeField] private UIDocument uiDocument;
-    private Button continueButton;
-    private TextElement storyTitle;
-    private TextElement storyDesc;
-    public ScenarioScriptableObject stories;
-    void Start()
+    [SerializeField] UIDocument uiDocument;
+    [SerializeField] ScenarioScriptableObject stories;
+    [SerializeField] TeamScriptableObject team;
+    TextElement title;
+    TextElement desc;
+    VisualElement buttonContainer;
+
+
+    void Awake()
     {
         if (uiDocument == null)
         {
@@ -21,21 +23,47 @@ public class StoryContainerUI : MonoBehaviour
 
         try
         {
-            continueButton = uiDocument.rootVisualElement.Q<Button>("continue-button");
-            storyTitle = uiDocument.rootVisualElement.Q<TextElement>("title");
-            storyDesc = uiDocument.rootVisualElement.Q<TextElement>("description");
+            title = uiDocument.rootVisualElement.Q<TextElement>("title");
+            desc = uiDocument.rootVisualElement.Q<TextElement>("description");
+            buttonContainer = uiDocument.rootVisualElement.Q<VisualElement>("button-container");
         }
         catch
         {
             Debug.LogError($"{gameObject.name} : MainMenuUI - Element Query Failed.");
         }
-        storyTitle.text = stories.story[stories.level+1].title;
-        Debug.Log(storyDesc);
-        Debug.Log(stories.story[stories.level+1].description);
-        storyDesc.text = stories.story[stories.level+1].description;
 
-        continueButton.clickable.clicked += () => {
-            LevelManager.instance.LoadScene(SceneIndex.MenuSelectionScene);
-        };
+        Scenario scenario = stories.story[stories.level + 1];
+
+        title.text = stories.story[stories.level+1].title;
+        desc.text = stories.story[stories.level+1].description;
+
+        if (stories.story[stories.level+1].winunit.Length <= 0)
+        {
+            Debug.Log("YO");
+            Button continueButton = new Button();
+            continueButton.text = "Continue";
+            continueButton.AddToClassList("button");
+            continueButton.clickable.clicked += () => {
+                LevelManager.instance.LoadScene(SceneIndex.MenuSelectionScene);
+            };
+
+            buttonContainer.Add(continueButton);
+        }
+
+        else
+        {
+            foreach (UnitScriptableObject unit in stories.story[stories.level+1].winunit)
+            {
+                Button unitButton = new Button();
+                unitButton.text = unit.name;
+                unitButton.AddToClassList("button");
+                unitButton.clickable.clicked += () => {
+                    team.units.Add(unit);
+                    LevelManager.instance.LoadScene(SceneIndex.MenuSelectionScene);
+                };
+
+                buttonContainer.Add(unitButton);
+            }
+        }
     }
 }
