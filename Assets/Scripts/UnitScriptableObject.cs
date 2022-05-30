@@ -12,7 +12,7 @@ public class UnitScriptableObject : ScriptableObject
     public Type T;
     public AbilitySetup[] VanguardAbilities;
     public AbilitySetup[] SupportAbilities;
-    public List<AbilitySetup> VanguardAbilities2;
+    //public List<AbilitySetup> VanguardAbilities2; For use when adding abilities
 
     public int MaxHealth;
     public int MaxAmmo;

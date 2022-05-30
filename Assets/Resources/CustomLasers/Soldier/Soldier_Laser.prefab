@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4960026233680658}
   - component: {fileID: 120275505055713720}
   - component: {fileID: 114813410297817302}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -221,7 +221,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4038453137455666}
   - component: {fileID: 114739907808396914}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Soldier_Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 4298072669872796}
   - component: {fileID: 198273211594814308}
   - component: {fileID: 199188263182488802}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: psEmber
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1315abb00406e0a458b2138c8363ac1c, type: 3}
+  m_Name: Paladin
+  m_EditorClassIdentifier: 
+  unitType: 0
+  UnitName: Paladin
+  VanguardAbilities:
+  - AbilityType: 0
+    AbilityName: 
+    AbilityDescription: 
+    Cost: 0
+    Damage: 0
+    StatBoost: 0
+    Variation: 0
+    VFX1: {fileID: 0}
+    VFX2: {fileID: 0}
+    VFX3: {fileID: 0}
+  - AbilityType: 9
+    AbilityName: Righteous Blow
+    AbilityDescription: 3 Damage/nDeals bonus damage if i have at least 1 def. Small
+      mana boost
+    Cost: -1
+    Damage: 3
+    StatBoost: 0
+    Variation: 1
+    VFX1: {fileID: 1116862508874840, guid: 0156ac8bc7645f44fb571c716152b33a, type: 3}
+    VFX2: {fileID: 0}
+    VFX3: {fileID: 0}
+  - AbilityType: 2
+    AbilityName: Wall of Plasma
+    AbilityDescription: Will form an invisible wall to protect the mage
+    Cost: -2
+    Damage: 0
+    StatBoost: 3
+    Variation: 1
+    VFX1: {fileID: 0}
+    VFX2: {fileID: 0}
+    VFX3: {fileID: 0}
+  SupportAbilities:
+  - AbilityType: 0
+    AbilityName: 
+    AbilityDescription: 
+    Cost: 0
+    Damage: 0
+    StatBoost: 0
+    Variation: 0
+    VFX1: {fileID: 0}
+    VFX2: {fileID: 0}
+    VFX3: {fileID: 0}
+  - AbilityType: 10
+    AbilityName: Holy Shield
+    AbilityDescription: +2 Permanent Defense
+    Cost: 2
+    Damage: 0
+    StatBoost: 2
+    Variation: 0
+    VFX1: {fileID: 0}
+    VFX2: {fileID: 0}
+    VFX3: {fileID: 0}
+  MaxHealth: 16
+  MaxAmmo: 0
+  MaxMana: 2
+  animator: {fileID: 9100000, guid: f30ec2216d9c56642b27c8e06645643d, type: 2}
+  sprite: {fileID: 101593814, guid: edbb65b9073b8b3408437d88a3821805, type: 3}

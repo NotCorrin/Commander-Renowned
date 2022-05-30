@@ -25,12 +25,14 @@ public class SceneController : Listener
     protected override void SubscribeListeners()
     {
         UIEvents.onUnitSelected += UnitSelected;
+        //GameEvents.onPhaseChanged += Deselect;
         //throw new System.NotImplementedException();
     }
 
     protected override void UnsubscribeListeners()
     {
         UIEvents.onUnitSelected -= UnitSelected;
+        //GameEvents.onPhaseChanged -= Deselect;
         //throw new System.NotImplementedException();
     }
 
@@ -61,6 +63,10 @@ public class SceneController : Listener
             UIEvents.UnitSelected(null);
         }
     }
+    //private void Deselect(RoundController.Phase phase)
+    //{
+    //    selected = false;
+    //}
     private void UnitSelected(Unit unit)
     {
         selected = unit;

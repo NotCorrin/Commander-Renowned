@@ -195,9 +195,8 @@ public class Unit : Listener
     {
         if(!ability)
         {
-            Debug.Log(spriteRenderer.color);
-            if(!FieldController.main.IsUnitPlayer(this)) UpdateEnemyVisual();
-            else spriteRenderer.color = Color.white;
+            animator.SetBool("greyedOut", false);
+            if (!FieldController.main.IsUnitPlayer(this)) UpdateEnemyVisual();
         }
         else if(!ability.IsTargetValid(this, isPlayer))
         {
@@ -273,14 +272,7 @@ public class Unit : Listener
     private void KillUnit()
     {
         if (visibleElements) Destroy(visibleElements);
-
-        if (HealthBar) Destroy(HealthBar.gameObject);
-        if (ManaBar) Destroy(ManaBar.gameObject);
-        if (AmmoBar) Destroy(AmmoBar.gameObject);
-        if(BuffBar) Destroy(BuffBar.gameObject);
         spriteRenderer.sprite = null;
-        if (animator) Destroy(animator);
-
     }
 
     // Start is called before the first frame update
@@ -339,8 +331,11 @@ public class Unit : Listener
     protected virtual void ResetUnit()
     {
         Health = MaxHealth;
-        Ammo = MaxAmmo;
-        Mana = MaxMana;
+        //Ammo = Mathf.CeilToInt(MaxAmmo/2);
+        Ammo = Mathf.Clamp(3, 0, MaxAmmo);
+        //Mana = Mathf.CeilToInt(MaxMana/2);
+        Mana = Mathf.Clamp(3, 0, MaxMana);
+
         ResetBuffs();
     }
     protected virtual void ResetBuffs()
@@ -356,6 +351,7 @@ public class Unit : Listener
         {
             baseDefense = Mathf.Max(0, --baseDefense);
             Defense = baseDefense;
+            Thorns = 0;
         }
     }
 

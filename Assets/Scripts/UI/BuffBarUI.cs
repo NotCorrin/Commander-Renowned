@@ -23,6 +23,7 @@ public class BuffBarUI : Listener
         UIEvents.onUnitAttackChanged += UpdateAttackBuff;
         UIEvents.onUnitDefenseChanged += UpdateDefenceBuff;
         UIEvents.onUnitAccuracyChanged += UpdateAccuracyBuff;
+        GameEvents.onKill += HideSelf;
     }
 
     protected override void UnsubscribeListeners()
@@ -31,6 +32,15 @@ public class BuffBarUI : Listener
         UIEvents.onUnitAttackChanged -= UpdateAttackBuff;
         UIEvents.onUnitDefenseChanged -= UpdateDefenceBuff;
         UIEvents.onUnitAccuracyChanged -= UpdateAccuracyBuff;
+        GameEvents.onKill -= HideSelf;
+    }
+
+    void HideSelf(Unit unit)
+    {
+        if(unit == parent)
+        {
+            barContainer.style.display = DisplayStyle.None;
+        }
     }
 
     void Start()

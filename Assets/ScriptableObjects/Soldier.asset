@@ -27,7 +27,7 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 3
     AbilityName: Arcane Bullet
-    AbilityDescription: Strike the enemy with dual arcane bullets. Attack up.
+    AbilityDescription: Strike the enemy with dual arcane bullets.
     Cost: 1
     Damage: 4
     StatBoost: 1
@@ -37,7 +37,7 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 4
     AbilityName: Defense Formation
-    AbilityDescription: Strike in a negative formation. Defense up, Damage 3
+    AbilityDescription: Strike in a negative formation. Defense up, Damage 4
     Cost: 1
     Damage: 4
     StatBoost: 1
@@ -66,7 +66,6 @@ MonoBehaviour:
     VFX1: {fileID: 782153884964200169, guid: b8c56c2add686174dadacb682e6415ad, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  VanguardAbilities2: []
   MaxHealth: 24
   MaxAmmo: 5
   MaxMana: 0

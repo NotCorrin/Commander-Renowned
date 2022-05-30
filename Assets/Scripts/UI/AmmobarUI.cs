@@ -15,15 +15,24 @@ public class AmmobarUI : Listener
     protected override void SubscribeListeners()
     {
         UIEvents.onUnitAmmoChanged += UpdateAmmo;
+        GameEvents.onKill += HideSelf;
     }
 
     protected override void UnsubscribeListeners()
     {
         UIEvents.onUnitAmmoChanged -= UpdateAmmo;
+        GameEvents.onKill -= HideSelf;
     }
     void UpdateAmmo(Unit unit, int value, int maxValue)
     {
         if(unit == parent) ammobarValue.text = value + "/" + maxValue;
+    }
+    void HideSelf(Unit unit)
+    {
+        if(unit == parent)
+        {
+            ammobarContainer.style.display = DisplayStyle.None;
+        }
     }
 
     void Start()

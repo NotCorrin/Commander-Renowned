@@ -28,5 +28,11 @@ public enum AbilityScript
     SoldierAbility,
     MageFireball,
     Charge,
-    Trace
+    Trace,
+    EnergySword,
+    PaladinBuff,
+    DruidLeech,
+    BrambleShield,
+    MechAttack,
+    OldAttack
 }
