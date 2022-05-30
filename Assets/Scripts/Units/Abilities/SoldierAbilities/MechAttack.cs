@@ -40,7 +40,7 @@ public class MechAttack : QTEAbility
                 }
         }
 
-        AttackWithLaser(Mathf.FloorToInt(FinalDamage));
+        AttackWithLaser(FinalDamage);
 
         GameEvents.UseAmmo(Caster, Caster.Ammo);
     }
@@ -72,6 +72,8 @@ public class MechAttack : QTEAbility
     {
         if(Target)
         {
+            GameEvents.BaseAttackUp(Caster, -1);
+            GameEvents.BaseDefenseUp(Caster, -1);
             GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, damage));
             FireLaserAtTarget(Target.transform);
         }
