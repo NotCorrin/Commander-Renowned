@@ -45,8 +45,7 @@ public class Defend : QTEAbility
         if (VFX2) Instantiate(VFX2, transform);
         GameEvents.DefenseUp(Caster, FinalDefense);
 
-        GameEvents.HealthChanged(Target, -GetDamageCalculation(Caster, Target, Damage));
-        FireLaserAtTarget(Target.transform);
+        AttackWithLaser(Damage);
 
         GameEvents.UseAmmo(Caster, Cost);
     }

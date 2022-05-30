@@ -25,14 +25,15 @@ MonoBehaviour:
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  - AbilityType: 14
-    AbilityName: Attack Formation
-    AbilityDescription: Strike in a positive formation. attack up, Damage 3
-    Cost: 1
-    Damage: 3
-    StatBoost: 1
+  - AbilityType: 13
+    AbilityName: Megalaser
+    AbilityDescription: Expend all ammo. Deal damage equal to the amount of ammo
+      spent.
+    Cost: 999
+    Damage: 1
+    StatBoost: 0
     Variation: 1
-    VFX1: {fileID: 0}
+    VFX1: {fileID: 1585991288121845649, guid: 4e759e593791d58409061a88347ebf53, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   - AbilityType: 4
@@ -42,18 +43,7 @@ MonoBehaviour:
     Damage: 3
     StatBoost: 1
     Variation: 1
-    VFX1: {fileID: 0}
-    VFX2: {fileID: 0}
-    VFX3: {fileID: 0}
-  - AbilityType: 13
-    AbilityName: Mech Attack
-    AbilityDescription: Expend all ammo. Deal damage equal to the amount of ammo
-      spent.
-    Cost: 999
-    Damage: 1
-    StatBoost: 0
-    Variation: 1
-    VFX1: {fileID: 0}
+    VFX1: {fileID: 8726590127215217202, guid: 783f819d5d65b494d9c8ad199f133bff, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   SupportAbilities:
