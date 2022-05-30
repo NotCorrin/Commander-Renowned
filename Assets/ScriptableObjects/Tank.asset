@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Tank
   m_EditorClassIdentifier: 
   unitType: 1
-  UnitName: Mech
+  UnitName: Tank
   VanguardAbilities:
   - AbilityType: 0
     AbilityName: 
@@ -80,5 +80,5 @@ MonoBehaviour:
   MaxHealth: 24
   MaxAmmo: 9
   MaxMana: 0
-  animator: {fileID: 9100000, guid: 7bf3a48164c15e44aaef6fcee29c76db, type: 2}
-  sprite: {fileID: 1176800561, guid: 52b80979e6cdb5440a16013afce6fe05, type: 3}
+  animator: {fileID: 9100000, guid: 78f975913a63e5f4c8c9a3c5cacfacb4, type: 2}
+  sprite: {fileID: -409528804, guid: 070d380dca0c7eb4f907591a3b861940, type: 3}
