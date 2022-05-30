@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.8
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.6519608, g: 0.86031747, b: 0.9504035, a: 0.8}
+  m_IndirectSpecularColor: {r: 0.65203047, g: 0.8602165, b: 0.9504369, a: 0.8}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -271,6 +271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiDocument: {fileID: 1046628882}
   stories: {fileID: 11400000, guid: f829df91173d761489da7c955a1523b6, type: 2}
+  team: {fileID: 11400000, guid: b7dab2c6d967bb64dbde10a52bb78ed4, type: 2}
 --- !u!1001 &1250100057
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,0 +1,21 @@
+.button {
+    font-size: 40px;
+    -unity-font: url('project://database/Assets/Fonts/Saira-Regular.ttf?fileID=12800000&guid=251e77914a76b49a1ba8e99db3b89002&type=3#Saira-Regular');
+    -unity-font-definition: url('project://database/Assets/Fonts/Saira-Regular%20SDF.asset?fileID=11400000&guid=94d2459b6274b4ed4809561a759f13c1&type=2#Saira-Regular SDF');
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    width: 380px;
+    height: 130px;
+    background-color: rgb(90, 197, 79);
+    border-left-width: 10px;
+    border-right-width: 10px;
+    border-top-width: 10px;
+    border-bottom-width: 10px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    color: rgb(0, 0, 0);
+}
