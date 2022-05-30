@@ -33,13 +33,9 @@ MonoBehaviour:
     Enemies:
     - enemies: []
     - enemies:
-      - {fileID: 11400000, guid: b21d54bddb21f7a419bd7a79ec36a958, type: 2}
-      - {fileID: 11400000, guid: af8c8893720fd0d47aedfb25dc11f9a1, type: 2}
-      - {fileID: 11400000, guid: edf88a06261f4ed4891c1b5cf94ad382, type: 2}
-    - enemies:
-      - {fileID: 11400000, guid: b21d54bddb21f7a419bd7a79ec36a958, type: 2}
-      - {fileID: 11400000, guid: e7acd760f86d622409b684a33cad4664, type: 2}
-      - {fileID: 11400000, guid: edf88a06261f4ed4891c1b5cf94ad382, type: 2}
+      - {fileID: 11400000, guid: ff9134c33cedaaa4a8f884e77b16ccc0, type: 2}
+      - {fileID: 11400000, guid: ff9134c33cedaaa4a8f884e77b16ccc0, type: 2}
+      - {fileID: 11400000, guid: ff9134c33cedaaa4a8f884e77b16ccc0, type: 2}
     windescription: 
     winunit: []
   - title: Plains
