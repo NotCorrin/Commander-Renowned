@@ -46,7 +46,7 @@ MonoBehaviour:
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   - AbilityType: 13
-    AbilityName: Mech Attack
+    AbilityName: Mega lazer
     AbilityDescription: Expend all ammo. Deal damage equal to the amount of ammo
       spent.
     Cost: 999
@@ -77,7 +77,7 @@ MonoBehaviour:
     VFX1: {fileID: 782153884964200169, guid: b8c56c2add686174dadacb682e6415ad, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  MaxHealth: 24
+  MaxHealth: 18
   MaxAmmo: 9
   MaxMana: 0
   animator: {fileID: 9100000, guid: 7bf3a48164c15e44aaef6fcee29c76db, type: 2}
