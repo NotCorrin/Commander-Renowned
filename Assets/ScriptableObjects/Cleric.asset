@@ -26,18 +26,20 @@ MonoBehaviour:
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   - AbilityType: 0
-    AbilityName: Spirit Burn
-    AbilityDescription: Steal the enemy's flame to empower your own
+    AbilityName: Divine Smite
+    AbilityDescription: Summon a burst of holy energy, damaging the enemy and restoring
+      your mana.
     Cost: -3
     Damage: 2
     StatBoost: 0
     Variation: 1
-    VFX1: {fileID: 1116862508874840, guid: 0156ac8bc7645f44fb571c716152b33a, type: 3}
+    VFX1: {fileID: 2589690010720979491, guid: 08e70c16a9d350a4294cc21bb9ab77f1, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   - AbilityType: 2
-    AbilityName: Wall of Plasma
-    AbilityDescription: Will form an invisible wall to protect the mage
+    AbilityName: Repel Harm
+    AbilityDescription: Compels those who intend to lessen their efforts. Increases
+      defense.
     Cost: -2
     Damage: 0
     StatBoost: 3
@@ -58,7 +60,7 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 1
     AbilityName: Confidence
-    AbilityDescription: Increases attack damage
+    AbilityDescription: Increases attack damage of your vanguard
     Cost: 1
     Damage: 0
     StatBoost: 2

@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class DruidLeech : Ability
 {
-	public override void SetupParams(AbilitySetup setup)
+    public override void SetupParams(AbilitySetup setup)
     {
 		base.SetupParams(setup);
-     if(!VFX1) VFX1 = Resources.Load("CustomLasers/FireMage/Meteor") as GameObject;
+        if(!VFX1) VFX1 = Resources.Load("CustomLasers/Druid/LeechingVines") as GameObject;
         isMagic = true;
     }
 	public override bool IsCasterValid (Unit Caster)
@@ -21,9 +21,8 @@ public class DruidLeech : Ability
 	public override void UseAbility (Unit Caster, Unit Target) {
 		if (IsAbilityValid(Caster, Target)) {
 
-            GameObject fireball = Instantiate(VFX1, Target.transform.position + new Vector3(Random.Range(-2,2), 5, Random.Range(-2, 2)), Quaternion.identity);
-            fireball.transform.LookAt(Target.transform);
-            fireball.GetComponent<FullAutoFireAtTarget>().SetBigMissilesHoming(Target.transform);
+            GameObject seeds = Instantiate(VFX1, Caster.transform.position, Quaternion.identity);
+            seeds.GetComponent<FullAutoFireAtTarget>().SetSmallMissilesHoming(Target.transform);
 
             GameEvents.ThornsUp(Target, StatBoost);
 			GameEvents.UseMana(Caster, Cost);

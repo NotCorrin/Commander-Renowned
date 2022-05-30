@@ -45,10 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loopingSFX: {fileID: 8959962781991663829}
-  waveSfxPrefabs:
-  - {fileID: 1963985919382282, guid: 99b56f09ce8bde94caacc2b20ac9babd, type: 3}
-  - {fileID: 1963985919382282, guid: 883a8472567c9ff4ba75b3980666ede7, type: 3}
-  - {fileID: 1963985919382282, guid: e4d1ec12d6a20f841b679e4b16798c04, type: 3}
+  waveSfxPrefabs: []
   explosionSfxPregabs:
   - {fileID: 1696384031815542, guid: 55e98177fd1bd4942859ad76bf3caf96, type: 3}
   - {fileID: 1696384031815542, guid: f8d4aa30ef4c73142944391df1688642, type: 3}
