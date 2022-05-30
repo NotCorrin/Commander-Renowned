@@ -195,7 +195,6 @@ public class Unit : Listener
     {
         if(!ability)
         {
-            Debug.Log(spriteRenderer.color);
             animator.SetBool("greyedOut", false);
             if (!FieldController.main.IsUnitPlayer(this)) UpdateEnemyVisual();
         }
