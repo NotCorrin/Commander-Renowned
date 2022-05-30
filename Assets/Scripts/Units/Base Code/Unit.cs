@@ -352,6 +352,7 @@ public class Unit : Listener
         {
             baseDefense = Mathf.Max(0, --baseDefense);
             Defense = baseDefense;
+            Thorns = 0;
         }
     }
 
