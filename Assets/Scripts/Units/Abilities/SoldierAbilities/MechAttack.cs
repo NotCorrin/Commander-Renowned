@@ -24,7 +24,7 @@ public class MechAttack : QTEAbility
 
     protected override void AbilityUsed(GameManager.QTEResult result)
     {
-        int FinalDamage = Damage * Caster.Ammo;        
+        int FinalDamage = Damage + Caster.Ammo;        
 
         switch (result)
         {
@@ -72,8 +72,8 @@ public class MechAttack : QTEAbility
     {
         if(Target)
         {
-            GameEvents.BaseAttackUp(Caster, -1);
-            GameEvents.BaseDefenseUp(Caster, -1);
+            GameEvents.BaseAttackUp(Caster, -2);
+            GameEvents.BaseDefenseUp(Caster, -2);
             GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, damage));
             FireLaserAtTarget(Target.transform);
         }
