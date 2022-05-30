@@ -59,12 +59,13 @@ public class MechAttack : QTEAbility
 		return (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(Target) != isPlayer);
 	}
 
-    void FireLaserAtTarget(Transform targetTransform)
+    void FireMissileAtTarget(Transform targetTransform)
     {
         if (VFX1)
         {
-            GameObject SpawnedLaser = Instantiate(VFX1, transform);
-            SpawnedLaser.transform.LookAt(targetTransform);
+            GameObject SpawnedMissile = Instantiate(VFX1, transform);
+            SpawnedMissile.transform.LookAt(targetTransform);
+            SpawnedMissile.GetComponent<FullAutoFireAtTarget>().SetSmallMissilesHoming(targetTransform);
         }
     }
 
@@ -72,10 +73,10 @@ public class MechAttack : QTEAbility
     {
         if(Target)
         {
+            GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, damage));
+            FireMissileAtTarget(Target.transform);
             GameEvents.BaseAttackUp(Caster, -2);
             GameEvents.BaseDefenseUp(Caster, -2);
-            GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, damage));
-            FireLaserAtTarget(Target.transform);
         }
     }
 

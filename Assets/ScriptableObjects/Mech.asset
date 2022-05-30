@@ -30,7 +30,7 @@ MonoBehaviour:
     AbilityDescription: Expend all ammo. Deal damage equal to the amount of ammo
       spent.
     Cost: 999
-    Damage: 1
+    Damage: 5
     StatBoost: 0
     Variation: 1
     VFX1: {fileID: 1585991288121845649, guid: 4e759e593791d58409061a88347ebf53, type: 3}
