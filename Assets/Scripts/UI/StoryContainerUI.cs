@@ -13,6 +13,7 @@ public class StoryContainerUI : MonoBehaviour
     VisualElement buttonContainer;
 
     bool tComplete;
+    public bool AddUnit;
 
     void Awake()
     {
@@ -38,7 +39,7 @@ public class StoryContainerUI : MonoBehaviour
         if (tComplete)
         {
             title.text = scenario.title;
-            desc.text = scenario.description;
+            desc.text = AddUnit?scenario.windescription:scenario.description;
         }
         else
         {
@@ -46,7 +47,7 @@ public class StoryContainerUI : MonoBehaviour
             desc.text = stories.tutorialText;
         }
 
-        if (scenario.winunit.Length <= 0)
+        if (scenario.winunit.Length <= 0 || !AddUnit)
         {
             Button continueButton = new Button();
             continueButton.text = "Continue";
@@ -57,7 +58,6 @@ public class StoryContainerUI : MonoBehaviour
 
             buttonContainer.Add(continueButton);
         }
-
         else
         {
             foreach (UnitScriptableObject unit in scenario.winunit)
@@ -76,7 +76,11 @@ public class StoryContainerUI : MonoBehaviour
     }
     void Continue()
     {
-        if(tComplete)   LevelManager.instance.LoadScene(SceneIndex.MenuSelectionScene);
+        if (tComplete)
+        {
+            if(team.tutorialComplete)   LevelManager.instance.LoadScene(SceneIndex.MenuSelectionScene);
+            else LevelManager.instance.LoadScene(SceneIndex.TerrainTestScene);
+        }
         else
         {
             title.text = stories.story[stories.level + 1].title;
