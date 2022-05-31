@@ -26,28 +26,25 @@ public class TankAttack : QTEAbility
 
     protected override void AbilityUsed(GameManager.QTEResult result)
     {
-        int FinalDefense = StatBoost;
+        int FinalDamage = Damage;
 
         switch (result)
         {
             case GameManager.QTEResult.Critical:
                 {
-                    FinalDefense += Variation;
+                    FinalDamage += Variation;
                     break;
                 }
             case GameManager.QTEResult.Miss:
                 {
-                    FinalDefense = Mathf.Max(0, FinalDefense - Variation);
+                    FinalDamage = Mathf.Max(0, FinalDamage - Variation);
                     break;
                 }
         }
 
-        if (VFX2) Instantiate(VFX2, transform);
-        GameEvents.AttackUp(Caster, FinalDefense);
-
         foreach (Unit unit in FieldController.main.GetAllies(Target))
         {
-            GameEvents.HealthChanged(Target, -GetDamageCalculation(Caster, Target, Damage));
+            GameEvents.UnitAttack(Caster, unit, -GetDamageCalculation(Caster, unit, FinalDamage));
             FireLaserAtTarget(unit.transform);
         }
         FireLaserAtTarget(Target.transform);
