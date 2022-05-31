@@ -29,6 +29,11 @@ MonoBehaviour:
     - enemies:
       - {fileID: 11400000, guid: af8c8893720fd0d47aedfb25dc11f9a1, type: 2}
       - {fileID: 11400000, guid: edf88a06261f4ed4891c1b5cf94ad382, type: 2}
+      - {fileID: 11400000, guid: edf88a06261f4ed4891c1b5cf94ad382, type: 2}
+    - enemies:
+      - {fileID: 11400000, guid: af8c8893720fd0d47aedfb25dc11f9a1, type: 2}
+      - {fileID: 11400000, guid: af8c8893720fd0d47aedfb25dc11f9a1, type: 2}
+      - {fileID: 11400000, guid: edf88a06261f4ed4891c1b5cf94ad382, type: 2}
     windescription: 'The shadow creatures have been defeated, and the village is
       saved.
 
