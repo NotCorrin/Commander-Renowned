@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: New Scenario
   m_EditorClassIdentifier: 
   level: 0
+  tutorialText: "Welcome to Commander: Renowned.\r\n\r\nYou are the Renowned; an
+    elite commander who wields arcane powers and combines it with modern technology.\r"
   story:
   - title: 
     description: 
@@ -20,24 +22,23 @@ MonoBehaviour:
     windescription: 
     winunit: []
   - title: Tutorial
-    description: 'Welcome to Commander: Renowned.
-
-
-      You play as a Renowned;
-      an elite commander who wields arcane powers and combines it with modern technology.
-
-
-      Command
-      your carefully curated selection of 3 units to defeat the enemy and free the
-      world from their grasp.'
+    description: "Your party of adventurers have been called to help the city of
+      Townsfield from invading shadow creatures.\r"
     Enemies:
     - enemies: []
     - enemies:
       - {fileID: 11400000, guid: ff9134c33cedaaa4a8f884e77b16ccc0, type: 2}
       - {fileID: 11400000, guid: ff9134c33cedaaa4a8f884e77b16ccc0, type: 2}
       - {fileID: 11400000, guid: ff9134c33cedaaa4a8f884e77b16ccc0, type: 2}
-    windescription: 
-    winunit: []
+    windescription: 'The shadow creatures have been defeated, and the village is
+      saved.
+
+      
+
+      A local mage has pledged their loyalty, and can be
+      chosen when selecting units.'
+    winunit:
+    - {fileID: 11400000, guid: e7acd760f86d622409b684a33cad4664, type: 2}
   - title: Plains
     description: You are ambushed by bandits.
     Enemies:

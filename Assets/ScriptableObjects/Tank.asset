@@ -22,16 +22,18 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  - AbilityType: 14
-    AbilityName: Attack Formation
-    AbilityDescription: Strike in a positive formation. attack up, Damage 3
-    Cost: 1
-    Damage: 3
-    StatBoost: 1
-    Variation: 1
+  - AbilityType: 15
+    AbilityName: Tank Attack
+    AbilityDescription: Die
+    Cost: 2
+    Damage: 4
+    StatBoost: 0
+    Variation: 2
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
@@ -42,17 +44,7 @@ MonoBehaviour:
     Damage: 3
     StatBoost: 1
     Variation: 1
-    VFX1: {fileID: 0}
-    VFX2: {fileID: 0}
-    VFX3: {fileID: 0}
-  - AbilityType: 13
-    AbilityName: Mech Attack
-    AbilityDescription: Expend all ammo. Deal damage equal to the amount of ammo
-      spent.
-    Cost: 999
-    Damage: 1
-    StatBoost: 0
-    Variation: 1
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
@@ -64,6 +56,7 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
@@ -74,6 +67,7 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
+    ForceTarget: 0
     VFX1: {fileID: 782153884964200169, guid: b8c56c2add686174dadacb682e6415ad, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}

@@ -22,6 +22,7 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
@@ -32,6 +33,7 @@ MonoBehaviour:
     Damage: 3
     StatBoost: 1
     Variation: 1
+    ForceTarget: 0
     VFX1: {fileID: 1533149051114980, guid: 14237ad61acba9345b53abf70e0cd027, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
@@ -42,6 +44,7 @@ MonoBehaviour:
     Damage: 1
     StatBoost: 3
     Variation: 1
+    ForceTarget: 0
     VFX1: {fileID: 4795044506606789115, guid: e24947d56dd5bb14089df296b91fab13, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
@@ -53,6 +56,7 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
@@ -61,24 +65,36 @@ MonoBehaviour:
     AbilityDescription: Gain 3 ammo
     Cost: -3
     Damage: 0
-    StatBoost: 0
+    StatBoost: 1
     Variation: 0
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  - AbilityType: 1
-    AbilityName: Confidence
-    AbilityDescription: Increases attack damage
+  - AbilityType: 17
+    AbilityName: Magic Reserves
+    AbilityDescription: Target unit gains 1 ammo and/or mana
+    Cost: 1
+    Damage: 0
+    StatBoost: 1
+    Variation: 0
+    ForceTarget: 0
+    VFX1: {fileID: 0}
+    VFX2: {fileID: 0}
+    VFX3: {fileID: 0}
+  - AbilityType: 16
+    AbilityName: Charisma
+    AbilityDescription: Increases attack damage of all allies
     Cost: 1
     Damage: 0
     StatBoost: 2
     Variation: 0
+    ForceTarget: 2
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  VanguardAbilities2: []
   MaxHealth: 18
-  MaxAmmo: 2
-  MaxMana: 2
+  MaxAmmo: 3
+  MaxMana: 3
   animator: {fileID: 9100000, guid: 74b3c6f72f520a248965c52c6f97a33e, type: 2}
   sprite: {fileID: -6852834596175607816, guid: 55e703a8ba1583a4987292f6d9806971, type: 3}

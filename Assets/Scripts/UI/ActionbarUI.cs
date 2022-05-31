@@ -254,8 +254,9 @@ public class ActionbarUI : Listener
         else if(RoundController.phase == RoundController.Phase.PlayerSupport)
         {
             if(!abilityActive[_selectedAbility-1]) return;
-            List<Unit> validTargets = FieldController.main.GetValidTargets(selectedUnit, selectedUnit.SupportAbilities[_selectedAbility - 1]);
-            if (validTargets.Count == 1)
+            Ability _ability = selectedUnit.SupportAbilities[_selectedAbility - 1];
+            List<Unit> validTargets = FieldController.main.GetValidTargets(selectedUnit, _ability);
+            if ((validTargets.Count == 1 || _ability.forceTarget == TargetMode.False) && _ability.forceTarget != TargetMode.True)
             {
                 GameEvents.UseAbility(selectedUnit, validTargets[0], _selectedAbility);
             }
