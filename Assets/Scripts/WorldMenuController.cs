@@ -13,7 +13,7 @@ public class WorldMenuController : Listener
     }
     void WinSceneDelay()
     {
-        LevelManager.instance.LoadScene(SceneIndex.EndScene);
+        LevelManager.instance.LoadScene(SceneIndex.AddUnitScene);
     }
 
     void LoseSceneDelay()

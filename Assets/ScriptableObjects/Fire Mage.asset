@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fire Mage
   m_EditorClassIdentifier: 
   unitType: 0
-  UnitName: Fire Mage
+  UnitName: Mage
   VanguardAbilities:
   - AbilityType: 0
     AbilityName: 
@@ -22,6 +22,7 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
@@ -32,6 +33,7 @@ MonoBehaviour:
     Damage: 2
     StatBoost: 0
     Variation: 1
+    ForceTarget: 0
     VFX1: {fileID: 1116862508874840, guid: 0156ac8bc7645f44fb571c716152b33a, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
@@ -42,6 +44,7 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 2
     Variation: 1
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
@@ -53,6 +56,7 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
@@ -64,10 +68,10 @@ MonoBehaviour:
     Damage: 8
     StatBoost: 0
     Variation: 0
+    ForceTarget: 0
     VFX1: {fileID: 8959962781991663832, guid: f1c8547dbd9935e4ba610a23c00f3c54, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  VanguardAbilities2: []
   MaxHealth: 12
   MaxAmmo: 0
   MaxMana: 5

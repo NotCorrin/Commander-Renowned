@@ -45,6 +45,8 @@ public abstract class Ability : MonoBehaviour
         get => variation;
     }
 
+    public TargetMode forceTarget;
+
     public Icon[] buffs;
     [SerializeField] protected GameObject VFX1;
     [SerializeField] protected GameObject VFX2;
@@ -61,6 +63,7 @@ public abstract class Ability : MonoBehaviour
             xCost = true;
             cost = 0;
         }
+        forceTarget = setup.ForceTarget;
         damage = setup.Damage;
         statBoost = setup.StatBoost;
         variation = setup.Variation;
@@ -117,4 +120,11 @@ public enum IconType
 {
     Attack,
     Defence
+}
+
+public enum TargetMode
+{
+    Default,
+    True,
+    False
 }
