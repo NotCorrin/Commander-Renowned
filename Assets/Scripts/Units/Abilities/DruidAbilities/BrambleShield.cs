@@ -49,27 +49,27 @@ public class BrambleShield : QTEAbility
 
     protected override void AbilityUsed(GameManager.QTEResult result)
     {
-        int FinalDefense = StatBoost;
+        int FinalThorns = StatBoost;
         int FinalCost = Cost;
 
         switch (result)
         {
             case GameManager.QTEResult.Critical:
                 {
-                    FinalDefense = FinalDefense + Variation;
+                    FinalThorns = FinalThorns + Variation;
                     break;
                 }
             case GameManager.QTEResult.Miss:
                 {
-                    FinalDefense = Mathf.Max(0, FinalDefense - Variation);
-                    FinalCost = Mathf.Min(0, FinalCost - CostVariation);
+                    FinalThorns = Mathf.Max(0, FinalThorns - Variation);
+                    FinalCost = Mathf.Min(-1, FinalCost - CostVariation);
                     break;
                 }
         }
 
         if (VFX1) Instantiate(VFX1, transform);
-        GameEvents.DefenseUp(Caster, FinalDefense);
-        GameEvents.ThornsUp(Caster, 2);
+        GameEvents.DefenseUp(Caster, 2);
+        GameEvents.ThornsUp(Caster, FinalThorns);
         //GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, Damage));
         GameEvents.onUseMana(Caster, FinalCost);
     }

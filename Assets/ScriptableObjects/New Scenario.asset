@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b12e751dbe26864a83de92a31c6d08e, type: 3}
   m_Name: New Scenario
   m_EditorClassIdentifier: 
-  level: 0
+  level: 1
   tutorialText: "Welcome to Commander: Renowned.\r\n\r\nYou are the Renowned; an
     elite commander who wields arcane powers and combines it with modern technology.\r"
   story:
@@ -43,13 +43,23 @@ MonoBehaviour:
       selecting units.'
     winunit:
     - {fileID: 11400000, guid: e7acd760f86d622409b684a33cad4664, type: 2}
-  - title: Plains
+  - title: Forest or some shit
     description: You are ambushed by bandits.
     Enemies:
     - enemies: []
     - enemies:
-      - {fileID: 11400000, guid: 5196e05f980e6154392d8db4f4d5968d, type: 2}
-      - {fileID: 11400000, guid: 5196e05f980e6154392d8db4f4d5968d, type: 2}
-      - {fileID: 11400000, guid: 5196e05f980e6154392d8db4f4d5968d, type: 2}
+      - {fileID: 11400000, guid: 7803db8250df25b40be0d0b5a9dea4fd, type: 2}
+      - {fileID: 11400000, guid: 7803db8250df25b40be0d0b5a9dea4fd, type: 2}
+      - {fileID: 11400000, guid: 7803db8250df25b40be0d0b5a9dea4fd, type: 2}
+    windescription: 
+    winunit: []
+  - title: Desert
+    description: You are ambushed by bandits.
+    Enemies:
+    - enemies: []
+    - enemies:
+      - {fileID: 11400000, guid: ff9134c33cedaaa4a8f884e77b16ccc0, type: 2}
+      - {fileID: 11400000, guid: e7acd760f86d622409b684a33cad4664, type: 2}
+      - {fileID: 11400000, guid: f6265ea57b7308b46a6e86b2ff8e1581, type: 2}
     windescription: 
     winunit: []

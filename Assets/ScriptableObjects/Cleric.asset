@@ -28,8 +28,10 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 0
     AbilityName: Divine Smite
-    AbilityDescription: Summon a burst of holy energy, damaging the enemy and restoring
-      your mana.\n2 ATT
+    AbilityDescription: 'Summon a burst of holy energy, damaging the enemy and restoring
+      your mana.
+
+      2 ATT'
     Cost: -3
     Damage: 2
     StatBoost: 0
@@ -40,7 +42,10 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 2
     AbilityName: Repel Harm
-    AbilityDescription: Compels those who intend to lessen their efforts.\n+3 DEF
+    AbilityDescription: 'Compels those who intend to lessen their efforts.
+
+      +3
+      DEF'
     Cost: -2
     Damage: 0
     StatBoost: 3

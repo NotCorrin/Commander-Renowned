@@ -62,7 +62,7 @@ public class MageDefend : QTEAbility
             case GameManager.QTEResult.Miss:
                 {
                     FinalDefense = Mathf.Max(0, FinalDefense - Variation);
-                    FinalCost = Mathf.Min(0, FinalCost - CostVariation);
+                    FinalCost = Mathf.Min(-1, FinalCost - CostVariation);
                     break;
                 }
         }

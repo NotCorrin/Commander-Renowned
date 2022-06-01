@@ -64,7 +64,10 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 11
     AbilityName: Leech
-    AbilityDescription: Mark an enemy with -2 thorns.\nDamage them to heal 2.
+    AbilityDescription: 'Mark an enemy with -2 thorns.
+
+      Damage them to heal
+      2.'
     Cost: 2
     Damage: 0
     StatBoost: -2
@@ -73,7 +76,7 @@ MonoBehaviour:
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  MaxHealth: 14
+  MaxHealth: 13
   MaxAmmo: 0
   MaxMana: 3
   animator: {fileID: 9100000, guid: 715f83c341f45504f993d4f8bf73e4c6, type: 2}

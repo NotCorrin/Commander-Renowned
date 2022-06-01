@@ -22,17 +22,19 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   - AbilityType: 13
     AbilityName: Megalaser
-    AbilityDescription: Expend all ammo. Deal damage equal to the amount of ammo
-      spent.
+    AbilityDescription: "Expend all ammo. \nDeal damage equal to 5 plus the amount
+      of ammo spent.\nPermanent att down and def down."
     Cost: 999
     Damage: 5
     StatBoost: 0
     Variation: 1
+    ForceTarget: 0
     VFX1: {fileID: 1585991288121845649, guid: 4e759e593791d58409061a88347ebf53, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
@@ -43,6 +45,7 @@ MonoBehaviour:
     Damage: 3
     StatBoost: 1
     Variation: 1
+    ForceTarget: 0
     VFX1: {fileID: 8726590127215217202, guid: 783f819d5d65b494d9c8ad199f133bff, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
@@ -54,6 +57,7 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
@@ -64,10 +68,11 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
+    ForceTarget: 0
     VFX1: {fileID: 782153884964200169, guid: b8c56c2add686174dadacb682e6415ad, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  MaxHealth: 24
+  MaxHealth: 20
   MaxAmmo: 9
   MaxMana: 0
   animator: {fileID: 9100000, guid: 7bf3a48164c15e44aaef6fcee29c76db, type: 2}
