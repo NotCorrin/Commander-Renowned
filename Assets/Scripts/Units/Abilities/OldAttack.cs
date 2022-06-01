@@ -45,7 +45,7 @@ public class OldAttack : QTEAbility
         if (VFX2) Instantiate(VFX2, transform);
         GameEvents.AttackUp(Caster, FinalDefense);
 
-        GameEvents.HealthChanged(Target, -GetDamageCalculation(Caster, Target, Damage));
+        GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, Damage));
         FireLaserAtTarget(Target.transform);
 
         GameEvents.UseAmmo(Caster, Cost);

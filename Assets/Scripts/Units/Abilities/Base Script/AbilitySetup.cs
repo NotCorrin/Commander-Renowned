@@ -7,6 +7,7 @@ public class AbilitySetup
 {
     public AbilityScript AbilityType;
     public string AbilityName;
+    [TextArea(5, 5)]
     public string AbilityDescription;
     public int Cost;
     public int Damage;

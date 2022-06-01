@@ -76,7 +76,7 @@ MonoBehaviour:
     AbilityDescription: Target unit gains 1 ammo and/or mana
     Cost: 1
     Damage: 0
-    StatBoost: 1
+    StatBoost: -1
     Variation: 0
     ForceTarget: 0
     VFX1: {fileID: 0}

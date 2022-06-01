@@ -423,14 +423,14 @@ public class Unit : Listener
         }
 
         finalWeight = (2 * moveWeight + healthWeight + resourceWeight) / 4 + buffWeight;
-        Debug.Log(UnitName
-        + "\n" + " final weight = " + finalWeight
-        + "\n" + " move weight = " + moveWeight
-        + "\n" + "health weight = " + healthWeight
-        + "\n" + "resource weight = " + resourceWeight
-        + "\n" + " weight - buffweight = " + ((2 * moveWeight + healthWeight + resourceWeight) / 4)
-        + "\n" + "buffweight = " + buffWeight
-        );
+        //Debug.Log(UnitName
+        //+ "\n" + " final weight = " + finalWeight
+        //+ "\n" + " move weight = " + moveWeight
+        //+ "\n" + "health weight = " + healthWeight
+        //+ "\n" + "resource weight = " + resourceWeight
+        //+ "\n" + " weight - buffweight = " + ((2 * moveWeight + healthWeight + resourceWeight) / 4)
+        //+ "\n" + "buffweight = " + buffWeight
+        //);
 
         return finalWeight;
     }

@@ -22,6 +22,7 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
@@ -33,6 +34,7 @@ MonoBehaviour:
     Damage: 2
     StatBoost: 0
     Variation: 1
+    ForceTarget: 0
     VFX1: {fileID: 3167238779002012738, guid: 957660e475a9833449cdfdf53e66cc76, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
@@ -44,6 +46,7 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 2
     Variation: 1
+    ForceTarget: 0
     VFX1: {fileID: 3167238779002012738, guid: a94bcb02515bfb545ae8937d8b75a1b6, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
@@ -55,16 +58,18 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   - AbilityType: 11
     AbilityName: Leech
-    AbilityDescription: Mark an enemy with -2 thorns. Damage them to heal 2.
+    AbilityDescription: Mark an enemy with -2 thorns.\nDamage them to heal 2.
     Cost: 2
     Damage: 0
     StatBoost: -2
     Variation: 0
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
