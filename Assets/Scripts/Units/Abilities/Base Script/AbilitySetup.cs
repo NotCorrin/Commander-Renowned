@@ -12,6 +12,7 @@ public class AbilitySetup
     public int Damage;
     public int StatBoost;
     public int Variation;
+    public TargetMode ForceTarget = TargetMode.Default;
 
     public GameObject VFX1;
     public GameObject VFX2;
@@ -34,5 +35,8 @@ public enum AbilityScript
     DruidLeech,
     BrambleShield,
     MechAttack,
-    OldAttack
+    OldAttack,
+    TankAttack,
+    CommanderBuff,
+    CommanderReload
 }

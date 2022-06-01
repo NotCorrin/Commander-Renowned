@@ -12,6 +12,8 @@ public class StoryContainerUI : MonoBehaviour
     TextElement desc;
     VisualElement buttonContainer;
 
+    bool tComplete;
+    public bool AddUnit;
 
     void Awake()
     {
@@ -33,26 +35,32 @@ public class StoryContainerUI : MonoBehaviour
         }
 
         Scenario scenario = stories.story[stories.level + 1];
-
-        title.text = stories.story[stories.level+1].title;
-        desc.text = stories.story[stories.level+1].description;
-
-        if (stories.story[stories.level+1].winunit.Length <= 0)
+        tComplete = team.tutorialComplete;
+        if (tComplete)
         {
-            Debug.Log("YO");
+            title.text = scenario.title;
+            desc.text = AddUnit?scenario.windescription:scenario.description;
+        }
+        else
+        {
+            title.text = "Tutorial";
+            desc.text = stories.tutorialText;
+        }
+
+        if (scenario.winunit.Length <= 0 || !AddUnit)
+        {
             Button continueButton = new Button();
             continueButton.text = "Continue";
             continueButton.AddToClassList("button");
             continueButton.clickable.clicked += () => {
-                LevelManager.instance.LoadScene(SceneIndex.MenuSelectionScene);
+                Continue();
             };
 
             buttonContainer.Add(continueButton);
         }
-
         else
         {
-            foreach (UnitScriptableObject unit in stories.story[stories.level+1].winunit)
+            foreach (UnitScriptableObject unit in scenario.winunit)
             {
                 Button unitButton = new Button();
                 unitButton.text = unit.name;
@@ -64,6 +72,20 @@ public class StoryContainerUI : MonoBehaviour
 
                 buttonContainer.Add(unitButton);
             }
+        }
+    }
+    void Continue()
+    {
+        if (tComplete)
+        {
+            if(team.tutorialComplete)   LevelManager.instance.LoadScene(SceneIndex.MenuSelectionScene);
+            else LevelManager.instance.LoadScene(SceneIndex.TerrainTestScene);
+        }
+        else
+        {
+            title.text = stories.story[stories.level + 1].title;
+            desc.text = stories.story[stories.level + 1].description;
+            tComplete = true;
         }
     }
 }
