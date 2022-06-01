@@ -97,7 +97,23 @@ public class FieldController : Listener
     {
         return (unit == PlayerVanguard || unit == PlayerSupportLeft || unit == PlayerSupportRight);
     }
-
+    public List<Unit> GetAllies(Unit unit)
+    {
+        List<Unit> unitList = new List<Unit>();
+        if(IsUnitPlayer(unit))
+        {
+            unitList.Add(PlayerVanguard);
+            unitList.Add(PlayerSupportLeft);
+            unitList.Add(PlayerSupportRight);
+        }
+        else
+        {
+            unitList.Add(EnemyVanguard);
+            unitList.Add(EnemySupportLeft);
+            unitList.Add(EnemySupportRight);
+        }
+        return unitList;
+    }
     public bool IsUnitActive(Unit unit)
     {
         if(unit == PlayerSupportLeft && supportLeftUsed || unit == PlayerSupportRight && supportRightUsed) return false;

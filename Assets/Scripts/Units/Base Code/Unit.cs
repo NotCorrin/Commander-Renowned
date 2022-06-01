@@ -496,12 +496,14 @@ public class Unit : Listener
 
     public void UpdateEnemyVisual()
     {
-        if(spriteRenderer)
-        {
-            spriteRenderer.color = new Color(0.85f, 0.66f, 1, 1);
-            //spriteRenderer.color = Color.black;
-            spriteRenderer.flipX = true;
-        }
+        //if(spriteRenderer)
+        //{
+        //    spriteRenderer.color = new Color(0.85f, 0.66f, 1, 1);
+        //    //spriteRenderer.color = Color.black;
+        //    spriteRenderer.flipX = true;
+        //}
+        animator.SetBool("enemy", true);
+        spriteRenderer.flipX = true;
     }
 }
 

@@ -42,7 +42,7 @@ public class SceneController : Listener
         {
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
+            ray.origin += Vector3.right * 99;
             RaycastHit hit;
             Physics.Raycast(ray, out hit, clickLayer);
 
