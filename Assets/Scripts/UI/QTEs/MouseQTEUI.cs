@@ -31,8 +31,9 @@ public class MouseQTEUI : Listener
     [SerializeField] private UIDocument uiDocument;
     private VisualElement container, arrow, normal, crit;
     private TextElement statusLabel;
-    private bool isMovingLeft;
-    private int currentLocation;
+    private float currentLocation;
+    private int modifier;
+    private bool clicked;
 
     protected override void SubscribeListeners()
     {
@@ -40,7 +41,6 @@ public class MouseQTEUI : Listener
 
         container.RegisterCallback<ClickEvent>(OnClick);
         statusLabel.RegisterCallback<TransitionEndEvent>(OnStatusTransitionEnd);
-        arrow.RegisterCallback<TransitionEndEvent>(OnTransitionEnd);
     }
 
     protected override void UnsubscribeListeners()
@@ -49,7 +49,6 @@ public class MouseQTEUI : Listener
 
         container.UnregisterCallback<ClickEvent>(OnClick);
         statusLabel.UnregisterCallback<TransitionEndEvent>(OnStatusTransitionEnd);
-        arrow.UnregisterCallback<TransitionEndEvent>(OnTransitionEnd);
     }
 
     void Awake()
@@ -78,21 +77,16 @@ public class MouseQTEUI : Listener
         normal.style.width = new Length(normalChance, LengthUnit.Percent);
         crit.style.width = new Length(critChance, LengthUnit.Percent);
 
-        StartCoroutine(LateStart());
-    }
-
-    IEnumerator LateStart()
-    {
-        yield return new WaitForSeconds(0.6f);
-        arrow.style.left = new Length(5, LengthUnit.Percent);
-        isMovingLeft = false;
+        modifier = 1;
+        clicked = false;
     }
 
     void OnClick(ClickEvent evt)
     {
+        clicked = true;
+        currentLocation = arrow.style.left.value.value;
+
         container.UnregisterCallback<ClickEvent>(OnClick);
-        arrow.UnregisterCallback<TransitionEndEvent>(OnTransitionEnd);
-        Debug.Log($"Clicked {currentLocation}");
 
         if (currentLocation >= 50 - (critChance / 2) && currentLocation <= 50 + (critChance / 2))
         {
@@ -119,12 +113,24 @@ public class MouseQTEUI : Listener
         statusLabel.style.scale = new Scale(new Vector2(3, 3));
     }
 
-    void OnTransitionEnd(TransitionEndEvent evt)
+    void Update()
     {
-        currentLocation += isMovingLeft ? -1 : 1;
-        isMovingLeft = currentLocation == 0 || currentLocation == 100 ? !isMovingLeft : isMovingLeft;
+        if (clicked) return;
 
-        arrow.style.left = new Length(currentLocation, LengthUnit.Percent);
+        currentLocation = arrow.style.left.value.value;
+
+        if (currentLocation <= 0f)
+        {
+            modifier = 1;
+            arrow.style.left = new Length(0.1f, LengthUnit.Percent);
+        }
+        else if (currentLocation >= 100f)
+        {
+            modifier = -1;
+            arrow.style.left = new Length(99.9f, LengthUnit.Percent);
+        }
+
+        arrow.style.left = new Length(currentLocation + (modifier * 150 * Time.deltaTime), LengthUnit.Percent);
     }
 
     void OnStatusTransitionEnd(TransitionEndEvent evt)
@@ -135,46 +141,6 @@ public class MouseQTEUI : Listener
         statusLabel.style.opacity = 0f;
         statusLabel.style.scale = new Scale(new Vector2(1, 1));
     }
-
-    // private void Update()
-    // {
-    //     if (Input.GetMouseButtonDown(0))
-    //     {
-    //         MenuEvents.QTETriggered();
-
-    //         IsClicked = true;
-    //     }
-    // }
-
-    // private void QTEAnimation(GameManager.QTEType qteType, int difficultyModifier)
-    // {
-    //     qteCircle.style.transitionDuration = new StyleList<TimeValue>(new List<TimeValue> { new TimeValue(QTEController.ShrinkingCircleMaxTime, TimeUnit.Second) });
-
-    //     //Debug.Log(qteCircle.style.scale);
-
-    //     if (!IsClicked)
-    //     {
-    //         qteCircle.style.scale = new Scale(new Vector2(0f, 0));
-
-    //         if (qteCircle.style.scale == new Scale(new Vector2(0f, 0f)))
-    //         {
-    //             container.style.transitionDelay = new StyleList<TimeValue>(new List<TimeValue> { new TimeValue(QTEController.ShrinkingCircleMaxTime, TimeUnit.Second) });
-
-    //             container.style.opacity = 0;
-    //         }
-    //     }
-    //     else if (IsClicked)
-    //     {
-    //         qteCircle.style.scale = new Scale(new Vector2(Time.deltaTime, Time.deltaTime));
-
-    //         container.style.opacity = 0;
-    //     }
-    // }
-
-    // void LateUpdate()
-    // {
-    //     QTEAnimation(GameManager.QTEType.shrinkingCircle, 1);
-    // }
 
     void EndQTE(GameManager.QTEResult result)
     {
