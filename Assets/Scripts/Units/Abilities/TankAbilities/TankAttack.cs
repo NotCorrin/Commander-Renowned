@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Defend : QTEAbility
+public class TankAttack : QTEAbility
 {
     
     public override void SetupParams(AbilitySetup setup)
@@ -15,37 +15,39 @@ public class Defend : QTEAbility
 
     public override int GetMoveWeight(Unit caster)
     {
-        int HealthWeight = Mathf.FloorToInt((1 - ((float)caster.Health / (float)caster.MaxHealth)) * 100);
+        int BuffWeight = GetTotalDamageBuffs(caster) * 30;
         if (caster.unitType == UnitType.Military || caster.unitType == UnitType.Commander)
         {
             if (caster.Ammo < Cost) return 0;
-            return (HealthWeight + 50) / 2;
+            return BuffWeight + Damage * 10;
         }
         else return 0;
     }
 
     protected override void AbilityUsed(GameManager.QTEResult result)
     {
-        int FinalDefense = StatBoost;
+        int FinalDamage = Damage;
 
         switch (result)
         {
             case GameManager.QTEResult.Critical:
                 {
-                    FinalDefense += Variation;
+                    FinalDamage += Variation;
                     break;
                 }
             case GameManager.QTEResult.Miss:
                 {
-                    FinalDefense = Mathf.Max(0, FinalDefense - Variation);
+                    FinalDamage = Mathf.Max(0, FinalDamage - Variation);
                     break;
                 }
         }
 
-        if (VFX2) Instantiate(VFX2, transform);
-        GameEvents.DefenseUp(Caster, FinalDefense);
-
-        AttackWithLaser(Damage);
+        foreach (Unit unit in FieldController.main.GetAllies(Target))
+        {
+            GameEvents.UnitAttack(Caster, unit, -GetDamageCalculation(Caster, unit, FinalDamage));
+            FireLaserAtTarget(unit.transform);
+        }
+        FireLaserAtTarget(Target.transform);
 
         GameEvents.UseAmmo(Caster, Cost);
     }

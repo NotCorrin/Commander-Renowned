@@ -6,6 +6,8 @@ using UnityEngine;
 public class ScenarioScriptableObject : ScriptableObject
 {
     public int level;
+    [TextArea(15, 6)]
+    public string tutorialText;
     public Scenario[] story;
 }
 

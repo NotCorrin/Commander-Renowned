@@ -33,17 +33,17 @@ MonoBehaviour:
     Damage: 3
     StatBoost: 0
     Variation: 1
-    VFX1: {fileID: 1116862508874840, guid: 0156ac8bc7645f44fb571c716152b33a, type: 3}
-    VFX2: {fileID: 0}
+    VFX1: {fileID: 1708044288245490, guid: a24543d1c31e13d4ea4dc02acfbe3011, type: 3}
+    VFX2: {fileID: 1708044288245490, guid: 1675df6f697632544970eb8cdbd4d6d9, type: 3}
     VFX3: {fileID: 0}
   - AbilityType: 2
-    AbilityName: Wall of Plasma
-    AbilityDescription: Will form an invisible wall to protect the mage
+    AbilityName: Stand Your Ground
+    AbilityDescription: Raise your shield and absorb the incoming blow.
     Cost: -2
     Damage: 0
     StatBoost: 3
     Variation: 1
-    VFX1: {fileID: 0}
+    VFX1: {fileID: 217341259536796723, guid: 75432b09afa8a304da43e1ecf77684af, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   SupportAbilities:
@@ -59,12 +59,13 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 10
     AbilityName: Holy Shield
-    AbilityDescription: +2 Permanent Defense
+    AbilityDescription: Summon a protective aura for your allies. \n+2 Permanent
+      Defense to target.
     Cost: 2
     Damage: 0
     StatBoost: 2
     Variation: 0
-    VFX1: {fileID: 0}
+    VFX1: {fileID: 217341259536796723, guid: 75432b09afa8a304da43e1ecf77684af, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   MaxHealth: 16

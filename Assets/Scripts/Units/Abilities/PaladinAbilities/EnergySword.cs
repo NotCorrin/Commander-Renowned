@@ -66,16 +66,19 @@ public class EnergySword : QTEAbility
 
         if (Caster.Defense >= 1)
         {
-            SpawnVFX(VFX1);
+            SpawnVFX(VFX2);
             FinalDamage += 3;
         }
-        else SpawnVFX(VFX2);
+        else SpawnVFX(VFX1);
 
         GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, FinalDamage));
         GameEvents.onUseMana(Caster, FinalCost);
     }
     void SpawnVFX(GameObject VFXprefab)
     {
-        if (VFXprefab) Instantiate(VFXprefab, Target.transform);
+        if (VFXprefab)
+        {
+            Instantiate(VFXprefab, Target.transform.position + new Vector3(0,2,0), Quaternion.identity).transform.LookAt(Target.transform.position);
+        }
     }
 }
