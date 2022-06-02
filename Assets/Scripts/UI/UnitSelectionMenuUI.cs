@@ -64,11 +64,13 @@ public class UnitSelectionMenuUI : MonoBehaviour
 
                 if (activeUnits.Contains(button))
                 {
+                    AudioManager.instance.Play("OnMousePressed");
                     button.Q<VisualElement>("white-background").style.backgroundColor = new StyleColor(Color.white);
                 }
                 else
                 {
-                     button.Q<VisualElement>("white-background").style.backgroundColor = new StyleColor(new Color(0.364f, 0.364f, 0.364f, 1));
+                    AudioManager.instance.Play("OnMousePressed");
+                    button.Q<VisualElement>("white-background").style.backgroundColor = new StyleColor(new Color(0.364f, 0.364f, 0.364f, 1));
                 }
 
                 if (activeUnits.Count == 3)
@@ -86,9 +88,19 @@ public class UnitSelectionMenuUI : MonoBehaviour
         });
     }
 
+    void OnDisable()
+    {
+        mainScrollViewContainer.Query<Button>().ForEach(button =>
+        {
+            button.clickable.clicked -= () => { };
+        });
+    }
+
     void ConfirmButton_Clicked()
     {
         confirmButton.SetEnabled(false);
+        confirmButton.clickable.clicked -= ConfirmButton_Clicked;
+
         teamScriptableObject.activeUnits.Clear();
         foreach (Button button in activeUnits)
         {
