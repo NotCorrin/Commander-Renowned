@@ -25,8 +25,8 @@ public class CommanderReload : Ability
         if (IsAbilityValid(Caster, Target))
         {
             Instantiate(VFX1, Target.transform);
-            GameEvents.onUseAmmo(Target, Cost);
-            GameEvents.onUseMana(Target, Cost);
+            GameEvents.onUseAmmo(Target, -Cost);
+            GameEvents.onUseMana(Target, -Cost);
             GameEvents.UseMana(Caster, Cost);
         }
     }
