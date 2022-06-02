@@ -22,7 +22,7 @@ public class ActionbarUI : Listener
     [SerializeField] private UIDocument promptBarUIDocument;
     private VisualElement promptBarContainer;
     private TextElement promptBarValue;
-    private Button promptCancelBtn;
+    private VisualElement promptCancel;
 
     [Header("Support Bar")]
     [SerializeField] private GameObject supportBar;
@@ -38,6 +38,7 @@ public class ActionbarUI : Listener
     [SerializeField] private UIDocument switchBarUIDocument;
     private VisualElement switchBarContainer;
     private VisualElement switchConfirmPanel;
+    private VisualElement switchEndPanelContainer;
     private VisualElement switchEndPanel;
 
     private Unit selectedUnit;
@@ -59,7 +60,9 @@ public class ActionbarUI : Listener
 
     protected override void SubscribeListeners()
     {
-        promptCancelBtn.clickable.clicked += OnPromptCancelClicked;
+        promptCancel.RegisterCallback<MouseEnterEvent>(OnPromptCancel_Hover);
+        promptCancel.RegisterCallback<MouseLeaveEvent>(OnPromptCancel_Unhover);
+        promptCancel.RegisterCallback<ClickEvent>(OnPromptCancel_Clicked);
 
 
         abilityOne.ability.RegisterCallback<MouseEnterEvent>(AbilityOne_Hover);
@@ -78,12 +81,12 @@ public class ActionbarUI : Listener
         endSupportTurnBtn.RegisterCallback<MouseLeaveEvent>(EndSupportTurn_Unhover);
         endSupportTurnBtn.RegisterCallback<ClickEvent>(EndSupportTurn_Clicked);
 
-        // switchConfirmPanel.RegisterCallback<MouseEnterEvent>(SwitchConfirm_Hover);
-        // switchConfirmPanel.RegisterCallback<MouseLeaveEvent>(SwitchConfirm_Unhover);
+        switchConfirmPanel.RegisterCallback<MouseEnterEvent, VisualElement>(Switch_Hover, switchConfirmPanel);
+        switchConfirmPanel.RegisterCallback<MouseLeaveEvent, VisualElement>(Switch_Unhover, switchConfirmPanel);
         switchConfirmPanel.RegisterCallback<ClickEvent>(SwitchConfirm_Clicked);
 
-        // switchEndPanel.RegisterCallback<MouseEnterEvent>(SwitchEnd_Hover);
-        // switchEndPanel.RegisterCallback<MouseLeaveEvent>(SwitchEnd_Unhover);
+        switchEndPanel.RegisterCallback<MouseEnterEvent, VisualElement>(Switch_Hover, switchEndPanel);
+        switchEndPanel.RegisterCallback<MouseLeaveEvent, VisualElement>(Switch_Unhover, switchEndPanel);
         switchEndPanel.RegisterCallback<ClickEvent>(SwitchEnd_Clicked);
 
         UIEvents.onUnitSelected += OnUnitSelected;
@@ -94,7 +97,9 @@ public class ActionbarUI : Listener
 
     protected override void UnsubscribeListeners()
     {
-        promptCancelBtn.clickable.clicked -= OnPromptCancelClicked;
+        promptCancel.UnregisterCallback<MouseEnterEvent>(OnPromptCancel_Hover);
+        promptCancel.UnregisterCallback<MouseLeaveEvent>(OnPromptCancel_Unhover);
+        promptCancel.UnregisterCallback<ClickEvent>(OnPromptCancel_Clicked);
 
         abilityOne.ability.UnregisterCallback<MouseEnterEvent>(AbilityOne_Hover);
         abilityOne.ability.UnregisterCallback<MouseLeaveEvent>(AbilityOne_Unhover);
@@ -112,12 +117,12 @@ public class ActionbarUI : Listener
         endSupportTurnBtn.UnregisterCallback<MouseLeaveEvent>(EndSupportTurn_Unhover);
         endSupportTurnBtn.UnregisterCallback<ClickEvent>(EndSupportTurn_Clicked);
 
-        // switchConfirmPanel.UnregisterCallback<MouseEnterEvent>(SwitchConfirm_Hover);
-        // switchConfirmPanel.UnregisterCallback<MouseLeaveEvent>(SwitchConfirm_Unhover);
+        switchConfirmPanel.UnregisterCallback<MouseEnterEvent, VisualElement>(Switch_Hover);
+        switchConfirmPanel.UnregisterCallback<MouseLeaveEvent, VisualElement>(Switch_Unhover);
         switchConfirmPanel.UnregisterCallback<ClickEvent>(SwitchConfirm_Clicked);
 
-        // switchEndPanel.UnregisterCallback<MouseEnterEvent>(SwitchEnd_Hover);
-        // switchEndPanel.UnregisterCallback<MouseLeaveEvent>(SwitchEnd_Unhover);
+        switchEndPanel.UnregisterCallback<MouseEnterEvent, VisualElement>(Switch_Hover);
+        switchEndPanel.UnregisterCallback<MouseLeaveEvent, VisualElement>(Switch_Unhover);
         switchEndPanel.UnregisterCallback<ClickEvent>(SwitchEnd_Clicked);
 
         UIEvents.onUnitSelected -= OnUnitSelected;
@@ -126,24 +131,75 @@ public class ActionbarUI : Listener
         //GameEvents.onKill -= SwitchPrompt;
     }
 
-    void SwitchConfirm_Clicked()
+    void SwitchConfirm_Clicked(ClickEvent evt)
     {
-
+        AudioManager.instance.Play("OnMousePressed");
+        Debug.Log("Switch Button Clicked");
+        if (RoundController.phase == RoundController.Phase.PlayerSwap)
+        {
+            if (selectedUnit)
+            {
+                if (FieldController.main.IsUnitPlayer(SceneController.main.selectedUnit)) FieldController.main.SwapPlayerUnit();
+            }
+            else
+            {
+                switchBarContainer.style.display = DisplayStyle.None;
+                promptBarContainer.style.display = DisplayStyle.Flex;
+                prompt = "Switch";
+                promptBarValue.text = "Select unit to swap into vanguard position";
+            }
+        }
+        else Debug.Log("Player cannot swap right now!");
     }
 
-    void SwitchEnd_Clicked()
+    void SwitchEnd_Clicked(ClickEvent evt)
     {
-
+        AudioManager.instance.Play("OnMousePressed");
+        Debug.Log("End Switch Turn Button Clicked");
+        if (RoundController.phase == RoundController.Phase.PlayerSwap) GameEvents.EndPhase();
+        else Debug.Log("Player does not have priority right now!");
     }
 
-    void OnPromptCancelClicked()
+    void Switch_Hover(MouseEnterEvent evt, VisualElement element)
+    {
+        AudioManager.instance.Play("OnMouseHover");
+        element.style.width = new Length(100, LengthUnit.Percent);
+        element.style.height = new Length(100, LengthUnit.Percent);
+    }
+
+    void Switch_Unhover(MouseLeaveEvent evt, VisualElement element)
+    {
+        element.style.width = new Length(94, LengthUnit.Percent);
+        element.style.height = new Length(94, LengthUnit.Percent);
+    }
+
+    void OnPromptCancel_Clicked(ClickEvent evt)
     {
         prompt = "";
+        AudioManager.instance.Play("OnMouseHover");
+
         if(RoundController.phase == RoundController.Phase.PlayerSwap) switchBarContainer.style.display = DisplayStyle.Flex;
         else supportBarContainer.style.display = DisplayStyle.Flex;
+
         promptBarContainer.style.display = DisplayStyle.None;
         GameEvents.GreyOut(null, false);
         Debug.Log("Prompt Cancel Clicked");
+    }
+
+    void OnPromptCancel_Hover(MouseEnterEvent evt)
+    {
+        if (RoundController.phase == RoundController.Phase.PlayerVanguard || RoundController.phase == RoundController.Phase.PlayerSupport)
+        {
+            AudioManager.instance.Play("OnMouseHover");
+            promptCancel.style.width = new Length(92, LengthUnit.Percent);
+            promptCancel.style.height = new Length(59, LengthUnit.Percent);
+        }
+    }
+
+    void OnPromptCancel_Unhover(MouseLeaveEvent evt)
+    {
+        promptCancel.style.width = new Length(80, LengthUnit.Percent);
+        promptCancel.style.height = new Length(42, LengthUnit.Percent);
     }
 
     void AbilityOne_Hover(MouseEnterEvent evt)
@@ -306,32 +362,6 @@ public class ActionbarUI : Listener
         }
     }
 
-    void SwitchConfirm_Clicked(ClickEvent evt)
-    {
-        Debug.Log("Switch Button Clicked");
-        if (RoundController.phase == RoundController.Phase.PlayerSwap)
-        {
-            if (selectedUnit)
-            {
-                if (FieldController.main.IsUnitPlayer(SceneController.main.selectedUnit)) FieldController.main.SwapPlayerUnit();
-            }
-            else
-            {
-                switchBarContainer.style.display = DisplayStyle.None;
-                promptBarContainer.style.display = DisplayStyle.Flex;
-                prompt = "Switch";
-                promptBarValue.text = "Select unit to swap into vanguard position";
-            }
-        }
-        else Debug.Log("Player cannot swap right now!");
-    }
-
-    void SwitchEnd_Clicked(ClickEvent evt)
-    {
-        Debug.Log("End Switch Turn Button Clicked");
-        if (RoundController.phase == RoundController.Phase.PlayerSwap) GameEvents.EndPhase();
-        else Debug.Log("Player does not have priority right now!");
-    }
     void AbilityUsed(Unit unit)
     {
         FieldController.main.SupportUsed(unit);
@@ -694,12 +724,12 @@ public class ActionbarUI : Listener
 
         if (!FieldController.main.GetUnit(FieldController.Position.Vanguard, true))
         {
-            switchEndPanel.style.display = DisplayStyle.None;
+            switchEndPanelContainer.style.display = DisplayStyle.None;
             switchBarContainer.style.display = DisplayStyle.Flex;
             OnUnitSelected(selectedUnit);
             return;
         }
-        else switchEndPanel.style.display = DisplayStyle.Flex;
+        else switchEndPanelContainer.style.display = DisplayStyle.Flex;
 
         switch (phase)
         {
@@ -775,7 +805,7 @@ public class ActionbarUI : Listener
             // Prompt Bar
             promptBarContainer = promptBarUIDocument.rootVisualElement.Query<VisualElement>("container");
             promptBarValue = promptBarContainer.Query<TextElement>("prompt");
-            promptCancelBtn = promptBarContainer.Query<Button>("cancel-button");
+            promptCancel = promptBarContainer.Query<VisualElement>("end-container");
 
             // Support Bar
             supportBarContainer = supportBarUIDocument.rootVisualElement.Query<VisualElement>("container");
@@ -855,7 +885,8 @@ public class ActionbarUI : Listener
             switchBarContainer = switchBarUIDocument.rootVisualElement.Query<VisualElement>("container");
 
             switchConfirmPanel = switchBarContainer.Query<VisualElement>("switch");
-            switchEndPanel = switchBarContainer.Query<VisualElement>("skip");
+            switchEndPanelContainer = switchBarContainer.Query<VisualElement>("skip-container");
+            switchEndPanel = switchEndPanelContainer.Query<VisualElement>("skip");
 
         }
         catch
