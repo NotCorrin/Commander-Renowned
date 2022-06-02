@@ -28,7 +28,9 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 0
     AbilityName: Spirit Burn
-    AbilityDescription: Steal the enemy's flame to empower your own
+    AbilityDescription: 'Steal the enemy''s flame to empower your own
+
+      2 ATT'
     Cost: -3
     Damage: 2
     StatBoost: 0
@@ -68,7 +70,9 @@ MonoBehaviour:
     AbilityDescription: 'Send down an asteroid to destroy your foes.
 
       Targets
-      enemy support units.'
+      enemy support units.
+
+      8 ATT'
     Cost: 5
     Damage: 8
     StatBoost: 0
@@ -77,7 +81,7 @@ MonoBehaviour:
     VFX1: {fileID: 8959962781991663832, guid: f1c8547dbd9935e4ba610a23c00f3c54, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  MaxHealth: 11
+  MaxHealth: 12
   MaxAmmo: 0
   MaxMana: 5
   animator: {fileID: 9100000, guid: 821cacc0ecea3eb47ad7c840089cad2a, type: 2}

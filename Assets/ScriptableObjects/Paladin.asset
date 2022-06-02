@@ -28,8 +28,8 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 9
     AbilityName: Righteous Blow
-    AbilityDescription: "3 Damage\nDeals bonus damage if i have at least 1 def. \nSmall
-      mana boost."
+    AbilityDescription: "3 Damage\nDeals bonus damage if the Paladin has at least
+      1 def. \nSmall mana boost."
     Cost: -1
     Damage: 3
     StatBoost: 0
@@ -69,7 +69,7 @@ MonoBehaviour:
     AbilityDescription: 'Summon a protective aura for your allies.
 
       +2 Permanent
-      Defense to target.'
+      Defense to any target.'
     Cost: 1
     Damage: 0
     StatBoost: 2

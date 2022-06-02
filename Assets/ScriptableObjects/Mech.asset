@@ -40,7 +40,7 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 4
     AbilityName: Defense Formation
-    AbilityDescription: Strike in a negative formation. Defense up, Damage 3
+    AbilityDescription: "Strike in a negative formation. \nDefense up, Damage 3"
     Cost: 1
     Damage: 3
     StatBoost: 1

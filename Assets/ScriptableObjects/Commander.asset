@@ -84,7 +84,7 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 16
     AbilityName: Charisma
-    AbilityDescription: Increases attack damage of all allies
+    AbilityDescription: All Allies gain +2 ATT
     Cost: 1
     Damage: 0
     StatBoost: 2
