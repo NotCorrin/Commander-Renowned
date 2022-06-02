@@ -18,6 +18,12 @@ EditorBuildSettings:
     path: Assets/Scenes/TerrainTestScene.unity
     guid: 87b8e1c1e212c414bb5ae4e0d182717a
   - enabled: 1
+    path: Assets/Scenes/BattleScene2.unity
+    guid: 519034b4fc14c184abd238e85a5d522d
+  - enabled: 1
+    path: Assets/Scenes/BattleScene3.unity
+    guid: 719e856fb4bd3cd4b9e33fb0ba817a5c
+  - enabled: 1
     path: Assets/Scenes/EndScene.unity
     guid: 0b1f1da31be0c7645baf3c12ceaeb528
   m_configObjects: {}

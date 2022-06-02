@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8084120195896693804
 MonoBehaviour:
@@ -62,4 +62,58 @@ MonoBehaviour:
     volume: 0.2
     pitch: 1
     loop: 0
+    source: {fileID: 0}
+  - name: Swoosh
+    clip: {fileID: 8300000, guid: 5291510b061a6df4ba30fce7b78bed75, type: 3}
+    volume: 0.15
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: TrackOneS
+    clip: {fileID: 8300000, guid: 0a1adc3005edfd74095c5dc71d52aaa3, type: 3}
+    volume: 0.15
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: TrackOneV
+    clip: {fileID: 8300000, guid: a4efda8df9780ed4c9c42deb94fce5a6, type: 3}
+    volume: 0.15
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: TrackTwoS
+    clip: {fileID: 8300000, guid: 5ec519de11e899547b4fb11d47aa442d, type: 3}
+    volume: 0.15
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: TrackTwoV
+    clip: {fileID: 8300000, guid: 473771a61defa384d8bd0d0bf7f30954, type: 3}
+    volume: 0.15
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: TrackThreeS
+    clip: {fileID: 8300000, guid: b110d3a69c8474a479b41fd198d233f7, type: 3}
+    volume: 0.15
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: TrackThreeV
+    clip: {fileID: 8300000, guid: 3078e8ce8bcf67e49bf3b652ee99b03f, type: 3}
+    volume: 0.15
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: MainMenu
+    clip: {fileID: 8300000, guid: 30a4fd41d36c36145b4dce041a130145, type: 3}
+    volume: 0.15
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: Story
+    clip: {fileID: 8300000, guid: 1c994f372989c5649997453e6624318d, type: 3}
+    volume: 0.15
+    pitch: 1
+    loop: 1
     source: {fileID: 0}
