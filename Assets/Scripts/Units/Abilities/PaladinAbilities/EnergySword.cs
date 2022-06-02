@@ -52,8 +52,8 @@ public class EnergySword : QTEAbility
                 {
                     FinalDamage += Variation;
                     FinalCost += CostVariation;
-                    break;
                     Debug.Log("Critical");
+                    break;
                 }
             case GameManager.QTEResult.Miss:
                 {
