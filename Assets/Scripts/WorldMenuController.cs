@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class WorldMenuController : Listener
 {
     public static bool End;
+    public ScenarioScriptableObject scenarios;
     // Start is called before the first frame update
     void EndScene(bool win)
     {
@@ -15,6 +16,7 @@ public class WorldMenuController : Listener
     }
     void WinSceneDelay()
     {
+        scenarios.level++;
         LevelManager.instance.LoadScene(SceneIndex.AddUnitScene);
     }
 

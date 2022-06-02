@@ -33,7 +33,7 @@ MonoBehaviour:
 
       3 ATT'
     Cost: 1
-    Damage: 3
+    Damage: 30
     StatBoost: 2
     Variation: 1
     ForceTarget: 0

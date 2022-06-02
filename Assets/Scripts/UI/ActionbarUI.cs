@@ -340,10 +340,18 @@ public class ActionbarUI : Listener
         OnUnitSelected(unit);
         GameEvents.GreyOut(null, false);
     }
-    void AllSupportUsed()
+    void AllSupportUsed(bool supportUsed)
     {
-        endSupportTurnBtn.Q<VisualElement>("end-yellow").style.display = DisplayStyle.None;
-        endSupportTurnBtn.Q<VisualElement>("end-red").style.display = DisplayStyle.Flex;
+        if (supportUsed)
+        {
+            endSupportTurnBtn.Q<VisualElement>("end-yellow").style.display = DisplayStyle.None;
+            endSupportTurnBtn.Q<VisualElement>("end-red").style.display = DisplayStyle.Flex;
+        }
+        else
+        {
+            endSupportTurnBtn.Q<VisualElement>("end-yellow").style.display = DisplayStyle.Flex;
+            endSupportTurnBtn.Q<VisualElement>("end-red").style.display = DisplayStyle.None;
+        }
     }
     void OnUnitSelected(Unit unit)
     {

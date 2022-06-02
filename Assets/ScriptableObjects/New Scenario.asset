@@ -51,7 +51,7 @@ MonoBehaviour:
       - {fileID: 11400000, guid: e99b8f8a0a04431478f676225795751c, type: 2}
     - enemies:
       - {fileID: 11400000, guid: edf88a06261f4ed4891c1b5cf94ad382, type: 2}
-      - {fileID: 11400000, guid: ff9134c33cedaaa4a8f884e77b16ccc0, type: 2}
+      - {fileID: 11400000, guid: e7acd760f86d622409b684a33cad4664, type: 2}
       - {fileID: 11400000, guid: e99b8f8a0a04431478f676225795751c, type: 2}
     windescription: Choose a new unit to add to your party.
     winunit:
