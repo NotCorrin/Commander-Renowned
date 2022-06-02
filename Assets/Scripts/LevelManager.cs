@@ -11,8 +11,9 @@ public enum SceneIndex
     StoryScene = 1,
     MenuSelectionScene = 2,
     TerrainTestScene = 3,
-    AddUnitScene = 4,
-    EndScene = 5
+    BattleSceneTwo = 4,
+    BattleSceneThree = 5,
+    EndScene = 6
 }
 public class LevelManager : MonoBehaviour
 {
@@ -81,6 +82,7 @@ public class LevelManager : MonoBehaviour
                 container.style.opacity = 1;
                 loading.style.opacity = 1;
                 yield return new WaitForSeconds(1f);
+                AudioManager.instance.Play("Swoosh");
                 operation.allowSceneActivation = true;
             }
         }

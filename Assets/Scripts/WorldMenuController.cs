@@ -17,7 +17,7 @@ public class WorldMenuController : Listener
     void WinSceneDelay()
     {
         scenarios.level++;
-        LevelManager.instance.LoadScene(SceneIndex.AddUnitScene);
+        LevelManager.instance.LoadScene(SceneIndex.StoryScene);
     }
 
     void LoseSceneDelay()

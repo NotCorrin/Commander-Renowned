@@ -52,8 +52,10 @@ public class StoryContainerUI : MonoBehaviour
             Button continueButton = new Button();
             continueButton.text = "Continue";
             continueButton.AddToClassList("button");
+            continueButton.RegisterCallback<MouseEnterEvent>(OnButtonHover);
             continueButton.clickable.clicked += () => {
-                Continue();
+                AudioManager.instance.Play("OnMousePressed");
+                Continue(continueButton);
             };
 
             buttonContainer.Add(continueButton);
@@ -65,7 +67,12 @@ public class StoryContainerUI : MonoBehaviour
                 Button unitButton = new Button();
                 unitButton.text = unit.name;
                 unitButton.AddToClassList("button");
+                unitButton.RegisterCallback<MouseEnterEvent>(OnButtonHover);
                 unitButton.clickable.clicked += () => {
+                    unitButton.SetEnabled(false);
+                    unitButton.clickable.clicked -= () => { };
+                    unitButton.UnregisterCallback<MouseEnterEvent>(OnButtonHover);
+                    AudioManager.instance.Play("OnMousePressed");
                     team.units.Add(unit);
                     LevelManager.instance.LoadScene(SceneIndex.MenuSelectionScene);
                 };
@@ -74,13 +81,32 @@ public class StoryContainerUI : MonoBehaviour
             }
         }
     }
-    void Continue()
+
+    void OnButtonHover(MouseEnterEvent evt)
+    {
+        AudioManager.instance.Play("OnMouseHover");
+    }
+
+    void Continue(Button button)
     {
         if (tComplete)
         {
-            if (stories.level > stories.story.Length - 1) LevelManager.instance.LoadScene(SceneIndex.EndScene);
-            else if (team.tutorialComplete)   LevelManager.instance.LoadScene(SceneIndex.MenuSelectionScene);
-            else LevelManager.instance.LoadScene(SceneIndex.TerrainTestScene);
+            button.SetEnabled(false);
+            button.clickable.clicked -= () => { };
+            button.UnregisterCallback<MouseEnterEvent>(OnButtonHover);
+
+            if (stories.level > stories.story.Length - 1)
+            {
+                LevelManager.instance.LoadScene(SceneIndex.EndScene);
+            }
+            else if (team.tutorialComplete)
+            {
+                LevelManager.instance.LoadScene(SceneIndex.MenuSelectionScene);
+            }
+            else
+            {
+                LevelManager.instance.LoadScene(SceneIndex.TerrainTestScene);
+            }
         }
         else
         {
