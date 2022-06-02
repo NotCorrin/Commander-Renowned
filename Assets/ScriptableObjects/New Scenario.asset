@@ -22,8 +22,8 @@ MonoBehaviour:
     windescription: 
     winunit: []
   - title: Tutorial
-    description: "Your party of adventurers have been called to help the city of
-      Townsfield from invading shadow creatures.\r"
+    description: Your party of adventurers have been called to help the village of
+      Townsfield from invading shadow creatures.
     Enemies:
     - enemies: []
     - enemies:
@@ -34,32 +34,48 @@ MonoBehaviour:
       - {fileID: 11400000, guid: af8c8893720fd0d47aedfb25dc11f9a1, type: 2}
       - {fileID: 11400000, guid: af8c8893720fd0d47aedfb25dc11f9a1, type: 2}
       - {fileID: 11400000, guid: edf88a06261f4ed4891c1b5cf94ad382, type: 2}
-    windescription: 'The shadow creatures have been defeated, and the village is
-      saved.
-
-
-
-      A local mage has pledged their loyalty, and can be chosen when
-      selecting units.'
+    windescription: "The shadow creatures have been defeated, and the village is
+      saved.\r\n\r\nA friendly face has offered to join your cause.\r\n\r\nChoose
+      a new unit to add to your party.\r"
     winunit:
+    - {fileID: 11400000, guid: ff9134c33cedaaa4a8f884e77b16ccc0, type: 2}
     - {fileID: 11400000, guid: e7acd760f86d622409b684a33cad4664, type: 2}
-  - title: Forest or some shit
-    description: You are ambushed by bandits.
+  - title: Plains
+    description: You have heard tell that Castle Valoth is currently under siege
+      from shadow creatures.
     Enemies:
     - enemies: []
     - enemies:
-      - {fileID: 11400000, guid: 7803db8250df25b40be0d0b5a9dea4fd, type: 2}
-      - {fileID: 11400000, guid: 7803db8250df25b40be0d0b5a9dea4fd, type: 2}
-      - {fileID: 11400000, guid: 7803db8250df25b40be0d0b5a9dea4fd, type: 2}
-    windescription: 
-    winunit: []
-  - title: Desert
-    description: You are ambushed by bandits.
+      - {fileID: 11400000, guid: af8c8893720fd0d47aedfb25dc11f9a1, type: 2}
+      - {fileID: 11400000, guid: af8c8893720fd0d47aedfb25dc11f9a1, type: 2}
+      - {fileID: 11400000, guid: af8c8893720fd0d47aedfb25dc11f9a1, type: 2}
+    windescription: Choose a new unit to add to your party.
+    winunit:
+    - {fileID: 11400000, guid: fcd4ac7d08691474480c50f178f7222c, type: 2}
+    - {fileID: 11400000, guid: e99b8f8a0a04431478f676225795751c, type: 2}
+  - title: Forest
+    description: "The Lord of Valoth is impressed with your courage and has tasked
+      you with assaulting the home of all shadow beings.\r\n\r\nHowever, your team
+      does not get far before being ambushed by shadow creatures!\r"
     Enemies:
     - enemies: []
     - enemies:
       - {fileID: 11400000, guid: ff9134c33cedaaa4a8f884e77b16ccc0, type: 2}
       - {fileID: 11400000, guid: e7acd760f86d622409b684a33cad4664, type: 2}
       - {fileID: 11400000, guid: f6265ea57b7308b46a6e86b2ff8e1581, type: 2}
-    windescription: 
-    winunit: []
+    windescription: Choose a new unit to add to your party.
+    winunit:
+    - {fileID: 11400000, guid: f6265ea57b7308b46a6e86b2ff8e1581, type: 2}
+    - {fileID: 11400000, guid: 7803db8250df25b40be0d0b5a9dea4fd, type: 2}
+  - title: Desert
+    description: It is here, in the desert, that the most powerful shadow creatures
+      roam. Defeat them, and all shadow creatures fall.
+    Enemies:
+    - enemies: []
+    - enemies:
+      - {fileID: 11400000, guid: ff9134c33cedaaa4a8f884e77b16ccc0, type: 2}
+      - {fileID: 11400000, guid: e7acd760f86d622409b684a33cad4664, type: 2}
+      - {fileID: 11400000, guid: f6265ea57b7308b46a6e86b2ff8e1581, type: 2}
+    windescription: You should not be able to see this.
+    winunit:
+    - {fileID: 0}

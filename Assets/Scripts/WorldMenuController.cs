@@ -5,9 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class WorldMenuController : Listener
 {
+    public static bool End;
     // Start is called before the first frame update
     void EndScene(bool win)
     {
+        End = true;
         if(win) Invoke("WinSceneDelay", 3);
         else Invoke("LoseSceneDelay", 3);
     }

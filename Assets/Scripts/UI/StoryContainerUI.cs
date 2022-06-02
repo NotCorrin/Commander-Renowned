@@ -78,7 +78,9 @@ public class StoryContainerUI : MonoBehaviour
     {
         if (tComplete)
         {
-            if(team.tutorialComplete)   LevelManager.instance.LoadScene(SceneIndex.MenuSelectionScene);
+            stories.level++;
+            if (stories.level > stories.story.Length - 1) LevelManager.instance.LoadScene(SceneIndex.EndScene);
+            else if (team.tutorialComplete)   LevelManager.instance.LoadScene(SceneIndex.MenuSelectionScene);
             else LevelManager.instance.LoadScene(SceneIndex.TerrainTestScene);
         }
         else

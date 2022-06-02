@@ -102,6 +102,7 @@ public class PhasePanelUI : Listener
 
     void OnPhaseChange(RoundController.Phase phase)
     {
+        if (WorldMenuController.End) return;
         currentPhaseContainer.label.style.left = new Length(-400, LengthUnit.Pixel);
         currentPhaseContainer.label.style.opacity = 0;
 

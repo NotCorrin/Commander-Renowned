@@ -26,12 +26,13 @@ MonoBehaviour:
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  - AbilityType: 4
-    AbilityName: Defense Formation
-    AbilityDescription: "Strike in a negative formation. \nDefense up, Damage 3"
-    Cost: 1
-    Damage: 3
-    StatBoost: 1
+  - AbilityType: 15
+    AbilityName: Bombard
+    AbilityDescription: Call an orbital strike to bombard your enemies! Deals 2 Damage
+      to all enemies.
+    Cost: 2
+    Damage: 20
+    StatBoost: 0
     Variation: 1
     ForceTarget: 0
     VFX1: {fileID: 0}

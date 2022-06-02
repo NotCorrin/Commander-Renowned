@@ -23,6 +23,7 @@ public class Unit : Listener
     public Transform AmmoBar;
     public Transform ManaBar;
     public Transform BuffBar;
+    public ParticleSystem ps;
 
 
     public GameObject visibleElements;
@@ -504,6 +505,7 @@ public class Unit : Listener
         //}
         animator.SetBool("enemy", true);
         spriteRenderer.flipX = true;
+        if (!ps.isPlaying) ps.Play();
     }
 }
 
