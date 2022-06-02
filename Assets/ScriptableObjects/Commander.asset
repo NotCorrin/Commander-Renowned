@@ -72,7 +72,7 @@ MonoBehaviour:
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   - AbilityType: 17
-    AbilityName: Magic Reserves
+    AbilityName: Transmutatation
     AbilityDescription: Target unit gains 1 ammo and/or mana
     Cost: 1
     Damage: 0
@@ -84,8 +84,8 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 16
     AbilityName: Charisma
-    AbilityDescription: Increases attack damage of all allies
-    Cost: 1
+    AbilityDescription: All Allies gain +2 ATT
+    Cost: -1
     Damage: 0
     StatBoost: 2
     Variation: 0

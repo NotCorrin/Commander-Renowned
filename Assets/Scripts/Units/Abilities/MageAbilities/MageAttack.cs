@@ -58,7 +58,7 @@ public class MageAttack : QTEAbility
             case GameManager.QTEResult.Miss:
                 {
                     FinalDamage -= Variation;
-                    FinalCost = Mathf.Min(0, Cost - CostVariation);
+                    FinalCost = Mathf.Min(-1, Cost - CostVariation);
                     Debug.Log("Poor");
                     break;
                 }

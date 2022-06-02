@@ -22,28 +22,35 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   - AbilityType: 0
     AbilityName: Divine Smite
-    AbilityDescription: Summon a burst of holy energy, damaging the enemy and restoring
+    AbilityDescription: 'Summon a burst of holy energy, damaging the enemy and restoring
       your mana.
+
+      2 ATT'
     Cost: -3
     Damage: 2
     StatBoost: 0
     Variation: 1
+    ForceTarget: 0
     VFX1: {fileID: 2589690010720979491, guid: 08e70c16a9d350a4294cc21bb9ab77f1, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   - AbilityType: 2
     AbilityName: Repel Harm
-    AbilityDescription: Compels those who intend to lessen their efforts. Increases
-      defense.
+    AbilityDescription: 'Compels those who intend to lessen their efforts.
+
+      +3
+      DEF'
     Cost: -2
     Damage: 0
     StatBoost: 3
     Variation: 1
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
@@ -55,16 +62,18 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   - AbilityType: 1
     AbilityName: Confidence
-    AbilityDescription: Increases attack damage of your vanguard
+    AbilityDescription: Target Ally gains +2 ATT
     Cost: 1
     Damage: 0
     StatBoost: 2
     Variation: 0
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}

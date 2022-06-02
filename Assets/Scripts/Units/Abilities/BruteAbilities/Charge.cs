@@ -13,11 +13,18 @@ public class Charge : QTEAbility
 
     public override int GetMoveWeight(Unit caster)
     {
-        int BuffWeight = caster.Attack * 30;
+        //int BuffWeight = 100;
         if (caster.unitType == UnitType.Military || caster.unitType == UnitType.Commander)
         {
             if (caster.Ammo < Cost) return 0;
-            return (2 * BuffWeight + 50) / 3;
+            if (FieldController.main.GetIsVanguard(caster))
+            {
+                return 100;
+            }
+            else
+            {
+                return Mathf.FloorToInt(((float)caster.Ammo / (float)caster.MaxAmmo) * 100);
+            }
         }
         else return 0;
     }

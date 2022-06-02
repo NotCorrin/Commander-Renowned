@@ -2,36 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommanderReload : Ability
+public class BuffTest : Ability
 {
-    public override void SetupParams(AbilitySetup setup)
+	public override void SetupParams(AbilitySetup setup)
     {
-        base.SetupParams(setup);
-        if (!VFX1) VFX1 = Resources.Load("CustomLasers/Soldier/ReloadParticles") as GameObject;
+		base.SetupParams(setup);
+        if(!VFX1) VFX1 = Resources.Load("CustomLasers/Mage/BuffParticles") as GameObject;
         isMagic = true;
         //buffs.add(new Buff(BuffType.Attack))
     }
-    public override bool IsCasterValid(Unit Caster)
+	public override bool IsCasterValid (Unit Caster)
     {
         return Caster.Mana >= Cost;
-    }
-    public override bool IsTargetValid(Unit Target, bool isPlayer)
+	}    
+	public override bool IsTargetValid (Unit Target, bool isPlayer)
     {
         if (isPlayer) return FieldController.main.IsUnitPlayer(Target);
         else return (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(Target) == isPlayer);
     }
-    public override void UseAbility(Unit Caster, Unit Target)
-    {
-        if (IsAbilityValid(Caster, Target))
-        {
+    public override void UseAbility (Unit Caster, Unit Target) {
+		if (IsAbilityValid(Caster, Target)) {
             Instantiate(VFX1, Target.transform);
-            GameEvents.onUseAmmo(Target, -Cost);
-            GameEvents.onUseMana(Target, -Cost);
-            GameEvents.UseMana(Caster, Cost);
-        }
-    }
-    public override int GetMoveWeight(Unit caster)
-    {
+			GameEvents.AttackUp(Target, StatBoost);
+			GameEvents.UseMana(Caster, Cost);
+		}
+	}
+	public override int GetMoveWeight (Unit caster) {
 
         int HealthWeight = Mathf.FloorToInt((1 - ((float)caster.Health / (float)caster.MaxHealth)) * 100);
         int ManaWeight;

@@ -22,27 +22,32 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   - AbilityType: 7
     AbilityName: Charge
-    AbilityDescription: Charge at the enemy \n+2 Permanant ATT (Decays by 1 each
-      turn)
+    AbilityDescription: 'Charge at the enemy with +2 Permanant ATT (Decays by 1 each
+      turn).
+
+      3 ATT'
     Cost: 1
     Damage: 3
     StatBoost: 2
     Variation: 1
+    ForceTarget: 0
     VFX1: {fileID: 1533149051114980, guid: cfe6edf34664fd546afc07dd31a8447e, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   - AbilityType: 4
     AbilityName: Defense Formation
-    AbilityDescription: Strike in a negative formation. Defense up, Damage 3
+    AbilityDescription: Strike in a negative formation. Defense up, Damage 4
     Cost: 1
     Damage: 4
     StatBoost: 1
     Variation: 1
+    ForceTarget: 0
     VFX1: {fileID: 1533149051114980, guid: cfe6edf34664fd546afc07dd31a8447e, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
@@ -54,6 +59,7 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
@@ -64,11 +70,11 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
+    ForceTarget: 0
     VFX1: {fileID: 782153884964200169, guid: b8c56c2add686174dadacb682e6415ad, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  VanguardAbilities2: []
-  MaxHealth: 20
+  MaxHealth: 18
   MaxAmmo: 6
   MaxMana: 0
   animator: {fileID: 9100000, guid: 290842611f5ef174cb1770e4e4ef610f, type: 2}

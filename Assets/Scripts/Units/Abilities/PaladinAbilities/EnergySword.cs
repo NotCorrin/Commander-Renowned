@@ -32,7 +32,7 @@ public class EnergySword : QTEAbility
         int HealthWeight = Mathf.FloorToInt(1 - ((float)caster.Health / (float)caster.MaxHealth) * 100);
         int ManaWeight;
         int BuffWeight = GetTotalDamageBuffs(caster) * 20;
-        if(GetTotalDefenseBuffs(caster) >= 1) BuffWeight += 50;
+        if (GetTotalDefenseBuffs(caster) >= 1) BuffWeight += 50;
         if (caster.unitType == UnitType.Mage || caster.unitType == UnitType.Commander)
         {
             ManaWeight = Mathf.FloorToInt((1 - ((float)caster.Mana / (float)caster.MaxMana)) * 100);
@@ -58,7 +58,6 @@ public class EnergySword : QTEAbility
             case GameManager.QTEResult.Miss:
                 {
                     FinalDamage -= Variation;
-                    FinalCost = Mathf.Min(0, Cost - CostVariation);
                     Debug.Log("Poor");
                     break;
                 }

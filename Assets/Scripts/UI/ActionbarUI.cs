@@ -90,6 +90,7 @@ public class ActionbarUI : Listener
         switchEndPanel.RegisterCallback<ClickEvent>(SwitchEnd_Clicked);
 
         UIEvents.onUnitSelected += OnUnitSelected;
+        UIEvents.onAllSupportUsed += AllSupportUsed;
         GameEvents.onPhaseChanged += PhaseSwitchUI;
         GameEvents.onAbilityResolved += AbilityUsed;
         //GameEvents.onKill += SwitchPrompt;
@@ -126,6 +127,7 @@ public class ActionbarUI : Listener
         switchEndPanel.UnregisterCallback<ClickEvent>(SwitchEnd_Clicked);
 
         UIEvents.onUnitSelected -= OnUnitSelected;
+        UIEvents.onAllSupportUsed -= AllSupportUsed;
         GameEvents.onPhaseChanged -= PhaseSwitchUI;
         GameEvents.onAbilityResolved -= AbilityUsed;
         //GameEvents.onKill -= SwitchPrompt;
@@ -367,6 +369,19 @@ public class ActionbarUI : Listener
         FieldController.main.SupportUsed(unit);
         OnUnitSelected(unit);
         GameEvents.GreyOut(null, false);
+    }
+    void AllSupportUsed(bool supportUsed)
+    {
+        if (supportUsed)
+        {
+            endSupportTurnBtn.Q<VisualElement>("end-yellow").style.display = DisplayStyle.None;
+            endSupportTurnBtn.Q<VisualElement>("end-red").style.display = DisplayStyle.Flex;
+        }
+        else
+        {
+            endSupportTurnBtn.Q<VisualElement>("end-yellow").style.display = DisplayStyle.Flex;
+            endSupportTurnBtn.Q<VisualElement>("end-red").style.display = DisplayStyle.None;
+        }
     }
     void OnUnitSelected(Unit unit)
     {

@@ -107,4 +107,13 @@ public static class UIEvents
             onMenuClicked();
         }
     }
+
+    public static Action<bool> onAllSupportUsed;
+    public static void AllSupportUsed(bool supportUsed)
+    {
+        if (onAllSupportUsed != null)
+        {
+            onAllSupportUsed(supportUsed);
+        }
+    }
 }

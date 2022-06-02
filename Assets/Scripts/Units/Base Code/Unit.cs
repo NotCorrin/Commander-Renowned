@@ -23,6 +23,7 @@ public class Unit : Listener
     public Transform AmmoBar;
     public Transform ManaBar;
     public Transform BuffBar;
+    public ParticleSystem ps;
 
 
     public GameObject visibleElements;
@@ -423,14 +424,14 @@ public class Unit : Listener
         }
 
         finalWeight = (2 * moveWeight + healthWeight + resourceWeight) / 4 + buffWeight;
-        Debug.Log(UnitName
-        + "\n" + " final weight = " + finalWeight
-        + "\n" + " move weight = " + moveWeight
-        + "\n" + "health weight = " + healthWeight
-        + "\n" + "resource weight = " + resourceWeight
-        + "\n" + " weight - buffweight = " + ((2 * moveWeight + healthWeight + resourceWeight) / 4)
-        + "\n" + "buffweight = " + buffWeight
-        );
+        //Debug.Log(UnitName
+        //+ "\n" + " final weight = " + finalWeight
+        //+ "\n" + " move weight = " + moveWeight
+        //+ "\n" + "health weight = " + healthWeight
+        //+ "\n" + "resource weight = " + resourceWeight
+        //+ "\n" + " weight - buffweight = " + ((2 * moveWeight + healthWeight + resourceWeight) / 4)
+        //+ "\n" + "buffweight = " + buffWeight
+        //);
 
         return finalWeight;
     }
@@ -504,6 +505,7 @@ public class Unit : Listener
         //}
         animator.SetBool("enemy", true);
         spriteRenderer.flipX = true;
+        if (!ps.isPlaying) ps.Play();
     }
 }
 
