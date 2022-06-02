@@ -88,7 +88,7 @@ public class UnitSelectionMenuUI : MonoBehaviour
 
     void ConfirmButton_Clicked()
     {
-        // TODO : Use the activeUnits list to set the player's team
+        confirmButton.SetEnabled(false);
         teamScriptableObject.activeUnits.Clear();
         foreach (Button button in activeUnits)
         {

@@ -53,6 +53,7 @@ public class StoryContainerUI : MonoBehaviour
             continueButton.text = "Continue";
             continueButton.AddToClassList("button");
             continueButton.clickable.clicked += () => {
+                continueButton.SetEnabled(false);
                 Continue();
             };
 
@@ -66,6 +67,7 @@ public class StoryContainerUI : MonoBehaviour
                 unitButton.text = unit.name;
                 unitButton.AddToClassList("button");
                 unitButton.clickable.clicked += () => {
+                    unitButton.SetEnabled(false);
                     team.units.Add(unit);
                     LevelManager.instance.LoadScene(SceneIndex.MenuSelectionScene);
                 };
@@ -78,9 +80,20 @@ public class StoryContainerUI : MonoBehaviour
     {
         if (tComplete)
         {
-            if (stories.level > stories.story.Length - 1) LevelManager.instance.LoadScene(SceneIndex.EndScene);
-            else if (team.tutorialComplete)   LevelManager.instance.LoadScene(SceneIndex.MenuSelectionScene);
-            else LevelManager.instance.LoadScene(SceneIndex.TerrainTestScene);
+            if (stories.level > stories.story.Length - 1)
+            {
+                LevelManager.instance.LoadScene(SceneIndex.EndScene);
+            }
+            else if (team.tutorialComplete)
+            {
+                Debug.LogError("THIS IS RUNNING HELP ME");
+                LevelManager.instance.LoadScene(SceneIndex.MenuSelectionScene);
+            }
+            else
+            {
+                Debug.LogError("THIS IS RUNNING HELP ME REEEEEEEEEEEEEEEEE");
+                LevelManager.instance.LoadScene(SceneIndex.TerrainTestScene);
+            }
         }
         else
         {
