@@ -368,14 +368,14 @@ public class Unit : Listener
     {
         if(RoundController.isPlayerPhase == FieldController.main.IsUnitPlayer(this))
         {
-            PermAttack = Mathf.Max(PermAttack, --PermAttack);
-            baseAccuracy = Mathf.Max(baseAccuracy, --baseAccuracy);
+            if (PermAttack > 0) PermAttack--;
+            if (baseAccuracy > 0) baseAccuracy--;
             Attack = PermAttack;
             Accuracy = baseAccuracy;
         }
         else
         {
-            PermDefense = Mathf.Max(PermDefense, --PermDefense);
+            if (PermDefense > 0) PermDefense--;
             Defense = PermDefense;
             Thorns = 0;
         }

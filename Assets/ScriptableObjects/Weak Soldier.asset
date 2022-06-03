@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1315abb00406e0a458b2138c8363ac1c, type: 3}
-  m_Name: WeakSoldier
+  m_Name: Weak Soldier
   m_EditorClassIdentifier: 
   unitType: 1
-  UnitName: The Brute
+  UnitName: Weak Soldier
   VanguardAbilities:
   - AbilityType: 0
     AbilityName: 
@@ -22,26 +22,31 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  - AbilityType: 3
-    AbilityName: Arcane Bullet
-    AbilityDescription: Strike the enemy with dual arcane bullets. Attack up.
+  - AbilityType: 14
+    AbilityName: Attack Formation
+    AbilityDescription: 'Strike the enemy!
+
+      Deal 5 damage.'
     Cost: 1
-    Damage: 99999
+    Damage: 5
     StatBoost: 1
     Variation: 1
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   - AbilityType: 4
     AbilityName: Defense Formation
-    AbilityDescription: Strike in a negative formation. Defense up, Damage 3
+    AbilityDescription: "Strike in a negative formation. \nDefense up, Damage 3"
     Cost: 1
-    Damage: 4
+    Damage: 3
     StatBoost: 1
     Variation: 1
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
@@ -53,6 +58,7 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
@@ -63,12 +69,12 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
+    ForceTarget: 0
     VFX1: {fileID: 782153884964200169, guid: b8c56c2add686174dadacb682e6415ad, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  VanguardAbilities2: []
-  MaxHealth: 1
-  MaxAmmo: 5
+  MaxHealth: 14
+  MaxAmmo: 4
   MaxMana: 0
   animator: {fileID: 9100000, guid: 290842611f5ef174cb1770e4e4ef610f, type: 2}
   sprite: {fileID: -3868812660829053132, guid: ebe7b0c9921a1e840bf1ffd5ab6bb180, type: 3}
