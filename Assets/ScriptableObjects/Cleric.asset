@@ -32,7 +32,7 @@ MonoBehaviour:
       your mana.
 
       2 ATT'
-    Cost: -3
+    Cost: -2
     Damage: 2
     StatBoost: 0
     Variation: 1
@@ -46,7 +46,7 @@ MonoBehaviour:
 
       +3
       DEF'
-    Cost: -2
+    Cost: -1
     Damage: 0
     StatBoost: 3
     Variation: 1

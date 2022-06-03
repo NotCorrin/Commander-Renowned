@@ -13,7 +13,8 @@ public enum SceneIndex
     TerrainTestScene = 3,
     BattleSceneTwo = 4,
     BattleSceneThree = 5,
-    EndScene = 6
+    EndScene = 6,
+    AddMenuScene = 7
 }
 public class LevelManager : MonoBehaviour
 {

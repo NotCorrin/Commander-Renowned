@@ -57,6 +57,7 @@ public class MageDefend : QTEAbility
             case GameManager.QTEResult.Critical:
                 {
                     FinalDefense = FinalDefense + Variation;
+                    FinalCost--;
                     break;
                 }
             case GameManager.QTEResult.Miss:

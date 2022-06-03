@@ -34,7 +34,7 @@ public class StoryContainerUI : MonoBehaviour
             Debug.LogError($"{gameObject.name} : MainMenuUI - Element Query Failed.");
         }
 
-        Scenario scenario = stories.story[stories.level + 1];
+        Scenario scenario = AddUnit? stories.story[stories.level]:stories.story[stories.level + 1];
         tComplete = team.tutorialComplete;
         if (tComplete)
         {

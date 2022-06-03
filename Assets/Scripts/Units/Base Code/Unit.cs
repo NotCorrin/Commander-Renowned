@@ -194,7 +194,8 @@ public class Unit : Listener
 
     void GreyOut(Ability ability, bool isPlayer)
     {
-        if(!ability)
+        Debug.LogWarning(this);
+        if (!ability)
         {
             animator.SetBool("greyedOut", false);
             if (!FieldController.main.IsUnitPlayer(this)) UpdateEnemyVisual();
@@ -488,6 +489,7 @@ public class Unit : Listener
 
     private void Awake()
     {
+        Debug.LogWarning("FIRST");
         if (!animator) animator = GetComponent<Animator>();
         if (!billboard) billboard = GetComponent<Billboard>();
         if (!coll) coll = GetComponent<Collider>();
