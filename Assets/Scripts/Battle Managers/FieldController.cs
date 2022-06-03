@@ -234,14 +234,15 @@ public class FieldController : Listener
             supportLeftUsed = !PlayerSupportLeft;
             supportRightUsed = !PlayerSupportRight;
         }
-        if(phase == RoundController.Phase.PlayerSupport) SupportUsed(null);
-        else UIEvents.AllSupportUsed(false);
+        Debug.Log(PlayerSupportLeft);
+        Debug.Log(PlayerSupportRight);
+        if(phase != RoundController.Phase.PlayerSupport) UIEvents.AllSupportUsed(false);
     }
 
     public void SupportUsed(Unit unit)
     {
-        if(GetIsSupportLeft(unit) && PlayerSupportLeft) supportLeftUsed = true;
-        if(GetIsSupportRight(unit) && PlayerSupportRight) supportRightUsed = true;
+        if(GetIsSupportLeft(unit)) supportLeftUsed = true;
+        if(GetIsSupportRight(unit)) supportRightUsed = true;
         UIEvents.AllSupportUsed(supportLeftUsed && supportRightUsed);
         //if(supportLeftUsed && supportRightUsed) GameEvents.EndPhase();
     }
