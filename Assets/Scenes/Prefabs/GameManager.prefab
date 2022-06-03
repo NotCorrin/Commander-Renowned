@@ -116,6 +116,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedObject: {fileID: 0}
   selectedUnit: {fileID: 0}
+  selected: 0
+  clickLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &1100034884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,10 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Team: {fileID: 11400000, guid: b7dab2c6d967bb64dbde10a52bb78ed4, type: 2}
-  EnemyTeam:
-  - {fileID: 11400000, guid: e7acd760f86d622409b684a33cad4664, type: 2}
-  - {fileID: 11400000, guid: e7acd760f86d622409b684a33cad4664, type: 2}
-  - {fileID: 11400000, guid: e7acd760f86d622409b684a33cad4664, type: 2}
+  Scenario: {fileID: 0}
   PositionParent: {fileID: 0}
   UnitPrefab: {fileID: 6480894034537515106, guid: e64746209dcc14f4ab958e8e25afdceb, type: 3}
 --- !u!114 &416161354
@@ -165,4 +166,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec6d915c222c91a42b634e8c79e83e03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  winScene: 
+  scenarios: {fileID: 11400000, guid: f829df91173d761489da7c955a1523b6, type: 2}

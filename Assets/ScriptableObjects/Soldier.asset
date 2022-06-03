@@ -27,7 +27,7 @@ MonoBehaviour:
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   - AbilityType: 3
-    AbilityName: Arcane Bullet
+    AbilityName: Press the Attack
     AbilityDescription: 'Strike the enemy with dual arcane bullets.
 
       Deal 2
