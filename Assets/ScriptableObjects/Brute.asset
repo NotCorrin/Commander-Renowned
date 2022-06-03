@@ -77,5 +77,5 @@ MonoBehaviour:
   MaxHealth: 18
   MaxAmmo: 6
   MaxMana: 0
-  animator: {fileID: 9100000, guid: 290842611f5ef174cb1770e4e4ef610f, type: 2}
-  sprite: {fileID: -3868812660829053132, guid: ebe7b0c9921a1e840bf1ffd5ab6bb180, type: 3}
+  animator: {fileID: 9100000, guid: 599668aef52e092489a5a10909743a1e, type: 2}
+  sprite: {fileID: -1922040017, guid: 7f10c4f9eea82124bb76d669fc687814, type: 3}

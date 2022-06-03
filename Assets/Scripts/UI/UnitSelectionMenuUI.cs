@@ -12,6 +12,7 @@ public class UnitSelectionMenuUI : MonoBehaviour
     [SerializeField] private VisualTreeAsset unitCardCollectionUI;
 
     [SerializeField] private TeamScriptableObject teamScriptableObject;
+    [SerializeField] private ScenarioScriptableObject stories;
     private VisualElement mainContainer;
     private TextElement mainTitleText;
     private ScrollView mainScrollView;
@@ -113,7 +114,7 @@ public class UnitSelectionMenuUI : MonoBehaviour
                 }
             }
         }
-        LevelManager.instance.LoadScene(SceneIndex.TerrainTestScene);
+        LevelManager.instance.LoadScene(stories.story[stories.level + 1].scene);
     }
 
     void EnableAllUnits()

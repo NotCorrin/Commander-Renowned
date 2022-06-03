@@ -383,7 +383,7 @@ public class Unit : Listener
         if (totalVanguardMoves == 0) totalVanguardMoves = -100; 
 
         int totalSupportMoveScore = 0;
-        int totalSupportMoves = 0;
+        //int totalSupportMoves = 0;
         foreach (Ability ability in supportAbilities)
         {
             if (ability)

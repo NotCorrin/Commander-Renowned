@@ -17,6 +17,7 @@ public class Scenario
     public string title;
     [TextArea(8,6)]
     public string description;
+    public SceneIndex scene;
     public Enemies[] Enemies;
     [TextArea(8,6)]
     public string windescription;

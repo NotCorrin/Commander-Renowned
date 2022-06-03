@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e3eb4b625d33a24e95e411e55228343, type: 3}
-  m_Name: New Team
+  m_Name: Test Team
   m_EditorClassIdentifier: 
   templateTeam: {fileID: 11400000, guid: 054d5dc112e825f498d6b77e1b1def52, type: 2}
   tutorialComplete: 1

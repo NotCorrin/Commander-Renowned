@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.8
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.65203047, g: 0.8602165, b: 0.9504369, a: 0.8}
+  m_IndirectSpecularColor: {r: 0.65194005, g: 0.86021996, b: 0.9504233, a: 0.8}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -302,10 +302,18 @@ PrefabInstance:
       propertyPath: winScene
       value: EndScene
       objectReference: {fileID: 0}
+    - target: {fileID: 416161354, guid: 0c4076252c8d19c4e9cfb4893d565a0a, type: 3}
+      propertyPath: scenarios
+      value: 
+      objectReference: {fileID: 11400000, guid: f5e03251a6703f14c834c6152cfc643e, type: 2}
+    - target: {fileID: 1100034891, guid: 0c4076252c8d19c4e9cfb4893d565a0a, type: 3}
+      propertyPath: Team
+      value: 
+      objectReference: {fileID: 11400000, guid: 30021a3c73cb58642b0d04b4bc03c402, type: 2}
     - target: {fileID: 1100034891, guid: 0c4076252c8d19c4e9cfb4893d565a0a, type: 3}
       propertyPath: Scenario
       value: 
-      objectReference: {fileID: 11400000, guid: f829df91173d761489da7c955a1523b6, type: 2}
+      objectReference: {fileID: 11400000, guid: f5e03251a6703f14c834c6152cfc643e, type: 2}
     - target: {fileID: 1100034891, guid: 0c4076252c8d19c4e9cfb4893d565a0a, type: 3}
       propertyPath: PositionParent
       value: 
@@ -714,7 +722,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 2.059789, y: 1}
+    m_SensorSize: {x: 1.907131, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -795,7 +803,7 @@ GameObject:
   - component: {fileID: 1196881856}
   - component: {fileID: 1196881855}
   m_Layer: 0
-  m_Name: Help
+  m_Name: No Help
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -105,7 +105,7 @@ public class StoryContainerUI : MonoBehaviour
             }
             else
             {
-                LevelManager.instance.LoadScene(SceneIndex.TerrainTestScene);
+                LevelManager.instance.LoadScene(stories.story[stories.level + 1].scene);
             }
         }
         else
