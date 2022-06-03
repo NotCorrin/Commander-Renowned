@@ -131,8 +131,8 @@ public class AudioManager : Listener
         isBattleMusic = true;
         bool shouldStopMusic = true;
 
-        Debug.Log(currentSceneIndex);
-        Debug.Log((int)SceneIndex.MenuSelectionScene);
+        //Debug.Log(currentSceneIndex);
+        //Debug.Log((int)SceneIndex.MenuSelectionScene);
 
         if (currentSceneIndex != (int)SceneIndex.MenuSelectionScene) StopAll();
 
