@@ -104,7 +104,7 @@ public class Unit : Listener
         set
         {
             attack = value;
-            UIEvents.UnitAttackChanged(this, attack);
+            UIEvents.UnitAttackChanged(this, attack - permAttack);
         }
     }
 
@@ -115,7 +115,7 @@ public class Unit : Listener
         set
         {
             permDefense = value;
-            UIEvents.UnitPermDefenseChanged(this, defense);
+            UIEvents.UnitPermDefenseChanged(this, permDefense);
         }
     }
 
@@ -124,7 +124,7 @@ public class Unit : Listener
         get => defense;
         set {
             defense = value;
-            UIEvents.UnitDefenseChanged(this, defense);
+            UIEvents.UnitDefenseChanged(this, defense - permDefense);
         }
     }
 
@@ -399,10 +399,9 @@ public class Unit : Listener
             }
         }
 
-        if (totalVanguardMoves <= 0) return 0; 
+        if (totalVanguardMoveScore <= 0) return 0; 
 
         int totalSupportMoveScore = 0;
-        int totalSupportMoves = 0;
 
         foreach (Ability ability in supportAbilities)
         {
