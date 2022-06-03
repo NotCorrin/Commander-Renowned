@@ -25,15 +25,24 @@ public class PhasePanelUI : Listener
 
     private StyleLength currentContainerLeft, nextArrowLeft, nextContainerLeft, futureArrowLeft, futureContainerLeft;
 
+    private bool End;
+    public void Ended(bool ignorethisbool)
+    {
+        End = true;
+    }
+
+
     protected override void SubscribeListeners()
     {
         GameEvents.onPhaseChanged += OnPhaseChange;
+        GameEvents.onGameEnd += Ended;
         mainContainer.RegisterCallback<TransitionEndEvent>(OnTransitionEnd);
     }
 
     protected override void UnsubscribeListeners()
     {
         GameEvents.onPhaseChanged -= OnPhaseChange;
+        GameEvents.onGameEnd -= Ended;
         mainContainer.UnregisterCallback<TransitionEndEvent>(OnTransitionEnd);
     }
     void Awake()
