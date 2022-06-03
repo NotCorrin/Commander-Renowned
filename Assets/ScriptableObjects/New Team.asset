@@ -13,13 +13,12 @@ MonoBehaviour:
   m_Name: New Team
   m_EditorClassIdentifier: 
   templateTeam: {fileID: 11400000, guid: 054d5dc112e825f498d6b77e1b1def52, type: 2}
-  tutorialComplete: 1
+  tutorialComplete: 0
   units:
   - {fileID: 11400000, guid: b21d54bddb21f7a419bd7a79ec36a958, type: 2}
   - {fileID: 11400000, guid: edf88a06261f4ed4891c1b5cf94ad382, type: 2}
   - {fileID: 11400000, guid: af8c8893720fd0d47aedfb25dc11f9a1, type: 2}
-  - {fileID: 11400000, guid: f6265ea57b7308b46a6e86b2ff8e1581, type: 2}
   activeUnits:
-  - {fileID: 11400000, guid: f6265ea57b7308b46a6e86b2ff8e1581, type: 2}
-  - {fileID: 11400000, guid: af8c8893720fd0d47aedfb25dc11f9a1, type: 2}
   - {fileID: 11400000, guid: b21d54bddb21f7a419bd7a79ec36a958, type: 2}
+  - {fileID: 11400000, guid: edf88a06261f4ed4891c1b5cf94ad382, type: 2}
+  - {fileID: 11400000, guid: af8c8893720fd0d47aedfb25dc11f9a1, type: 2}

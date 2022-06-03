@@ -75,8 +75,8 @@ public class MechAttack : QTEAbility
         {
             GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, damage));
             FireMissileAtTarget(Target.transform);
-            GameEvents.BaseAttackUp(Caster, -2);
-            GameEvents.BaseDefenseUp(Caster, -2);
+            GameEvents.BaseAttackUp(Caster, StatBoost);
+            GameEvents.BaseDefenseUp(Caster, StatBoost);
         }
     }
 
