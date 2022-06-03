@@ -8,8 +8,7 @@ public class TankAttack : QTEAbility
     public override void SetupParams(AbilitySetup setup)
     {
         base.SetupParams(setup);
-        if(!VFX1) VFX1 = Resources.Load("CustomLasers/Soldier/Soldier_Laser") as GameObject;
-        if(!VFX2) VFX2 = Resources.Load("CustomLasers/Soldier/Shield") as GameObject;
+        if(!VFX1) VFX1 = Resources.Load("CustomLasers/Tank/Bombard") as GameObject;
         isMagic = false;
     }
 
@@ -41,12 +40,12 @@ public class TankAttack : QTEAbility
                     break;
                 }
         }
+
         foreach (Unit unit in FieldController.main.GetAllies(Target))
         {
             GameEvents.UnitAttack(Caster, unit, -GetDamageCalculation(Caster, unit, FinalDamage));
-            FireLaserAtTarget(unit.transform);
+            LaunchAttackAtTarget(unit.transform);
         }
-        FireLaserAtTarget(Target.transform);
 
         GameEvents.UseAmmo(Caster, Cost);
     }
@@ -71,18 +70,18 @@ public class TankAttack : QTEAbility
 		return (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(Target) != isPlayer);
 	}
 
-    void FireLaserAtTarget(Transform targetTransform)
+    void LaunchAttackAtTarget(Transform targetTransform)
     {
         if (VFX1)
         {
-            GameObject SpawnedLaser = Instantiate(VFX1, transform);
-            SpawnedLaser.transform.LookAt(targetTransform);
+            GameObject SpawnedMissile = Instantiate(VFX1, transform);
+            SpawnedMissile.GetComponent<FullAutoFireAtTarget>().SetBigMissilesHoming(targetTransform);
         }
     }
 
     void AttackWithLaser(int damage)
     {
         GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, damage));
-        FireLaserAtTarget(Target.transform);
+        LaunchAttackAtTarget(Target.transform);
     }
 }
