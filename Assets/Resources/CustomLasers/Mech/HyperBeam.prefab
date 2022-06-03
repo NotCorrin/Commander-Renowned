@@ -5747,7 +5747,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.5
+      value: 0.2
       mode: 0
       spread: 0
       speed:
@@ -8787,7 +8787,7 @@ ParticleSystem:
         m_RotationOrder: 4
     minKillSpeed: 0
     maxKillSpeed: 10000
-    radiusScale: 0.001
+    radiusScale: 0.05
     collidesWith:
       serializedVersion: 2
       m_Bits: 4294967295
