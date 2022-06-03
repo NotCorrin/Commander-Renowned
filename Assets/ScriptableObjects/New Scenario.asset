@@ -12,18 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b12e751dbe26864a83de92a31c6d08e, type: 3}
   m_Name: New Scenario
   m_EditorClassIdentifier: 
-  level: 3
+  level: 0
   tutorialText: "Welcome to Commander: Renowned.\r\n\r\nYou are the Renowned; an
     elite commander who wields arcane powers and combines it with modern technology.\r"
   story:
   - title: 
     description: 
+    scene: 0
     Enemies: []
     windescription: 
     winunit: []
   - title: Tutorial
     description: Your party of adventurers have been called to help the village of
       Townsfield from invading shadow creatures.
+    scene: 3
     Enemies:
     - enemies: []
     - enemies:
@@ -43,6 +45,7 @@ MonoBehaviour:
   - title: Plains
     description: You have heard tell that Castle Valoth is currently under siege
       from shadow creatures.
+    scene: 3
     Enemies:
     - enemies: []
     - enemies:
@@ -61,6 +64,7 @@ MonoBehaviour:
     description: "The Lord of Valoth is impressed with your courage and has tasked
       you with assaulting the home of all shadow beings.\r\n\r\nHowever, your team
       does not get far before being ambushed by shadow creatures!\r"
+    scene: 4
     Enemies:
     - enemies: []
     - enemies:
@@ -74,6 +78,7 @@ MonoBehaviour:
   - title: Desert
     description: It is here, in the desert, that the most powerful shadow creatures
       roam. Defeat them, and all shadow creatures fall.
+    scene: 5
     Enemies:
     - enemies: []
     - enemies:
