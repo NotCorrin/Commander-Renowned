@@ -102,15 +102,15 @@ public class FieldController : Listener
         List<Unit> unitList = new List<Unit>();
         if(IsUnitPlayer(unit))
         {
-            unitList.Add(PlayerVanguard);
-            unitList.Add(PlayerSupportLeft);
-            unitList.Add(PlayerSupportRight);
+            if (PlayerVanguard) unitList.Add(PlayerVanguard);
+            if (PlayerSupportLeft) unitList.Add(PlayerSupportLeft);
+            if (PlayerSupportRight) unitList.Add(PlayerSupportRight);
         }
         else
         {
-            unitList.Add(EnemyVanguard);
-            unitList.Add(EnemySupportLeft);
-            unitList.Add(EnemySupportRight);
+            if (EnemyVanguard) unitList.Add(EnemyVanguard);
+            if (EnemySupportLeft) unitList.Add(EnemySupportLeft);
+            if (EnemySupportRight) unitList.Add(EnemySupportRight);
         }
         return unitList;
     }
