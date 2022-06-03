@@ -118,8 +118,12 @@ public struct Icon
 
 public enum IconType
 {
+    PermAttack,
+    PermDefence,
     Attack,
-    Defence
+    Defence,
+    Thorns,
+    Accuracy
 }
 
 public enum TargetMode
