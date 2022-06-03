@@ -160,6 +160,11 @@ public class AudioManager : Listener
                 isBattleMusic = false;
                 break;
             
+            case (int)SceneIndex.AddMenuScene:
+                currentMusic = "Story";
+                isBattleMusic = false;
+                break;
+            
             case (int)SceneIndex.MenuSelectionScene:
                 currentMusic = "Story";
                 isBattleMusic = false;
