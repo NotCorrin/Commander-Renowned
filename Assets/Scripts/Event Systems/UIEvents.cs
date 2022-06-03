@@ -63,12 +63,30 @@ public static class UIEvents
         }
     }
 
+    public static Action<Unit, int> onUnitPermAttackChanged;
+    public static void UnitPermAttackChanged(Unit unit, int attackChange)
+    {
+        if (onUnitPermAttackChanged != null)
+        {
+            onUnitPermAttackChanged(unit, attackChange);
+        }
+    }
+
     public static Action<Unit, int> onUnitDefenseChanged;
     public static void UnitDefenseChanged(Unit unit, int defenseChange)
     {
         if (onUnitDefenseChanged != null)
         {
             onUnitDefenseChanged(unit, defenseChange);
+        }
+    }
+
+    public static Action<Unit, int> onUnitPermDefenseChanged;
+    public static void UnitPermDefenseChanged(Unit unit, int defenseChange)
+    {
+        if (onUnitPermDefenseChanged != null)
+        {
+            onUnitPermDefenseChanged(unit, defenseChange);
         }
     }
 
