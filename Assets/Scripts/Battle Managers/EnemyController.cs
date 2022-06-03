@@ -60,7 +60,7 @@ public class EnemyController : Listener
 				int rightSwitchScore = enemySupportRight.GetSwitchScore();
 				if (rightSwitchScore > leftSwitchScore)
 				{
-					//right > left
+					// Right > Left
 					if (rightSwitchScore > vanguardStickScore)
 					{
 						SwapUnit(enemySupportRight);
@@ -71,9 +71,9 @@ public class EnemyController : Listener
 					}
 					return;
 				}
-				else
+				else if(leftSwitchScore > rightSwitchScore)
 				{
-					//Left > Right
+					// Left > Right
 					if (leftSwitchScore > vanguardStickScore)
 					{
 						SwapUnit(enemySupportLeft);
@@ -83,6 +83,36 @@ public class EnemyController : Listener
 						GoToNextPhase();
 					}
 					return;
+				}
+				else
+				{
+					// Left == Right
+					if (Random.Range(0, 100) <= 50)
+					{
+						// Randomly choose left
+						if (leftSwitchScore > vanguardStickScore)
+						{
+							SwapUnit(enemySupportLeft);
+						}
+						else
+						{
+							GoToNextPhase();
+						}
+						return;
+					}
+					else
+					{
+						// Randomly choose right
+						if (rightSwitchScore > vanguardStickScore)
+						{
+							SwapUnit(enemySupportRight);
+						}
+						else
+						{
+							GoToNextPhase();
+						}
+						return;
+					}
 				}
             }
 			else
