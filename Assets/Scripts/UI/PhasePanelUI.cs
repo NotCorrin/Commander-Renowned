@@ -28,13 +28,15 @@ public class PhasePanelUI : Listener
     protected override void SubscribeListeners()
     {
         GameEvents.onPhaseChanged += OnPhaseChange;
+        mainContainer.RegisterCallback<TransitionEndEvent>(OnTransitionEnd);
     }
 
     protected override void UnsubscribeListeners()
     {
         GameEvents.onPhaseChanged -= OnPhaseChange;
+        mainContainer.UnregisterCallback<TransitionEndEvent>(OnTransitionEnd);
     }
-    void Start()
+    void Awake()
     {
         if (uIDocument == null)
         {
@@ -74,8 +76,6 @@ public class PhasePanelUI : Listener
         nextContainerLeft = new Length(550, LengthUnit.Pixel);
         futureArrowLeft = new Length(950, LengthUnit.Pixel);
         futureContainerLeft = new Length(1100, LengthUnit.Pixel);
-
-        mainContainer.RegisterCallback<TransitionEndEvent>(OnTransitionEnd);
     }
 
     string AddSpacesToPhase(string phase)
@@ -102,7 +102,7 @@ public class PhasePanelUI : Listener
 
     void OnPhaseChange(RoundController.Phase phase)
     {
-        if (WorldMenuController.End) return;
+        // if (WorldMenuController.End) return;
         currentPhaseContainer.label.style.left = new Length(-400, LengthUnit.Pixel);
         currentPhaseContainer.label.style.opacity = 0;
 
