@@ -936,6 +936,21 @@ MonoBehaviour:
     m_Scale: 1
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
+  - m_Index: 368
+    m_Metrics:
+      m_Width: 18.09375
+      m_Height: 84.875
+      m_HorizontalBearingX: -1.171875
+      m_HorizontalBearingY: 66.875
+      m_HorizontalAdvance: 23.765625
+    m_GlyphRect:
+      m_X: 984
+      m_Y: 253
+      m_Width: 19
+      m_Height: 85
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
   m_CharacterTable:
   - m_ElementType: 1
     m_Unicode: 32
@@ -1160,6 +1175,10 @@ MonoBehaviour:
   - m_ElementType: 1
     m_Unicode: 13
     m_GlyphIndex: 631
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 106
+    m_GlyphIndex: 368
     m_Scale: 1
   m_AtlasTextures:
   - {fileID: 6770922451350981383}
@@ -1387,6 +1406,10 @@ MonoBehaviour:
     m_Y: 246
     m_Width: 74
     m_Height: 81
+  - m_X: 974
+    m_Y: 243
+    m_Width: 38
+    m_Height: 104
   m_FreeGlyphRects:
   - m_X: 87
     m_Y: 28
@@ -1480,10 +1503,6 @@ MonoBehaviour:
     m_Y: 179
     m_Width: 27
     m_Height: 49
-  - m_X: 974
-    m_Y: 243
-    m_Width: 49
-    m_Height: 780
   - m_X: 915
     m_Y: 230
     m_Width: 44
@@ -1496,10 +1515,6 @@ MonoBehaviour:
     m_Y: 248
     m_Width: 32
     m_Height: 775
-  - m_X: 883
-    m_Y: 309
-    m_Width: 140
-    m_Height: 714
   - m_X: 536
     m_Y: 83
     m_Width: 9
@@ -1537,14 +1552,6 @@ MonoBehaviour:
     m_Width: 56
     m_Height: 7
   - m_X: 0
-    m_Y: 327
-    m_Width: 1023
-    m_Height: 696
-  - m_X: 743
-    m_Y: 313
-    m_Width: 280
-    m_Height: 710
-  - m_X: 0
     m_Y: 311
     m_Width: 669
     m_Height: 712
@@ -1564,6 +1571,26 @@ MonoBehaviour:
     m_Y: 234
     m_Width: 39
     m_Height: 12
+  - m_X: 1012
+    m_Y: 243
+    m_Width: 11
+    m_Height: 780
+  - m_X: 883
+    m_Y: 309
+    m_Width: 91
+    m_Height: 714
+  - m_X: 0
+    m_Y: 347
+    m_Width: 1023
+    m_Height: 676
+  - m_X: 0
+    m_Y: 327
+    m_Width: 974
+    m_Height: 696
+  - m_X: 743
+    m_Y: 313
+    m_Width: 231
+    m_Height: 710
   m_FontFeatureTable:
     m_MultipleSubstitutionRecords: []
     m_LigatureSubstitutionRecords: []

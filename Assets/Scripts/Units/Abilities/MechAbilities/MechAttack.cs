@@ -13,7 +13,7 @@ public class MechAttack : QTEAbility
 
     public override int GetMoveWeight(Unit caster)
     {
-        int BuffWeight = caster.Attack * 15 + (caster.Ammo-3) * 15;
+        int BuffWeight = caster.Attack * 15 + (caster.Ammo-2) * 15;
         if (caster.unitType == UnitType.Military || caster.unitType == UnitType.Commander)
         {
             if (caster.Ammo < Cost) return 0;
