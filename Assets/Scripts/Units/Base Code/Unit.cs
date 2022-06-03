@@ -523,6 +523,8 @@ public class Unit : Listener
         if (selectedps)
         {
             if (!selectedps.isPlaying) selectedps.Play();
+            var em = selectedps.emission;
+            em.enabled = true;
         }
     }
 
@@ -543,6 +545,7 @@ public class Unit : Listener
         {
             foreach (Ability ability in SupportAbilities)
             {
+                if (!ability) continue;
                 if(FieldController.main.GetValidTargets(this, ability).Count != 0)
                 {
                     AbilityUsable();
