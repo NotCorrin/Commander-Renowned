@@ -240,8 +240,8 @@ public class FieldController : Listener
 
     public void SupportUsed(Unit unit)
     {
-        if(GetIsSupportLeft(unit)) supportLeftUsed = true;
-        if(GetIsSupportRight(unit)) supportRightUsed = true;
+        if(GetIsSupportLeft(unit) && PlayerSupportLeft) supportLeftUsed = true;
+        if(GetIsSupportRight(unit) && PlayerSupportRight) supportRightUsed = true;
         UIEvents.AllSupportUsed(supportLeftUsed && supportRightUsed);
         //if(supportLeftUsed && supportRightUsed) GameEvents.EndPhase();
     }

@@ -274,6 +274,7 @@ public class Unit : Listener
     {
         if (visibleElements) Destroy(visibleElements);
         spriteRenderer.sprite = null;
+        ps.Stop();
     }
 
     // Start is called before the first frame update
@@ -505,7 +506,10 @@ public class Unit : Listener
         //}
         animator.SetBool("enemy", true);
         spriteRenderer.flipX = true;
-        if (!ps.isPlaying) ps.Play();
+        if (ps)
+        {
+            if (!ps.isPlaying) ps.Play();
+        }
     }
 }
 
