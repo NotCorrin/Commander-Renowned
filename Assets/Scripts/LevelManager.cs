@@ -22,6 +22,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private UIDocument uiDocument;
     private VisualElement container;
     private TextElement loading;
+    private bool startedLoading = false;
 
     void Awake()
     {
@@ -64,6 +65,11 @@ public class LevelManager : MonoBehaviour
 
 	public void LoadScene(SceneIndex index)
     {
+        if(startedLoading == true)
+		{
+            return;
+		}
+        startedLoading = true;
         container.style.scale = new Vector2(1, 1);
         StartCoroutine(StartLoading((int)index));
 	}
@@ -86,5 +92,6 @@ public class LevelManager : MonoBehaviour
                 operation.allowSceneActivation = true;
             }
         }
+        startedLoading = false;
 	}
 }
