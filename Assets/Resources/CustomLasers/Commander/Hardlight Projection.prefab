@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1822691795743488448}
   - component: {fileID: 1228135851134635790}
   m_Layer: 0
-  m_Name: TankShield
+  m_Name: Hardlight Projection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
