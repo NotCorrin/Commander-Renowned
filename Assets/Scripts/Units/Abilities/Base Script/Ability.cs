@@ -3,6 +3,11 @@ using UnityEngine;
 [System.Serializable]
 public abstract class Ability : MonoBehaviour
 {
+    protected bool isMagic;
+    public bool IsMagic
+    {
+        get => isMagic;
+    }
     [SerializeField] protected string abilityName;
     public string AbilityName
     {
@@ -20,6 +25,7 @@ public abstract class Ability : MonoBehaviour
     {
         get => cost;
     }
+    public bool xCost;
 
     [SerializeField] protected int damage;
     public int Damage
@@ -39,6 +45,9 @@ public abstract class Ability : MonoBehaviour
         get => variation;
     }
 
+    public TargetMode forceTarget;
+
+    public Icon[] buffs;
     [SerializeField] protected GameObject VFX1;
     [SerializeField] protected GameObject VFX2;
     [SerializeField] protected GameObject VFX3;
@@ -49,6 +58,12 @@ public abstract class Ability : MonoBehaviour
         abilityName = setup.AbilityName;
         abilityDescription = setup.AbilityDescription;
         cost = setup.Cost;
+        if (setup.Cost == 999)
+        {
+            xCost = true;
+            cost = 0;
+        }
+        forceTarget = setup.ForceTarget;
         damage = setup.Damage;
         statBoost = setup.StatBoost;
         variation = setup.Variation;
@@ -60,7 +75,7 @@ public abstract class Ability : MonoBehaviour
     public abstract void UseAbility(Unit Caster, Unit Target);
     public virtual bool IsAbilityValid(Unit Caster, Unit Target) 
     {
-        return IsCasterValid(Caster) && IsTargetValid(Target, FieldController.main.IsUnitPlayer(Caster));
+        return IsCasterValid(Caster) && IsTargetValid(Target, FieldController.main.IsUnitPlayer(Caster)) && Caster && Target;
     }
     public abstract bool IsCasterValid(Unit Caster);
     public abstract bool IsTargetValid(Unit Target, bool isPlayer);
@@ -68,4 +83,52 @@ public abstract class Ability : MonoBehaviour
     {
         return Mathf.Max(Damage + Caster.Attack - Target.Defense, 0);
     }
+
+    protected int GetTotalDamageBuffs(Unit Caster)
+    {
+        int totalDamageBuffs = 0;
+        totalDamageBuffs += Caster.Attack;
+        /*Version made AI look at opponent defense buffs. Took away satisfaction of oursmarting AI
+        totalDamageBuffs -= FieldController.main.GetUnit(FieldController.Position.Vanguard, !FieldController.main.IsUnitPlayer(Caster)).Defense);*/
+        return totalDamageBuffs;
+    }
+
+    protected int GetTotalDefenseBuffs(Unit Caster)
+    {
+        int totalDefenseBuffs = 0;
+        totalDefenseBuffs += Caster.Defense;
+        /*Version made AI look at opponent defense buffs. Took away satisfaction of oursmarting AI
+        totalDamageBuffs -= FieldController.main.GetUnit(FieldController.Position.Vanguard, !FieldController.main.IsUnitPlayer(Caster)).Defense);*/
+        return totalDefenseBuffs;
+    }
+}
+
+[System.Serializable]
+public struct Icon
+{
+    public IconType iconType;
+    public int buffAmount;
+
+    public Icon(IconType t, int a)
+    {
+        iconType = t;
+        buffAmount = a;
+    }
+}
+
+public enum IconType
+{
+    PermAttack,
+    PermDefence,
+    Attack,
+    Defence,
+    Thorns,
+    Accuracy
+}
+
+public enum TargetMode
+{
+    Default,
+    True,
+    False
 }

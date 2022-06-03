@@ -16,40 +16,45 @@ public class Attack : QTEAbility
     {
         base.SetupParams(setup);
         if(!VFX1) VFX1 = Resources.Load("CustomLasers/Soldier/Soldier_Laser") as GameObject;
+        isMagic = false;
     }
 
     public override int GetMoveWeight(Unit caster)
     {
-        int BuffWeight = caster.Attack * 30;
+        int BuffWeight = GetTotalDamageBuffs(caster) * 30;
         if (caster.unitType == UnitType.Military || caster.unitType == UnitType.Commander)
         {
             if (caster.Ammo < Cost) return 0;
-            return (2 * BuffWeight + 50) / 3;
+            return BuffWeight + Damage * 10;
         }
         else return 0;
     }
 
-    protected override void AbilityUsed(QTEController.QTEResult result)
+    public override void UseAbility(Unit Caster, Unit Target)
+    {
+        GameEvents.AccuracyUp(Caster, StatBoost);
+        base.UseAbility(Caster, Target);
+    }
+
+    protected override void AbilityUsed(GameManager.QTEResult result)
     {
         FinalDamage = Damage;
 
         switch (result)
         {
-            case QTEController.QTEResult.Critical:
+            case GameManager.QTEResult.Critical:
                 {
                     FinalDamage += base.Variation;
                     break;
                 }
-            case QTEController.QTEResult.Miss:
+            case GameManager.QTEResult.Miss:
                 {
                     FinalDamage -= base.Variation;
                     break;
                 }
         }
 
-        GameEvents.AccuracyUp(Caster, StatBoost);
-
-        AttackWithLaser(Mathf.FloorToInt(FinalDamage / 2));
+        AttackWithLaser(Mathf.FloorToInt((float)FinalDamage / 2));
 
         secondShotTimer = secondShotDelay;
         secondShotTrigger = true;
@@ -57,9 +62,9 @@ public class Attack : QTEAbility
         GameEvents.UseAmmo(Caster, Cost);
     }
 
-    protected override QTEController.QTEType GetQTEType()
+    protected override GameManager.QTEType GetQTEType()
     {
-        return QTEController.QTEType.shrinkingCircle;
+        return GameManager.QTEType.shrinkingCircle;
     }
 
     public override bool IsCasterValid (Unit Caster)
@@ -92,8 +97,8 @@ public class Attack : QTEAbility
     {
         if(Target)
         {
-            GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, damage));
             FireLaserAtTarget(Target.transform);
+            GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, damage));
         }
     }
         
@@ -103,7 +108,7 @@ public class Attack : QTEAbility
         {
             if ((secondShotTimer -= Time.deltaTime) <= 0)
             {
-                AttackWithLaser(Mathf.CeilToInt(FinalDamage/2));
+                AttackWithLaser(Mathf.CeilToInt((float)FinalDamage/2));
                 secondShotTrigger = false;
             }
         }

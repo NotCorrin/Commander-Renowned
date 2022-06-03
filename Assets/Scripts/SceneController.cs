@@ -7,6 +7,8 @@ public class SceneController : Listener
     public static SceneController main;
     public GameObject selectedObject;
     public Unit selectedUnit;
+    public bool selected;
+    public LayerMask clickLayer;
 
     // Start is called before the first frame update
     void Start()
@@ -22,11 +24,15 @@ public class SceneController : Listener
 
     protected override void SubscribeListeners()
     {
+        UIEvents.onUnitSelected += UnitSelected;
+        //GameEvents.onPhaseChanged += Deselect;
         //throw new System.NotImplementedException();
     }
 
     protected override void UnsubscribeListeners()
     {
+        UIEvents.onUnitSelected -= UnitSelected;
+        //GameEvents.onPhaseChanged -= Deselect;
         //throw new System.NotImplementedException();
     }
 
@@ -36,9 +42,9 @@ public class SceneController : Listener
         {
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
+            ray.origin += Vector3.right * 99;
             RaycastHit hit;
-            Physics.Raycast(ray, out hit);
+            Physics.Raycast(ray, out hit, clickLayer);
 
             if (hit.collider != null)
             {
@@ -46,10 +52,23 @@ public class SceneController : Listener
                 if (selectedObject.GetComponent<Unit>())
                 {
                     //Debug.Log(hit.collider.name);
-                    selectedUnit = selectedObject.GetComponent<Unit>();
-                    UIEvents.UnitSelected(selectedUnit);
+                    if(selectedUnit != selectedObject.GetComponent<Unit>() || selected == false)
+                    {
+                        selectedUnit = selectedObject.GetComponent<Unit>();
+                        UIEvents.UnitSelected(selectedUnit);
+                    }
+                    return;
                 }
             }
+            UIEvents.UnitSelected(null);
         }
+    }
+    //private void Deselect(RoundController.Phase phase)
+    //{
+    //    selected = false;
+    //}
+    private void UnitSelected(Unit unit)
+    {
+        selected = unit;
     }
 }

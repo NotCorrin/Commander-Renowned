@@ -13,8 +13,8 @@ using System;
  * onUseAmmo(Unit, int)
  * onUseMana(Unit, int)
  * onUseAbility(Unit, Unit, int)
- * onQTEStart(QTEController.QTEType)
- * onQTEResolves(QTEController.QTEResult)
+ * onQTEStart(GameManager.QTEType)
+ * onQTEResolves(GameManager.QTEResult)
  */
 
 public static class GameEvents
@@ -65,6 +65,14 @@ public static class GameEvents
             onDefenseUp(Caster, Amount);
         }
     }
+    public static Action<Unit, int> onBaseDefenseUp;
+    public static void BaseDefenseUp(Unit Caster, int Amount)
+    {
+        if (onBaseDefenseUp != null)
+        {
+            onBaseDefenseUp(Caster, Amount);
+        }
+    }
 
     public static Action<Unit, int> onAttackUp;
     public static void AttackUp(Unit Caster, int Amount)
@@ -72,6 +80,14 @@ public static class GameEvents
         if (onAttackUp != null)
         {
             onAttackUp(Caster, Amount);
+        }
+    }
+    public static Action<Unit, int> onBaseAttackUp;
+    public static void BaseAttackUp(Unit Caster, int Amount)
+    {
+        if (onBaseAttackUp != null)
+        {
+            onBaseAttackUp(Caster, Amount);
         }
     }
 
@@ -111,6 +127,15 @@ public static class GameEvents
         }
     }
 
+    public static Action<Ability, bool> onGreyOut;
+    public static void GreyOut(Ability ability, bool disable)
+    {
+        if (onGreyOut != null)
+        {
+            onGreyOut(ability, disable);
+        }
+    }
+
     public static Action<Unit, Unit, int> onUseAbility;
     public static void UseAbility(Unit caster, Unit target, int abilityNumber)
     {
@@ -125,8 +150,8 @@ public static class GameEvents
         }
     }
 
-    public static Action<QTEController.QTEType, int> onQTEStart;
-    public static void QTEStart(QTEController.QTEType qteType, int difficultyModifier)
+    public static Action<GameManager.QTEType, int> onQTEStart;
+    public static void QTEStart(GameManager.QTEType qteType, int difficultyModifier)
     {
         if (onQTEStart != null)
         {
@@ -134,8 +159,8 @@ public static class GameEvents
         }
     }
 
-    public static Action<QTEController.QTEResult> onQTEResolved;
-    public static void QTEResolved(QTEController.QTEResult QTEResult)
+    public static Action<GameManager.QTEResult> onQTEResolved;
+    public static void QTEResolved(GameManager.QTEResult QTEResult)
     {
         if (onQTEResolved != null)
         {

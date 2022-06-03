@@ -15,11 +15,19 @@ public class Unit : Listener
 
     [SerializeField] GameObject DamageNumbers;
 
-    SpriteRenderer spriteRenderer;
-    private Billboard billboard;
-    private Animator animator;
+    [SerializeField] SpriteRenderer spriteRenderer;
+    Collider coll;
+    [SerializeField] private Billboard billboard;
+    [SerializeField] private Animator animator;
+    public Transform HealthBar;
     public Transform AmmoBar;
     public Transform ManaBar;
+    public Transform BuffBar;
+    public ParticleSystem ps;
+    public ParticleSystem selectedps;
+
+
+    public GameObject visibleElements;
 
     [SerializeField] protected int maxHealth;
 
@@ -35,7 +43,7 @@ public class Unit : Listener
         get => health;
         set
         {
-            health = Mathf.Max(Mathf.Min(value, MaxHealth), 0);
+            health = Mathf.Clamp(value, 0, MaxHealth);
             UIEvents.UnitHealthChanged(this, health);
             if(value <= 0) 
             {
@@ -56,7 +64,7 @@ public class Unit : Listener
         get => ammo;
         set
         {
-            ammo = Mathf.Max(Mathf.Min(value, MaxAmmo), 0);
+            ammo = Mathf.Clamp(value, 0, MaxAmmo);
             UIEvents.UnitAmmoChanged(this, ammo, maxAmmo);
         }
     }
@@ -73,10 +81,22 @@ public class Unit : Listener
         get => mana;
         set
         {
-            mana = Mathf.Max(Mathf.Min(value, MaxMana));
-            UIEvents.UnitManaChanged(this, mana);
+            mana = Mathf.Clamp(value, 0, MaxMana);
+            UIEvents.UnitManaChanged(this, mana, MaxMana);
         }
     }
+
+    protected int permAttack;
+    public int PermAttack
+    {
+        get => permAttack;
+        set
+        {
+            permAttack = value;
+            UIEvents.UnitPermAttackChanged(this, permAttack);
+        }
+    }
+        //[SerializeField]
 
     protected int attack;
     public int Attack
@@ -85,21 +105,31 @@ public class Unit : Listener
         set
         {
             attack = value;
-            UIEvents.UnitAttackChanged(this, attack);
+            UIEvents.UnitAttackChanged(this, attack - permAttack);
+        }
+    }
+
+    protected int permDefense;
+    public int PermDefense
+    {
+        get => permDefense;
+        set
+        {
+            permDefense = value;
+            UIEvents.UnitPermDefenseChanged(this, permDefense);
         }
     }
 
     protected int defense;
-    public int Defense
-    {
+    public int Defense {
         get => defense;
-        set
-        {
+        set {
             defense = value;
-            UIEvents.UnitDefenseChanged(this, defense);
+            UIEvents.UnitDefenseChanged(this, defense - permDefense);
         }
     }
 
+    protected int baseAccuracy;
     protected int accuracy;
     public int Accuracy
     {
@@ -141,11 +171,27 @@ public class Unit : Listener
             Attack += AttackChange;
         }
     }
+    private void OnBaseAttackChanged(Unit target, int AttackChange)
+    {
+        if (target == this)
+        {
+            PermAttack += AttackChange;
+            Attack += AttackChange;
+        }
+    }
 
     private void OnDefenseChanged(Unit target, int DefenseChange)
     {
         if (target == this)
         {
+            Defense += DefenseChange;
+        }
+    }
+    private void OnBaseDefenseChanged(Unit target, int DefenseChange)
+    {
+        if (target == this)
+        {
+            PermDefense += DefenseChange;
             Defense += DefenseChange;
         }
     }
@@ -163,6 +209,21 @@ public class Unit : Listener
         if (target == this)
         {
             Thorns += ThornsChange;
+        }
+    }
+
+    void GreyOut(Ability ability, bool isPlayer)
+    {
+        Debug.LogWarning(this);
+        if (!ability)
+        {
+            animator.SetBool("greyedOut", false);
+            if (!FieldController.main.IsUnitPlayer(this)) UpdateEnemyVisual();
+        }
+        else if(!ability.IsTargetValid(this, isPlayer))
+        {
+            //spriteRenderer.color -= new Color(0.5f,0.5f,0.5f,0.2f);
+            animator.SetBool("greyedOut", true);
         }
     }
 
@@ -191,6 +252,7 @@ public class Unit : Listener
             }
 
         }
+        if(!FieldController.main.IsUnitPlayer(this)) UpdateEnemyVisual();
     }
 
     private void OnUseAmmo(Unit caster, int cost)
@@ -220,6 +282,25 @@ public class Unit : Listener
         }
     }
 
+    private void OnKill(Unit unit)
+    {
+        if (unit == this)
+        {
+            animator.SetTrigger("killUnit");
+            if (GetComponent<SphereCollider>()) Destroy(GetComponent<SphereCollider>());
+            var em = ps.emission;
+            em.enabled = false;
+        }
+    }
+
+    private void KillUnit()
+    {
+        if (visibleElements) Destroy(visibleElements);
+        spriteRenderer.sprite = null;
+        var em = ps.emission;
+        em.enabled = false;
+    }
+
     // Start is called before the first frame update
     public int GetStickScore()
     {
@@ -231,7 +312,7 @@ public class Unit : Listener
         return GetStandardAlgorithm();
     }
 
-    public void SetupUnit(UnitType uType, string uName, AbilitySetup[] vAbilities, AbilitySetup[] sAbilities, int mHealth, int mAmmo, int mMana, RuntimeAnimatorController anim)
+    public void SetupUnit(UnitType uType, string uName, AbilitySetup[] vAbilities, AbilitySetup[] sAbilities, int mHealth, int mAmmo, int mMana, RuntimeAnimatorController anim, Sprite sprite)
     {
         unitType = uType;
 
@@ -268,6 +349,7 @@ public class Unit : Listener
         maxHealth = mHealth;
         maxAmmo = mAmmo;
         maxMana = mMana;
+        spriteRenderer.sprite = sprite;
         animator.runtimeAnimatorController = anim;
 
         ResetUnit();
@@ -275,20 +357,27 @@ public class Unit : Listener
     protected virtual void ResetUnit()
     {
         Health = MaxHealth;
-        Ammo = MaxAmmo;
-        Mana = MaxMana;
+        //Ammo = Mathf.CeilToInt(MaxAmmo/2);
+        Ammo = Mathf.Clamp(3, 0, MaxAmmo);
+        //Mana = Mathf.CeilToInt(MaxMana/2);
+        Mana = Mathf.Clamp(3, 0, MaxMana);
+
         ResetBuffs();
     }
     protected virtual void ResetBuffs()
     {
         if(RoundController.isPlayerPhase == FieldController.main.IsUnitPlayer(this))
         {
-            Attack = 0;
-            Accuracy = 0;
+            if (PermAttack > 0) PermAttack--;
+            if (baseAccuracy > 0) baseAccuracy--;
+            Attack = PermAttack;
+            Accuracy = baseAccuracy;
         }
         else
         {
-            Defense = 0;
+            if (PermDefense > 0) PermDefense--;
+            Defense = PermDefense;
+            Thorns = 0;
         }
     }
 
@@ -315,10 +404,10 @@ public class Unit : Listener
             }
         }
 
-        if (totalVanguardMoves == 0) totalVanguardMoves = -100; 
+        if (totalVanguardMoveScore <= 0) return 0; 
 
         int totalSupportMoveScore = 0;
-        int totalSupportMoves = 0;
+
         foreach (Ability ability in supportAbilities)
         {
             if (ability)
@@ -330,7 +419,14 @@ public class Unit : Listener
             }
         }
 
-        moveWeight = totalVanguardMoveScore - totalSupportMoveScore ;
+        if (totalSupportMoveScore > totalVanguardMoveScore)
+        {
+            moveWeight = -totalSupportMoveScore;
+        }
+        else
+        {
+            moveWeight = totalVanguardMoveScore;
+        }
 
         healthWeight = Mathf.RoundToInt(((float)Health / (float)MaxHealth) * 100);
 
@@ -353,14 +449,14 @@ public class Unit : Listener
         }
 
         finalWeight = (2 * moveWeight + healthWeight + resourceWeight) / 4 + buffWeight;
-        Debug.Log(UnitName
-        + "\n" + " final weight = " + finalWeight
-        + "\n" + " move weight = " + moveWeight
-        + "\n" + "health weight = " + healthWeight
-        + "\n" + "resource weight = " + resourceWeight
-        + "\n" + " weight - buffweight = " + ((2 * moveWeight + healthWeight + resourceWeight) / 4)
-        + "\n" + "buffweight = " + buffWeight
-        );
+        //Debug.Log(UnitName
+        //+ "\n" + " final weight = " + finalWeight
+        //+ "\n" + " move weight = " + moveWeight
+        //+ "\n" + "health weight = " + healthWeight
+        //+ "\n" + "resource weight = " + resourceWeight
+        //+ "\n" + " weight - buffweight = " + ((2 * moveWeight + healthWeight + resourceWeight) / 4)
+        //+ "\n" + "buffweight = " + buffWeight
+        //);
 
         return finalWeight;
     }
@@ -372,7 +468,9 @@ public class Unit : Listener
         GameEvents.onBattleStarted += ResetUnit;
         GameEvents.onHealthChanged += OnHealthChanged;
         GameEvents.onDefenseUp += OnDefenseChanged;
+        GameEvents.onBaseDefenseUp += OnBaseDefenseChanged;
         GameEvents.onAttackUp += OnAttackChanged;
+        GameEvents.onBaseAttackUp += OnBaseAttackChanged;
         GameEvents.onAccuracyUp += OnAccuracyChanged;
         GameEvents.onThornsUp += OnThornsChanged;
         GameEvents.onUseAbility += UseAbility;
@@ -380,9 +478,12 @@ public class Unit : Listener
         GameEvents.onUseAmmo += OnUseAmmo;
         GameEvents.onResetBuffs += ResetBuffs;
         GameEvents.onUnitAttack += OnAttacked;
+        GameEvents.onKill += OnKill;
 
         GameEvents.onPhaseChanged += UpdateBillboard;
-        
+        GameEvents.onGreyOut += GreyOut;
+
+        GameEvents.onAbilityResolved += AbilityDone;
     }
 
     protected override void UnsubscribeListeners()
@@ -390,7 +491,9 @@ public class Unit : Listener
         GameEvents.onBattleStarted -= ResetUnit;
         GameEvents.onHealthChanged -= OnHealthChanged;
         GameEvents.onDefenseUp -= OnDefenseChanged;
+        GameEvents.onBaseDefenseUp -= OnBaseDefenseChanged;
         GameEvents.onAttackUp -= OnAttackChanged;
+        GameEvents.onBaseAttackUp -= OnBaseAttackChanged;
         GameEvents.onAccuracyUp -= OnAccuracyChanged;
         GameEvents.onThornsUp -= OnThornsChanged;
         GameEvents.onUseAbility -= UseAbility;
@@ -398,33 +501,77 @@ public class Unit : Listener
         GameEvents.onUseAmmo -= OnUseAmmo;
         GameEvents.onResetBuffs -= ResetBuffs;
         GameEvents.onUnitAttack -= OnAttacked;
+        GameEvents.onKill += OnKill;
 
         GameEvents.onPhaseChanged -= UpdateBillboard;
+        GameEvents.onGreyOut -= GreyOut;
 
+        GameEvents.onAbilityResolved -= AbilityDone;
+    }
+
+    private void AbilityDone(Unit unit)
+    {
+        if(unit == this)
+        {
+            var em = selectedps.emission;
+            em.enabled = false;
+        }
+    }
+
+    public void AbilityUsable()
+    {
+        if (selectedps)
+        {
+            if (!selectedps.isPlaying) selectedps.Play();
+            var em = selectedps.emission;
+            em.enabled = true;
+        }
     }
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
-        billboard = GetComponent<Billboard>();
+        Debug.LogWarning("FIRST");
+        if (!animator) animator = GetComponent<Animator>();
+        if (!billboard) billboard = GetComponent<Billboard>();
+        if (!coll) coll = GetComponent<Collider>();
+        if (!spriteRenderer) spriteRenderer = GetComponent<SpriteRenderer>();
 
-        DamageNumbers = Resources.Load("UIPrefabs/DamageText") as GameObject;
+        if (!DamageNumbers) DamageNumbers = Resources.Load("UIPrefabs/DamageText") as GameObject;
     }
     void UpdateBillboard(RoundController.Phase _phase)
     {
+        var em = selectedps.emission;
+        em.enabled = false;
+
         billboard.SwitchBillboardState(((int)_phase)>=2);
+        if(_phase == RoundController.Phase.PlayerSupport && FieldController.main.GetPosition(this) != FieldController.Position.Vanguard && FieldController.main.IsUnitPlayer(this))
+        {
+            foreach (Ability ability in SupportAbilities)
+            {
+                if (!ability) continue;
+                if(FieldController.main.GetValidTargets(this, ability).Count != 0)
+                {
+                    AbilityUsable();
+                    return;
+                }
+            }
+        }
     }
 
     public void UpdateEnemyVisual()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-
-        if(spriteRenderer)
+        //if(spriteRenderer)
+        //{
+        //    spriteRenderer.color = new Color(0.85f, 0.66f, 1, 1);
+        //    //spriteRenderer.color = Color.black;
+        //    spriteRenderer.flipX = true;
+        //}
+        animator.SetBool("enemy", true);
+        spriteRenderer.flipX = true;
+        if (ps)
         {
-            spriteRenderer.color = new Color(0.85f, 0.66f, 1, 1);
-            spriteRenderer.flipX = true;
+            if (!ps.isPlaying) ps.Play();
         }
-        
     }
 }
 

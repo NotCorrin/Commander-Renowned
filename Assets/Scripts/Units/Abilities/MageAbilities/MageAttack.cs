@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class MageAttack : QTEAbility
 {
-    [SerializeField] int CostVariation = 1; //unused for now (cbf)
+    [SerializeField] int CostVariation = -1; //unused for now (cbf)
 
     public override void SetupParams(AbilitySetup setup)
     {
         VFX1 = Resources.Load("CustomLasers/Mage/Mage_Explosion") as GameObject;
+        isMagic = true;
         base.SetupParams(setup);
     }
 
@@ -21,42 +22,43 @@ public class MageAttack : QTEAbility
 		return (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(Target) != isPlayer);
 	}
 
-    protected override QTEController.QTEType GetQTEType()
+    protected override GameManager.QTEType GetQTEType()
     {
-        return QTEController.QTEType.shrinkingCircle;
+        return GameManager.QTEType.shrinkingCircle;
     }
 
     public override int GetMoveWeight (Unit caster)
     {   
-        int HealthWeight = Mathf.FloorToInt((caster.Health / caster.MaxHealth) * 100);
+        int HealthWeight = Mathf.FloorToInt(1 - ((float)caster.Health / (float)caster.MaxHealth) * 100);
         int ManaWeight;
+        int BuffWeight = GetTotalDamageBuffs(caster) * 20;
         if (caster.unitType == UnitType.Mage || caster.unitType == UnitType.Commander)
         {
-            ManaWeight = Mathf.FloorToInt((1 - (caster.Mana / caster.MaxMana)) * 100);
+            ManaWeight = Mathf.FloorToInt((1 - ((float)caster.Mana / (float)caster.MaxMana)) * 100);
         }
         else return 0;
 
-        return (2 * HealthWeight+ManaWeight)/3;
+        return (HealthWeight+2 * ManaWeight)/3 + BuffWeight;
     }
 
-    protected override void AbilityUsed(QTEController.QTEResult result)
+    protected override void AbilityUsed(GameManager.QTEResult result)
     {
         int FinalDamage = Damage;
         int FinalCost = Cost;
 
         switch (result)
         {
-            case QTEController.QTEResult.Critical:
+            case GameManager.QTEResult.Critical:
                 {
                     FinalDamage += Variation;
-                    FinalCost = 5;
-                    break;
+                    FinalCost += CostVariation;
                     Debug.Log("Critical");
+                    break;
                 }
-            case QTEController.QTEResult.Miss:
+            case GameManager.QTEResult.Miss:
                 {
                     FinalDamage -= Variation;
-                    FinalCost = 1;
+                    FinalCost = Mathf.Min(-1, Cost - CostVariation);
                     Debug.Log("Poor");
                     break;
                 }
@@ -64,6 +66,6 @@ public class MageAttack : QTEAbility
 
         if (VFX1) Instantiate(VFX1, Target.transform);
         GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, FinalDamage));
-        GameEvents.onUseMana(Caster, -FinalCost);
+        GameEvents.onUseMana(Caster, FinalCost);
     }
 }

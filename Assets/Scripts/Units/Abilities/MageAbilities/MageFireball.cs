@@ -7,7 +7,8 @@ public class MageFireball : Ability
 	public override void SetupParams(AbilitySetup setup)
     {
 		base.SetupParams(setup);
-        if(!VFX1) VFX1 = Resources.Load("CustomLasers/Mage/Mage_Explosion") as GameObject;
+     if(!VFX1) VFX1 = Resources.Load("CustomLasers/FireMage/Meteor") as GameObject;
+        isMagic = true;
     }
 	public override bool IsCasterValid (Unit Caster)
     {
@@ -19,7 +20,11 @@ public class MageFireball : Ability
 	}
 	public override void UseAbility (Unit Caster, Unit Target) {
 		if (IsAbilityValid(Caster, Target)) {
-            Instantiate(VFX1, Target.transform.position, Quaternion.identity);
+
+            GameObject fireball = Instantiate(VFX1, Target.transform.position + new Vector3(Random.Range(-2,2), 5, Random.Range(-2, 2)), Quaternion.identity);
+            fireball.transform.LookAt(Target.transform);
+            fireball.GetComponent<FullAutoFireAtTarget>().SetBigMissilesHoming(Target.transform);
+
             GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, Damage));
 			GameEvents.AttackUp(Target, StatBoost);
 			GameEvents.UseMana(Caster, Cost);
@@ -27,18 +32,14 @@ public class MageFireball : Ability
 	}
 	public override int GetMoveWeight (Unit caster) {
 
-        int HealthWeight = Mathf.FloorToInt((1 - (caster.Health / caster.MaxHealth)) * 100);
-        int ManaWeight;
-
         if (caster.unitType == UnitType.Mage || caster.unitType == UnitType.Commander)
         {
             if (caster.Mana < Cost) return 0;
 
-            ManaWeight = Mathf.FloorToInt((caster.Mana / caster.MaxMana) * 100);
 
         }
         else return 0;
 
-        return (HealthWeight + 2 * ManaWeight) / 3;
+        return 100;
     }
 }

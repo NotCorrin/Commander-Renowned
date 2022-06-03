@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 959022537}
   - component: {fileID: 959022536}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SFXController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1863132213}
   - component: {fileID: 1863132212}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FireLaserLoopSFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,7 +201,7 @@ GameObject:
   - component: {fileID: 8959962781752745977}
   - component: {fileID: 8959962781752745983}
   - component: {fileID: 8959962781752745976}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: StartWave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5095,7 +5095,7 @@ GameObject:
   - component: {fileID: 8959962781960404089}
   - component: {fileID: 8959962781960404095}
   - component: {fileID: 8959962781960404094}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SmallTrails
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10011,7 +10011,7 @@ GameObject:
   - component: {fileID: 8959962781991663828}
   - component: {fileID: 8959962781991663829}
   - component: {fileID: 6934059016669861924}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ArcaneBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10206,7 +10206,7 @@ GameObject:
   - component: {fileID: 8959962782114538860}
   - component: {fileID: 8959962782114538770}
   - component: {fileID: 8959962782114538771}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: StartParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15089,7 +15089,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8959962782272226408}
   - component: {fileID: 8959962782272226409}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point light For Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15184,7 +15184,7 @@ GameObject:
   - component: {fileID: 8959962782541270228}
   - component: {fileID: 8959962782541270230}
   - component: {fileID: 8959962782541270229}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Explosion_Flare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20070,7 +20070,7 @@ GameObject:
   - component: {fileID: 8959962782625997028}
   - component: {fileID: 8959962782625997029}
   - component: {fileID: 8959962782625997035}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BigMissile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25018,7 +25018,7 @@ GameObject:
   - component: {fileID: 8959962782712870585}
   - component: {fileID: 8959962782712870587}
   - component: {fileID: 8959962782712870586}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Explosion_FresnelSphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29920,7 +29920,7 @@ GameObject:
   - component: {fileID: 8959962782860964886}
   - component: {fileID: 8959962782860964880}
   - component: {fileID: 8959962782860964887}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LightsOnly
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34822,7 +34822,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8959962782877419523}
   - component: {fileID: 8959962782877419548}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point light Particle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34915,7 +34915,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8959962783135827845}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BigMissiles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34952,7 +34952,7 @@ GameObject:
   - component: {fileID: 8959962783201515669}
   - component: {fileID: 8959962783201515675}
   - component: {fileID: 8959962783201515668}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BigMissileCore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39874,7 +39874,7 @@ GameObject:
   - component: {fileID: 8959962783201678315}
   - component: {fileID: 8959962783201678309}
   - component: {fileID: 8959962783201678308}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Explosion_Curves
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44767,7 +44767,7 @@ GameObject:
   - component: {fileID: 8959962783278678382}
   - component: {fileID: 8959962783278678376}
   - component: {fileID: 8959962783278678383}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Explosion_Embers
   m_TagString: Untagged
   m_Icon: {fileID: 0}

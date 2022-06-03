@@ -15,15 +15,24 @@ public class ManabarUI : Listener
     protected override void SubscribeListeners()
     {
         UIEvents.onUnitManaChanged += UpdateMana;
+        GameEvents.onKill += HideSelf;
     }
 
     protected override void UnsubscribeListeners()
     {
         UIEvents.onUnitManaChanged -= UpdateMana;
+        GameEvents.onKill -= HideSelf;
     }
-    void UpdateMana(Unit unit, int value)
+    void UpdateMana(Unit unit, int value, int maxValue)
     {
-        if(unit == parent) manabarValue.text = value + "";
+        if(unit == parent) manabarValue.text = value + "/" + maxValue;
+    }
+    void HideSelf(Unit unit)
+    {
+        if(unit == parent)
+        {
+            manabarContainer.style.display = DisplayStyle.None;
+        }
     }
 
     void Start()

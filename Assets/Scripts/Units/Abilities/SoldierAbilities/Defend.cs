@@ -10,6 +10,7 @@ public class Defend : QTEAbility
         base.SetupParams(setup);
         if(!VFX1) VFX1 = Resources.Load("CustomLasers/Soldier/Soldier_Laser") as GameObject;
         if(!VFX2) VFX2 = Resources.Load("CustomLasers/Soldier/Shield") as GameObject;
+        isMagic = false;
     }
 
     public override int GetMoveWeight(Unit caster)
@@ -23,18 +24,18 @@ public class Defend : QTEAbility
         else return 0;
     }
 
-    protected override void AbilityUsed(QTEController.QTEResult result)
+    protected override void AbilityUsed(GameManager.QTEResult result)
     {
         int FinalDefense = StatBoost;
 
         switch (result)
         {
-            case QTEController.QTEResult.Critical:
+            case GameManager.QTEResult.Critical:
                 {
                     FinalDefense += Variation;
                     break;
                 }
-            case QTEController.QTEResult.Miss:
+            case GameManager.QTEResult.Miss:
                 {
                     FinalDefense = Mathf.Max(0, FinalDefense - Variation);
                     break;
@@ -44,15 +45,14 @@ public class Defend : QTEAbility
         if (VFX2) Instantiate(VFX2, transform);
         GameEvents.DefenseUp(Caster, FinalDefense);
 
-        GameEvents.HealthChanged(Target, -GetDamageCalculation(Caster, Target, Damage));
-        FireLaserAtTarget(Target.transform);
+        AttackWithLaser(Damage);
 
         GameEvents.UseAmmo(Caster, Cost);
     }
 
-    protected override QTEController.QTEType GetQTEType()
+    protected override GameManager.QTEType GetQTEType()
     {
-        return QTEController.QTEType.shrinkingCircle;
+        return GameManager.QTEType.shrinkingCircle;
     }
     
     public override bool IsCasterValid (Unit Caster)

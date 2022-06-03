@@ -7,6 +7,9 @@ public abstract class QTEAbility : Ability
     protected Unit Caster;
     protected Unit Target;
 
+    public Icon[] critList;
+    public Icon[] missList;
+
     public override void UseAbility(Unit Caster, Unit Target)
     {
         //Overridable code snippet that starts the QTE sequence
@@ -19,7 +22,7 @@ public abstract class QTEAbility : Ability
         }
     }
 
-    protected void OnQTEResolved(QTEController.QTEResult result)
+    protected void OnQTEResolved(GameManager.QTEResult result)
     {
         AbilityUsed(result);
         Invoke("SetPhase",0.5f);
@@ -32,9 +35,9 @@ public abstract class QTEAbility : Ability
     }
 
     // Use this to set the QTE type
-    protected abstract QTEController.QTEType GetQTEType();
+    protected abstract GameManager.QTEType GetQTEType();
 
-    protected abstract void AbilityUsed(QTEController.QTEResult result);
+    protected abstract void AbilityUsed(GameManager.QTEResult result);
 
 
 }

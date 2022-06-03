@@ -58,17 +58,15 @@ public class RoundController : Listener
             GameEvents.ResetBuffs();
         }
 
-        RoundController.SetPhase(Phase.NextPhase);
+        RoundController.SetPhase();
     }
     
-    public static void SetPhase(Phase _phase)
+    public static void SetPhase()
     {
         if (!isPlayerPhase) FieldController.main.ActivateKill();
         //Debug.LogWarning("this should happen third" + FieldController.main.GetUnit(FieldController.Position.Vanguard, true));
         //if(!FieldController.main.GetUnit(FieldController.Position.Vanguard, true)) Debug.LogError("It works");
-        if (_phase == Phase.NextPhase) phase++;
-        else phase = _phase;
-        if (phase == Phase.NextPhase) { phase = Phase.PlayerVanguard; Debug.Log("reached last phase, cycling back"); }
+        phase = (Phase)((int)(phase + 1)%6);
         GameEvents.PhaseChanged(phase);
         //if(phase == Phase.EnemyVangaurd) GameEvents.QTEStart(QTEController.QTEType.shrinkingCircle, 1);
     }
@@ -86,7 +84,7 @@ public class RoundController : Listener
     private void StartBattle()
     {
         //Debug.LogWarning("Battle Started");
-        phase = Phase.PlayerVanguard;
+        phase = Phase.PlayerSwap;
         GameEvents.PhaseChanged(phase);
     }
 
@@ -97,7 +95,6 @@ public class RoundController : Listener
         PlayerSwap,
         EnemySwap,
         PlayerSupport,
-        EnemySupport,
-        NextPhase
+        EnemySupport
     }
 }

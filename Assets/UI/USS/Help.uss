@@ -1,0 +1,116 @@
+.toggle-opened {
+    background-image: url('project://database/Assets/UI/Images/Help/helpClose.svg?fileID=7388822144124034973&guid=c0a491a757811be4387f1b12c92d61b4&type=3#helpClose');
+    -unity-background-scale-mode: scale-to-fit;
+    transition-duration: 0ms;
+}
+
+.toggle-opened:hover {
+    background-image: url('project://database/Assets/UI/Images/Help/helpClose.svg?fileID=7388822144124034973&guid=c0a491a757811be4387f1b12c92d61b4&type=3#helpClose');
+    -unity-background-scale-mode: scale-to-fit;
+    transition-duration: 0ms;
+    -unity-background-image-tint-color: rgba(234, 50, 60, 255);
+}
+
+.toggle-closed {
+    background-image: url('project://database/Assets/UI/Images/Help/helpOpen.svg?fileID=7388822144124034973&guid=c360cf4b7ab028341aab02668a04b60c&type=3#helpOpen');
+    -unity-background-scale-mode: scale-to-fit;
+    transition-duration: 0ms;
+}
+
+.toggle-closed:hover {
+    background-image: url('project://database/Assets/UI/Images/Help/helpOpen.svg?fileID=7388822144124034973&guid=c360cf4b7ab028341aab02668a04b60c&type=3#helpOpen');
+    -unity-background-scale-mode: scale-to-fit;
+    transition-duration: 0ms;
+    -unity-background-image-tint-color: rgba(255, 255, 255, 255);
+}
+
+.help-enabled {
+    display: flex;
+    opacity: 1;
+    transition-property: opacity, display;
+    transition-duration: 400ms, 0s;
+    transition-delay: 0s, 0s;
+}
+
+.help-disabled {
+    display: none;
+    opacity: 0;
+    transition-property: opacity, display;
+    transition-duration: 400ms, 0s;
+    transition-delay: 0s, 600ms;
+}
+
+.page {
+    width: 100%;
+    height: 100%;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    position: absolute;
+}
+
+.page-enabled {
+    opacity: 1;
+    translate: 0 0;
+    transition-property: opacity, translate;
+    transition-duration: 200ms, 200ms;
+    transition-delay: 180ms, 180ms;
+}
+
+.page-closing {
+    opacity: 0;
+    translate: 30px 0;
+    transition-property: opacity, translate;
+    transition-duration: 200ms, 200ms;
+    transition-delay: 0s, 0s;
+}
+
+.page-disabled {
+    opacity: 0;
+    translate: -30px 0;
+    transition-property: opacity, translate;
+    transition-duration: 200ms, 200ms;
+    transition-delay: 0s, 0s;
+}
+
+.page-description {
+    font-size: 20px;
+    color: rgb(0, 0, 0);
+    -unity-font: url('project://database/Assets/Fonts/Saira-Regular.ttf?fileID=12800000&guid=251e77914a76b49a1ba8e99db3b89002&type=3#Saira-Regular');
+    -unity-font-definition: url('project://database/Assets/Fonts/Saira-Regular%20SDF.asset?fileID=11400000&guid=94d2459b6274b4ed4809561a759f13c1&type=2#Saira-Regular SDF');
+    white-space: normal;
+}
+
+.content-title:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.content-title:hover Label {
+    transition-property: color;
+    transition-duration: 140ms;
+    color: rgb(10, 10, 10);
+}
+
+.content-title {
+    font-size: 24px;
+    color: rgb(0, 0, 0);
+    margin-top: 4px;
+    margin-left: 4px;
+    margin-bottom: 4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 10px;
+}
+
+.content-title-selected {
+    font-size: 24px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(0, 0, 0);
+    margin-top: 4px;
+    margin-bottom: 4px;
+    margin-left: 4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 10px;
+}

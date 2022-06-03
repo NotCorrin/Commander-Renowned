@@ -14,15 +14,24 @@ public class HealthbarUI : Listener
     protected override void SubscribeListeners()
     {
         UIEvents.onUnitHealthChanged += UpdateHealth;
+        GameEvents.onKill += HideSelf;
     }
 
     protected override void UnsubscribeListeners()
     {
         UIEvents.onUnitHealthChanged -= UpdateHealth;
+        GameEvents.onKill -= HideSelf;
     }
     void UpdateHealth(Unit unit, int value)
     {
         if(unit == parent) healthbarValue.text = value + "";
+    }
+    void HideSelf(Unit unit)
+    {
+        if(unit == parent)
+        {
+            healthbarContainer.style.display = DisplayStyle.None;
+        }
     }
     void Start()
     {
