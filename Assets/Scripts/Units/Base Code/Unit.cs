@@ -267,6 +267,8 @@ public class Unit : Listener
         {
             animator.SetTrigger("killUnit");
             if (GetComponent<SphereCollider>()) Destroy(GetComponent<SphereCollider>());
+            var em = ps.emission;
+            em.enabled = false;
         }
     }
 
@@ -274,7 +276,8 @@ public class Unit : Listener
     {
         if (visibleElements) Destroy(visibleElements);
         spriteRenderer.sprite = null;
-        ps.Stop();
+        var em = ps.emission;
+        em.enabled = false;
     }
 
     // Start is called before the first frame update

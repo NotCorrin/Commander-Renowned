@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: New Scenario
   m_EditorClassIdentifier: 
   level: 0
-  tutorialText: "Welcome to Commander: Renowned.\r\n\r\nYou are the Renowned; an
-    elite commander who wields arcane powers and combines it with modern technology.\r"
+  tutorialText: "Welcome to Commander: Renowned.\r\n\r\nYou are an elite commander
+    of both magic and military known as the Renowned.\r\n\r\nYour objective is to
+    eliminate all the units from the enemy team before you lose all of your own units.\r\n\r\nYou
+    will need to create strategies and form cohesions to best the enemy team.\r\n\r\nIt\u2019s
+    a battle to the death!\r\n"
   story:
   - title: 
     description: 
