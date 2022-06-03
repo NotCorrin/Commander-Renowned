@@ -28,8 +28,10 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 0
     AbilityName: Root Burst
-    AbilityDescription: Create as growth of roots that burst out, sapping the opponent's
+    AbilityDescription: 'Create as growth of roots that burst out, sapping the opponent''s
       energy
+
+      2 ATT'
     Cost: -3
     Damage: 2
     StatBoost: 0
@@ -40,8 +42,10 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 12
     AbilityName: Bramble Shield
-    AbilityDescription: Will form a wall of thorns to protect the mage and damage
+    AbilityDescription: 'Will form a wall of thorns to protect the mage and damage
       incoming enemies.
+
+      +2 DEF'
     Cost: -1
     Damage: 0
     StatBoost: 2
