@@ -24,6 +24,7 @@ public class Unit : Listener
     public Transform ManaBar;
     public Transform BuffBar;
     public ParticleSystem ps;
+    public ParticleSystem selectedps;
 
 
     public GameObject visibleElements;
@@ -213,7 +214,8 @@ public class Unit : Listener
 
     void GreyOut(Ability ability, bool isPlayer)
     {
-        if(!ability)
+        Debug.LogWarning(this);
+        if (!ability)
         {
             animator.SetBool("greyedOut", false);
             if (!FieldController.main.IsUnitPlayer(this)) UpdateEnemyVisual();
@@ -286,6 +288,8 @@ public class Unit : Listener
         {
             animator.SetTrigger("killUnit");
             if (GetComponent<SphereCollider>()) Destroy(GetComponent<SphereCollider>());
+            var em = ps.emission;
+            em.enabled = false;
         }
     }
 
@@ -293,7 +297,8 @@ public class Unit : Listener
     {
         if (visibleElements) Destroy(visibleElements);
         spriteRenderer.sprite = null;
-        ps.Stop();
+        var em = ps.emission;
+        em.enabled = false;
     }
 
     // Start is called before the first frame update
@@ -477,7 +482,8 @@ public class Unit : Listener
 
         GameEvents.onPhaseChanged += UpdateBillboard;
         GameEvents.onGreyOut += GreyOut;
-        
+
+        GameEvents.onAbilityResolved += AbilityDone;
     }
 
     protected override void UnsubscribeListeners()
@@ -498,11 +504,31 @@ public class Unit : Listener
         GameEvents.onKill += OnKill;
 
         GameEvents.onPhaseChanged -= UpdateBillboard;
+        GameEvents.onGreyOut -= GreyOut;
 
+        GameEvents.onAbilityResolved -= AbilityDone;
+    }
+
+    private void AbilityDone(Unit unit)
+    {
+        if(unit == this)
+        {
+            var em = selectedps.emission;
+            em.enabled = false;
+        }
+    }
+
+    public void AbilityUsable()
+    {
+        if (selectedps)
+        {
+            if (!selectedps.isPlaying) selectedps.Play();
+        }
     }
 
     private void Awake()
     {
+        Debug.LogWarning("FIRST");
         if (!animator) animator = GetComponent<Animator>();
         if (!billboard) billboard = GetComponent<Billboard>();
         if (!coll) coll = GetComponent<Collider>();
@@ -513,6 +539,17 @@ public class Unit : Listener
     void UpdateBillboard(RoundController.Phase _phase)
     {
         billboard.SwitchBillboardState(((int)_phase)>=2);
+        if(_phase == RoundController.Phase.PlayerSupport && FieldController.main.GetPosition(this) != FieldController.Position.Vanguard && FieldController.main.IsUnitPlayer(this))
+        {
+            foreach (Ability ability in SupportAbilities)
+            {
+                if(FieldController.main.GetValidTargets(this, ability).Count != 0)
+                {
+                    AbilityUsable();
+                    return;
+                }
+            }
+        }
     }
 
     public void UpdateEnemyVisual()

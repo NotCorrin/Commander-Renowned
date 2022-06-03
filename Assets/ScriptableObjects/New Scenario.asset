@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: New Scenario
   m_EditorClassIdentifier: 
   level: 0
-  tutorialText: "Welcome to Commander: Renowned.\r\n\r\nYou are the Renowned; an
-    elite commander who wields arcane powers and combines it with modern technology.\r"
+  tutorialText: "Welcome to Commander: Renowned.\r\n\r\nYou are an elite commander
+    of both magic and military known as the Renowned.\r\n\r\nYour objective is to
+    eliminate all the units from the enemy team before you lose all of your own units.\r\n\r\nYou
+    will need to create strategies and form cohesions to best the enemy team.\r\n\r\nIt\u2019s
+    a battle to the death!\r\n"
   story:
   - title: 
     description: 
@@ -71,6 +74,10 @@ MonoBehaviour:
       - {fileID: 11400000, guid: ff9134c33cedaaa4a8f884e77b16ccc0, type: 2}
       - {fileID: 11400000, guid: e7acd760f86d622409b684a33cad4664, type: 2}
       - {fileID: 11400000, guid: f6265ea57b7308b46a6e86b2ff8e1581, type: 2}
+    - enemies:
+      - {fileID: 11400000, guid: edf88a06261f4ed4891c1b5cf94ad382, type: 2}
+      - {fileID: 11400000, guid: 7803db8250df25b40be0d0b5a9dea4fd, type: 2}
+      - {fileID: 11400000, guid: e7acd760f86d622409b684a33cad4664, type: 2}
     windescription: Choose a new unit to add to your party.
     winunit:
     - {fileID: 11400000, guid: f6265ea57b7308b46a6e86b2ff8e1581, type: 2}
@@ -82,9 +89,8 @@ MonoBehaviour:
     Enemies:
     - enemies: []
     - enemies:
-      - {fileID: 11400000, guid: ff9134c33cedaaa4a8f884e77b16ccc0, type: 2}
-      - {fileID: 11400000, guid: ff9134c33cedaaa4a8f884e77b16ccc0, type: 2}
-      - {fileID: 11400000, guid: ff9134c33cedaaa4a8f884e77b16ccc0, type: 2}
+      - {fileID: 11400000, guid: e7acd760f86d622409b684a33cad4664, type: 2}
+      - {fileID: 11400000, guid: f6265ea57b7308b46a6e86b2ff8e1581, type: 2}
+      - {fileID: 11400000, guid: fcd4ac7d08691474480c50f178f7222c, type: 2}
     windescription: You won!
-    winunit:
-    - {fileID: 0}
+    winunit: []

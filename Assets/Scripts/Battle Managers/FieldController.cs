@@ -234,8 +234,6 @@ public class FieldController : Listener
             supportLeftUsed = !PlayerSupportLeft;
             supportRightUsed = !PlayerSupportRight;
         }
-        Debug.Log(PlayerSupportLeft);
-        Debug.Log(PlayerSupportRight);
         if(phase != RoundController.Phase.PlayerSupport) UIEvents.AllSupportUsed(false);
     }
 
