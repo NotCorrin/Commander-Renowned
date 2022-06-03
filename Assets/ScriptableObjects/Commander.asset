@@ -48,7 +48,7 @@ MonoBehaviour:
     StatBoost: 2
     Variation: 1
     ForceTarget: 0
-    VFX1: {fileID: 4795044506606789115, guid: e24947d56dd5bb14089df296b91fab13, type: 3}
+    VFX1: {fileID: 7018246452246271507, guid: a7ae20c41e63aed4698231cfba45ec53, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   SupportAbilities:
