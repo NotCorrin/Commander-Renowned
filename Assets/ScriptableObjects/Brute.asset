@@ -31,9 +31,9 @@ MonoBehaviour:
     AbilityDescription: 'Charge at the enemy with +2 Permanant ATT (Decays by 1 each
       turn).
 
-      3 ATT'
+      1 ATT'
     Cost: 1
-    Damage: 3
+    Damage: 1
     StatBoost: 2
     Variation: 1
     ForceTarget: 0
@@ -75,7 +75,7 @@ MonoBehaviour:
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   MaxHealth: 18
-  MaxAmmo: 6
+  MaxAmmo: 4
   MaxMana: 0
   animator: {fileID: 9100000, guid: 599668aef52e092489a5a10909743a1e, type: 2}
   sprite: {fileID: -1922040017, guid: 7f10c4f9eea82124bb76d669fc687814, type: 3}

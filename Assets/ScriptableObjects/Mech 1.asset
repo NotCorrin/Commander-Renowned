@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1315abb00406e0a458b2138c8363ac1c, type: 3}
-  m_Name: Mech
+  m_Name: Mech 1
   m_EditorClassIdentifier: 
   unitType: 1
   UnitName: Mech
@@ -27,12 +27,12 @@ MonoBehaviour:
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   - AbilityType: 13
-    AbilityName: Megalaser
+    AbilityName: SuperMegalaser
     AbilityDescription: "Expend all ammo. \nDeal damage equal to 5 plus the amount
-      of ammo spent.\nPermanent -2 ATT and -2 DEF"
+      of ammo spent.\nPermanent att down and def down."
     Cost: 999
     Damage: 5
-    StatBoost: -2
+    StatBoost: -1
     Variation: 1
     ForceTarget: 0
     VFX1: {fileID: 1585991288121845649, guid: 4e759e593791d58409061a88347ebf53, type: 3}

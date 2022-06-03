@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b12e751dbe26864a83de92a31c6d08e, type: 3}
   m_Name: New Scenario
   m_EditorClassIdentifier: 
-  level: 0
+  level: 3
   tutorialText: "Welcome to Commander: Renowned.\r\n\r\nYou are an elite commander
     of both magic and military known as the Renowned.\r\n\r\nYour objective is to
     eliminate all the units from the enemy team before you lose all of your own units.\r\n\r\nYou
@@ -91,6 +91,6 @@ MonoBehaviour:
     - enemies:
       - {fileID: 11400000, guid: e7acd760f86d622409b684a33cad4664, type: 2}
       - {fileID: 11400000, guid: f6265ea57b7308b46a6e86b2ff8e1581, type: 2}
-      - {fileID: 11400000, guid: fcd4ac7d08691474480c50f178f7222c, type: 2}
+      - {fileID: 11400000, guid: d35ad073ca7c0d648a3a9b65aaf17431, type: 2}
     windescription: You won!
     winunit: []

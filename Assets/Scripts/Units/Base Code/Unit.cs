@@ -368,14 +368,14 @@ public class Unit : Listener
     {
         if(RoundController.isPlayerPhase == FieldController.main.IsUnitPlayer(this))
         {
-            PermAttack = Mathf.Max(0, --PermAttack);
-            baseAccuracy = Mathf.Max(0, --baseAccuracy);
+            PermAttack = Mathf.Max(PermAttack, --PermAttack);
+            baseAccuracy = Mathf.Max(baseAccuracy, --baseAccuracy);
             Attack = PermAttack;
             Accuracy = baseAccuracy;
         }
         else
         {
-            PermDefense = Mathf.Max(0, --PermDefense);
+            PermDefense = Mathf.Max(PermDefense, --PermDefense);
             Defense = PermDefense;
             Thorns = 0;
         }
@@ -540,6 +540,9 @@ public class Unit : Listener
     }
     void UpdateBillboard(RoundController.Phase _phase)
     {
+        var em = selectedps.emission;
+        em.enabled = false;
+
         billboard.SwitchBillboardState(((int)_phase)>=2);
         if(_phase == RoundController.Phase.PlayerSupport && FieldController.main.GetPosition(this) != FieldController.Position.Vanguard && FieldController.main.IsUnitPlayer(this))
         {
