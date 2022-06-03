@@ -484,6 +484,7 @@ public class Unit : Listener
         GameEvents.onKill += OnKill;
 
         GameEvents.onPhaseChanged -= UpdateBillboard;
+        GameEvents.onGreyOut -= GreyOut;
 
     }
 

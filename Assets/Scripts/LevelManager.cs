@@ -72,6 +72,10 @@ public class LevelManager : MonoBehaviour
 		}
         startedLoading = true;
         container.style.scale = new Vector2(1, 1);
+        //foreach (GameObject item in GameObject.FindObjectsOfType(typeof(GameObject)))
+        //{
+        //    item.SetActive(false);
+        //}
         StartCoroutine(StartLoading((int)index));
 	}
 
