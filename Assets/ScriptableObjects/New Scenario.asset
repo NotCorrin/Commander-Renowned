@@ -89,5 +89,4 @@ MonoBehaviour:
       - {fileID: 11400000, guid: ff9134c33cedaaa4a8f884e77b16ccc0, type: 2}
       - {fileID: 11400000, guid: ff9134c33cedaaa4a8f884e77b16ccc0, type: 2}
     windescription: You won!
-    winunit:
-    - {fileID: 0}
+    winunit: []
