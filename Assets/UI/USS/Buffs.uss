@@ -1,0 +1,85 @@
+.buffPermAttack {
+    width: 40px;
+    background-image: url('project://database/Assets/UI/Images/BuffIcons/Perm%20Attack.svg?fileID=7388822144124034973&guid=5ef562b8df4de8a429139508b57fdf01&type=3#Perm Attack');
+    -unity-background-scale-mode: scale-to-fit;
+    height: 40px;
+    margin-left: 1px;
+    margin-right: 1px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+.buffPermDefence {
+    width: 40px;
+    background-image: url('project://database/Assets/UI/Images/BuffIcons/Perm%20Defence.svg?fileID=7388822144124034973&guid=437bf520307daac4d89a73ad0e31afde&type=3#Perm Defence');
+    -unity-background-scale-mode: scale-to-fit;
+    height: 40px;
+    margin-left: 1px;
+    margin-right: 1px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+.buffAttack {
+    width: 40px;
+    background-image: url('project://database/Assets/UI/Images/BuffIcons/Attack.svg?fileID=7388822144124034973&guid=004a751754dba5f41a8330e3ba4a5153&type=3#Attack');
+    -unity-background-scale-mode: scale-to-fit;
+    height: 40px;
+    margin-left: 1px;
+    margin-right: 1px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+.buffDefence {
+    width: 40px;
+    background-image: url('project://database/Assets/UI/Images/BuffIcons/Defence.svg?fileID=7388822144124034973&guid=a7b61a34d31a3514a852933a5535acbc&type=3#Defence');
+    -unity-background-scale-mode: scale-to-fit;
+    height: 40px;
+    margin-left: 1px;
+    margin-right: 1px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+.buffThorns {
+    width: 40px;
+    background-image: url('project://database/Assets/UI/Images/BuffIcons/Thorns.svg?fileID=7388822144124034973&guid=95ab6f1a0c962e04bb7544562822c175&type=3#Thorns');
+    -unity-background-scale-mode: scale-to-fit;
+    height: 40px;
+    margin-left: 1px;
+    margin-right: 1px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+.buffAccuracy {
+    width: 40px;
+    background-image: url('project://database/Assets/UI/Images/BuffIcons/Accuracy.svg?fileID=7388822144124034973&guid=e9c2532bc1480de40978e52441c86a79&type=3#Accuracy');
+    -unity-background-scale-mode: scale-to-fit;
+    height: 40px;
+    margin-left: 1px;
+    margin-right: 1px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+.label {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    position: absolute;
+    bottom: -4px;
+    width: 100%;
+    -unity-font: url('project://database/Assets/Fonts/Saira-Regular.ttf?fileID=12800000&guid=251e77914a76b49a1ba8e99db3b89002&type=3#Saira-Regular');
+    -unity-font-definition: url('project://database/Assets/Fonts/Saira-Regular%20SDF.asset?fileID=11400000&guid=94d2459b6274b4ed4809561a759f13c1&type=2#Saira-Regular SDF');
+    -unity-text-align: upper-center;
+    color: rgb(255, 255, 255);
+    height: auto;
+    font-size: 19px;
+}
