@@ -33,16 +33,21 @@ public class StoryContainerUI : MonoBehaviour
         {
             Debug.LogError($"{gameObject.name} : MainMenuUI - Element Query Failed.");
         }
-
-        Scenario scenario = stories.story[stories.level + 1];
+        Debug.Log(stories.level);
+        Debug.Log(stories.story.Length);
+        Scenario scenario;
+        if (stories.level >= stories.story.Length - 1 && !AddUnit) AddUnit = true;
         tComplete = team.tutorialComplete;
         if (tComplete)
         {
+            if (AddUnit) scenario = stories.story[stories.level];
+            else scenario = stories.story[stories.level + 1];
             title.text = scenario.title;
             desc.text = AddUnit?scenario.windescription:scenario.description;
         }
         else
         {
+            scenario = stories.story[stories.level + 1];
             title.text = "Tutorial";
             desc.text = stories.tutorialText;
         }
@@ -95,8 +100,10 @@ public class StoryContainerUI : MonoBehaviour
             button.clickable.clicked -= () => { };
             button.UnregisterCallback<MouseEnterEvent>(OnButtonHover);
 
-            if (stories.level > stories.story.Length - 1)
+            if (stories.level >= stories.story.Length - 1)
             {
+                stories.level = 0;
+                team.tutorialComplete = false;
                 LevelManager.instance.LoadScene(SceneIndex.EndScene);
             }
             else if (team.tutorialComplete)

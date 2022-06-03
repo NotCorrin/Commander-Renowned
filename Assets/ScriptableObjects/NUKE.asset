@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1315abb00406e0a458b2138c8363ac1c, type: 3}
-  m_Name: Cleric
+  m_Name: NUKE
   m_EditorClassIdentifier: 
-  unitType: 0
-  UnitName: Cleric
+  unitType: 1
+  UnitName: NUKE
   VanguardAbilities:
   - AbilityType: 0
     AbilityName: 
@@ -26,29 +26,17 @@ MonoBehaviour:
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  - AbilityType: 0
-    AbilityName: Divine Smite
-    AbilityDescription: 'Summon a burst of holy energy, damaging the enemy and restoring
-      your mana.
+  - AbilityType: 15
+    AbilityName: Bombard
+    AbilityDescription: 'Call an orbital strike to bombard your enemies!
 
-      2 ATT'
-    Cost: -2
-    Damage: 2
+      Very
+      risky, low accuracy attack.
+
+      Deals 2 Damage to all enemies.'
+    Cost: 0
+    Damage: 9999
     StatBoost: 0
-    Variation: 1
-    ForceTarget: 0
-    VFX1: {fileID: 2589690010720979491, guid: 08e70c16a9d350a4294cc21bb9ab77f1, type: 3}
-    VFX2: {fileID: 0}
-    VFX3: {fileID: 0}
-  - AbilityType: 2
-    AbilityName: Repel Harm
-    AbilityDescription: 'Compels those who intend to lessen their efforts.
-
-      +3
-      DEF'
-    Cost: -1
-    Damage: 0
-    StatBoost: 3
     Variation: 1
     ForceTarget: 0
     VFX1: {fileID: 0}
@@ -66,19 +54,19 @@ MonoBehaviour:
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  - AbilityType: 1
-    AbilityName: Confidence
-    AbilityDescription: Target Ally gains +2 ATT
-    Cost: 1
+  - AbilityType: 5
+    AbilityName: Reload
+    AbilityDescription: Gain 3 ammo
+    Cost: -3
     Damage: 0
-    StatBoost: 2
+    StatBoost: 0
     Variation: 0
     ForceTarget: 0
-    VFX1: {fileID: 0}
+    VFX1: {fileID: 782153884964200169, guid: b8c56c2add686174dadacb682e6415ad, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  MaxHealth: 12
-  MaxAmmo: 0
-  MaxMana: 4
-  animator: {fileID: 9100000, guid: 4f80504d0e3c5944b9e9a722e69a1a9b, type: 2}
-  sprite: {fileID: 1517324202, guid: e43ce0c7b4e703f4b83ae7abf63a9570, type: 3}
+  MaxHealth: 30
+  MaxAmmo: 5
+  MaxMana: 0
+  animator: {fileID: 9100000, guid: 78f975913a63e5f4c8c9a3c5cacfacb4, type: 2}
+  sprite: {fileID: -409528804, guid: 070d380dca0c7eb4f907591a3b861940, type: 3}

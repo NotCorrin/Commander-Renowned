@@ -13,7 +13,8 @@ public enum SceneIndex
     TerrainTestScene = 3,
     BattleSceneTwo = 4,
     BattleSceneThree = 5,
-    EndScene = 6
+    EndScene = 6,
+    AddMenuScene = 7
 }
 public class LevelManager : MonoBehaviour
 {
@@ -71,6 +72,10 @@ public class LevelManager : MonoBehaviour
 		}
         startedLoading = true;
         container.style.scale = new Vector2(1, 1);
+        //foreach (GameObject item in GameObject.FindObjectsOfType(typeof(GameObject)))
+        //{
+        //    item.SetActive(false);
+        //}
         StartCoroutine(StartLoading((int)index));
 	}
 
