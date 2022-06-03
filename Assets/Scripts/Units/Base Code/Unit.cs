@@ -85,7 +85,16 @@ public class Unit : Listener
         }
     }
 
-    protected int baseAttack;
+    protected int permAttack;
+    public int PermAttack
+    {
+        get => permAttack;
+        set
+        {
+            permAttack = value;
+            UIEvents.UnitPermAttackChanged(this, permAttack);
+        }
+    }
         //[SerializeField]
 
     protected int attack;
@@ -99,7 +108,17 @@ public class Unit : Listener
         }
     }
 
-    protected int baseDefense;
+    protected int permDefense;
+    public int PermDefense
+    {
+        get => permDefense;
+        set
+        {
+            permDefense = value;
+            UIEvents.UnitPermDefenseChanged(this, defense);
+        }
+    }
+
     protected int defense;
     public int Defense {
         get => defense;
@@ -155,7 +174,7 @@ public class Unit : Listener
     {
         if (target == this)
         {
-            baseAttack += AttackChange;
+            PermAttack += AttackChange;
             Attack += AttackChange;
         }
     }
@@ -171,7 +190,7 @@ public class Unit : Listener
     {
         if (target == this)
         {
-            baseDefense += DefenseChange;
+            PermDefense += DefenseChange;
             Defense += DefenseChange;
         }
     }
@@ -348,15 +367,15 @@ public class Unit : Listener
     {
         if(RoundController.isPlayerPhase == FieldController.main.IsUnitPlayer(this))
         {
-            baseAttack = Mathf.Max(0, --baseAttack);
+            PermAttack = Mathf.Max(0, --PermAttack);
             baseAccuracy = Mathf.Max(0, --baseAccuracy);
-            Attack = baseAttack;
+            Attack = PermAttack;
             Accuracy = baseAccuracy;
         }
         else
         {
-            baseDefense = Mathf.Max(0, --baseDefense);
-            Defense = baseDefense;
+            PermDefense = Mathf.Max(0, --PermDefense);
+            Defense = PermDefense;
             Thorns = 0;
         }
     }
