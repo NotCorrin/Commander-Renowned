@@ -5,7 +5,7 @@ name: Linter
 on:
   # Triggers the workflow on push or pull request events
   push:
-    branches-ignore: [ "main", "development" ]
+    branches: [ "main", "development" ]
   pull_request:
     branches: [ "main", "development" ]
 
