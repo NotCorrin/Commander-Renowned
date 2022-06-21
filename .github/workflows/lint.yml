@@ -1,3 +1,4 @@
+---
 name: Linter
 
 # Controls when the workflow will run
@@ -11,7 +12,6 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
 
   lint:
@@ -23,3 +23,6 @@ jobs:
     
     - name: Super-Linter
       uses: github/super-linter@v4.9.4
+      env:
+        GITHUB_TOKEN: {{ secrets.GITHUB_TOKEN }}
+        FILTER_REGEX_EXCLUDE: ".*(Fantasy Adventure Environment|TextMesh Pro|SineVFX)\/.*"
