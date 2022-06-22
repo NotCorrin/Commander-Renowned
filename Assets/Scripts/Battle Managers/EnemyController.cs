@@ -412,9 +412,10 @@ public class EnemyController : Listener
     }
 	void UseSupportAbility ()
 	{
-		UseSupportLeftAbility();
+        Invoke("GoToNextPhase", 0.85f);
+        UseSupportLeftAbility();
 		Invoke("UseSupportRightAbility", 0.65f);
-	}
+    }
 
 	void UseSupportLeftAbility ()
 	{
@@ -427,7 +428,10 @@ public class EnemyController : Listener
 			if (leftAbilityValidTargets.Count > 0)
 			{
 				Unit leftTarget = leftAbilityValidTargets[Random.Range(0, leftAbilityValidTargets.Count)];
-				GameEvents.UseAbility(enemySupportLeft, leftTarget, supportLeftBestAbilityIndex); // Remove this line for multi targets
+                if (supportLeftBestAbility.IsAbilityValid(enemySupportLeft, leftTarget))
+                {
+                    GameEvents.UseAbility(enemySupportLeft, leftTarget, supportLeftBestAbilityIndex);
+                }// Remove this line for multi targets
 			}
 			/*
 			int leftAbilityNumOfTargets = [SET VALUE HERE]; <<<<< IMPORTANT THING TO ADD
@@ -451,7 +455,10 @@ public class EnemyController : Listener
 			if (rightAbilityValidTargets.Count > 0)
 			{ 
 				Unit rightTarget = rightAbilityValidTargets[Random.Range(0, rightAbilityValidTargets.Count)];
-				GameEvents.UseAbility(enemySupportRight, rightTarget, supportRightBestAbilityIndex);  // Remove this line for multi targets
+                if (supportRightBestAbility.IsAbilityValid(enemySupportRight, rightTarget))
+                {
+                    GameEvents.UseAbility(enemySupportRight, rightTarget, supportRightBestAbilityIndex);
+                }// Remove this line for multi targets
 			}
 
 			/*
@@ -463,8 +470,7 @@ public class EnemyController : Listener
 			}
 			*/
 		}
-		Invoke("GoToNextPhase", 0.2f);
-	}
+    }
 
 	void GoToNextPhase ()
 	{
