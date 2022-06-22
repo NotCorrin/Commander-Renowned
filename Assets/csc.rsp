@@ -1,4 +1,4 @@
--ruleset:Assets/Analyzer/Default.ruleset
+-ruleset:Assets/Scripts/Analyzer/Default.ruleset
 -nowarn:0067
 -nowarn:0618
 -nowarn:0649
