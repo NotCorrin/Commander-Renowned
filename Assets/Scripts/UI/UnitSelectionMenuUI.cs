@@ -12,6 +12,7 @@ public class UnitSelectionMenuUI : MonoBehaviour
     [SerializeField] private VisualTreeAsset unitCardCollectionUI;
 
     [SerializeField] private TeamScriptableObject teamScriptableObject;
+    [SerializeField] private ScenarioScriptableObject stories;
     private VisualElement mainContainer;
     private TextElement mainTitleText;
     private ScrollView mainScrollView;
@@ -31,6 +32,7 @@ public class UnitSelectionMenuUI : MonoBehaviour
         VisualElement test = default;
         VisualElement unitCard = default;
 
+        if (!teamScriptableObject.tutorialComplete) teamScriptableObject.Reset();
         for (int i = 0; i < teamScriptableObject.units.Count; i++)
         {
             if (i % 5 == 0)
@@ -63,11 +65,13 @@ public class UnitSelectionMenuUI : MonoBehaviour
 
                 if (activeUnits.Contains(button))
                 {
+                    AudioManager.instance.Play("OnMousePressed");
                     button.Q<VisualElement>("white-background").style.backgroundColor = new StyleColor(Color.white);
                 }
                 else
                 {
-                     button.Q<VisualElement>("white-background").style.backgroundColor = new StyleColor(new Color(0.364f, 0.364f, 0.364f, 1));
+                    AudioManager.instance.Play("OnMousePressed");
+                    button.Q<VisualElement>("white-background").style.backgroundColor = new StyleColor(new Color(0.364f, 0.364f, 0.364f, 1));
                 }
 
                 if (activeUnits.Count == 3)
@@ -85,9 +89,19 @@ public class UnitSelectionMenuUI : MonoBehaviour
         });
     }
 
+    void OnDisable()
+    {
+        mainScrollViewContainer.Query<Button>().ForEach(button =>
+        {
+            button.clickable.clicked -= () => { };
+        });
+    }
+
     void ConfirmButton_Clicked()
     {
-        // TODO : Use the activeUnits list to set the player's team
+        confirmButton.SetEnabled(false);
+        confirmButton.clickable.clicked -= ConfirmButton_Clicked;
+
         teamScriptableObject.activeUnits.Clear();
         foreach (Button button in activeUnits)
         {
@@ -100,7 +114,7 @@ public class UnitSelectionMenuUI : MonoBehaviour
                 }
             }
         }
-        SceneManager.LoadScene("TerrainTestScene");
+        LevelManager.instance.LoadScene(stories.story[stories.level + 1].scene);
     }
 
     void EnableAllUnits()

@@ -15,9 +15,18 @@ EditorBuildSettings:
     path: Assets/Scenes/MenuSelectionScene.unity
     guid: 9282214db01112d4c9cf6fed79f13f30
   - enabled: 1
-    path: Assets/Scenes/TerrainTestScene.unity
+    path: Assets/Scenes/BattleScene1.unity
     guid: 87b8e1c1e212c414bb5ae4e0d182717a
+  - enabled: 1
+    path: Assets/Scenes/BattleScene2.unity
+    guid: 519034b4fc14c184abd238e85a5d522d
+  - enabled: 1
+    path: Assets/Scenes/BattleScene3.unity
+    guid: 719e856fb4bd3cd4b9e33fb0ba817a5c
   - enabled: 1
     path: Assets/Scenes/EndScene.unity
     guid: 0b1f1da31be0c7645baf3c12ceaeb528
+  - enabled: 1
+    path: Assets/Scenes/AddUnitScene.unity
+    guid: 136bdccbd18f1b3459ea3bab887878f6
   m_configObjects: {}

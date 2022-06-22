@@ -22,16 +22,18 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   - AbilityType: 3
     AbilityName: I am going to fucking die
     AbilityDescription: AAAAAAAAAAAA
-    Cost: 0
-    Damage: 1
+    Cost: 1
+    Damage: 0
     StatBoost: 1
     Variation: 1
+    ForceTarget: 0
     VFX1: {fileID: 1533149051114980, guid: 14237ad61acba9345b53abf70e0cd027, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
@@ -43,6 +45,7 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
@@ -53,10 +56,10 @@ MonoBehaviour:
     Damage: 1
     StatBoost: 1
     Variation: 1
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  VanguardAbilities2: []
   MaxHealth: 1
   MaxAmmo: 2
   MaxMana: 2

@@ -6,6 +6,8 @@ using UnityEngine;
 public class ScenarioScriptableObject : ScriptableObject
 {
     public int level;
+    [TextArea(8, 6)]
+    public string tutorialText;
     public Scenario[] story;
 }
 
@@ -13,9 +15,13 @@ public class ScenarioScriptableObject : ScriptableObject
 public class Scenario
 {
     public string title;
-    [TextArea(15,6)]
+    [TextArea(8,6)]
     public string description;
+    public SceneIndex scene;
     public Enemies[] Enemies;
+    [TextArea(8,6)]
+    public string windescription;
+    public UnitScriptableObject[] winunit;
 }
 
 [System.Serializable]

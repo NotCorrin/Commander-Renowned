@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1177547748308970642}
   - component: {fileID: 7093203253603255209}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BuffParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 2645995707965312570}
   - component: {fileID: 2520428163052499470}
   - component: {fileID: 4960630204066656521}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: embers
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -97,7 +97,23 @@ public class FieldController : Listener
     {
         return (unit == PlayerVanguard || unit == PlayerSupportLeft || unit == PlayerSupportRight);
     }
-
+    public List<Unit> GetAllies(Unit unit)
+    {
+        List<Unit> unitList = new List<Unit>();
+        if(IsUnitPlayer(unit))
+        {
+            if (PlayerVanguard) unitList.Add(PlayerVanguard);
+            if (PlayerSupportLeft) unitList.Add(PlayerSupportLeft);
+            if (PlayerSupportRight) unitList.Add(PlayerSupportRight);
+        }
+        else
+        {
+            if (EnemyVanguard) unitList.Add(EnemyVanguard);
+            if (EnemySupportLeft) unitList.Add(EnemySupportLeft);
+            if (EnemySupportRight) unitList.Add(EnemySupportRight);
+        }
+        return unitList;
+    }
     public bool IsUnitActive(Unit unit)
     {
         if(unit == PlayerSupportLeft && supportLeftUsed || unit == PlayerSupportRight && supportRightUsed) return false;
@@ -213,17 +229,19 @@ public class FieldController : Listener
         supportLeftUsed = false;
         supportRightUsed = false;
 
-        /*if(RoundController.isPlayerPhase) 
+        if(RoundController.isPlayerPhase)
         {
             supportLeftUsed = !PlayerSupportLeft;
             supportRightUsed = !PlayerSupportRight;
-        }*/
+        }
+        if(phase != RoundController.Phase.PlayerSupport) UIEvents.AllSupportUsed(false);
     }
 
     public void SupportUsed(Unit unit)
     {
         if(GetIsSupportLeft(unit)) supportLeftUsed = true;
         if(GetIsSupportRight(unit)) supportRightUsed = true;
+        UIEvents.AllSupportUsed(supportLeftUsed && supportRightUsed);
         //if(supportLeftUsed && supportRightUsed) GameEvents.EndPhase();
     }
 

@@ -7,16 +7,17 @@ public class AbilitySetup
 {
     public AbilityScript AbilityType;
     public string AbilityName;
+    [TextArea(5, 5)]
     public string AbilityDescription;
     public int Cost;
     public int Damage;
     public int StatBoost;
     public int Variation;
+    public TargetMode ForceTarget = TargetMode.Default;
 
     public GameObject VFX1;
     public GameObject VFX2;
     public GameObject VFX3;
-
 }
 
 public enum AbilityScript
@@ -28,5 +29,15 @@ public enum AbilityScript
     Defend,
     SoldierAbility,
     MageFireball,
-    Charge
+    Charge,
+    Trace,
+    EnergySword,
+    PaladinBuff,
+    DruidLeech,
+    BrambleShield,
+    MechAttack,
+    OldAttack,
+    TankAttack,
+    CommanderBuff,
+    CommanderReload
 }

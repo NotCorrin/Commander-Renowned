@@ -5,21 +5,24 @@ using UnityEngine.SceneManagement;
 
 public class WorldMenuController : Listener
 {
-    public string winScene;
+    public static bool End;
+    public ScenarioScriptableObject scenarios;
     // Start is called before the first frame update
     void EndScene(bool win)
     {
+        End = true;
         if(win) Invoke("WinSceneDelay", 3);
         else Invoke("LoseSceneDelay", 3);
     }
     void WinSceneDelay()
     {
-        SceneManager.LoadScene("StoryScene");
+        scenarios.level++;
+        LevelManager.instance.LoadScene(SceneIndex.AddMenuScene);
     }
 
     void LoseSceneDelay()
     {
-        SceneManager.LoadScene("EndScene");
+        LevelManager.instance.LoadScene(SceneIndex.EndScene);
     }
 
     // Update is called once per frame

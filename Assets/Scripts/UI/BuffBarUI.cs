@@ -6,34 +6,55 @@ using UnityEngine.UIElements;
 public class BuffBarUI : Listener
 {
     [SerializeField] private UIDocument uiDocument;
-    private VisualElement barContainer;
-    private VisualElement attackBuffContainer;
-    private TextElement attackBuffValue;
-    private VisualElement defenceBuffContainer;
-    private TextElement defenceBuffValue;
-    private VisualElement accuracyBuffContainer;
-    private TextElement accuracyBuffValue;
+    private VisualElement container;
 
     private Camera cam;
     private Unit parent;
 
+    struct Buff
+    {
+        public VisualElement element;
+        public Label label;
+    }
+
+    Buff permAttack;
+    Buff permDefence;
+    Buff attack;
+    Buff defence; 
+    Buff thorns;
+    Buff accuracy;
+
     protected override void SubscribeListeners()
     {
-        // TODO : Add Event Listeners
+        UIEvents.onUnitPermAttackChanged += UpdatePermAttackBuff;
+        UIEvents.onUnitPermDefenseChanged += UpdatePermDefenceBuff;
         UIEvents.onUnitAttackChanged += UpdateAttackBuff;
         UIEvents.onUnitDefenseChanged += UpdateDefenceBuff;
         UIEvents.onUnitAccuracyChanged += UpdateAccuracyBuff;
+        UIEvents.onUnitThornsChanged += UpdateThornsBuff;
+        GameEvents.onKill += HideSelf;
     }
 
     protected override void UnsubscribeListeners()
     {
-        // TODO : Remove Event Listeners
+        UIEvents.onUnitPermAttackChanged -= UpdatePermAttackBuff;
+        UIEvents.onUnitPermDefenseChanged -= UpdatePermDefenceBuff;
         UIEvents.onUnitAttackChanged -= UpdateAttackBuff;
         UIEvents.onUnitDefenseChanged -= UpdateDefenceBuff;
         UIEvents.onUnitAccuracyChanged -= UpdateAccuracyBuff;
+        UIEvents.onUnitThornsChanged -= UpdateThornsBuff;
+        GameEvents.onKill -= HideSelf;
     }
 
-    void Start()
+    void HideSelf(Unit unit)
+    {
+        if(unit == parent)
+        {
+            container.style.display = DisplayStyle.None;
+        }
+    }
+
+    void Awake()
     {
         cam = Camera.main;
         parent = transform.parent.GetComponent<Unit>();
@@ -46,96 +67,85 @@ public class BuffBarUI : Listener
 
         try
         {
-            barContainer = uiDocument.rootVisualElement.Q<VisualElement>("container");
-            attackBuffContainer = uiDocument.rootVisualElement.Query<VisualElement>("attack-container");
-            attackBuffValue = attackBuffContainer.Query<TextElement>("attack-value");
-            defenceBuffContainer = uiDocument.rootVisualElement.Query<VisualElement>("defence-container");
-            defenceBuffValue = defenceBuffContainer.Query<TextElement>("defence-value");
-            accuracyBuffContainer = uiDocument.rootVisualElement.Query<VisualElement>("accuracy-container");
-            accuracyBuffValue = accuracyBuffContainer.Query<TextElement>("accuracy-value");
+            container = uiDocument.rootVisualElement.Q<VisualElement>("container");
+
+            permAttack.element = container.Q<VisualElement>("permAttack");
+            permDefence.element = container.Q<VisualElement>("permDefence");
+            attack.element = container.Q<VisualElement>("attack");
+            defence.element = container.Q<VisualElement>("defence");
+            thorns.element = container.Q<VisualElement>("thorns");
+            accuracy.element = container.Q<VisualElement>("accuracy");
+
+            permAttack.label = permAttack.element.Q<Label>("label");
+            permDefence.label = permDefence.element.Q<Label>("label");
+            attack.label = attack.element.Q<Label>("label");
+            defence.label = defence.element.Q<Label>("label");
+            thorns.label = thorns.element.Q<Label>("label");
+            accuracy.label = accuracy.element.Q<Label>("label");
         }
         catch
         {
             Debug.LogError($"{gameObject.name} : AttackBuffUI - Element Query Failed.");
         }
+    }
 
-        attackBuffContainer.style.opacity = 0;
-        defenceBuffContainer.style.opacity = 0;
-        accuracyBuffContainer.style.opacity = 0;
+    void UpdateBuff(Buff buff, int amount)
+    {
+        if (amount == 0)
+        {
+            buff.element.style.display = DisplayStyle.None;
+            return;
+        }
+
+        buff.element.style.display = DisplayStyle.Flex;
+        buff.label.text = amount.ToString();
+    }
+
+    void UpdatePermAttackBuff(Unit unit, int amount)
+    {
+        if(unit != parent) return;
+
+        UpdateBuff(permAttack, amount);
+    }
+
+    void UpdatePermDefenceBuff(Unit unit, int amount)
+    {
+        if(unit != parent) return;
+
+        UpdateBuff(permDefence, amount);
     }
 
     void UpdateAttackBuff(Unit unit, int buff)
     {
         if(unit != parent) return;
-        if (buff == 0)
-        {
-            attackBuffContainer.style.opacity = 0;
-        }
 
-        else
-        {
-            attackBuffValue.text = buff.ToString();
-
-            if (attackBuffValue.text.Equals("0"))
-            {
-                attackBuffContainer.style.opacity = 0;
-            }
-            else
-            {
-                attackBuffContainer.style.opacity = 1;
-            }
-        }
+        UpdateBuff(attack, buff);
     }
 
     void UpdateDefenceBuff(Unit unit, int buff)
     {
         if(unit != parent) return;
-        if (buff == 0)
-        {
-            defenceBuffContainer.style.opacity = 0;
-        }
 
-        else
-        {
-            defenceBuffValue.text = buff.ToString();
-
-            if (defenceBuffValue.text.Equals("0"))
-            {
-                defenceBuffContainer.style.opacity = 0;
-            }
-            else
-            {
-                defenceBuffContainer.style.opacity = 1;
-            }
-        }
+        UpdateBuff(defence, buff);
     }
 
     void UpdateAccuracyBuff(Unit unit, int buff)
     {
         if(unit != parent) return;
-        if (buff == 0)
-        {
-            accuracyBuffContainer.style.opacity = 0;
-        }
 
-        else
-        {
-            accuracyBuffValue.text = buff.ToString();
+        UpdateBuff(accuracy, buff);
+    }
 
-            if (accuracyBuffValue.text.Equals("0"))
-            {
-                accuracyBuffContainer.style.opacity = 0;
-            }
-            else
-            {
-                accuracyBuffContainer.style.opacity = 1;
-            }
-        }
+    void UpdateThornsBuff(Unit unit, int buff)
+    {
+        if(unit != parent) return;
+
+        UpdateBuff(thorns, buff);
     }
 
     void LateUpdate()
     {
-        Vector2 newPosition = RuntimePanelUtils.CameraTransformWorldToPanel(barContainer.panel, transform.position, cam);
-        barContainer.transform.position = new Vector3(newPosition.x - barContainer.layout.width / 2, newPosition.y - barContainer.layout.height / 2, 0);
+        Vector2 newPosition = RuntimePanelUtils.CameraTransformWorldToPanel(container.panel, transform.position, cam);
+        container.transform.position = new Vector3(newPosition.x - container.layout.width / 2, newPosition.y - container.layout.height / 2, 0);
     }
 }

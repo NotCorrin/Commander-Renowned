@@ -22,27 +22,33 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  - AbilityType: 3
-    AbilityName: Attack Formation
-    AbilityDescription: Strike in an attack formation. Attack up, Damage 3
+  - AbilityType: 14
+    AbilityName: Arcane Bullet
+    AbilityDescription: "Strike in an attack formation. \nDamage 3"
     Cost: 1
     Damage: 3
-    StatBoost: 1
+    StatBoost: 0
     Variation: 1
+    ForceTarget: 0
     VFX1: {fileID: 1533149051114980, guid: 14237ad61acba9345b53abf70e0cd027, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   - AbilityType: 2
-    AbilityName: Wall of Plasma
-    AbilityDescription: Will form an invisible wall to protect the mage
+    AbilityName: Hardlight Projection
+    AbilityDescription: 'Will form an invisible wall to protect the commander.
+
+      +2
+      DEF'
     Cost: -2
     Damage: 1
-    StatBoost: 3
+    StatBoost: 2
     Variation: 1
-    VFX1: {fileID: 4795044506606789115, guid: e24947d56dd5bb14089df296b91fab13, type: 3}
+    ForceTarget: 0
+    VFX1: {fileID: 7018246452246271507, guid: a7ae20c41e63aed4698231cfba45ec53, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   SupportAbilities:
@@ -53,6 +59,7 @@ MonoBehaviour:
     Damage: 0
     StatBoost: 0
     Variation: 0
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
@@ -61,22 +68,34 @@ MonoBehaviour:
     AbilityDescription: Gain 3 ammo
     Cost: -3
     Damage: 0
-    StatBoost: 0
+    StatBoost: 1
     Variation: 0
+    ForceTarget: 0
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  - AbilityType: 1
-    AbilityName: Confidence
-    AbilityDescription: Increases attack damage
+  - AbilityType: 17
+    AbilityName: Transmutatation
+    AbilityDescription: Target unit gains 1 ammo and/or mana
     Cost: 1
+    Damage: 0
+    StatBoost: 1
+    Variation: 0
+    ForceTarget: 0
+    VFX1: {fileID: 0}
+    VFX2: {fileID: 0}
+    VFX3: {fileID: 0}
+  - AbilityType: 16
+    AbilityName: Charisma
+    AbilityDescription: All Allies gain +2 ATT
+    Cost: 2
     Damage: 0
     StatBoost: 2
     Variation: 0
+    ForceTarget: 2
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  VanguardAbilities2: []
   MaxHealth: 18
   MaxAmmo: 2
   MaxMana: 2

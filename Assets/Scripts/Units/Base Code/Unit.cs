@@ -22,6 +22,10 @@ public class Unit : Listener
     public Transform HealthBar;
     public Transform AmmoBar;
     public Transform ManaBar;
+    public Transform BuffBar;
+    public ParticleSystem ps;
+    public ParticleSystem selectedps;
+
 
     public GameObject visibleElements;
 
@@ -82,7 +86,16 @@ public class Unit : Listener
         }
     }
 
-    protected int baseAttack;
+    protected int permAttack;
+    public int PermAttack
+    {
+        get => permAttack;
+        set
+        {
+            permAttack = value;
+            UIEvents.UnitPermAttackChanged(this, permAttack);
+        }
+    }
         //[SerializeField]
 
     protected int attack;
@@ -92,17 +105,27 @@ public class Unit : Listener
         set
         {
             attack = value;
-            UIEvents.UnitAttackChanged(this, attack);
+            UIEvents.UnitAttackChanged(this, attack - permAttack);
         }
     }
 
-    protected int baseDefense;
+    protected int permDefense;
+    public int PermDefense
+    {
+        get => permDefense;
+        set
+        {
+            permDefense = value;
+            UIEvents.UnitPermDefenseChanged(this, permDefense);
+        }
+    }
+
     protected int defense;
     public int Defense {
         get => defense;
         set {
             defense = value;
-            UIEvents.UnitDefenseChanged(this, defense);
+            UIEvents.UnitDefenseChanged(this, defense - permDefense);
         }
     }
 
@@ -152,7 +175,7 @@ public class Unit : Listener
     {
         if (target == this)
         {
-            baseAttack += AttackChange;
+            PermAttack += AttackChange;
             Attack += AttackChange;
         }
     }
@@ -168,7 +191,7 @@ public class Unit : Listener
     {
         if (target == this)
         {
-            baseDefense += DefenseChange;
+            PermDefense += DefenseChange;
             Defense += DefenseChange;
         }
     }
@@ -191,14 +214,16 @@ public class Unit : Listener
 
     void GreyOut(Ability ability, bool isPlayer)
     {
-        if(!ability)
+        Debug.LogWarning(this);
+        if (!ability)
         {
-            if(!FieldController.main.IsUnitPlayer(this)) UpdateEnemyVisual();
-            else spriteRenderer.color = Color.white;
+            animator.SetBool("greyedOut", false);
+            if (!FieldController.main.IsUnitPlayer(this)) UpdateEnemyVisual();
         }
         else if(!ability.IsTargetValid(this, isPlayer))
         {
-            spriteRenderer.color -= new Color(0.5f,0.5f,0.5f,0.2f);
+            //spriteRenderer.color -= new Color(0.5f,0.5f,0.5f,0.2f);
+            animator.SetBool("greyedOut", true);
         }
     }
 
@@ -263,19 +288,17 @@ public class Unit : Listener
         {
             animator.SetTrigger("killUnit");
             if (GetComponent<SphereCollider>()) Destroy(GetComponent<SphereCollider>());
+            var em = ps.emission;
+            em.enabled = false;
         }
     }
 
     private void KillUnit()
     {
         if (visibleElements) Destroy(visibleElements);
-
-        if (HealthBar) Destroy(HealthBar.gameObject);
-        if (ManaBar) Destroy(ManaBar.gameObject);
-        if (AmmoBar) Destroy(AmmoBar.gameObject);
         spriteRenderer.sprite = null;
-        if (animator) Destroy(animator);
-
+        var em = ps.emission;
+        em.enabled = false;
     }
 
     // Start is called before the first frame update
@@ -334,23 +357,27 @@ public class Unit : Listener
     protected virtual void ResetUnit()
     {
         Health = MaxHealth;
-        Ammo = MaxAmmo;
-        Mana = MaxMana;
+        //Ammo = Mathf.CeilToInt(MaxAmmo/2);
+        Ammo = Mathf.Clamp(3, 0, MaxAmmo);
+        //Mana = Mathf.CeilToInt(MaxMana/2);
+        Mana = Mathf.Clamp(3, 0, MaxMana);
+
         ResetBuffs();
     }
     protected virtual void ResetBuffs()
     {
         if(RoundController.isPlayerPhase == FieldController.main.IsUnitPlayer(this))
         {
-            baseAttack = Mathf.Max(0, --baseAttack);
-            baseAccuracy = Mathf.Max(0, --baseAccuracy);
-            Attack = baseAttack;
+            if (PermAttack > 0) PermAttack--;
+            if (baseAccuracy > 0) baseAccuracy--;
+            Attack = PermAttack;
             Accuracy = baseAccuracy;
         }
         else
         {
-            baseDefense = Mathf.Max(0, --baseDefense);
-            Defense = baseDefense;
+            if (PermDefense > 0) PermDefense--;
+            Defense = PermDefense;
+            Thorns = 0;
         }
     }
 
@@ -377,10 +404,10 @@ public class Unit : Listener
             }
         }
 
-        if (totalVanguardMoves == 0) totalVanguardMoves = -100; 
+        if (totalVanguardMoveScore <= 0) return 0; 
 
         int totalSupportMoveScore = 0;
-        int totalSupportMoves = 0;
+
         foreach (Ability ability in supportAbilities)
         {
             if (ability)
@@ -422,14 +449,14 @@ public class Unit : Listener
         }
 
         finalWeight = (2 * moveWeight + healthWeight + resourceWeight) / 4 + buffWeight;
-        Debug.Log(UnitName
-        + "\n" + " final weight = " + finalWeight
-        + "\n" + " move weight = " + moveWeight
-        + "\n" + "health weight = " + healthWeight
-        + "\n" + "resource weight = " + resourceWeight
-        + "\n" + " weight - buffweight = " + ((2 * moveWeight + healthWeight + resourceWeight) / 4)
-        + "\n" + "buffweight = " + buffWeight
-        );
+        //Debug.Log(UnitName
+        //+ "\n" + " final weight = " + finalWeight
+        //+ "\n" + " move weight = " + moveWeight
+        //+ "\n" + "health weight = " + healthWeight
+        //+ "\n" + "resource weight = " + resourceWeight
+        //+ "\n" + " weight - buffweight = " + ((2 * moveWeight + healthWeight + resourceWeight) / 4)
+        //+ "\n" + "buffweight = " + buffWeight
+        //);
 
         return finalWeight;
     }
@@ -455,7 +482,8 @@ public class Unit : Listener
 
         GameEvents.onPhaseChanged += UpdateBillboard;
         GameEvents.onGreyOut += GreyOut;
-        
+
+        GameEvents.onAbilityResolved += AbilityDone;
     }
 
     protected override void UnsubscribeListeners()
@@ -476,11 +504,33 @@ public class Unit : Listener
         GameEvents.onKill += OnKill;
 
         GameEvents.onPhaseChanged -= UpdateBillboard;
+        GameEvents.onGreyOut -= GreyOut;
 
+        GameEvents.onAbilityResolved -= AbilityDone;
+    }
+
+    private void AbilityDone(Unit unit)
+    {
+        if(unit == this)
+        {
+            var em = selectedps.emission;
+            em.enabled = false;
+        }
+    }
+
+    public void AbilityUsable()
+    {
+        if (selectedps)
+        {
+            if (!selectedps.isPlaying) selectedps.Play();
+            var em = selectedps.emission;
+            em.enabled = true;
+        }
     }
 
     private void Awake()
     {
+        Debug.LogWarning("FIRST");
         if (!animator) animator = GetComponent<Animator>();
         if (!billboard) billboard = GetComponent<Billboard>();
         if (!coll) coll = GetComponent<Collider>();
@@ -490,16 +540,37 @@ public class Unit : Listener
     }
     void UpdateBillboard(RoundController.Phase _phase)
     {
+        var em = selectedps.emission;
+        em.enabled = false;
+
         billboard.SwitchBillboardState(((int)_phase)>=2);
+        if(_phase == RoundController.Phase.PlayerSupport && FieldController.main.GetPosition(this) != FieldController.Position.Vanguard && FieldController.main.IsUnitPlayer(this))
+        {
+            foreach (Ability ability in SupportAbilities)
+            {
+                if (!ability) continue;
+                if(FieldController.main.GetValidTargets(this, ability).Count != 0)
+                {
+                    AbilityUsable();
+                    return;
+                }
+            }
+        }
     }
 
     public void UpdateEnemyVisual()
     {
-        if(spriteRenderer)
+        //if(spriteRenderer)
+        //{
+        //    spriteRenderer.color = new Color(0.85f, 0.66f, 1, 1);
+        //    //spriteRenderer.color = Color.black;
+        //    spriteRenderer.flipX = true;
+        //}
+        animator.SetBool("enemy", true);
+        spriteRenderer.flipX = true;
+        if (ps)
         {
-            spriteRenderer.color = new Color(0.85f, 0.66f, 1, 1);
-            //spriteRenderer.color = Color.black;
-            spriteRenderer.flipX = true;
+            if (!ps.isPlaying) ps.Play();
         }
     }
 }

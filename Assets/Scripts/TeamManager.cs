@@ -16,6 +16,8 @@ public class TeamManager : Listener
     {
         List<Unit> playerUnits = new List<Unit>();
         List<Unit> enemyUnits = new List<Unit>();
+        if (!Team.tutorialComplete) Team.Reset();
+        Team.tutorialComplete = true;
         int i = 0;
         for (i = 0; i < Team.activeUnits.Count; i++)
         {

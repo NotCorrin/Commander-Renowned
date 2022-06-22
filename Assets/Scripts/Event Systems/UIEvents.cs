@@ -63,12 +63,30 @@ public static class UIEvents
         }
     }
 
+    public static Action<Unit, int> onUnitPermAttackChanged;
+    public static void UnitPermAttackChanged(Unit unit, int attackChange)
+    {
+        if (onUnitPermAttackChanged != null)
+        {
+            onUnitPermAttackChanged(unit, attackChange);
+        }
+    }
+
     public static Action<Unit, int> onUnitDefenseChanged;
     public static void UnitDefenseChanged(Unit unit, int defenseChange)
     {
         if (onUnitDefenseChanged != null)
         {
             onUnitDefenseChanged(unit, defenseChange);
+        }
+    }
+
+    public static Action<Unit, int> onUnitPermDefenseChanged;
+    public static void UnitPermDefenseChanged(Unit unit, int defenseChange)
+    {
+        if (onUnitPermDefenseChanged != null)
+        {
+            onUnitPermDefenseChanged(unit, defenseChange);
         }
     }
 
@@ -81,8 +99,8 @@ public static class UIEvents
         }
     }
 
-    public static Action<QTEController.QTEDisplayResult> onDisplayQTEResults;
-    public static void DisplayQTEResults(QTEController.QTEDisplayResult DisplayResult)
+    public static Action<GameManager.QTEDisplayResult> onDisplayQTEResults;
+    public static void DisplayQTEResults(GameManager.QTEDisplayResult DisplayResult)
     {
         if (onDisplayQTEResults != null)
         {
@@ -105,6 +123,15 @@ public static class UIEvents
         if (onMenuClicked != null)
         {
             onMenuClicked();
+        }
+    }
+
+    public static Action<bool> onAllSupportUsed;
+    public static void AllSupportUsed(bool supportUsed)
+    {
+        if (onAllSupportUsed != null)
+        {
+            onAllSupportUsed(supportUsed);
         }
     }
 }
