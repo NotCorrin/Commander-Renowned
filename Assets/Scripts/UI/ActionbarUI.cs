@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 /// <summary>
-/// Contains code for the actionbar UI.
+/// Contains code for the actionbar.
 /// </summary>
 public class ActionbarUI : UISubscriber
 {
