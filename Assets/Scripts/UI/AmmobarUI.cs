@@ -27,7 +27,7 @@ public class AmmobarUI : Listener
     }
 
     /// <summary>
-    /// Subscribes AmmobarUI to events.
+    /// Unsubscribes AmmobarUI to events.
     /// </summary>
     protected override void UnsubscribeListeners()
     {
