@@ -10,7 +10,7 @@ public class BrambleShield : QTEAbility
     {
         base.SetupParams(setup);
         if(!VFX1) VFX1 = Resources.Load("CustomLasers/Mage/MageFlare") as GameObject;
-        isMagic = true;
+        IsMagic = true;
     }
 
     public override bool IsCasterValid (Unit Caster)

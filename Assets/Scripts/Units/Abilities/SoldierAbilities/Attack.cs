@@ -16,7 +16,7 @@ public class Attack : QTEAbility
     {
         base.SetupParams(setup);
         if(!VFX1) VFX1 = Resources.Load("CustomLasers/Soldier/Soldier_Laser") as GameObject;
-        isMagic = false;
+        IsMagic = false;
     }
 
     public override int GetMoveWeight(Unit caster)

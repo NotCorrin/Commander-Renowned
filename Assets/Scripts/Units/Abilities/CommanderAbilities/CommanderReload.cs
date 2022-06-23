@@ -8,7 +8,7 @@ public class CommanderReload : Ability
     {
         base.SetupParams(setup);
         if (!VFX1) VFX1 = Resources.Load("CustomLasers/Soldier/ReloadParticles") as GameObject;
-        isMagic = true;
+        IsMagic = true;
         //buffs.add(new Buff(BuffType.Attack))
     }
     public override bool IsCasterValid(Unit Caster)

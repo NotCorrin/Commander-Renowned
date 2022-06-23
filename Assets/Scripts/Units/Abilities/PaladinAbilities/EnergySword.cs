@@ -9,7 +9,7 @@ public class EnergySword : QTEAbility
     public override void SetupParams(AbilitySetup setup)
     {
         VFX1 = Resources.Load("CustomLasers/Mage/Mage_Explosion") as GameObject;
-        isMagic = true;
+        IsMagic = true;
         base.SetupParams(setup);
     }
 

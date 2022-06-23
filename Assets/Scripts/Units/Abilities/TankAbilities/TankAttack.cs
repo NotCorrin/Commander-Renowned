@@ -9,7 +9,7 @@ public class TankAttack : QTEAbility
     {
         base.SetupParams(setup);
         if(!VFX1) VFX1 = Resources.Load("CustomLasers/Tank/Bombard") as GameObject;
-        isMagic = false;
+        IsMagic = false;
     }
 
     public override int GetMoveWeight(Unit caster)

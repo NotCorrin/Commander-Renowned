@@ -314,7 +314,7 @@ public class ActionbarUI : Listener
             if(!abilityActive[_selectedAbility-1]) return;
             Ability _ability = selectedUnit.SupportAbilities[_selectedAbility - 1];
             List<Unit> validTargets = FieldController.main.GetValidTargets(selectedUnit, _ability);
-            if ((validTargets.Count == 1 || _ability.forceTarget == TargetMode.False) && _ability.forceTarget != TargetMode.True)
+            if ((validTargets.Count == 1 || _ability.ForceTarget == TargetMode.False) && _ability.ForceTarget != TargetMode.True)
             {
                 GameEvents.UseAbility(selectedUnit, validTargets[0], _selectedAbility);
             }
@@ -511,15 +511,15 @@ public class ActionbarUI : Listener
         if(_abilities[0])
         {
             abilityOne.activeName.text = _abilities[0].AbilityName;
-            abilityOne.activeCost.text = _abilities[0].xCost ? "X" : Mathf.Abs(_abilities[0].Cost) + "";
+            abilityOne.activeCost.text = _abilities[0].XCost ? "X" : Mathf.Abs(_abilities[0].Cost) + "";
             abilityOne.activeDesc.text = _abilities[0].AbilityDescription;
 
             abilityOne.hoverName.text = _abilities[0].AbilityName;
-            abilityOne.hoverCost.text = _abilities[0].xCost ? "X" : Mathf.Abs(_abilities[0].Cost) + "";
+            abilityOne.hoverCost.text = _abilities[0].XCost ? "X" : Mathf.Abs(_abilities[0].Cost) + "";
             abilityOne.hoverDesc.text = _abilities[0].AbilityDescription;
 
             abilityOne.disabledName.text = _abilities[0].AbilityName;
-            abilityOne.disabledCost.text = _abilities[0].xCost ? "X" : Mathf.Abs(_abilities[0].Cost) + "";
+            abilityOne.disabledCost.text = _abilities[0].XCost ? "X" : Mathf.Abs(_abilities[0].Cost) + "";
             abilityOne.disabledDesc.text = _abilities[0].AbilityDescription;
 
             if (_abilities[0].Cost < 0)
@@ -584,15 +584,15 @@ public class ActionbarUI : Listener
         if(_abilities[1])
         {
             abilityTwo.activeName.text = _abilities[1].AbilityName;
-            abilityTwo.activeCost.text = _abilities[1].xCost ? "X" : Mathf.Abs(_abilities[1].Cost) + "";
+            abilityTwo.activeCost.text = _abilities[1].XCost ? "X" : Mathf.Abs(_abilities[1].Cost) + "";
             abilityTwo.activeDesc.text = _abilities[1].AbilityDescription;
 
             abilityTwo.hoverName.text = _abilities[1].AbilityName;
-            abilityTwo.hoverCost.text = _abilities[1].xCost ? "X" : Mathf.Abs(_abilities[1].Cost) + "";
+            abilityTwo.hoverCost.text = _abilities[1].XCost ? "X" : Mathf.Abs(_abilities[1].Cost) + "";
             abilityTwo.hoverDesc.text = _abilities[1].AbilityDescription;
 
             abilityTwo.disabledName.text = _abilities[1].AbilityName;
-            abilityTwo.disabledCost.text = _abilities[1].xCost ? "X" : Mathf.Abs(_abilities[1].Cost) + "";
+            abilityTwo.disabledCost.text = _abilities[1].XCost ? "X" : Mathf.Abs(_abilities[1].Cost) + "";
             abilityTwo.disabledDesc.text = _abilities[1].AbilityDescription;
 
             if (_abilities[1].Cost < 0)
@@ -657,15 +657,15 @@ public class ActionbarUI : Listener
         if(_abilities[2])
         {
             abilityThree.activeName.text = _abilities[2].AbilityName;
-            abilityThree.activeCost.text = _abilities[2].xCost ? "X" : Mathf.Abs(_abilities[2].Cost) + "";
+            abilityThree.activeCost.text = _abilities[2].XCost ? "X" : Mathf.Abs(_abilities[2].Cost) + "";
             abilityThree.activeDesc.text = _abilities[2].AbilityDescription;
 
             abilityThree.hoverName.text = _abilities[2].AbilityName;
-            abilityThree.hoverCost.text = _abilities[2].xCost ? "X" : Mathf.Abs(_abilities[2].Cost) + "";
+            abilityThree.hoverCost.text = _abilities[2].XCost ? "X" : Mathf.Abs(_abilities[2].Cost) + "";
             abilityThree.hoverDesc.text = _abilities[2].AbilityDescription;
 
             abilityThree.disabledName.text = _abilities[2].AbilityName;
-            abilityThree.disabledCost.text = _abilities[2].xCost ? "X" : Mathf.Abs(_abilities[2].Cost) + "";
+            abilityThree.disabledCost.text = _abilities[2].XCost ? "X" : Mathf.Abs(_abilities[2].Cost) + "";
             abilityThree.disabledDesc.text = _abilities[2].AbilityDescription;
 
             if (_abilities[2].Cost < 0)

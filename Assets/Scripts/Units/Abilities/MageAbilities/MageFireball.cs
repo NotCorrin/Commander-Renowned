@@ -8,7 +8,7 @@ public class MageFireball : Ability
     {
 		base.SetupParams(setup);
      if(!VFX1) VFX1 = Resources.Load("CustomLasers/FireMage/Meteor") as GameObject;
-        isMagic = true;
+        IsMagic = true;
     }
 	public override bool IsCasterValid (Unit Caster)
     {

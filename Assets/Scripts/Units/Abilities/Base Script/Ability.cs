@@ -3,132 +3,88 @@ using UnityEngine;
 [System.Serializable]
 public abstract class Ability : MonoBehaviour
 {
-    protected bool isMagic;
-    public bool IsMagic
-    {
-        get => isMagic;
-    }
-    [SerializeField] protected string abilityName;
-    public string AbilityName
-    {
-        get => abilityName;
-    }
+    /// <summary>
+    /// Gets or sets a value indicating whether or not ability has a variable cost.
+    /// </summary>
+    public bool XCost { get; set; }
 
-    [SerializeField] protected string abilityDescription;
-    public string AbilityDescription
-    {
-        get => abilityDescription;
-    }
+    public bool IsMagic { get; protected set; }
 
-    [SerializeField] protected int cost;
-    public int Cost
-    {
-        get => cost;
-    }
-    public bool xCost;
+    public string AbilityName { get; protected set; }
 
-    [SerializeField] protected int damage;
-    public int Damage
-    {
-        get => damage;
-    }
+    public string AbilityDescription { get; protected set; }
 
-    [SerializeField] protected int statBoost;
-    public int StatBoost
-    {
-        get => statBoost;
-    }
+    public int Cost { get; protected set; }
 
-    [SerializeField] protected int variation;
-    public int Variation
-    {
-        get => variation;
-    }
+    public int Damage { get; protected set; }
 
-    public TargetMode forceTarget;
+    public int StatBoost { get; protected set; }
 
-    public Icon[] buffs;
-    [SerializeField] protected GameObject VFX1;
-    [SerializeField] protected GameObject VFX2;
-    [SerializeField] protected GameObject VFX3;
+    public int Variation { get; protected set; }
 
+    public TargetMode ForceTarget { get; set; }
+
+    public Icon[] Buffs { get; set; }
+
+    protected GameObject VFX1 { get; set; }
+
+    protected GameObject VFX2 { get; set; }
+
+    protected GameObject VFX3 { get; set; }
 
     public virtual void SetupParams(AbilitySetup setup)
     {
-        abilityName = setup.AbilityName;
-        abilityDescription = setup.AbilityDescription;
-        cost = setup.Cost;
+        AbilityName = setup.AbilityName;
+        AbilityDescription = setup.AbilityDescription;
+        Cost = setup.Cost;
         if (setup.Cost == 999)
         {
-            xCost = true;
-            cost = 0;
+            XCost = true;
+            Cost = 0;
         }
-        forceTarget = setup.ForceTarget;
-        damage = setup.Damage;
-        statBoost = setup.StatBoost;
-        variation = setup.Variation;
+
+        ForceTarget = setup.ForceTarget;
+        Damage = setup.Damage;
+        StatBoost = setup.StatBoost;
+        Variation = setup.Variation;
         VFX1 = setup.VFX1;
         VFX2 = setup.VFX2;
         VFX3 = setup.VFX3;
     }
-    public abstract int GetMoveWeight(Unit Caster);
-    public abstract void UseAbility(Unit Caster, Unit Target);
-    public virtual bool IsAbilityValid(Unit Caster, Unit Target) 
+
+    public abstract int GetMoveWeight(Unit caster);
+
+    public abstract void UseAbility(Unit caster, Unit target);
+
+    public virtual bool IsAbilityValid(Unit caster, Unit target)
     {
-        return IsCasterValid(Caster) && IsTargetValid(Target, FieldController.main.IsUnitPlayer(Caster)) && Caster && Target;
-    }
-    public abstract bool IsCasterValid(Unit Caster);
-    public abstract bool IsTargetValid(Unit Target, bool isPlayer);
-    protected int GetDamageCalculation(Unit Caster, Unit Target, int Damage)
-    {
-        return Mathf.Max(Damage + Caster.Attack - Target.Defense, 0);
+        return IsCasterValid(caster) && IsTargetValid(target, FieldController.main.IsUnitPlayer(caster)) && caster && target;
     }
 
-    protected int GetTotalDamageBuffs(Unit Caster)
+    public abstract bool IsCasterValid(Unit caster);
+
+    public abstract bool IsTargetValid(Unit target, bool isPlayer);
+
+    protected int GetDamageCalculation(Unit caster, Unit target, int damage)
+    {
+        return Mathf.Max(damage + caster.Attack - target.Defense, 0);
+    }
+
+    protected int GetTotalDamageBuffs(Unit caster)
     {
         int totalDamageBuffs = 0;
-        totalDamageBuffs += Caster.Attack;
+        totalDamageBuffs += caster.Attack;
         /*Version made AI look at opponent defense buffs. Took away satisfaction of oursmarting AI
         totalDamageBuffs -= FieldController.main.GetUnit(FieldController.Position.Vanguard, !FieldController.main.IsUnitPlayer(Caster)).Defense);*/
         return totalDamageBuffs;
     }
 
-    protected int GetTotalDefenseBuffs(Unit Caster)
+    protected int GetTotalDefenseBuffs(Unit caster)
     {
         int totalDefenseBuffs = 0;
-        totalDefenseBuffs += Caster.Defense;
+        totalDefenseBuffs += caster.Defense;
         /*Version made AI look at opponent defense buffs. Took away satisfaction of oursmarting AI
         totalDamageBuffs -= FieldController.main.GetUnit(FieldController.Position.Vanguard, !FieldController.main.IsUnitPlayer(Caster)).Defense);*/
         return totalDefenseBuffs;
     }
-}
-
-[System.Serializable]
-public struct Icon
-{
-    public IconType iconType;
-    public int buffAmount;
-
-    public Icon(IconType t, int a)
-    {
-        iconType = t;
-        buffAmount = a;
-    }
-}
-
-public enum IconType
-{
-    PermAttack,
-    PermDefence,
-    Attack,
-    Defence,
-    Thorns,
-    Accuracy
-}
-
-public enum TargetMode
-{
-    Default,
-    True,
-    False
 }
