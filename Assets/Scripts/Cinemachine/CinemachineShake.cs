@@ -1,67 +1,90 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using Cinemachine;
+using UnityEngine;
 
+/// <summary>
+/// Controls the camera shake of the main camera through cinemachine.
+/// </summary>
 public class CinemachineShake : Listener
 {
-	private CinemachineVirtualCamera virtualCamera;
-	private CinemachineBasicMultiChannelPerlin basicMultiChannelPerlin;
+    private CinemachineVirtualCamera virtualCamera;
+    private CinemachineBasicMultiChannelPerlin basicMultiChannelPerlin;
 
-	private float shakeTimer;
-	private float shakeTimerTotal;
-	private float startingIntensity;
+    private float shakeTimer;
+    private float shakeTimerTotal;
+    private float startingIntensity;
 
-	void Awake () {
-		virtualCamera = GetComponent<CinemachineVirtualCamera>();
-		if (virtualCamera) {
-			basicMultiChannelPerlin = virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
-		} else {
-			Debug.LogError("There is no Cinemachine Virtual Camera component!");
-		}
-	}
+    /// <summary>
+    /// Subscribes 'ShakeCamera' into GameEvents.onUnitAttack.
+    /// </summary>
+    protected override void SubscribeListeners()
+    {
+        GameEvents.onUnitAttack += ShakeCamera;
+    }
 
-	void Update () {
-		if(shakeTimer > 0) {
-			shakeTimer -= Time.deltaTime;
-			if(shakeTimer <= 0) {
-				basicMultiChannelPerlin.m_AmplitudeGain = 0;
-				Mathf.Lerp(startingIntensity, 0f, 1 - (shakeTimer/shakeTimerTotal));
-			}
-		}
-	}
+    /// <summary>
+    /// Unsubscribes 'ShakeCamera' into GameEvents.onUnitAttack.
+    /// </summary>
+    protected override void UnsubscribeListeners()
+    {
+        GameEvents.onUnitAttack -= ShakeCamera;
+    }
 
-	void ShakeCamera (Unit attacker, Unit defender, int value) {
-		if(Mathf.Abs(value) > 5) {
-			ShakeCameraBig();
-			return;
-		}
-		ShakeCameraSmall();
-	}
+    private void Awake()
+    {
+        virtualCamera = GetComponent<CinemachineVirtualCamera>();
+        if (virtualCamera)
+        {
+            basicMultiChannelPerlin = virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        }
+        else
+        {
+            Debug.LogError("There is no Cinemachine Virtual Camera component!");
+        }
+    }
 
-	void ShakeCameraSmall () {
-		float intensity = 0.5f;
-		float duration = 0.2f;
-		basicMultiChannelPerlin.m_AmplitudeGain = intensity;
-		shakeTimer = duration;
-		shakeTimerTotal = duration;
-		startingIntensity = intensity;
-	}
+    private void Update()
+    {
+        if (shakeTimer > 0)
+        {
+            shakeTimer -= Time.deltaTime;
+            if (shakeTimer <= 0)
+            {
+                basicMultiChannelPerlin.m_AmplitudeGain = 0;
+                Mathf.Lerp(startingIntensity, 0f, 1 - (shakeTimer / shakeTimerTotal));
+            }
+        }
+    }
 
-	void ShakeCameraBig () {
-		float intensity = 3f;
-		float duration = 0.35f;
-		basicMultiChannelPerlin.m_AmplitudeGain = intensity;
-		shakeTimer = duration;
-		shakeTimerTotal = duration;
-		startingIntensity = intensity;
-	}
+    private void ShakeCamera(Unit attacker, Unit defender, int value)
+    {
+        if (Mathf.Abs(value) > 5)
+        {
+            ShakeCameraBig();
+            return;
+        }
 
-	protected override void SubscribeListeners () {
-		GameEvents.onUnitAttack += ShakeCamera;
-	}
+        ShakeCameraSmall();
+    }
 
-	protected override void UnsubscribeListeners () {
-		GameEvents.onUnitAttack -= ShakeCamera;
-	}
+    private void ShakeCameraSmall()
+    {
+        float intensity = 0.5f;
+        float duration = 0.2f;
+        basicMultiChannelPerlin.m_AmplitudeGain = intensity;
+        shakeTimer = duration;
+        shakeTimerTotal = duration;
+        startingIntensity = intensity;
+    }
+
+    private void ShakeCameraBig()
+    {
+        float intensity = 3f;
+        float duration = 0.35f;
+        basicMultiChannelPerlin.m_AmplitudeGain = intensity;
+        shakeTimer = duration;
+        shakeTimerTotal = duration;
+        startingIntensity = intensity;
+    }
 }
