@@ -31,7 +31,7 @@ public class BrambleShield : QTEAbility
     {
         int HealthWeight = Mathf.FloorToInt((1 - ((float)caster.Health / (float)caster.MaxHealth)) * 30);
         int ManaWeight = 0;
-        if (!(caster.unitType == UnitType.Mage || caster.unitType == UnitType.Commander))
+        if (!(caster.UnitType == UnitType.Mage || caster.UnitType == UnitType.Commander))
         {
             return 0;
         }

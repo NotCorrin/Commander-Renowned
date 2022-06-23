@@ -15,7 +15,7 @@ public class TankAttack : QTEAbility
     public override int GetMoveWeight(Unit caster)
     {
         int BuffWeight = FieldController.main.GetAllies(Target).Count * 30;
-        if (caster.unitType == UnitType.Military || caster.unitType == UnitType.Commander)
+        if (caster.UnitType == UnitType.Military || caster.UnitType == UnitType.Commander)
         {
             if (caster.Ammo < Cost) return 0;
             return BuffWeight + Damage * 10;

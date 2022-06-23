@@ -33,7 +33,7 @@ public class EnergySword : QTEAbility
         int ManaWeight;
         int BuffWeight = GetTotalDamageBuffs(caster) * 20;
         if (GetTotalDefenseBuffs(caster) >= 1) BuffWeight += 50;
-        if (caster.unitType == UnitType.Mage || caster.unitType == UnitType.Commander)
+        if (caster.UnitType == UnitType.Mage || caster.UnitType == UnitType.Commander)
         {
             ManaWeight = Mathf.FloorToInt((1 - ((float)caster.Mana / (float)caster.MaxMana)) * 100);
         }

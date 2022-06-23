@@ -33,7 +33,7 @@ public class PaladinBuff : Ability
         int HealthWeight = Mathf.FloorToInt(((float)caster.Health / (float)caster.MaxHealth) * 100);
         int ManaWeight;
 
-        if (caster.unitType == UnitType.Mage || caster.unitType == UnitType.Commander)
+        if (caster.UnitType == UnitType.Mage || caster.UnitType == UnitType.Commander)
         {
             if (caster.Mana < Cost) return 0;
 

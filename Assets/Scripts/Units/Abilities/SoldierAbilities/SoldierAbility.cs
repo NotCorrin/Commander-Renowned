@@ -15,7 +15,7 @@ public class SoldierAbility : Ability
     public override int GetMoveWeight(Unit caster)
     {
         int AmmoWeight;
-        if (caster.unitType == UnitType.Military || caster.unitType == UnitType.Commander)
+        if (caster.UnitType == UnitType.Military || caster.UnitType == UnitType.Commander)
         {
             if (caster.Ammo >= caster.MaxAmmo) return 0;
             AmmoWeight = Mathf.FloorToInt((1 - ((float)caster.Ammo / (float)caster.MaxAmmo)) * 50);

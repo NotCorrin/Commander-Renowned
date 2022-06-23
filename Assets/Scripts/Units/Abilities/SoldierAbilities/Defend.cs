@@ -16,7 +16,7 @@ public class Defend : QTEAbility
     public override int GetMoveWeight(Unit caster)
     {
         int HealthWeight = Mathf.FloorToInt((1 - ((float)caster.Health / (float)caster.MaxHealth)) * 100);
-        if (caster.unitType == UnitType.Military || caster.unitType == UnitType.Commander)
+        if (caster.UnitType == UnitType.Military || caster.UnitType == UnitType.Commander)
         {
             if (caster.Ammo < Cost) return 0;
             return (HealthWeight + 50) / 2;

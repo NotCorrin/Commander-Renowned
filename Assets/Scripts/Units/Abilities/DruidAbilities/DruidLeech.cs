@@ -31,7 +31,7 @@ public class DruidLeech : Ability
 	}
 	public override int GetMoveWeight (Unit caster) {
 
-        if (caster.unitType == UnitType.Mage || caster.unitType == UnitType.Commander)
+        if (caster.UnitType == UnitType.Mage || caster.UnitType == UnitType.Commander)
         {
             if (caster.Mana < Cost) return 0;
         }
