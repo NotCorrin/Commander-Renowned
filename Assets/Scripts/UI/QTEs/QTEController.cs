@@ -52,7 +52,7 @@ public class QTEController : Listener
 
         switch (qteType)
         {
-            case GameManager.QTEType.shrinkingCircle:
+            case GameManager.QTEType.TimingBar:
                 {
                     StartShrinkingCircle(finalDifficultyModifier);
                     break;

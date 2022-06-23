@@ -24,7 +24,7 @@ public class MageAttack : QTEAbility
 
     protected override GameManager.QTEType GetQTEType()
     {
-        return GameManager.QTEType.shrinkingCircle;
+        return GameManager.QTEType.TimingBar;
     }
 
     public override int GetMoveWeight (Unit caster)

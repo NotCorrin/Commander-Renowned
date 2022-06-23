@@ -53,7 +53,7 @@ public class OldAttack : QTEAbility
 
     protected override GameManager.QTEType GetQTEType()
     {
-        return GameManager.QTEType.shrinkingCircle;
+        return GameManager.QTEType.TimingBar;
     }
     
     public override bool IsCasterValid (Unit Caster)
