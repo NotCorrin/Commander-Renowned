@@ -23,6 +23,9 @@ public class AudioManager : Listener
 {
     public static AudioManager instance;
 
+    /// <summary>
+    /// An array of sounds for the AudioManager.
+    /// </summary>
     public Sound[] sounds;
     private string currentMusic;
     private bool isBattleMusic = true;
