@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+/// <summary>
+/// Contains code for the healthbar.
+/// </summary>
 public class HealthbarUI : Listener
 {
     [SerializeField] private UIDocument uiDocument;
@@ -22,18 +25,24 @@ public class HealthbarUI : Listener
         UIEvents.onUnitHealthChanged -= UpdateHealth;
         GameEvents.onKill -= HideSelf;
     }
-    void UpdateHealth(Unit unit, int value)
+
+    private void UpdateHealth(Unit unit, int value)
     {
-        if(unit == parent) healthbarValue.text = value + "";
+        if (unit == parent)
+        {
+            healthbarValue.text = value + string.Empty;
+        }
     }
-    void HideSelf(Unit unit)
+
+    private void HideSelf(Unit unit)
     {
-        if(unit == parent)
+        if (unit == parent)
         {
             healthbarContainer.style.display = DisplayStyle.None;
         }
     }
-    void Start()
+
+    private void Start()
     {
         cam = Camera.main;
         parent = transform.parent.GetComponent<Unit>();
@@ -55,9 +64,9 @@ public class HealthbarUI : Listener
         }
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         Vector2 newPosition = RuntimePanelUtils.CameraTransformWorldToPanel(healthbarContainer.panel, transform.position, cam);
-        healthbarContainer.transform.position = new Vector3 (newPosition.x - healthbarContainer.layout.width / 2, newPosition.y - healthbarContainer.layout.height / 2, 0);
+        healthbarContainer.transform.position = new Vector3(newPosition.x - (healthbarContainer.layout.width / 2), newPosition.y - (healthbarContainer.layout.height / 2), 0);
     }
 }
