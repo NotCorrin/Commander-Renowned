@@ -1,30 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using Cinemachine;
+using UnityEngine;
 
+/// <summary>
+/// Controls the position of the camera.
+/// </summary>
 public class CameraController : Listener
 {
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
     [SerializeField] private float moveSpeed = 0.5f;
     private CinemachineTrackedDolly dolly;
 
+    /// <summary>
+    /// Subscribes 'CameraHandler' into GameEvents.onPhaseChanged.
+    /// </summary>
     protected override void SubscribeListeners()
     {
         GameEvents.onPhaseChanged += CameraHandler;
     }
 
+    /// <summary>
+    /// Unsubscribes 'CameraHandler' into GameEvents.onPhaseChanged.
+    /// </summary>
     protected override void UnsubscribeListeners()
     {
         GameEvents.onPhaseChanged -= CameraHandler;
     }
 
-    void Start()
+    private void Start()
     {
         dolly = virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>();
     }
 
-    void CameraHandler(RoundController.Phase phase)
+    private void CameraHandler(RoundController.Phase phase)
     {
         if ((phase == RoundController.Phase.PlayerSupport ||
              phase == RoundController.Phase.PlayerSwap ||
@@ -34,7 +43,6 @@ public class CameraController : Listener
         {
             StartCoroutine(MoveCameraUp());
         }
-
         else if ((phase == RoundController.Phase.EnemyVangaurd ||
                  phase == RoundController.Phase.PlayerVanguard) &&
                  dolly.m_PathPosition != 0)
@@ -43,7 +51,7 @@ public class CameraController : Listener
         }
     }
 
-    IEnumerator MoveCameraUp()
+    private IEnumerator MoveCameraUp()
     {
         float startTime = Time.time;
 
@@ -52,18 +60,20 @@ public class CameraController : Listener
             dolly.m_PathPosition = (Time.time - startTime) / moveSpeed;
             yield return null;
         }
+
         dolly.m_PathPosition = 1f;
     }
 
-    IEnumerator MoveCameraDown()
+    private IEnumerator MoveCameraDown()
     {
         float startTime = Time.time;
 
         while (Time.time < startTime + moveSpeed)
         {
-            dolly.m_PathPosition = 1f - (Time.time - startTime) / moveSpeed;
+            dolly.m_PathPosition = 1f - ((Time.time - startTime) / moveSpeed);
             yield return null;
         }
+
         dolly.m_PathPosition = 0f;
     }
 }
