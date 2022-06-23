@@ -3,11 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-/// <summary>
-/// Contains code for the actionbar.
-/// </summary>
-public class ActionbarUI : UISubscriber
+struct AbilityButton
 {
+    public VisualElement ability, active, hover, disabled;
+    public TextElement activeName, activeCost, activeDesc, activeOperation;
+    public VisualElement activeManaIcon, activeAmmoIcon;
+    public TextElement hoverName, hoverCost, hoverDesc, hoverOperation;
+    public VisualElement hoverManaIcon, hoverAmmoIcon;
+    public TextElement disabledName, disabledCost, disabledDesc, disabledOperation;
+    public VisualElement disabledManaIcon, disabledAmmoIcon;
+}
+
+public class ActionbarUI : Listener
+{
+    #region variables
     [Header("Prompt Bar")]
     [SerializeField] private GameObject promptBar;
     [SerializeField] private UIDocument promptBarUIDocument;
@@ -34,18 +43,27 @@ public class ActionbarUI : UISubscriber
 
     private Unit selectedUnit;
     private int selectedAbility;
-    private string prompt = string.Empty;
+    private string prompt = "";
 
     private bool[] abilityActive = new bool[3];
+    #endregion
 
-    /// <summary>
-    /// Subscribes ActionbarUI UIElements to events.
-    /// </summary>
-    protected override void SubscribeCallbacks()
+    void Awake()
+    {
+        VerifyVariables();
+        RunQueries();
+
+        promptBarContainer.style.display = DisplayStyle.None;
+        // supportBarContainer.style.display = DisplayStyle.None;
+        switchBarContainer.style.display = DisplayStyle.None;
+    }
+
+    protected override void SubscribeListeners()
     {
         promptCancel.RegisterCallback<MouseEnterEvent>(OnPromptCancel_Hover);
         promptCancel.RegisterCallback<MouseLeaveEvent>(OnPromptCancel_Unhover);
         promptCancel.RegisterCallback<ClickEvent>(OnPromptCancel_Clicked);
+
 
         abilityOne.ability.RegisterCallback<MouseEnterEvent>(AbilityOne_Hover);
         abilityOne.ability.RegisterCallback<MouseLeaveEvent>(AbilityOne_Unhover);
@@ -70,12 +88,15 @@ public class ActionbarUI : UISubscriber
         switchEndPanel.RegisterCallback<MouseEnterEvent, VisualElement>(Switch_Hover, switchEndPanel);
         switchEndPanel.RegisterCallback<MouseLeaveEvent, VisualElement>(Switch_Unhover, switchEndPanel);
         switchEndPanel.RegisterCallback<ClickEvent>(SwitchEnd_Clicked);
+
+        UIEvents.onUnitSelected += OnUnitSelected;
+        UIEvents.onAllSupportUsed += AllSupportUsed;
+        GameEvents.onPhaseChanged += PhaseSwitchUI;
+        GameEvents.onAbilityResolved += AbilityUsed;
+        //GameEvents.onKill += SwitchPrompt;
     }
 
-    /// <summary>
-    /// Unsubscribes ActionbarUI UIElements from events.
-    /// </summary>
-    protected override void UnsubscribeCallbacks()
+    protected override void UnsubscribeListeners()
     {
         promptCancel.UnregisterCallback<MouseEnterEvent>(OnPromptCancel_Hover);
         promptCancel.UnregisterCallback<MouseLeaveEvent>(OnPromptCancel_Unhover);
@@ -104,43 +125,15 @@ public class ActionbarUI : UISubscriber
         switchEndPanel.UnregisterCallback<MouseEnterEvent, VisualElement>(Switch_Hover);
         switchEndPanel.UnregisterCallback<MouseLeaveEvent, VisualElement>(Switch_Unhover);
         switchEndPanel.UnregisterCallback<ClickEvent>(SwitchEnd_Clicked);
-    }
 
-    /// <summary>
-    /// Subscribes ActionbarUI to events.
-    /// </summary>
-    protected override void SubscribeListeners()
-    {
-        UIEvents.onUnitSelected += OnUnitSelected;
-        UIEvents.onAllSupportUsed += AllSupportUsed;
-        GameEvents.onPhaseChanged += PhaseSwitchUI;
-        GameEvents.onAbilityResolved += AbilityUsed;
-        /* GameEvents.onKill += SwitchPrompt; */
-    }
-
-    /// <summary>
-    /// Unsubscribes ActionbarUI to events.
-    /// </summary>
-    protected override void UnsubscribeListeners()
-    {
         UIEvents.onUnitSelected -= OnUnitSelected;
         UIEvents.onAllSupportUsed -= AllSupportUsed;
         GameEvents.onPhaseChanged -= PhaseSwitchUI;
         GameEvents.onAbilityResolved -= AbilityUsed;
-        /* GameEvents.onKill -= SwitchPrompt; */
+        //GameEvents.onKill -= SwitchPrompt;
     }
 
-    private void Awake()
-    {
-        VerifyVariables();
-        RunQueries();
-
-        promptBarContainer.style.display = DisplayStyle.None;
-        /* supportBarContainer.style.display = DisplayStyle.None; */
-        switchBarContainer.style.display = DisplayStyle.None;
-    }
-
-    private void SwitchConfirm_Clicked(ClickEvent evt)
+    void SwitchConfirm_Clicked(ClickEvent evt)
     {
         AudioManager.instance.Play("OnMousePressed");
         Debug.Log("Switch Button Clicked");
@@ -148,10 +141,7 @@ public class ActionbarUI : UISubscriber
         {
             if (selectedUnit)
             {
-                if (FieldController.main.IsUnitPlayer(SceneController.main.selectedUnit))
-                {
-                    FieldController.main.SwapPlayerUnit();
-                }
+                if (FieldController.main.IsUnitPlayer(SceneController.main.selectedUnit)) FieldController.main.SwapPlayerUnit();
             }
             else
             {
@@ -161,59 +151,44 @@ public class ActionbarUI : UISubscriber
                 promptBarValue.text = "Select unit to swap into vanguard position";
             }
         }
-        else
-        {
-            Debug.Log("Player cannot swap right now!");
-        }
+        else Debug.Log("Player cannot swap right now!");
     }
 
-    private void SwitchEnd_Clicked(ClickEvent evt)
+    void SwitchEnd_Clicked(ClickEvent evt)
     {
         AudioManager.instance.Play("OnMousePressed");
         Debug.Log("End Switch Turn Button Clicked");
-        if (RoundController.phase == RoundController.Phase.PlayerSwap)
-        {
-            GameEvents.EndPhase();
-        }
-        else
-        {
-            Debug.Log("Player does not have priority right now!");
-        }
+        if (RoundController.phase == RoundController.Phase.PlayerSwap) GameEvents.EndPhase();
+        else Debug.Log("Player does not have priority right now!");
     }
 
-    private void Switch_Hover(MouseEnterEvent evt, VisualElement element)
+    void Switch_Hover(MouseEnterEvent evt, VisualElement element)
     {
         AudioManager.instance.Play("OnMouseHover");
         element.style.width = new Length(100, LengthUnit.Percent);
         element.style.height = new Length(100, LengthUnit.Percent);
     }
 
-    private void Switch_Unhover(MouseLeaveEvent evt, VisualElement element)
+    void Switch_Unhover(MouseLeaveEvent evt, VisualElement element)
     {
         element.style.width = new Length(94, LengthUnit.Percent);
         element.style.height = new Length(94, LengthUnit.Percent);
     }
 
-    private void OnPromptCancel_Clicked(ClickEvent evt)
+    void OnPromptCancel_Clicked(ClickEvent evt)
     {
-        prompt = string.Empty;
+        prompt = "";
         AudioManager.instance.Play("OnMouseHover");
 
-        if (RoundController.phase == RoundController.Phase.PlayerSwap)
-        {
-            switchBarContainer.style.display = DisplayStyle.Flex;
-        }
-        else
-        {
-            supportBarContainer.style.display = DisplayStyle.Flex;
-        }
+        if(RoundController.phase == RoundController.Phase.PlayerSwap) switchBarContainer.style.display = DisplayStyle.Flex;
+        else supportBarContainer.style.display = DisplayStyle.Flex;
 
         promptBarContainer.style.display = DisplayStyle.None;
         GameEvents.GreyOut(null, false);
         Debug.Log("Prompt Cancel Clicked");
     }
 
-    private void OnPromptCancel_Hover(MouseEnterEvent evt)
+    void OnPromptCancel_Hover(MouseEnterEvent evt)
     {
         if (RoundController.phase == RoundController.Phase.PlayerVanguard || RoundController.phase == RoundController.Phase.PlayerSupport)
         {
@@ -223,24 +198,24 @@ public class ActionbarUI : UISubscriber
         }
     }
 
-    private void OnPromptCancel_Unhover(MouseLeaveEvent evt)
+    void OnPromptCancel_Unhover(MouseLeaveEvent evt)
     {
         promptCancel.style.width = new Length(80, LengthUnit.Percent);
         promptCancel.style.height = new Length(42, LengthUnit.Percent);
     }
 
-    private void AbilityOne_Hover(MouseEnterEvent evt)
+    void AbilityOne_Hover(MouseEnterEvent evt)
     {
         if (abilityActive[0])
         {
             AudioManager.instance.Play("OnMouseHover");
-
+            
             abilityOne.hover.style.height = new Length(100, LengthUnit.Percent);
             abilityOne.active.style.height = new Length(0, LengthUnit.Percent);
         }
     }
 
-    private void AbilityOne_Unhover(MouseLeaveEvent evt)
+    void AbilityOne_Unhover(MouseLeaveEvent evt)
     {
         if (abilityActive[0])
         {
@@ -249,7 +224,7 @@ public class ActionbarUI : UISubscriber
         }
     }
 
-    private void AbilityOne_Clicked(ClickEvent evt)
+    void AbilityOne_Clicked(ClickEvent evt)
     {
         if (abilityActive[0])
         {
@@ -261,7 +236,7 @@ public class ActionbarUI : UISubscriber
         }
     }
 
-    private void AbilityTwo_Hover(MouseEnterEvent evt)
+    void AbilityTwo_Hover(MouseEnterEvent evt)
     {
         if (abilityActive[1])
         {
@@ -271,7 +246,7 @@ public class ActionbarUI : UISubscriber
         }
     }
 
-    private void AbilityTwo_Unhover(MouseLeaveEvent evt)
+    void AbilityTwo_Unhover(MouseLeaveEvent evt)
     {
         if (abilityActive[1])
         {
@@ -280,7 +255,7 @@ public class ActionbarUI : UISubscriber
         }
     }
 
-    private void AbilityTwo_Clicked(ClickEvent evt)
+    void AbilityTwo_Clicked(ClickEvent evt)
     {
         if (abilityActive[1])
         {
@@ -292,7 +267,7 @@ public class ActionbarUI : UISubscriber
         }
     }
 
-    private void AbilityThree_Hover(MouseEnterEvent evt)
+    void AbilityThree_Hover(MouseEnterEvent evt)
     {
         if (abilityActive[2])
         {
@@ -302,7 +277,7 @@ public class ActionbarUI : UISubscriber
         }
     }
 
-    private void AbilityThree_Unhover(MouseLeaveEvent evt)
+    void AbilityThree_Unhover(MouseLeaveEvent evt)
     {
         if (abilityActive[2])
         {
@@ -311,7 +286,7 @@ public class ActionbarUI : UISubscriber
         }
     }
 
-    private void AbilityThree_Clicked(ClickEvent evt)
+    void AbilityThree_Clicked(ClickEvent evt)
     {
         if (abilityActive[2])
         {
@@ -322,57 +297,43 @@ public class ActionbarUI : UISubscriber
             Debug.Log("Ability Three Button Clicked");
         }
     }
-
-    private void UseAbility(int selectedAbility)
+    void UseAbility(int _selectedAbility)
     {
-        if (RoundController.phase == RoundController.Phase.PlayerVanguard)
+        if(RoundController.phase == RoundController.Phase.PlayerVanguard)
         {
-            if (!abilityActive[selectedAbility - 1])
-            {
-                return;
-            }
-
-            if (FieldController.main.IsUnitActive(selectedUnit))
-            {
-                GameEvents.UseAbility(
-                    selectedUnit,
-                    FieldController.main.GetUnit(FieldController.Position.Vanguard, !FieldController.main.IsUnitPlayer(selectedUnit)),
-                    selectedAbility);
-            }
-
+            if (!abilityActive[_selectedAbility - 1]) return;
+            if (FieldController.main.IsUnitActive(selectedUnit)) 
+            GameEvents.UseAbility(  selectedUnit, 
+                                    FieldController.main.GetUnit(FieldController.Position.Vanguard, !FieldController.main.IsUnitPlayer(selectedUnit)),
+                                    _selectedAbility);
             AbilityUI(selectedUnit, true);
             return;
         }
-        else if (RoundController.phase == RoundController.Phase.PlayerSupport)
+        else if(RoundController.phase == RoundController.Phase.PlayerSupport)
         {
-            if (!abilityActive[selectedAbility - 1])
+            if(!abilityActive[_selectedAbility-1]) return;
+            Ability _ability = selectedUnit.SupportAbilities[_selectedAbility - 1];
+            List<Unit> validTargets = FieldController.main.GetValidTargets(selectedUnit, _ability);
+            if ((validTargets.Count == 1 || _ability.forceTarget == TargetMode.False) && _ability.forceTarget != TargetMode.True)
             {
-                return;
-            }
-
-            Ability ability = selectedUnit.SupportAbilities[selectedAbility - 1];
-            List<Unit> validTargets = FieldController.main.GetValidTargets(selectedUnit, ability);
-
-            if ((validTargets.Count == 1 || ability.forceTarget == TargetMode.False) && ability.forceTarget != TargetMode.True)
-            {
-                GameEvents.UseAbility(selectedUnit, validTargets[0], selectedAbility);
+                GameEvents.UseAbility(selectedUnit, validTargets[0], _selectedAbility);
             }
             else
             {
                 supportBarContainer.style.display = DisplayStyle.None;
                 promptBarContainer.style.display = DisplayStyle.Flex;
                 prompt = "Ability";
-                promptBarValue.text = "Select target for " + selectedUnit.SupportAbilities[selectedAbility - 1].AbilityName;
-                this.selectedAbility = selectedAbility;
-                GameEvents.GreyOut(selectedUnit.SupportAbilities[selectedAbility - 1], FieldController.main.IsUnitPlayer(selectedUnit));
+                promptBarValue.text = "Select target for " + selectedUnit.SupportAbilities[_selectedAbility-1].AbilityName;
+                selectedAbility = _selectedAbility;
+                GameEvents.GreyOut(selectedUnit.SupportAbilities[_selectedAbility-1], FieldController.main.IsUnitPlayer(selectedUnit));
                 return;
             }
         }
-
         OnUnitSelected(selectedUnit);
+        //else GameEvents.UseAbility(selectedUnit, SceneController.main.selectedUnit, 3);
     }
 
-    private void EndSupportTurn_Hover(MouseEnterEvent evt)
+    void EndSupportTurn_Hover(MouseEnterEvent evt)
     {
         if (RoundController.phase == RoundController.Phase.PlayerVanguard || RoundController.phase == RoundController.Phase.PlayerSupport)
         {
@@ -382,13 +343,13 @@ public class ActionbarUI : UISubscriber
         }
     }
 
-    private void EndSupportTurn_Unhover(MouseLeaveEvent evt)
+    void EndSupportTurn_Unhover(MouseLeaveEvent evt)
     {
         endSupportTurnBtn.style.width = new Length(80, LengthUnit.Percent);
         endSupportTurnBtn.style.height = new Length(42, LengthUnit.Percent);
     }
 
-    private void EndSupportTurn_Clicked(ClickEvent evt)
+    void EndSupportTurn_Clicked(ClickEvent evt)
     {
         Debug.Log("End Support Turn Button Clicked");
 
@@ -403,14 +364,13 @@ public class ActionbarUI : UISubscriber
         }
     }
 
-    private void AbilityUsed(Unit unit)
+    void AbilityUsed(Unit unit)
     {
         FieldController.main.SupportUsed(unit);
         OnUnitSelected(unit);
         GameEvents.GreyOut(null, false);
     }
-
-    private void AllSupportUsed(bool supportUsed)
+    void AllSupportUsed(bool supportUsed)
     {
         if (supportUsed)
         {
@@ -423,10 +383,9 @@ public class ActionbarUI : UISubscriber
             endSupportTurnBtn.Q<VisualElement>("end-red").style.display = DisplayStyle.None;
         }
     }
-
-    private void OnUnitSelected(Unit unit)
+    void OnUnitSelected(Unit unit)
     {
-        if (!unit)
+        if(!unit) 
         {
             abilityOne.active.style.display = DisplayStyle.None;
             abilityOne.hover.style.display = DisplayStyle.None;
@@ -441,51 +400,40 @@ public class ActionbarUI : UISubscriber
             abilityThree.disabled.style.display = DisplayStyle.None;
             return;
         }
-
-        /* Debug.Log(unit.UnitName + " was selected"); */
+        //Debug.Log(unit.UnitName + " was selected");
         if (unit && prompt == "Switch")
         {
             if (SceneController.main.selectedUnit)
             {
-                if (FieldController.main.IsUnitPlayer(SceneController.main.selectedUnit))
-                {
-                    FieldController.main.SwapPlayerUnit();
-                }
+                if (FieldController.main.IsUnitPlayer(SceneController.main.selectedUnit)) FieldController.main.SwapPlayerUnit();
             }
-
-            prompt = string.Empty;
+            prompt = "";
             return;
         }
-
         if (selectedUnit && unit)
         {
-            if (prompt == "Ability")
+            if(prompt == "Ability")
             {
-                if (RoundController.phase != RoundController.Phase.PlayerSupport)
-                {
-                    prompt = string.Empty;
-                }
-                else if (selectedUnit.SupportAbilities[selectedAbility - 1].IsAbilityValid(selectedUnit, unit))
+                if(RoundController.phase != RoundController.Phase.PlayerSupport) prompt = "";
+                else if(selectedUnit.SupportAbilities[selectedAbility - 1].IsAbilityValid(selectedUnit, unit))
                 {
                     Debug.Log("Caster = " + selectedUnit + "\n" + "Target = " + unit);
                     supportBarContainer.style.display = DisplayStyle.Flex;
                     promptBarContainer.style.display = DisplayStyle.None;
-                    prompt = string.Empty;
+                    prompt = "";
                     GameEvents.UseAbility(selectedUnit, unit, selectedAbility);
                 }
-
                 return;
             }
             else if (prompt == "Death")
             {
-                if (FieldController.main.IsUnitPlayer(unit) && !FieldController.main.GetIsVanguard(unit))
+                if(FieldController.main.IsUnitPlayer(unit) && !FieldController.main.GetIsVanguard(unit))
                 {
                     supportBarContainer.style.display = DisplayStyle.Flex;
                     promptBarContainer.style.display = DisplayStyle.None;
-                    prompt = string.Empty;
+                    prompt = "";
                     FieldController.main.SwapPlayerUnit(unit);
                 }
-
                 return;
             }
         }
@@ -493,38 +441,33 @@ public class ActionbarUI : UISubscriber
         selectedUnit = unit;
         AbilityUI(unit);
     }
-
-    private void AbilityUI(Unit unit, bool setAllFalse = false)
+    void AbilityUI(Unit unit, bool setAllFalse = false)
     {
-        /* Debug.Log("Rendering abilities... "); */
-        Ability[] abilities = FieldController.main.GetIsVanguard(unit) ? unit.VanguardAbilities : unit.SupportAbilities;
+        //Debug.Log("Rendering abilities... ");
+        Ability[] _abilities = FieldController.main.GetIsVanguard(unit)?unit.VanguardAbilities:unit.SupportAbilities;
 
-        for (int i = 0; i < abilities.Length; i++)
+        for (int i = 0; i < _abilities.Length; i++)
         {
-            if (setAllFalse)
+            if(setAllFalse)
             {
                 abilityActive[i] = false;
                 continue;
             }
-
-            if (!FieldController.main.IsUnitActive(unit)
-            || abilities[i] == null)
+            if(!FieldController.main.IsUnitActive(unit)
+            || _abilities[i] == null)
             {
                 abilityActive[i] = false;
                 continue;
             }
-
-            if (!abilities[i].IsCasterValid(unit))
+            if(!_abilities[i].IsCasterValid(unit))
             {
                 abilityActive[i] = false;
                 continue;
             }
-
             abilityActive[i] = true;
         }
-
-        /* if (abilityActive[0]) abilityOneBtn.style.backgroundColor = new StyleColor(new Color(1, 1, 1, 0.69f));
-        // else abilityOneBtn.style.backgroundColor = new StyleColor(new Color(0.364f, 0.364f, 0.364f, 0.69f)); */
+        // if(abilityActive[0]) abilityOneBtn.style.backgroundColor = new StyleColor(new Color(1, 1, 1, 0.69f));
+        // else abilityOneBtn.style.backgroundColor = new StyleColor(new Color(0.364f, 0.364f, 0.364f, 0.69f));
 
         if (abilityActive[0])
         {
@@ -565,21 +508,21 @@ public class ActionbarUI : UISubscriber
             abilityThree.disabled.style.display = DisplayStyle.Flex;
         }
 
-        if (abilities[0])
+        if(_abilities[0])
         {
-            abilityOne.activeName.text = abilities[0].AbilityName;
-            abilityOne.activeCost.text = abilities[0].xCost ? "X" : Mathf.Abs(abilities[0].Cost) + string.Empty;
-            abilityOne.activeDesc.text = abilities[0].AbilityDescription;
+            abilityOne.activeName.text = _abilities[0].AbilityName;
+            abilityOne.activeCost.text = _abilities[0].xCost ? "X" : Mathf.Abs(_abilities[0].Cost) + "";
+            abilityOne.activeDesc.text = _abilities[0].AbilityDescription;
 
-            abilityOne.hoverName.text = abilities[0].AbilityName;
-            abilityOne.hoverCost.text = abilities[0].xCost ? "X" : Mathf.Abs(abilities[0].Cost) + string.Empty;
-            abilityOne.hoverDesc.text = abilities[0].AbilityDescription;
+            abilityOne.hoverName.text = _abilities[0].AbilityName;
+            abilityOne.hoverCost.text = _abilities[0].xCost ? "X" : Mathf.Abs(_abilities[0].Cost) + "";
+            abilityOne.hoverDesc.text = _abilities[0].AbilityDescription;
 
-            abilityOne.disabledName.text = abilities[0].AbilityName;
-            abilityOne.disabledCost.text = abilities[0].xCost ? "X" : Mathf.Abs(abilities[0].Cost) + string.Empty;
-            abilityOne.disabledDesc.text = abilities[0].AbilityDescription;
+            abilityOne.disabledName.text = _abilities[0].AbilityName;
+            abilityOne.disabledCost.text = _abilities[0].xCost ? "X" : Mathf.Abs(_abilities[0].Cost) + "";
+            abilityOne.disabledDesc.text = _abilities[0].AbilityDescription;
 
-            if (abilities[0].Cost < 0)
+            if (_abilities[0].Cost < 0)
             {
                 abilityOne.activeOperation.text = "+";
                 abilityOne.hoverOperation.text = "+";
@@ -592,7 +535,7 @@ public class ActionbarUI : UISubscriber
                 abilityOne.disabledOperation.text = "-";
             }
 
-            if (abilities[0].IsMagic)
+            if (_abilities[0].IsMagic)
             {
                 abilityOne.activeAmmoIcon.style.display = DisplayStyle.None;
                 abilityOne.hoverAmmoIcon.style.display = DisplayStyle.None;
@@ -615,20 +558,20 @@ public class ActionbarUI : UISubscriber
         }
         else
         {
-            abilityOne.activeName.text = string.Empty;
-            abilityOne.activeCost.text = string.Empty;
-            abilityOne.activeDesc.text = string.Empty;
-            abilityOne.activeOperation.text = string.Empty;
+            abilityOne.activeName.text = "";
+            abilityOne.activeCost.text = "";
+            abilityOne.activeDesc.text = "";
+            abilityOne.activeOperation.text = "";
 
-            abilityOne.hoverName.text = string.Empty;
-            abilityOne.hoverCost.text = string.Empty;
-            abilityOne.hoverDesc.text = string.Empty;
-            abilityOne.hoverOperation.text = string.Empty;
+            abilityOne.hoverName.text = "";
+            abilityOne.hoverCost.text = "";
+            abilityOne.hoverDesc.text = "";
+            abilityOne.hoverOperation.text = "";
 
-            abilityOne.disabledName.text = string.Empty;
-            abilityOne.disabledCost.text = string.Empty;
-            abilityOne.disabledDesc.text = string.Empty;
-            abilityOne.disabledOperation.text = string.Empty;
+            abilityOne.disabledName.text = "";
+            abilityOne.disabledCost.text = "";
+            abilityOne.disabledDesc.text = "";
+            abilityOne.disabledOperation.text = "";
 
             abilityOne.activeAmmoIcon.style.display = DisplayStyle.None;
             abilityOne.hoverAmmoIcon.style.display = DisplayStyle.None;
@@ -638,22 +581,21 @@ public class ActionbarUI : UISubscriber
             abilityOne.hoverManaIcon.style.display = DisplayStyle.None;
             abilityOne.disabledManaIcon.style.display = DisplayStyle.None;
         }
-
-        if (abilities[1])
+        if(_abilities[1])
         {
-            abilityTwo.activeName.text = abilities[1].AbilityName;
-            abilityTwo.activeCost.text = abilities[1].xCost ? "X" : Mathf.Abs(abilities[1].Cost) + string.Empty;
-            abilityTwo.activeDesc.text = abilities[1].AbilityDescription;
+            abilityTwo.activeName.text = _abilities[1].AbilityName;
+            abilityTwo.activeCost.text = _abilities[1].xCost ? "X" : Mathf.Abs(_abilities[1].Cost) + "";
+            abilityTwo.activeDesc.text = _abilities[1].AbilityDescription;
 
-            abilityTwo.hoverName.text = abilities[1].AbilityName;
-            abilityTwo.hoverCost.text = abilities[1].xCost ? "X" : Mathf.Abs(abilities[1].Cost) + string.Empty;
-            abilityTwo.hoverDesc.text = abilities[1].AbilityDescription;
+            abilityTwo.hoverName.text = _abilities[1].AbilityName;
+            abilityTwo.hoverCost.text = _abilities[1].xCost ? "X" : Mathf.Abs(_abilities[1].Cost) + "";
+            abilityTwo.hoverDesc.text = _abilities[1].AbilityDescription;
 
-            abilityTwo.disabledName.text = abilities[1].AbilityName;
-            abilityTwo.disabledCost.text = abilities[1].xCost ? "X" : Mathf.Abs(abilities[1].Cost) + string.Empty;
-            abilityTwo.disabledDesc.text = abilities[1].AbilityDescription;
+            abilityTwo.disabledName.text = _abilities[1].AbilityName;
+            abilityTwo.disabledCost.text = _abilities[1].xCost ? "X" : Mathf.Abs(_abilities[1].Cost) + "";
+            abilityTwo.disabledDesc.text = _abilities[1].AbilityDescription;
 
-            if (abilities[1].Cost < 0)
+            if (_abilities[1].Cost < 0)
             {
                 abilityTwo.activeOperation.text = "+";
                 abilityTwo.hoverOperation.text = "+";
@@ -666,7 +608,7 @@ public class ActionbarUI : UISubscriber
                 abilityTwo.disabledOperation.text = "-";
             }
 
-            if (abilities[1].IsMagic)
+            if (_abilities[1].IsMagic)
             {
                 abilityTwo.activeAmmoIcon.style.display = DisplayStyle.None;
                 abilityTwo.hoverAmmoIcon.style.display = DisplayStyle.None;
@@ -689,20 +631,20 @@ public class ActionbarUI : UISubscriber
         }
         else
         {
-            abilityTwo.activeName.text = string.Empty;
-            abilityTwo.activeCost.text = string.Empty;
-            abilityTwo.activeDesc.text = string.Empty;
-            abilityTwo.activeOperation.text = string.Empty;
+            abilityTwo.activeName.text = "";
+            abilityTwo.activeCost.text = "";
+            abilityTwo.activeDesc.text = "";
+            abilityTwo.activeOperation.text = "";
 
-            abilityTwo.hoverName.text = string.Empty;
-            abilityTwo.hoverCost.text = string.Empty;
-            abilityTwo.hoverDesc.text = string.Empty;
-            abilityTwo.hoverOperation.text = string.Empty;
+            abilityTwo.hoverName.text = "";
+            abilityTwo.hoverCost.text = "";
+            abilityTwo.hoverDesc.text = "";
+            abilityTwo.hoverOperation.text = "";
 
-            abilityTwo.disabledName.text = string.Empty;
-            abilityTwo.disabledCost.text = string.Empty;
-            abilityTwo.disabledDesc.text = string.Empty;
-            abilityTwo.disabledOperation.text = string.Empty;
+            abilityTwo.disabledName.text = "";
+            abilityTwo.disabledCost.text = "";
+            abilityTwo.disabledDesc.text = "";
+            abilityTwo.disabledOperation.text = "";
 
             abilityTwo.activeAmmoIcon.style.display = DisplayStyle.None;
             abilityTwo.hoverAmmoIcon.style.display = DisplayStyle.None;
@@ -712,22 +654,21 @@ public class ActionbarUI : UISubscriber
             abilityTwo.hoverManaIcon.style.display = DisplayStyle.None;
             abilityTwo.disabledManaIcon.style.display = DisplayStyle.None;
         }
-
-        if (abilities[2])
+        if(_abilities[2])
         {
-            abilityThree.activeName.text = abilities[2].AbilityName;
-            abilityThree.activeCost.text = abilities[2].xCost ? "X" : Mathf.Abs(abilities[2].Cost) + string.Empty;
-            abilityThree.activeDesc.text = abilities[2].AbilityDescription;
+            abilityThree.activeName.text = _abilities[2].AbilityName;
+            abilityThree.activeCost.text = _abilities[2].xCost ? "X" : Mathf.Abs(_abilities[2].Cost) + "";
+            abilityThree.activeDesc.text = _abilities[2].AbilityDescription;
 
-            abilityThree.hoverName.text = abilities[2].AbilityName;
-            abilityThree.hoverCost.text = abilities[2].xCost ? "X" : Mathf.Abs(abilities[2].Cost) + string.Empty;
-            abilityThree.hoverDesc.text = abilities[2].AbilityDescription;
+            abilityThree.hoverName.text = _abilities[2].AbilityName;
+            abilityThree.hoverCost.text = _abilities[2].xCost ? "X" : Mathf.Abs(_abilities[2].Cost) + "";
+            abilityThree.hoverDesc.text = _abilities[2].AbilityDescription;
 
-            abilityThree.disabledName.text = abilities[2].AbilityName;
-            abilityThree.disabledCost.text = abilities[2].xCost ? "X" : Mathf.Abs(abilities[2].Cost) + string.Empty;
-            abilityThree.disabledDesc.text = abilities[2].AbilityDescription;
+            abilityThree.disabledName.text = _abilities[2].AbilityName;
+            abilityThree.disabledCost.text = _abilities[2].xCost ? "X" : Mathf.Abs(_abilities[2].Cost) + "";
+            abilityThree.disabledDesc.text = _abilities[2].AbilityDescription;
 
-            if (abilities[2].Cost < 0)
+            if (_abilities[2].Cost < 0)
             {
                 abilityThree.activeOperation.text = "+";
                 abilityThree.hoverOperation.text = "+";
@@ -740,7 +681,7 @@ public class ActionbarUI : UISubscriber
                 abilityThree.disabledOperation.text = "-";
             }
 
-            if (abilities[2].IsMagic)
+            if (_abilities[2].IsMagic)
             {
                 abilityThree.activeAmmoIcon.style.display = DisplayStyle.None;
                 abilityThree.hoverAmmoIcon.style.display = DisplayStyle.None;
@@ -760,23 +701,25 @@ public class ActionbarUI : UISubscriber
                 abilityThree.hoverManaIcon.style.display = DisplayStyle.None;
                 abilityThree.disabledManaIcon.style.display = DisplayStyle.None;
             }
+
+            
         }
         else
         {
-            abilityThree.activeName.text = string.Empty;
-            abilityThree.activeCost.text = string.Empty;
-            abilityThree.activeDesc.text = string.Empty;
-            abilityThree.activeOperation.text = string.Empty;
+            abilityThree.activeName.text = "";
+            abilityThree.activeCost.text = "";
+            abilityThree.activeDesc.text = "";
+            abilityThree.activeOperation.text = "";
 
-            abilityThree.hoverName.text = string.Empty;
-            abilityThree.hoverCost.text = string.Empty;
-            abilityThree.hoverDesc.text = string.Empty;
-            abilityThree.hoverOperation.text = string.Empty;
+            abilityThree.hoverName.text = "";
+            abilityThree.hoverCost.text = "";
+            abilityThree.hoverDesc.text = "";
+            abilityThree.hoverOperation.text = "";
 
-            abilityThree.disabledName.text = string.Empty;
-            abilityThree.disabledCost.text = string.Empty;
-            abilityThree.disabledDesc.text = string.Empty;
-            abilityThree.disabledOperation.text = string.Empty;
+            abilityThree.disabledName.text = "";
+            abilityThree.disabledCost.text = "";
+            abilityThree.disabledDesc.text = "";
+            abilityThree.disabledOperation.text = "";
 
             abilityThree.activeAmmoIcon.style.display = DisplayStyle.None;
             abilityThree.hoverAmmoIcon.style.display = DisplayStyle.None;
@@ -788,7 +731,7 @@ public class ActionbarUI : UISubscriber
         }
     }
 
-    private void PhaseSwitchUI(RoundController.Phase phase)
+    void PhaseSwitchUI(RoundController.Phase phase)
     {
         supportBarContainer.style.display = DisplayStyle.None;
         switchBarContainer.style.display = DisplayStyle.None;
@@ -801,10 +744,7 @@ public class ActionbarUI : UISubscriber
             OnUnitSelected(selectedUnit);
             return;
         }
-        else
-        {
-            switchEndPanelContainer.style.display = DisplayStyle.Flex;
-        }
+        else switchEndPanelContainer.style.display = DisplayStyle.Flex;
 
         switch (phase)
         {
@@ -831,11 +771,10 @@ public class ActionbarUI : UISubscriber
             default:
                 break;
         }
-
-        /* endSupportTurnBtn.text = phase.ToString() + "\nEnd Phase"; */
+        // endSupportTurnBtn.text = phase.ToString() + "\nEnd Phase";
     }
 
-    private void VerifyVariables()
+    void VerifyVariables()
     {
         if (promptBar == null)
         {
@@ -874,7 +813,7 @@ public class ActionbarUI : UISubscriber
         }
     }
 
-    private void RunQueries()
+    void RunQueries()
     {
         try
         {
@@ -963,36 +902,11 @@ public class ActionbarUI : UISubscriber
             switchConfirmPanel = switchBarContainer.Query<VisualElement>("switch");
             switchEndPanelContainer = switchBarContainer.Query<VisualElement>("skip-container");
             switchEndPanel = switchEndPanelContainer.Query<VisualElement>("skip");
+
         }
         catch
         {
             Debug.LogError($"{gameObject.name} : ActionbarUI - Element Query Failed.");
         }
-    }
-
-    private struct AbilityButton
-    {
-        public VisualElement ability;
-        public VisualElement active;
-        public VisualElement hover;
-        public VisualElement disabled;
-        public TextElement activeName;
-        public TextElement activeCost;
-        public TextElement activeDesc;
-        public TextElement activeOperation;
-        public VisualElement activeManaIcon;
-        public VisualElement activeAmmoIcon;
-        public TextElement hoverName;
-        public TextElement hoverCost;
-        public TextElement hoverDesc;
-        public TextElement hoverOperation;
-        public VisualElement hoverManaIcon;
-        public VisualElement hoverAmmoIcon;
-        public TextElement disabledName;
-        public TextElement disabledCost;
-        public TextElement disabledDesc;
-        public TextElement disabledOperation;
-        public VisualElement disabledManaIcon;
-        public VisualElement disabledAmmoIcon;
     }
 }
