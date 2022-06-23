@@ -1,7 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 /*
  * Event list:
@@ -10,33 +10,32 @@ using System;
  * onQTETriggered()
  */
 
+#pragma warning disable SA1201 // Elements should appear in the correct order
+#pragma warning disable SA1401 // Fields should be private
+
 public static class MenuEvents
 {
     public static Action onBattleStartSelected;
+
     public static void BattleStartSelected()
     {
-        if (onBattleStartSelected != null)
-        {
-            onBattleStartSelected();
-        }
+        onBattleStartSelected?.Invoke();
     }
 
-    public static Action <Unit, Enum> onUseAbility;
+    public static Action<Unit, Enum> onUseAbility;
 
-    public static void UseAbility(Unit unit, Enum ability )
+    public static void UseAbility(Unit unit, Enum ability)
     {
-        if (onUseAbility != null)
-        {
-            onUseAbility(unit, ability);
-        }
+        onUseAbility?.Invoke(unit, ability);
     }
 
     public static Action<GameManager.QTEResult> onQTETriggered;
+
     public static void QTETriggered(GameManager.QTEResult result)
     {
-        if (onQTETriggered != null)
-        {
-            onQTETriggered(result);
-        }
+        onQTETriggered?.Invoke(result);
     }
 }
+
+#pragma warning restore SA1201 // Elements should appear in the correct order
+#pragma warning restore SA1401 // Fields should be private

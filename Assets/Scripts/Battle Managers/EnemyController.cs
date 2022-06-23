@@ -338,14 +338,14 @@ public class EnemyController : Listener
 	protected override void SubscribeListeners ()
 	{
 		GameEvents.onPhaseChanged += EnemyTurn;
-		GameEvents.onSetupUnits += SetupUnits;
+		GameEvents.OnSetupUnits += SetupUnits;
 		GameEvents.onKill += Kill;
 	}
 
 	protected override void UnsubscribeListeners ()
 	{
 		GameEvents.onPhaseChanged -= EnemyTurn;
-		GameEvents.onSetupUnits -= SetupUnits;
+		GameEvents.OnSetupUnits -= SetupUnits;
 		GameEvents.onKill -= Kill;
 	}
 
