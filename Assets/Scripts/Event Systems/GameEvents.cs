@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-#pragma 
 /*
  * Event list:
  * onBattleStart()
@@ -24,7 +23,7 @@ public static class GameEvents
 {
     // Start is called before the first frame update
 
-    /// <summary> 
+    /// <summary>
     /// Called when a battle is started.
     /// </summary>
     public static Action onBattleStarted;
@@ -41,20 +40,14 @@ public static class GameEvents
 
     public static void SetupUnits(List<Unit> playerUnits, List<Unit> enemyUnits)
     {
-        if (onSetupUnits != null)
-        {
-            onSetupUnits?.Invoke(playerUnits, enemyUnits);
-        }
+        onSetupUnits?.Invoke(playerUnits, enemyUnits);
     }
 
-    private static Action<Unit, int> onHealthChanged;
+    public static Action<Unit, int> onHealthChanged;
 
     public static void HealthChanged(Unit target, int value)
     {
-        if (onHealthChanged != null)
-        {
-            onHealthChanged?.Invoke(target, value);
-        }
+        onHealthChanged?.Invoke(target, value);
     }
 
     public static Action<Unit, Unit, int> onUnitAttack;
@@ -62,100 +55,74 @@ public static class GameEvents
     public static void UnitAttack(Unit attacker, Unit defender, int value)
     {
         HealthChanged(defender, value);
-        if (onUnitAttack != null)
-        {
-            onUnitAttack?.Invoke(attacker, defender, value);
-        }
+        onUnitAttack?.Invoke(attacker, defender, value);
     }
 
     public static Action<Unit, int> onDefenseUp;
 
     public static void DefenseUp(Unit caster, int amount)
     {
-        if (onDefenseUp != null)
-        {
-            onDefenseUp?.Invoke(caster, amount);
-        }
+        onDefenseUp?.Invoke(caster, amount);
     }
 
     public static Action<Unit, int> onBaseDefenseUp;
 
     public static void BaseDefenseUp(Unit caster, int amount)
     {
-        if (onBaseDefenseUp != null)
-        {
-            onBaseDefenseUp?.Invoke(caster, amount);
-        }
+        onBaseDefenseUp?.Invoke(caster, amount);
     }
 
     public static Action<Unit, int> onAttackUp;
 
     public static void AttackUp(Unit caster, int amount)
     {
-        if (onAttackUp != null)
-        {
-            onAttackUp?.Invoke(caster, amount);
-        }
+        onAttackUp?.Invoke(caster, amount);
     }
 
     public static Action<Unit, int> onBaseAttackUp;
 
     public static void BaseAttackUp(Unit caster, int amount)
     {
-        if (onBaseAttackUp != null)
-        {
-            onBaseAttackUp?.Invoke(caster, amount);
-        }
+        onBaseAttackUp?.Invoke(caster, amount);
     }
 
     public static Action<Unit, int> onAccuracyUp;
 
     public static void AccuracyUp(Unit caster, int amount)
     {
-        if (onAccuracyUp != null)
-        {
-            onAccuracyUp?.Invoke(caster, amount);
-        }
+        onAccuracyUp?.Invoke(caster, amount);
     }
 
     public static Action<Unit, int> onThornsUp;
 
-    public static void ThornsUp(Unit caster, int Amount)
+    public static void ThornsUp(Unit caster, int amount)
     {
-        if (onThornsUp != null)
-        {
-            onThornsUp?.Invoke(caster, Amount);
-        }
+        onThornsUp?.Invoke(caster, amount);
     }
 
     public static Action<Unit, int> onUseAmmo;
-    public static void UseAmmo(Unit Caster, int Cost)
+
+    public static void UseAmmo(Unit caster, int cost)
     {
-        if (onUseAmmo != null)
-        {
-            onUseAmmo?.Invoke(Caster, Cost);
-        }
+        onUseAmmo?.Invoke(caster, cost);
     }
 
     public static Action<Unit, int> onUseMana;
-    public static void UseMana(Unit Caster, int Cost)
+
+    public static void UseMana(Unit caster, int cost)
     {
-        if (onUseMana != null)
-        {
-            onUseMana?.Invoke(Caster, Cost);
-        }
+        onUseMana?.Invoke(caster, cost);
     }
 
     public static Action<Ability, bool> onGreyOut;
+
     public static void GreyOut(Ability ability, bool disable)
     {
-        if (onGreyOut != null)
-        {
-            onGreyOut?.Invoke(ability, disable);
-        }
+        onGreyOut?.Invoke(ability, disable);
     }
 
     public static Action<Unit, Unit, int> onUseAbility;
+
     public static void UseAbility(Unit caster, Unit target, int abilityNumber)
     {
         if (abilityNumber > 3 || abilityNumber < 1)
@@ -163,74 +130,62 @@ public static class GameEvents
             Debug.Log("Invalid Ability Number");
             return;
         }
-        if (onUseAbility != null)
-        {
-            onUseAbility?.Invoke(caster, target, abilityNumber);
-        }
+
+        onUseAbility?.Invoke(caster, target, abilityNumber);
     }
 
     public static Action<GameManager.QTEType, int> onQTEStart;
+
     public static void QTEStart(GameManager.QTEType qteType, int difficultyModifier)
     {
-        if (onQTEStart != null)
-        {
-            onQTEStart?.Invoke(qteType, difficultyModifier);
-        }
+        onQTEStart?.Invoke(qteType, difficultyModifier);
     }
 
     public static Action<GameManager.QTEResult> onQTEResolved;
-    public static void QTEResolved(GameManager.QTEResult QTEResult)
+
+    public static void QTEResolved(GameManager.QTEResult qTEResult)
     {
-        if (onQTEResolved != null)
-        {
-            onQTEResolved?.Invoke(QTEResult);
-        }
+        onQTEResolved?.Invoke(qTEResult);
     }
 
     public static Action<Unit> onSwitchUnitEnd;
+
     public static void SwitchUnitEnd(Unit unitSwitched)
     {
-        if (onSwitchUnitEnd != null)
-        {
-            onSwitchUnitEnd?.Invoke(unitSwitched);
-        }
+        onSwitchUnitEnd?.Invoke(unitSwitched);
     }
 
     public static Action<Unit> onAbilityResolved;
+
     public static void AbilityResolved(Unit source)
     {
-        if (onAbilityResolved != null)
-        {
-            onAbilityResolved?.Invoke(source);
-        }
+        onAbilityResolved?.Invoke(source);
     }
 
     public static Action<Unit> onKill;
+
     public static void Kill(Unit source)
     {
-        if (onKill != null)
-        {
-            onKill?.Invoke(source);
-        }
+        onKill?.Invoke(source);
     }
 
     public static Action<bool> onGameEnd;
+
     public static void GameEnd(bool win)
     {
-        if (onGameEnd != null)
-        {
-            onGameEnd?.Invoke(win);
-        }
+        onGameEnd?.Invoke(win);
     }
 
     // public static Action<Unit> onUnitClick;
     public static Action roundcontrollerEndPhase;
+
     public static void EndPhase()
     {
         roundcontrollerEndPhase?.Invoke();
     }
 
     public static Action onResetBuffs;
+
     public static void ResetBuffs()
     {
         onResetBuffs?.Invoke();
@@ -238,7 +193,6 @@ public static class GameEvents
 
     // public static Action<RoundController.Phase> onSetPhase;
     public static Action<RoundController.Phase> onPhaseChanged;
-
 
     public static Action<List<Unit>, List<Unit>> OnSetupUnits { get => onSetupUnits; set => onSetupUnits = value; }
 

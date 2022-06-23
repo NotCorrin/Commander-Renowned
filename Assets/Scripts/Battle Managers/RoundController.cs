@@ -41,13 +41,13 @@ public class RoundController : Listener
 
     protected override void SubscribeListeners()
     {
-        GameEvents.OnBattleStarted += StartBattle;
+        GameEvents.onBattleStarted += StartBattle;
         GameEvents.roundcontrollerEndPhase += ChangePhase;
     }
 
     protected override void UnsubscribeListeners()
     {
-        GameEvents.OnBattleStarted -= StartBattle;
+        GameEvents.onBattleStarted -= StartBattle;
         GameEvents.roundcontrollerEndPhase -= ChangePhase;
     }
 

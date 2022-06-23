@@ -465,7 +465,7 @@ public class Unit : Listener
 
     protected override void SubscribeListeners()
     {
-        GameEvents.OnBattleStarted += ResetUnit;
+        GameEvents.onBattleStarted += ResetUnit;
         GameEvents.onHealthChanged += OnHealthChanged;
         GameEvents.onDefenseUp += OnDefenseChanged;
         GameEvents.onBaseDefenseUp += OnBaseDefenseChanged;
@@ -488,7 +488,7 @@ public class Unit : Listener
 
     protected override void UnsubscribeListeners()
     {
-        GameEvents.OnBattleStarted -= ResetUnit;
+        GameEvents.onBattleStarted -= ResetUnit;
         GameEvents.onHealthChanged -= OnHealthChanged;
         GameEvents.onDefenseUp -= OnDefenseChanged;
         GameEvents.onBaseDefenseUp -= OnBaseDefenseChanged;
