@@ -188,14 +188,14 @@ public class FieldController : Listener
     {
         GameEvents.onPhaseChanged += ResetSupportUsed;
         GameEvents.onKill += Kill;
-        GameEvents.onSetupUnits += SetupUnits;
+        GameEvents.OnSetupUnits += SetupUnits;
     }
 
     protected override void UnsubscribeListeners()
     {
         GameEvents.onPhaseChanged -= ResetSupportUsed;
         GameEvents.onKill -= Kill;
-        GameEvents.onSetupUnits += SetupUnits;
+        GameEvents.OnSetupUnits += SetupUnits;
     }
 
     private void Kill(Unit unit)

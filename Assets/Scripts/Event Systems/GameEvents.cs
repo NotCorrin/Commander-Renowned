@@ -1,8 +1,8 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
+#pragma 
 /*
  * Event list:
  * onBattleStart()
@@ -17,95 +17,114 @@ using System;
  * onQTEResolves(GameManager.QTEResult)
  */
 
+#pragma warning disable SA1201 // Elements should appear in the correct order
+#pragma warning disable SA1401 // Fields should be private
+
 public static class GameEvents
 {
     // Start is called before the first frame update
+
+    /// <summary> 
+    /// Called when a battle is started.
+    /// </summary>
     public static Action onBattleStarted;
+
     public static void BattleStart()
     {
-        if (onBattleStarted != null)
-        {
-            onBattleStarted();
-        }
+        onBattleStarted?.Invoke();
     }
 
-    public static Action<List<Unit>, List<Unit>> onSetupUnits;
+    /// <summary>
+    /// Called with lists of units to spawn when units are being set up.
+    /// </summary>
+    private static Action<List<Unit>, List<Unit>> onSetupUnits;
+
     public static void SetupUnits(List<Unit> playerUnits, List<Unit> enemyUnits)
     {
         if (onSetupUnits != null)
         {
-            onSetupUnits(playerUnits, enemyUnits);
+            onSetupUnits?.Invoke(playerUnits, enemyUnits);
         }
     }
 
-    public static Action<Unit, int> onHealthChanged;
-    public static void HealthChanged(Unit target, int Value)
+    private static Action<Unit, int> onHealthChanged;
+
+    public static void HealthChanged(Unit target, int value)
     {
         if (onHealthChanged != null)
         {
-            onHealthChanged(target, Value);
+            onHealthChanged?.Invoke(target, value);
         }
     }
 
     public static Action<Unit, Unit, int> onUnitAttack;
-    public static void UnitAttack(Unit attacker, Unit defender, int Value)
+
+    public static void UnitAttack(Unit attacker, Unit defender, int value)
     {
-        HealthChanged(defender, Value);
+        HealthChanged(defender, value);
         if (onUnitAttack != null)
         {
-            onUnitAttack(attacker, defender, Value);
+            onUnitAttack?.Invoke(attacker, defender, value);
         }
     }
 
     public static Action<Unit, int> onDefenseUp;
-    public static void DefenseUp(Unit Caster, int Amount)
+
+    public static void DefenseUp(Unit caster, int amount)
     {
         if (onDefenseUp != null)
         {
-            onDefenseUp(Caster, Amount);
+            onDefenseUp?.Invoke(caster, amount);
         }
     }
+
     public static Action<Unit, int> onBaseDefenseUp;
-    public static void BaseDefenseUp(Unit Caster, int Amount)
+
+    public static void BaseDefenseUp(Unit caster, int amount)
     {
         if (onBaseDefenseUp != null)
         {
-            onBaseDefenseUp(Caster, Amount);
+            onBaseDefenseUp?.Invoke(caster, amount);
         }
     }
 
     public static Action<Unit, int> onAttackUp;
-    public static void AttackUp(Unit Caster, int Amount)
+
+    public static void AttackUp(Unit caster, int amount)
     {
         if (onAttackUp != null)
         {
-            onAttackUp(Caster, Amount);
+            onAttackUp?.Invoke(caster, amount);
         }
     }
+
     public static Action<Unit, int> onBaseAttackUp;
-    public static void BaseAttackUp(Unit Caster, int Amount)
+
+    public static void BaseAttackUp(Unit caster, int amount)
     {
         if (onBaseAttackUp != null)
         {
-            onBaseAttackUp(Caster, Amount);
+            onBaseAttackUp?.Invoke(caster, amount);
         }
     }
 
     public static Action<Unit, int> onAccuracyUp;
-    public static void AccuracyUp(Unit Caster, int Amount)
+
+    public static void AccuracyUp(Unit caster, int amount)
     {
         if (onAccuracyUp != null)
         {
-            onAccuracyUp(Caster, Amount);
+            onAccuracyUp?.Invoke(caster, amount);
         }
     }
 
     public static Action<Unit, int> onThornsUp;
-    public static void ThornsUp(Unit Caster, int Amount)
+
+    public static void ThornsUp(Unit caster, int Amount)
     {
         if (onThornsUp != null)
         {
-            onThornsUp(Caster, Amount);
+            onThornsUp?.Invoke(caster, Amount);
         }
     }
 
@@ -114,7 +133,7 @@ public static class GameEvents
     {
         if (onUseAmmo != null)
         {
-            onUseAmmo(Caster, Cost);
+            onUseAmmo?.Invoke(Caster, Cost);
         }
     }
 
@@ -123,7 +142,7 @@ public static class GameEvents
     {
         if (onUseMana != null)
         {
-            onUseMana(Caster, Cost);
+            onUseMana?.Invoke(Caster, Cost);
         }
     }
 
@@ -132,7 +151,7 @@ public static class GameEvents
     {
         if (onGreyOut != null)
         {
-            onGreyOut(ability, disable);
+            onGreyOut?.Invoke(ability, disable);
         }
     }
 
@@ -146,7 +165,7 @@ public static class GameEvents
         }
         if (onUseAbility != null)
         {
-            onUseAbility(caster, target, abilityNumber);
+            onUseAbility?.Invoke(caster, target, abilityNumber);
         }
     }
 
@@ -155,7 +174,7 @@ public static class GameEvents
     {
         if (onQTEStart != null)
         {
-            onQTEStart(qteType, difficultyModifier);
+            onQTEStart?.Invoke(qteType, difficultyModifier);
         }
     }
 
@@ -164,7 +183,7 @@ public static class GameEvents
     {
         if (onQTEResolved != null)
         {
-            onQTEResolved(QTEResult);
+            onQTEResolved?.Invoke(QTEResult);
         }
     }
 
@@ -173,7 +192,7 @@ public static class GameEvents
     {
         if (onSwitchUnitEnd != null)
         {
-            onSwitchUnitEnd(unitSwitched);
+            onSwitchUnitEnd?.Invoke(unitSwitched);
         }
     }
 
@@ -182,7 +201,7 @@ public static class GameEvents
     {
         if (onAbilityResolved != null)
         {
-            onAbilityResolved(source);
+            onAbilityResolved?.Invoke(source);
         }
     }
 
@@ -191,7 +210,7 @@ public static class GameEvents
     {
         if (onKill != null)
         {
-            onKill(source);
+            onKill?.Invoke(source);
         }
     }
 
@@ -200,37 +219,34 @@ public static class GameEvents
     {
         if (onGameEnd != null)
         {
-            onGameEnd(win);
+            onGameEnd?.Invoke(win);
         }
     }
 
-
-    //public static Action<Unit> onUnitClick;
+    // public static Action<Unit> onUnitClick;
     public static Action roundcontrollerEndPhase;
     public static void EndPhase()
     {
-        if (roundcontrollerEndPhase != null)
-        {
-            roundcontrollerEndPhase();
-        }
+        roundcontrollerEndPhase?.Invoke();
     }
 
     public static Action onResetBuffs;
     public static void ResetBuffs()
     {
-        if (onResetBuffs != null)
-        {
-            onResetBuffs();
-        }
+        onResetBuffs?.Invoke();
     }
 
     // public static Action<RoundController.Phase> onSetPhase;
     public static Action<RoundController.Phase> onPhaseChanged;
+
+
+    public static Action<List<Unit>, List<Unit>> OnSetupUnits { get => onSetupUnits; set => onSetupUnits = value; }
+
     public static void PhaseChanged(RoundController.Phase phase)
     {
-        if (onPhaseChanged != null)
-        {
-            onPhaseChanged(phase);
-        }
+        onPhaseChanged?.Invoke(phase);
     }
 }
+
+#pragma warning restore SA1201 // Elements should appear in the correct order
+#pragma warning restore SA1401 // Fields should be private
