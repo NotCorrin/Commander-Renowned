@@ -3,19 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class StoryContainerUI : MonoBehaviour
+/// <summary>
+/// Contains code for the StoryContainerUI.
+/// </summary>
+public class StoryContainerUI : UISubscriber
 {
-    [SerializeField] UIDocument uiDocument;
-    [SerializeField] ScenarioScriptableObject stories;
-    [SerializeField] TeamScriptableObject team;
-    TextElement title;
-    TextElement desc;
-    VisualElement buttonContainer;
+    [SerializeField] private UIDocument uiDocument;
+    [SerializeField] private ScenarioScriptableObject stories;
+    [SerializeField] private TeamScriptableObject team;
+    private TextElement title;
+    private TextElement desc;
+    private VisualElement buttonContainer;
 
-    bool tComplete;
-    public bool AddUnit;
+    private bool tComplete;
+    private bool addUnit;
 
-    void Awake()
+    /// <summary>
+    /// Assign UI elements to fields in StoryContainerUI.
+    /// </summary>
+    protected override void AssignUIElements()
+    {
+        title = uiDocument.rootVisualElement.Q<TextElement>("title");
+        desc = uiDocument.rootVisualElement.Q<TextElement>("description");
+        buttonContainer = uiDocument.rootVisualElement.Q<VisualElement>("button-container");
+    }
+
+    private void Start()
     {
         if (uiDocument == null)
         {
@@ -23,27 +36,28 @@ public class StoryContainerUI : MonoBehaviour
             uiDocument = GetComponent<UIDocument>();
         }
 
-        try
-        {
-            title = uiDocument.rootVisualElement.Q<TextElement>("title");
-            desc = uiDocument.rootVisualElement.Q<TextElement>("description");
-            buttonContainer = uiDocument.rootVisualElement.Q<VisualElement>("button-container");
-        }
-        catch
-        {
-            Debug.LogError($"{gameObject.name} : MainMenuUI - Element Query Failed.");
-        }
         Debug.Log(stories.level);
         Debug.Log(stories.story.Length);
         Scenario scenario;
-        if (stories.level >= stories.story.Length - 1 && !AddUnit) AddUnit = true;
+        if (stories.level >= stories.story.Length - 1 && !addUnit)
+        {
+            addUnit = true;
+        }
+
         tComplete = team.tutorialComplete;
         if (tComplete)
         {
-            if (AddUnit) scenario = stories.story[stories.level];
-            else scenario = stories.story[stories.level + 1];
+            if (addUnit)
+            {
+                scenario = stories.story[stories.level];
+            }
+            else
+            {
+                scenario = stories.story[stories.level + 1];
+            }
+
             title.text = scenario.title;
-            desc.text = AddUnit?scenario.windescription:scenario.description;
+            desc.text = addUnit ? scenario.windescription : scenario.description;
         }
         else
         {
@@ -52,13 +66,14 @@ public class StoryContainerUI : MonoBehaviour
             desc.text = stories.tutorialText;
         }
 
-        if (scenario.winunit.Length <= 0 || !AddUnit)
+        if (scenario.winunit.Length <= 0 || !addUnit)
         {
-            Button continueButton = new Button();
+            Button continueButton = new ();
             continueButton.text = "Continue";
             continueButton.AddToClassList("button");
             continueButton.RegisterCallback<MouseEnterEvent>(OnButtonHover);
-            continueButton.clickable.clicked += () => {
+            continueButton.clickable.clicked += () =>
+            {
                 AudioManager.instance.Play("OnMousePressed");
                 Continue(continueButton);
             };
@@ -69,11 +84,12 @@ public class StoryContainerUI : MonoBehaviour
         {
             foreach (UnitScriptableObject unit in scenario.winunit)
             {
-                Button unitButton = new Button();
+                Button unitButton = new ();
                 unitButton.text = unit.name;
                 unitButton.AddToClassList("button");
                 unitButton.RegisterCallback<MouseEnterEvent>(OnButtonHover);
-                unitButton.clickable.clicked += () => {
+                unitButton.clickable.clicked += () =>
+                {
                     unitButton.SetEnabled(false);
                     unitButton.clickable.clicked -= () => { };
                     unitButton.UnregisterCallback<MouseEnterEvent>(OnButtonHover);
@@ -87,12 +103,12 @@ public class StoryContainerUI : MonoBehaviour
         }
     }
 
-    void OnButtonHover(MouseEnterEvent evt)
+    private void OnButtonHover(MouseEnterEvent evt)
     {
         AudioManager.instance.Play("OnMouseHover");
     }
 
-    void Continue(Button button)
+    private void Continue(Button button)
     {
         if (tComplete)
         {
