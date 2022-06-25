@@ -2,23 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Code for the billboard.
+/// Is applied to GameObjects that should look at the camera.
+/// </summary>
 public class Billboard : MonoBehaviour
 {
-    #region Variables
-
     private Transform camTransform;
     private Vector3 originEuler;
     [SerializeField] private bool useStaticBillboard;
 
-    #endregion
+    /// <summary>
+    /// Switches between static and dynamic billboards.
+    /// </summary>
+    /// <param name="toSwitch">False if the billboard should be dynamic, true if it should be static.</param>
+    public void SwitchBillboardState(bool toSwitch)
+    {
+        useStaticBillboard = toSwitch;
+    }
 
-    void Start()
+    private void Start()
     {
         camTransform = Camera.main.transform;
         originEuler = transform.eulerAngles;
     }
 
-    void Update()
+    private void Update()
     {
         // if spacebar is pressed //no
         /*if (Input.GetKeyDown(KeyCode.Space))
@@ -27,15 +36,11 @@ public class Billboard : MonoBehaviour
         }*/
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         if (!useStaticBillboard)
         {
             Vector3 direction = new Vector3(originEuler.x, camTransform.eulerAngles.y, originEuler.z);
-            //Quaternion.
-            // transform.LookAt(camTransform);
-            // transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y - 180f, 0f);
-            //direction.x = transform.right;
             Quaternion toRotation = Quaternion.Euler(direction);
             transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, Time.deltaTime * 5f);
         }
@@ -45,17 +50,7 @@ public class Billboard : MonoBehaviour
 
             transform.rotation = camTransform.rotation;
 
-            // transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, 0f, 0f);
-
             transform.rotation = Quaternion.Lerp(transform.rotation, endRotation, Time.deltaTime);
         }
-    }
-
-    public void SwitchBillboardState(bool toSwitch)
-    {
-        useStaticBillboard = toSwitch;
-
-        // Lerp 
-        //transform.rotation = Quaternion.Lerp(transform.rotation, camTransform.rotation, Time.deltaTime);
     }
 }
