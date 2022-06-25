@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 /// <summary>
 /// Contains code for the healthbar.
 /// </summary>
-public class HealthbarUI : Listener
+public class HealthbarUI : UISubscriber
 {
     [SerializeField] private UIDocument uiDocument;
     private VisualElement healthbarContainer;
@@ -14,12 +14,27 @@ public class HealthbarUI : Listener
     private Camera cam;
     private Unit parent;
 
+    /// <summary>
+    /// Assign UI elements to fields in HealthBarUI.
+    /// </summary>
+    protected override void AssignUIElements()
+    {
+        healthbarContainer = uiDocument.rootVisualElement.Query<VisualElement>("container");
+        healthbarValue = healthbarContainer.Query<TextElement>("value");
+    }
+
+    /// <summary>
+    /// Subscribes HealthBarUI to events.
+    /// </summary>
     protected override void SubscribeListeners()
     {
         UIEvents.onUnitHealthChanged += UpdateHealth;
         GameEvents.onKill += HideSelf;
     }
 
+    /// <summary>
+    /// Unsubscribes HealthBarUI to events.
+    /// </summary>
     protected override void UnsubscribeListeners()
     {
         UIEvents.onUnitHealthChanged -= UpdateHealth;
@@ -51,16 +66,6 @@ public class HealthbarUI : Listener
         {
             Debug.Log($"{gameObject.name} : HealthbarUI - has no UIDocument assigned in the inspector. Script will still work, but is not 100% safe.");
             uiDocument = GetComponentInParent<UIDocument>();
-        }
-
-        try
-        {
-            healthbarContainer = uiDocument.rootVisualElement.Query<VisualElement>("container");
-            healthbarValue = healthbarContainer.Query<TextElement>("value");
-        }
-        catch
-        {
-            Debug.LogError($"{gameObject.name} : HealthbarUI - Element Query Failed.");
         }
     }
 

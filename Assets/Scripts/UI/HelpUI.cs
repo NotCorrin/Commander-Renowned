@@ -32,6 +32,9 @@ public class HelpUI : UISubscriber
         Closing,
     }
 
+    /// <summary>
+    /// Assign UI elements to fields in HelpUI.
+    /// </summary>
     protected override void AssignUIElements()
     {
         toggle = uiDocument.rootVisualElement.Query<VisualElement>("toggle-container");
@@ -62,6 +65,9 @@ public class HelpUI : UISubscriber
         qte.Container = contentContainer.Query<VisualElement>("qte");
     }
 
+    /// <summary>
+    /// Subscribe UIElements to events in HelpUI.
+    /// </summary>
     protected override void RegisterCallbacks()
     {
         toggle.RegisterCallback<ClickEvent>(Toggle_Clicked);
@@ -85,6 +91,9 @@ public class HelpUI : UISubscriber
         qte.TitleButton.RegisterCallback<ClickEvent, Page>(PageButton_Clicked, qte);
     }
 
+    /// <summary>
+    /// Unsubscribe UIElements to events in HelpUI.
+    /// </summary>
     protected override void UnregisterCallbacks()
     {
         toggle.UnregisterCallback<ClickEvent>(Toggle_Clicked);
