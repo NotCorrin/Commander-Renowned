@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+/// <summary>
+/// Contains code for the MouseQTEUI.
+/// </summary>
 public class MouseQTEUI : UISubscriber
 {
     [Header("Debugging")]
@@ -46,10 +49,29 @@ public class MouseQTEUI : UISubscriber
         }
     }
 
+    /// <summary>
+    /// Sets chance values for the QTE.
+    /// </summary>
+    /// <param name="normalChance">The normal chance out of 100.</param>
+    /// <param name="critChance">The crit chance out of 100.</param>
     public void SetQTEValues(int normalChance, int critChance)
     {
         NormalChance = normalChance;
         CritChance = critChance;
+    }
+
+    /// <summary>
+    /// Assign UI elements to fields in MouseQTEUI.
+    /// </summary>
+    protected override void AssignUIElements()
+    {
+        container = uiDocument.rootVisualElement.Query<VisualElement>("container");
+
+        arrow = container.Query<VisualElement>("arrow");
+        normal = container.Query<VisualElement>("normal");
+        crit = container.Query<VisualElement>("crit");
+
+        statusLabel = container.Query<TextElement>("status");
     }
 
     /// <summary>
@@ -71,7 +93,7 @@ public class MouseQTEUI : UISubscriber
     /// <summary>
     /// Subscribe UIElements to events in MouseQTEUI.
     /// </summary>
-    protected override void SubscribeCallbacks()
+    protected override void RegisterCallbacks()
     {
         container.RegisterCallback<ClickEvent>(OnClick);
         statusLabel.RegisterCallback<TransitionEndEvent>(OnStatusTransitionEnd);
@@ -80,33 +102,18 @@ public class MouseQTEUI : UISubscriber
     /// <summary>
     /// Unsubscribe UIElements from events in MouseQTEUI.
     /// </summary>
-    protected override void UnsubscribeCallbacks()
+    protected override void UnregisterCallbacks()
     {
         container.UnregisterCallback<ClickEvent>(OnClick);
         statusLabel.UnregisterCallback<TransitionEndEvent>(OnStatusTransitionEnd);
     }
 
-    private void Awake()
+    private void Start()
     {
         if (uiDocument == null)
         {
             Debug.Log($"{gameObject.name} : AttackBuffUI - has no UIDocument assigned in the inspector. Script will still work, but is not 100% safe.");
             uiDocument = GetComponentInParent<UIDocument>();
-        }
-
-        try
-        {
-            container = uiDocument.rootVisualElement.Query<VisualElement>("container");
-
-            arrow = container.Query<VisualElement>("arrow");
-            normal = container.Query<VisualElement>("normal");
-            crit = container.Query<VisualElement>("crit");
-
-            statusLabel = container.Query<TextElement>("status");
-        }
-        catch
-        {
-            Debug.LogError($"{gameObject.name} : Mouse QTE UI - Element Query Failed.");
         }
 
         normal.style.width = new Length(normalChance, LengthUnit.Percent);

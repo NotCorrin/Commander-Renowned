@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Base class for all UI listeners.
 /// </summary>
-public abstract class UISubscriber : Listener
+public abstract class UISubscriber : MonoBehaviour
 {
     /// <summary>
     /// Subscribes UIElements to events.
@@ -13,7 +13,9 @@ public abstract class UISubscriber : Listener
     /// <remarks>
     /// This method is called when the listener is enabled.
     /// </remarks>
-    protected abstract void SubscribeCallbacks();
+    protected virtual void RegisterCallbacks()
+    {
+    }
 
     /// <summary>
     /// Unsubscribes UIElements from events.
@@ -21,15 +23,55 @@ public abstract class UISubscriber : Listener
     /// <remarks>
     /// This method is called when the listener is disabled.
     /// </remarks>
-    protected abstract void UnsubscribeCallbacks();
+    protected virtual void UnregisterCallbacks()
+    {
+    }
+
+    /// <summary>
+    /// Assign UI elements to fields.
+    /// </summary>
+    protected abstract void AssignUIElements();
+
+    /// <summary>
+    /// Subscribe to events.
+    /// </summary>
+    /// <remarks>
+    /// This method is called when the listener is enabled.
+    /// Optional to implement.
+    /// </remarks>
+    protected virtual void SubscribeListeners()
+    {
+    }
+
+    /// <summary>
+    /// Unsubscribe from events.
+    /// </summary>
+    /// <remarks>
+    /// This method is called when the listener is disabled.
+    /// Optional to implement.
+    /// </remarks>
+    protected virtual void UnsubscribeListeners()
+    {
+    }
 
     private void OnEnable()
     {
-        SubscribeCallbacks();
+        try
+        {
+            AssignUIElements();
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError(e);
+        }
+
+        SubscribeListeners();
+        RegisterCallbacks();
     }
 
     private void OnDisable()
     {
-        UnsubscribeCallbacks();
+        UnsubscribeListeners();
+        UnregisterCallbacks();
     }
 }

@@ -9,13 +9,22 @@ using UnityEngine.UIElements;
 /// <remarks>
 /// Inherits from Listener as it does not register callbacks.
 /// </remarks>
-public class AmmobarUI : Listener
+public class AmmobarUI : UISubscriber
 {
     [SerializeField] private UIDocument uiDocument;
     private VisualElement ammobarContainer;
     private TextElement ammobarValue;
     private Camera cam;
     private Unit parent;
+
+    /// <summary>
+    /// Assign UI elements to fields in AmmoBarUI.
+    /// </summary>
+    protected override void AssignUIElements()
+    {
+        ammobarContainer = uiDocument.rootVisualElement.Query<VisualElement>("container");
+        ammobarValue = ammobarContainer.Query<TextElement>("value");
+    }
 
     /// <summary>
     /// Subscribes AmmobarUI to events.
@@ -60,16 +69,6 @@ public class AmmobarUI : Listener
         {
             Debug.Log($"{gameObject.name} : HealthbarUI - has no UIDocument assigned in the inspector. Script will still work, but is not 100% safe.");
             uiDocument = GetComponentInParent<UIDocument>();
-        }
-
-        try
-        {
-            ammobarContainer = uiDocument.rootVisualElement.Query<VisualElement>("container");
-            ammobarValue = ammobarContainer.Query<TextElement>("value");
-        }
-        catch
-        {
-            Debug.LogError($"{gameObject.name} : AmmobarUI - Element Query Failed.");
         }
     }
 
