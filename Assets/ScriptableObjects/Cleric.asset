@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Cleric
   m_EditorClassIdentifier: 
   unitType: 0
-  UnitName: Cleric
-  VanguardAbilities:
+  unitName: Cleric
+  vanguardAbilities:
   - AbilityType: 0
     AbilityName: 
     AbilityDescription: 
@@ -54,7 +54,7 @@ MonoBehaviour:
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  SupportAbilities:
+  supportAbilities:
   - AbilityType: 0
     AbilityName: 
     AbilityDescription: 
@@ -77,8 +77,8 @@ MonoBehaviour:
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  MaxHealth: 12
-  MaxAmmo: 0
-  MaxMana: 4
+  maxHealth: 12
+  maxAmmo: 0
+  maxMana: 4
   animator: {fileID: 9100000, guid: 4f80504d0e3c5944b9e9a722e69a1a9b, type: 2}
   sprite: {fileID: 1517324202, guid: e43ce0c7b4e703f4b83ae7abf63a9570, type: 3}

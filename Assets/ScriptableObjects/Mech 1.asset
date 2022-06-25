@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Mech 1
   m_EditorClassIdentifier: 
   unitType: 1
-  UnitName: Mech
-  VanguardAbilities:
+  unitName: Mech
+  vanguardAbilities:
   - AbilityType: 0
     AbilityName: 
     AbilityDescription: 
@@ -49,7 +49,7 @@ MonoBehaviour:
     VFX1: {fileID: 8726590127215217202, guid: 783f819d5d65b494d9c8ad199f133bff, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  SupportAbilities:
+  supportAbilities:
   - AbilityType: 0
     AbilityName: 
     AbilityDescription: 
@@ -72,8 +72,8 @@ MonoBehaviour:
     VFX1: {fileID: 782153884964200169, guid: b8c56c2add686174dadacb682e6415ad, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  MaxHealth: 20
-  MaxAmmo: 9
-  MaxMana: 0
+  maxHealth: 20
+  maxAmmo: 9
+  maxMana: 0
   animator: {fileID: 9100000, guid: 7bf3a48164c15e44aaef6fcee29c76db, type: 2}
   sprite: {fileID: 1176800561, guid: 52b80979e6cdb5440a16013afce6fe05, type: 3}

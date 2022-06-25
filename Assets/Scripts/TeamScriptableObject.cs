@@ -11,6 +11,9 @@ public class TeamScriptableObject : ScriptableObject
     public List<UnitScriptableObject> units;
     public List<UnitScriptableObject> activeUnits;
 
+    /// <summary>
+    /// Reset team to templateTeam values; currently only used when restarting after finishing the game.
+    /// </summary>
     public void Reset()
     {
         units.Clear();
@@ -18,7 +21,10 @@ public class TeamScriptableObject : ScriptableObject
         foreach (var item in templateTeam.units)
         {
             units.Add(item);
-            if(units.Count<=3) activeUnits.Add(item);
+            if (units.Count <= 3)
+            {
+                activeUnits.Add(item);
+            }
         }
     }
 }

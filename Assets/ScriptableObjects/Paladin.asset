@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Paladin
   m_EditorClassIdentifier: 
   unitType: 0
-  UnitName: Paladin
-  VanguardAbilities:
+  unitName: Paladin
+  vanguardAbilities:
   - AbilityType: 0
     AbilityName: 
     AbilityDescription: 
@@ -52,7 +52,7 @@ MonoBehaviour:
     VFX1: {fileID: 217341259536796723, guid: 75432b09afa8a304da43e1ecf77684af, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  SupportAbilities:
+  supportAbilities:
   - AbilityType: 0
     AbilityName: 
     AbilityDescription: 
@@ -78,8 +78,8 @@ MonoBehaviour:
     VFX1: {fileID: 217341259536796723, guid: 75432b09afa8a304da43e1ecf77684af, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  MaxHealth: 16
-  MaxAmmo: 0
-  MaxMana: 2
+  maxHealth: 16
+  maxAmmo: 0
+  maxMana: 2
   animator: {fileID: 9100000, guid: f30ec2216d9c56642b27c8e06645643d, type: 2}
   sprite: {fileID: 101593814, guid: edbb65b9073b8b3408437d88a3821805, type: 3}

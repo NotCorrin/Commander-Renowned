@@ -43,7 +43,7 @@ public class UnitSelectionMenuUI : MonoBehaviour
 
             unitCard = unitCardUI.Instantiate();
             unitCard.Q<TextElement>("name-label").text = teamScriptableObject.units[i].UnitName;
-            unitCard.Q<VisualElement>("unit").style.backgroundImage = new StyleBackground(teamScriptableObject.units[i].sprite);
+            unitCard.Q<VisualElement>("unit").style.backgroundImage = new StyleBackground(teamScriptableObject.units[i].Sprite);
             test.Q<VisualElement>("container").Add(unitCard);
         }
 

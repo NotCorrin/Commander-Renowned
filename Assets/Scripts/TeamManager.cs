@@ -38,15 +38,16 @@ public class TeamManager : Listener
             enemyUnits.Add(null);
         }
         GameEvents.SetupUnits(playerUnits, enemyUnits);
-    }    
+    }
+
     Unit SpawnUnit(Vector3 spawnPos, UnitScriptableObject teamUnit)
     {
         Unit newUnit = Instantiate(UnitPrefab, spawnPos, Quaternion.identity).GetComponent<Unit>();
-        newUnit.SetupUnit(teamUnit.unitType, teamUnit.UnitName, teamUnit.VanguardAbilities, teamUnit.SupportAbilities, teamUnit.MaxHealth, teamUnit.MaxAmmo, teamUnit.MaxMana, teamUnit.animator, teamUnit.sprite);
+        newUnit.SetupUnit(teamUnit.UnitType, teamUnit.UnitName, teamUnit.VanguardAbilities, teamUnit.SupportAbilities, teamUnit.MaxHealth, teamUnit.MaxAmmo, teamUnit.MaxMana, teamUnit.Animator, teamUnit.Sprite);
             newUnit.gameObject.name =  teamUnit.UnitName;
             return newUnit;
     }
-    // Start is called before the first frame update
+
     void SetEnemyTeam()
     {
         Debug.Log(Scenario.story[Scenario.level+1].Enemies.Length);
@@ -58,17 +59,17 @@ public class TeamManager : Listener
     }
 
     // Update is called once per frame
-    void Start()
+    private void Start()
     {
         SetEnemyTeam();
         SpawnTeam();
     }
+
     protected override void SubscribeListeners()
     {
-
     }
+
     protected override void UnsubscribeListeners()
     {
-
     }
 }
