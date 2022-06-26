@@ -5,11 +5,31 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Team", menuName = "Team", order = 1)]
 public class TeamScriptableObject : ScriptableObject
 {
-    public TeamScriptableObject templateTeam;
+    [SerializeField] private TeamScriptableObject templateTeam;
 
-    public bool tutorialComplete;
-    public List<UnitScriptableObject> units;
-    public List<UnitScriptableObject> activeUnits;
+    [SerializeField] private bool tutorialComplete;
+
+    [SerializeField] private List<UnitScriptableObject> units;
+
+    [SerializeField] private List<UnitScriptableObject> activeUnits;
+
+    public bool TutorialComplete
+    {
+        get { return tutorialComplete; }
+        set { tutorialComplete = value; }
+    }
+
+    public List<UnitScriptableObject> Units
+    {
+        get { return units; }
+        set { units = value; }
+    }
+
+    public List<UnitScriptableObject> ActiveUnits
+    {
+        get { return activeUnits; }
+        set { activeUnits = value; }
+    }
 
     /// <summary>
     /// Reset team to templateTeam values; currently only used when restarting after finishing the game.

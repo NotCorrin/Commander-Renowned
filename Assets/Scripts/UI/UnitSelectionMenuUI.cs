@@ -46,12 +46,12 @@ public class UnitSelectionMenuUI : UISubscriber
         VisualElement test = default;
         VisualElement unitCard = default;
 
-        if (!teamScriptableObject.tutorialComplete)
+        if (!teamScriptableObject.TutorialComplete)
         {
             teamScriptableObject.Reset();
         }
 
-        for (int i = 0; i < teamScriptableObject.units.Count; i++)
+        for (int i = 0; i < teamScriptableObject.Units.Count; i++)
         {
             if (i % 5 == 0)
             {
@@ -60,8 +60,8 @@ public class UnitSelectionMenuUI : UISubscriber
             }
 
             unitCard = unitCardUI.Instantiate();
-            unitCard.Q<TextElement>("name-label").text = teamScriptableObject.units[i].UnitName;
-            unitCard.Q<VisualElement>("unit").style.backgroundImage = new StyleBackground(teamScriptableObject.units[i].Sprite);
+            unitCard.Q<TextElement>("name-label").text = teamScriptableObject.Units[i].UnitName;
+            unitCard.Q<VisualElement>("unit").style.backgroundImage = new StyleBackground(teamScriptableObject.Units[i].Sprite);
             test.Q<VisualElement>("container").Add(unitCard);
         }
 
@@ -121,14 +121,14 @@ public class UnitSelectionMenuUI : UISubscriber
         confirmButton.SetEnabled(false);
         confirmButton.clickable.clicked -= ConfirmButton_Clicked;
 
-        teamScriptableObject.activeUnits.Clear();
+        teamScriptableObject.ActiveUnits.Clear();
         foreach (Button button in activeUnits)
         {
-            foreach (UnitScriptableObject unit in teamScriptableObject.units)
+            foreach (UnitScriptableObject unit in teamScriptableObject.Units)
             {
                 if (unit.UnitName == button.Q<TextElement>("name-label").text)
                 {
-                    teamScriptableObject.activeUnits.Add(unit);
+                    teamScriptableObject.ActiveUnits.Add(unit);
                     break;
                 }
             }

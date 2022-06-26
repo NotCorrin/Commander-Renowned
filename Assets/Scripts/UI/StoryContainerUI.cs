@@ -44,7 +44,7 @@ public class StoryContainerUI : UISubscriber
             addUnit = true;
         }
 
-        tComplete = team.tutorialComplete;
+        tComplete = team.TutorialComplete;
         if (tComplete)
         {
             if (addUnit)
@@ -94,7 +94,7 @@ public class StoryContainerUI : UISubscriber
                     unitButton.clickable.clicked -= () => { };
                     unitButton.UnregisterCallback<MouseEnterEvent>(OnButtonHover);
                     AudioManager.instance.Play("OnMousePressed");
-                    team.units.Add(unit);
+                    team.Units.Add(unit);
                     LevelManager.instance.LoadScene(SceneIndex.MenuSelectionScene);
                 };
 
@@ -119,10 +119,10 @@ public class StoryContainerUI : UISubscriber
             if (stories.level >= stories.story.Length - 1)
             {
                 stories.level = 0;
-                team.tutorialComplete = false;
+                team.TutorialComplete = false;
                 LevelManager.instance.LoadScene(SceneIndex.EndScene);
             }
-            else if (team.tutorialComplete)
+            else if (team.TutorialComplete)
             {
                 LevelManager.instance.LoadScene(SceneIndex.MenuSelectionScene);
             }

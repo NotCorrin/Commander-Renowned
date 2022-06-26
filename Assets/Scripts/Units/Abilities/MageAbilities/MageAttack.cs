@@ -19,7 +19,7 @@ public class MageAttack : QTEAbility
 	}    
     public override bool IsTargetValid (Unit Target, bool isPlayer)
     {
-		return (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(Target) != isPlayer);
+		return (FieldController.Main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.Main.IsUnitPlayer(Target) != isPlayer);
 	}
 
     protected override GameManager.QTEType GetQTEType()

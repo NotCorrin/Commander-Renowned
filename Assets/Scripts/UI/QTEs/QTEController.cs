@@ -29,9 +29,9 @@ public class QTEController : Listener
         int finalDifficultyModifier = difficultyModifier;
 
         // Inverts difficulty modifier if not player turn
-        if (RoundController.main != null)
+        if (RoundController.Main != null)
         {
-            if (!RoundController.main.IsCurrentRoundPlayer())
+            if (!RoundController.Main.IsCurrentRoundPlayer())
             {
                 finalDifficultyModifier = -difficultyModifier;
             }
@@ -67,9 +67,9 @@ public class QTEController : Listener
 
     private GameManager.QTEResult InvertResultIfNotPlayer(GameManager.QTEResult baseResult)
     {
-        if (RoundController.main != null)
+        if (RoundController.Main != null)
         {
-            if (!RoundController.main.IsCurrentRoundPlayer())
+            if (!RoundController.Main.IsCurrentRoundPlayer())
             {
                 // Debug.Log("Not player, inverting");
                 switch (baseResult)

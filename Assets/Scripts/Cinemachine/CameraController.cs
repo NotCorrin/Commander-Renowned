@@ -24,19 +24,19 @@ public class CameraController : Listener
         dolly = virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>();
     }
 
-    void CameraHandler(RoundController.Phase phase)
+    void CameraHandler(RoundController.PhaseType phase)
     {
-        if ((phase == RoundController.Phase.PlayerSupport ||
-             phase == RoundController.Phase.PlayerSwap ||
-             phase == RoundController.Phase.EnemySupport ||
-             phase == RoundController.Phase.EnemySwap) &&
+        if ((phase == RoundController.PhaseType.PlayerSupport ||
+             phase == RoundController.PhaseType.PlayerSwap ||
+             phase == RoundController.PhaseType.EnemySupport ||
+             phase == RoundController.PhaseType.EnemySwap) &&
              dolly.m_PathPosition != 1)
         {
             StartCoroutine(MoveCameraUp());
         }
 
-        else if ((phase == RoundController.Phase.EnemyVangaurd ||
-                 phase == RoundController.Phase.PlayerVanguard) &&
+        else if ((phase == RoundController.PhaseType.EnemyVangaurd ||
+                 phase == RoundController.PhaseType.PlayerVanguard) &&
                  dolly.m_PathPosition != 0)
         {
             StartCoroutine(MoveCameraDown());

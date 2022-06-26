@@ -192,11 +192,11 @@ public static class GameEvents
     }
 
     // public static Action<RoundController.Phase> onSetPhase;
-    public static Action<RoundController.Phase> onPhaseChanged;
+    public static Action<RoundController.PhaseType> onPhaseChanged;
 
     public static Action<List<Unit>, List<Unit>> OnSetupUnits { get => onSetupUnits; set => onSetupUnits = value; }
 
-    public static void PhaseChanged(RoundController.Phase phase)
+    public static void PhaseChanged(RoundController.PhaseType phase)
     {
         onPhaseChanged?.Invoke(phase);
     }

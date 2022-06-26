@@ -235,13 +235,13 @@ public class ActionbarUI : UISubscriber
     {
         AudioManager.instance.Play("OnMousePressed");
         Debug.Log("Switch Button Clicked");
-        if (RoundController.phase == RoundController.Phase.PlayerSwap)
+        if (RoundController.Phase == RoundController.PhaseType.PlayerSwap)
         {
             if (selectedUnit)
             {
-                if (FieldController.main.IsUnitPlayer(SceneController.main.selectedUnit))
+                if (FieldController.Main.IsUnitPlayer(SceneController.main.selectedUnit))
                 {
-                    FieldController.main.SwapPlayerUnit();
+                    FieldController.Main.SwapPlayerUnit();
                 }
             }
             else
@@ -262,7 +262,7 @@ public class ActionbarUI : UISubscriber
     {
         AudioManager.instance.Play("OnMousePressed");
         Debug.Log("End Switch Turn Button Clicked");
-        if (RoundController.phase == RoundController.Phase.PlayerSwap)
+        if (RoundController.Phase == RoundController.PhaseType.PlayerSwap)
         {
             GameEvents.EndPhase();
         }
@@ -290,7 +290,7 @@ public class ActionbarUI : UISubscriber
         prompt = string.Empty;
         AudioManager.instance.Play("OnMouseHover");
 
-        if (RoundController.phase == RoundController.Phase.PlayerSwap)
+        if (RoundController.Phase == RoundController.PhaseType.PlayerSwap)
         {
             switchBarContainer.style.display = DisplayStyle.Flex;
         }
@@ -306,7 +306,7 @@ public class ActionbarUI : UISubscriber
 
     private void OnPromptCancel_Hover(MouseEnterEvent evt)
     {
-        if (RoundController.phase == RoundController.Phase.PlayerVanguard || RoundController.phase == RoundController.Phase.PlayerSupport)
+        if (RoundController.Phase == RoundController.PhaseType.PlayerVanguard || RoundController.Phase == RoundController.PhaseType.PlayerSupport)
         {
             AudioManager.instance.Play("OnMouseHover");
             promptCancel.style.width = new Length(92, LengthUnit.Percent);
@@ -416,25 +416,25 @@ public class ActionbarUI : UISubscriber
 
     private void UseAbility(int newSelectedAbility)
     {
-        if (RoundController.phase == RoundController.Phase.PlayerVanguard)
+        if (RoundController.Phase == RoundController.PhaseType.PlayerVanguard)
         {
             if (!abilityActive[newSelectedAbility - 1])
             {
                 return;
             }
 
-            if (FieldController.main.IsUnitActive(selectedUnit))
+            if (FieldController.Main.IsUnitActive(selectedUnit))
             {
                 GameEvents.UseAbility(
                     selectedUnit,
-                    FieldController.main.GetUnit(FieldController.Position.Vanguard, !FieldController.main.IsUnitPlayer(selectedUnit)),
+                    FieldController.Main.GetUnit(FieldController.Position.Vanguard, !FieldController.Main.IsUnitPlayer(selectedUnit)),
                     newSelectedAbility);
             }
 
             AbilityUI(selectedUnit, true);
             return;
         }
-        else if (RoundController.phase == RoundController.Phase.PlayerSupport)
+        else if (RoundController.Phase == RoundController.PhaseType.PlayerSupport)
         {
             if (!abilityActive[newSelectedAbility - 1])
             {
@@ -442,7 +442,7 @@ public class ActionbarUI : UISubscriber
             }
 
             Ability newAbility = selectedUnit.SupportAbilities[newSelectedAbility - 1];
-            List<Unit> validTargets = FieldController.main.GetValidTargets(selectedUnit, newAbility);
+            List<Unit> validTargets = FieldController.Main.GetValidTargets(selectedUnit, newAbility);
             if ((validTargets.Count == 1 || newAbility.forceTarget == TargetMode.False) && newAbility.forceTarget != TargetMode.True)
             {
                 GameEvents.UseAbility(selectedUnit, validTargets[0], newSelectedAbility);
@@ -454,7 +454,7 @@ public class ActionbarUI : UISubscriber
                 prompt = "Ability";
                 promptBarValue.text = "Select target for " + selectedUnit.SupportAbilities[newSelectedAbility - 1].AbilityName;
                 selectedAbility = newSelectedAbility;
-                GameEvents.GreyOut(selectedUnit.SupportAbilities[newSelectedAbility - 1], FieldController.main.IsUnitPlayer(selectedUnit));
+                GameEvents.GreyOut(selectedUnit.SupportAbilities[newSelectedAbility - 1], FieldController.Main.IsUnitPlayer(selectedUnit));
                 return;
             }
         }
@@ -465,7 +465,7 @@ public class ActionbarUI : UISubscriber
 
     private void EndSupportTurn_Hover(MouseEnterEvent evt)
     {
-        if (RoundController.phase == RoundController.Phase.PlayerVanguard || RoundController.phase == RoundController.Phase.PlayerSupport)
+        if (RoundController.Phase == RoundController.PhaseType.PlayerVanguard || RoundController.Phase == RoundController.PhaseType.PlayerSupport)
         {
             AudioManager.instance.Play("OnMouseHover");
             endSupportTurnBtn.style.width = new Length(92, LengthUnit.Percent);
@@ -483,7 +483,7 @@ public class ActionbarUI : UISubscriber
     {
         Debug.Log("End Support Turn Button Clicked");
 
-        if (RoundController.phase == RoundController.Phase.PlayerVanguard || RoundController.phase == RoundController.Phase.PlayerSupport)
+        if (RoundController.Phase == RoundController.PhaseType.PlayerVanguard || RoundController.Phase == RoundController.PhaseType.PlayerSupport)
         {
             AudioManager.instance.Play("OnMousePressed");
             GameEvents.EndPhase();
@@ -496,7 +496,7 @@ public class ActionbarUI : UISubscriber
 
     private void AbilityUsed(Unit unit)
     {
-        FieldController.main.SupportUsed(unit);
+        FieldController.Main.SupportUsed(unit);
         OnUnitSelected(unit);
         GameEvents.GreyOut(null, false);
     }
@@ -538,9 +538,9 @@ public class ActionbarUI : UISubscriber
         {
             if (SceneController.main.selectedUnit)
             {
-                if (FieldController.main.IsUnitPlayer(SceneController.main.selectedUnit))
+                if (FieldController.Main.IsUnitPlayer(SceneController.main.selectedUnit))
                 {
-                    FieldController.main.SwapPlayerUnit();
+                    FieldController.Main.SwapPlayerUnit();
                 }
             }
 
@@ -552,7 +552,7 @@ public class ActionbarUI : UISubscriber
         {
             if (prompt == "Ability")
             {
-                if (RoundController.phase != RoundController.Phase.PlayerSupport)
+                if (RoundController.Phase != RoundController.PhaseType.PlayerSupport)
                 {
                     prompt = string.Empty;
                 }
@@ -569,12 +569,12 @@ public class ActionbarUI : UISubscriber
             }
             else if (prompt == "Death")
             {
-                if (FieldController.main.IsUnitPlayer(unit) && !FieldController.main.GetIsVanguard(unit))
+                if (FieldController.Main.IsUnitPlayer(unit) && !FieldController.Main.GetIsVanguard(unit))
                 {
                     supportBarContainer.style.display = DisplayStyle.Flex;
                     promptBarContainer.style.display = DisplayStyle.None;
                     prompt = string.Empty;
-                    FieldController.main.SwapPlayerUnit(unit);
+                    FieldController.Main.SwapPlayerUnit(unit);
                 }
 
                 return;
@@ -588,7 +588,7 @@ public class ActionbarUI : UISubscriber
     private void AbilityUI(Unit unit, bool setAllFalse = false)
     {
         // Debug.Log("Rendering abilities... ");
-        Ability[] abilitiesList = FieldController.main.GetIsVanguard(unit) ? unit.VanguardAbilities : unit.SupportAbilities;
+        Ability[] abilitiesList = FieldController.Main.GetIsVanguard(unit) ? unit.VanguardAbilities : unit.SupportAbilities;
 
         for (int i = 0; i < abilitiesList.Length; i++)
         {
@@ -598,7 +598,7 @@ public class ActionbarUI : UISubscriber
                 continue;
             }
 
-            if (!FieldController.main.IsUnitActive(unit)
+            if (!FieldController.Main.IsUnitActive(unit)
             || abilitiesList[i] == null)
             {
                 abilityActive[i] = false;
@@ -879,13 +879,13 @@ public class ActionbarUI : UISubscriber
         }
     }
 
-    private void PhaseSwitchUI(RoundController.Phase phase)
+    private void PhaseSwitchUI(RoundController.PhaseType phase)
     {
         supportBarContainer.style.display = DisplayStyle.None;
         switchBarContainer.style.display = DisplayStyle.None;
         promptBarContainer.style.display = DisplayStyle.None;
 
-        if (!FieldController.main.GetUnit(FieldController.Position.Vanguard, true))
+        if (!FieldController.Main.GetUnit(FieldController.Position.Vanguard, true))
         {
             switchEndPanelContainer.style.display = DisplayStyle.None;
             switchBarContainer.style.display = DisplayStyle.Flex;
@@ -899,24 +899,24 @@ public class ActionbarUI : UISubscriber
 
         switch (phase)
         {
-            case RoundController.Phase.PlayerVanguard:
+            case RoundController.PhaseType.PlayerVanguard:
                 supportBarContainer.style.display = DisplayStyle.Flex;
-                UIEvents.UnitSelected(FieldController.main.GetUnit(FieldController.Position.Vanguard, true));
+                UIEvents.UnitSelected(FieldController.Main.GetUnit(FieldController.Position.Vanguard, true));
                 break;
-            case RoundController.Phase.EnemyVangaurd:
+            case RoundController.PhaseType.EnemyVangaurd:
                 supportBarContainer.style.display = DisplayStyle.Flex;
                 break;
-            case RoundController.Phase.PlayerSwap:
+            case RoundController.PhaseType.PlayerSwap:
                 switchBarContainer.style.display = DisplayStyle.Flex;
                 selectedUnit = null;
                 break;
-            case RoundController.Phase.EnemySwap:
+            case RoundController.PhaseType.EnemySwap:
                 switchBarContainer.style.display = DisplayStyle.Flex;
                 break;
-            case RoundController.Phase.PlayerSupport:
+            case RoundController.PhaseType.PlayerSupport:
                 supportBarContainer.style.display = DisplayStyle.Flex;
                 break;
-            case RoundController.Phase.EnemySupport:
+            case RoundController.PhaseType.EnemySupport:
                 supportBarContainer.style.display = DisplayStyle.Flex;
                 break;
             default:
