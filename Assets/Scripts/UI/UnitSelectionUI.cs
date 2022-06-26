@@ -3,24 +3,41 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class UnitSelectionUI : Listener
+/// <summary>
+/// Contains code for the UnitSelection.
+/// </summary>
+public class UnitSelectionUI : UISubscriber
 {
     [SerializeField] private UIDocument uiDocument;
     private VisualElement unitSelectionContainer;
     [SerializeField] private Unit parent;
 
+    /// <summary>
+    /// Assign UI elements to fields in UnitSelectionUI.
+    /// </summary>
+    protected override void AssignUIElements()
+    {
+        unitSelectionContainer = uiDocument.rootVisualElement.Q<VisualElement>("container");
+    }
+
+    /// <summary>
+    /// Subscribe to events in UnitSelectionUI.
+    /// </summary>
     protected override void SubscribeListeners()
     {
         UIEvents.onUnitSelected += UnitSelection;
     }
 
+    /// <summary>
+    /// Unsubscribe to events in UnitSelectionUI.
+    /// </summary>
     protected override void UnsubscribeListeners()
     {
         UIEvents.onUnitSelected -= UnitSelection;
     }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         parent = transform.parent.GetComponent<Unit>();
 
@@ -30,19 +47,10 @@ public class UnitSelectionUI : Listener
             uiDocument = GetComponentInParent<UIDocument>();
         }
 
-        try
-        {
-            unitSelectionContainer = uiDocument.rootVisualElement.Q<VisualElement>("container");
-        }
-        catch
-        {
-            Debug.LogError($"{gameObject.name} : UnitSelectionUI - Element Query Failed.");
-        }
-
         unitSelectionContainer.style.opacity = 0;
     }
 
-    public void UnitSelection(Unit unit)
+    private void UnitSelection(Unit unit)
     {
         if (parent == unit)
         {
@@ -58,9 +66,9 @@ public class UnitSelectionUI : Listener
     }
 
     // Update is called once per frame
-    void LateUpdate()
+    private void LateUpdate()
     {
         Vector2 newPosition = RuntimePanelUtils.CameraTransformWorldToPanel(unitSelectionContainer.panel, transform.position, Camera.main);
-        unitSelectionContainer.transform.position = new Vector3(newPosition.x - unitSelectionContainer.layout.width / 2, newPosition.y - unitSelectionContainer.layout.height / 2, 0);
+        unitSelectionContainer.transform.position = new Vector3(newPosition.x - (unitSelectionContainer.layout.width / 2), newPosition.y - (unitSelectionContainer.layout.height / 2), 0);
     }
 }
