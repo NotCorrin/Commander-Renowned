@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Contains code for the end screen UI.
+/// </summary>
 public class EndUI : MonoBehaviour
 {
-    void Update()
+    private void Update()
     {
         if (Input.anyKeyDown)
         {
