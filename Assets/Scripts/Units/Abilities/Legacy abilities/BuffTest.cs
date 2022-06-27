@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommanderBuff : Ability
+public class BuffTest : Ability
 {
     public override void SetupParams(AbilitySetup setup)
     {
@@ -38,12 +38,8 @@ public class CommanderBuff : Ability
     {
         if (IsAbilityValid(caster, target))
         {
-            foreach (Unit unit in FieldController.Main.GetAllies(target))
-            {
-                Instantiate(VFX1, unit.transform);
-                GameEvents.AttackUp(unit, StatBoost);
-            }
-
+            _ = Instantiate(VFX1, target.transform);
+            GameEvents.AttackUp(target, StatBoost);
             GameEvents.UseMana(caster, Cost);
         }
     }
