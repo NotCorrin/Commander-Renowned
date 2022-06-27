@@ -21,9 +21,18 @@ public class Scenario
 
     public SceneIndex Scene => scene;
 
-    public EnemyList[] Enemies => enemies;
-
     public string Windescription => windescription;
 
     public UnitScriptableObject[] Winunit => winunit;
+
+    public UnitScriptableObject[] GetEnemies(int i) => enemies[i].Enemies;
+
+    public int GetNumPuzzles() => enemies.Length;
+
+    public struct EnemyList
+    {
+        [SerializeField] private UnitScriptableObject[] enemies;
+
+        public UnitScriptableObject[] Enemies => enemies;
+    }
 }
