@@ -20,8 +20,10 @@ public class MouseQTEUI : UISubscriber
     private VisualElement crit;
     private TextElement statusLabel;
     private float currentLocation;
-    private int modifier;
     private bool clicked;
+    private int qteLengthPercent;
+    private int normalLeft;
+    private int critLeft;
 
     /// <summary>
     /// Gets or sets the crit chance.
@@ -116,10 +118,18 @@ public class MouseQTEUI : UISubscriber
             uiDocument = GetComponentInParent<UIDocument>();
         }
 
+        qteLengthPercent = 95;
+        int offsetPercent = 4;
+
+        normalLeft = qteLengthPercent - normalChance;
+        critLeft = qteLengthPercent - critChance - offsetPercent;
+
+        normal.style.left = new Length(normalLeft, LengthUnit.Percent);
+        crit.style.left = new Length(critLeft, LengthUnit.Percent);
+
         normal.style.width = new Length(normalChance, LengthUnit.Percent);
         crit.style.width = new Length(critChance, LengthUnit.Percent);
 
-        modifier = 1;
         clicked = false;
     }
 
@@ -130,14 +140,14 @@ public class MouseQTEUI : UISubscriber
 
         container.UnregisterCallback<ClickEvent>(OnClick);
 
-        if (currentLocation >= 50 - (critChance / 2) && currentLocation <= 50 + (critChance / 2))
+        if (currentLocation >= critLeft && currentLocation <= critLeft + critChance)
         {
             Debug.Log("Crit");
             statusLabel.text = "CRIT!";
             statusLabel.style.color = new StyleColor(new Color(0f / 255f, 152f / 255f, 220f / 255f));
             MenuEvents.QTETriggered(GameManager.QTEResult.Critical);
         }
-        else if (currentLocation >= 50 - (normalChance / 2) && currentLocation <= 50 + (normalChance / 2))
+        else if (currentLocation >= normalLeft && currentLocation <= normalLeft + normalChance)
         {
             Debug.Log("Normal");
             statusLabel.text = "Hit!";
@@ -164,18 +174,13 @@ public class MouseQTEUI : UISubscriber
 
         currentLocation = arrow.style.left.value.value;
 
-        if (currentLocation <= 0f)
+        if (currentLocation >= 99.9f)
         {
-            modifier = 1;
-            arrow.style.left = new Length(0.1f, LengthUnit.Percent);
-        }
-        else if (currentLocation >= 100f)
-        {
-            modifier = -1;
-            arrow.style.left = new Length(99.9f, LengthUnit.Percent);
+            arrow.style.left = new Length(0f, LengthUnit.Percent);
+            currentLocation = arrow.style.left.value.value;
         }
 
-        arrow.style.left = new Length(currentLocation + (modifier * 150 * Time.deltaTime), LengthUnit.Percent);
+        arrow.style.left = new Length(currentLocation + (150 * Time.deltaTime), LengthUnit.Percent);
     }
 
     private void OnStatusTransitionEnd(TransitionEndEvent evt)
