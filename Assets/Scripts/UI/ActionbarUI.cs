@@ -94,6 +94,8 @@ public class ActionbarUI : Listener
         GameEvents.onPhaseChanged += PhaseSwitchUI;
         GameEvents.onAbilityResolved += AbilityUsed;
         //GameEvents.onKill += SwitchPrompt;
+
+        GameEvents.onPhaseChanged += HideActionBar;
     }
 
     protected override void UnsubscribeListeners()
@@ -131,6 +133,8 @@ public class ActionbarUI : Listener
         GameEvents.onPhaseChanged -= PhaseSwitchUI;
         GameEvents.onAbilityResolved -= AbilityUsed;
         //GameEvents.onKill -= SwitchPrompt;
+
+        GameEvents.onPhaseChanged -= HideActionBar;
     }
 
     void SwitchConfirm_Clicked(ClickEvent evt)
@@ -907,6 +911,18 @@ public class ActionbarUI : Listener
         catch
         {
             Debug.LogError($"{gameObject.name} : ActionbarUI - Element Query Failed.");
+        }
+    }
+
+    void HideActionBar(RoundController.Phase phase)
+    {
+        if (phase == RoundController.Phase.EnemySupport || phase == RoundController.Phase.EnemySwap || phase == RoundController.Phase.EnemyVangaurd)
+        {
+            supportBarContainer.style.opacity = 0;
+        }
+        else
+        {
+            supportBarContainer.style.opacity = 1;
         }
     }
 }
