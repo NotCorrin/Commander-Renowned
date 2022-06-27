@@ -74,6 +74,7 @@ public class TeamManager : Listener
 
     private void SetEnemyTeam()
     {
+        Debug.Log(scenario.Story[scenario.Level + 1]);
         int randomPuzzle = Random.Range(0, scenario.Story[scenario.Level + 1].GetNumPuzzles() - 1);
         currentEnemyTeam = new List<UnitScriptableObject>();
         foreach (UnitScriptableObject unit in scenario.Story[scenario.Level + 1].GetEnemies(randomPuzzle))
