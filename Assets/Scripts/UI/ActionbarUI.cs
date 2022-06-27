@@ -904,20 +904,20 @@ public class ActionbarUI : UISubscriber
                 UIEvents.UnitSelected(FieldController.Main.GetUnit(FieldController.Position.Vanguard, true));
                 break;
             case RoundController.PhaseType.EnemyVangaurd:
-                supportBarContainer.style.display = DisplayStyle.Flex;
+                supportBarContainer.style.display = DisplayStyle.None;
                 break;
             case RoundController.PhaseType.PlayerSwap:
                 switchBarContainer.style.display = DisplayStyle.Flex;
                 selectedUnit = null;
                 break;
             case RoundController.PhaseType.EnemySwap:
-                switchBarContainer.style.display = DisplayStyle.Flex;
+                switchBarContainer.style.display = DisplayStyle.None;
                 break;
             case RoundController.PhaseType.PlayerSupport:
                 supportBarContainer.style.display = DisplayStyle.Flex;
                 break;
             case RoundController.PhaseType.EnemySupport:
-                supportBarContainer.style.display = DisplayStyle.Flex;
+                supportBarContainer.style.display = DisplayStyle.None;
                 break;
             default:
                 break;

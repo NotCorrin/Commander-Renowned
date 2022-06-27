@@ -43,19 +43,6 @@ public class SwappingUnits : MonoBehaviour
             {
                 if (hit.transform)
                 {
-                    if (hit.transform.gameObject.tag == "Military" && hit.transform.gameObject.transform.position.x < 3)
-                    {
-                        Debug.Log("military");
-                    }
-                    else if (hit.transform.gameObject.tag == "Magic" && hit.transform.gameObject.transform.position.x < 3)
-                    {
-                        Debug.Log("magic");
-                    }
-                    else if (hit.transform.gameObject.tag == "Renowned" && hit.transform.gameObject.transform.position.x < 3)
-                    {
-                        Debug.Log("renowned");
-                    }
-
                     selectedUnit = hit.transform.gameObject;
                 }
             }
