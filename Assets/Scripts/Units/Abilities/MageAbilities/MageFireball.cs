@@ -22,7 +22,7 @@ public class MageFireball : Ability
 
     public override bool IsTargetValid(Unit target, bool isPlayer)
     {
-        return (FieldController.main.GetPosition(target) != FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(target) != isPlayer) && target;
+        return (FieldController.Main.GetPosition(target) != FieldController.Position.Vanguard) && (FieldController.Main.IsUnitPlayer(target) != isPlayer) && target;
     }
 
     public override void UseAbility(Unit caster, Unit target)

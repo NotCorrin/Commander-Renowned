@@ -441,8 +441,8 @@ public class ActionbarUI : UISubscriber
                 return;
             }
             Ability _ability = selectedUnit.SupportAbilities[_selectedAbility - 1];
-            List<Unit> validTargets = FieldController.main.GetValidTargets(selectedUnit, _ability);
-            if ((validTargets.Count == 1 || _ability.forceTarget == TargetMode.False) && _ability.forceTarget != TargetMode.True)
+            List<Unit> validTargets = FieldController.Main.GetValidTargets(selectedUnit, _ability);
+            if ((validTargets.Count == 1 || _ability.ForceTarget == TargetMode.False) && _ability.forceTarget != TargetMode.True)
             {
                 return;
             }

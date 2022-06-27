@@ -24,11 +24,11 @@ public class DruidLeech : Ability
     {
         if (isPlayer)
         {
-            return !FieldController.main.IsUnitPlayer(target);
+            return !FieldController.Main.IsUnitPlayer(target);
         }
         else
         {
-            return (FieldController.main.GetPosition(target) == FieldController.Position.Vanguard) && FieldController.main.IsUnitPlayer(target);
+            return (FieldController.Main.GetPosition(target) == FieldController.Position.Vanguard) && FieldController.Main.IsUnitPlayer(target);
         }
     }
 

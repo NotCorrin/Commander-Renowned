@@ -361,7 +361,10 @@ public class Unit : Listener
         if (!ability)
         {
             animator.SetBool("greyedOut", false);
-            if (!FieldController.Main.IsUnitPlayer(this)) UpdateEnemyVisual();
+            if (!FieldController.Main.IsUnitPlayer(this))
+            {
+                UpdateEnemyVisual();
+            }
         }
         else if (!ability.IsTargetValid(this, isPlayer))
         {
@@ -398,11 +401,15 @@ public class Unit : Listener
             }
         }
 
-        if (!FieldController.main.IsUnitPlayer(this))
+        if (!FieldController.Main.IsUnitPlayer(this))
         {
             UpdateEnemyVisual();
         }
-        if(!FieldController.main.IsUnitPlayer(this)) UpdateEnemyVisual();
+
+        if (!FieldController.Main.IsUnitPlayer(this))
+        {
+            UpdateEnemyVisual();
+        }
     }
 
     private void OnUseAmmo(Unit caster, int cost)
@@ -458,7 +465,7 @@ public class Unit : Listener
 
     private void ResetBuffs()
     {
-        if(RoundController.isPlayerPhase == FieldController.main.IsUnitPlayer(this))
+        if (RoundController.IsPlayerPhase == FieldController.Main.IsUnitPlayer(this))
         {
             if (PermAttack > 0)
             {
@@ -603,33 +610,22 @@ public class Unit : Listener
         }
     }
 
-    private void UpdateBillboard(RoundController.Phase phase)
-    {
-        Debug.LogWarning("FIRST");
-        if (!animator) animator = GetComponent<Animator>();
-        if (!billboard) billboard = GetComponent<Billboard>();
-        if (!coll) coll = GetComponent<Collider>();
-        if (!spriteRenderer) spriteRenderer = GetComponent<SpriteRenderer>();
-
-        if (!DamageNumbers) DamageNumbers = Resources.Load("UIPrefabs/DamageText") as GameObject;
-    }
-    void UpdateBillboard(RoundController.Phase _phase)
+    private void UpdateBillboard(RoundController.PhaseType _phase)
     {
         var em = selectedps.emission;
         em.enabled = false;
 
         billboard.SwitchBillboardState(((int)_phase)>=2);
-        if(_phase == RoundController.Phase.PlayerSupport && FieldController.main.GetPosition(this) != FieldController.Position.Vanguard && FieldController.main.IsUnitPlayer(this))
+        if (_phase == RoundController.PhaseType.PlayerSupport && FieldController.Main.GetPosition(this) != FieldController.Position.Vanguard && FieldController.Main.IsUnitPlayer(this))
         {
             foreach (Ability ability in SupportAbilities)
             {
-                if (!ability) continue;
-                if(FieldController.main.GetValidTargets(this, ability).Count != 0)
+                if (!ability)
                 {
                     continue;
                 }
 
-                if (FieldController.main.GetValidTargets(this, ability).Count != 0)
+                if (FieldController.Main.GetValidTargets(this, ability).Count != 0)
                 {
                     AbilityUsable();
                     return;

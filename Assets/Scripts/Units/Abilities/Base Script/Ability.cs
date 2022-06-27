@@ -58,7 +58,7 @@ public abstract class Ability : MonoBehaviour
 
     public virtual bool IsAbilityValid(Unit caster, Unit target)
     {
-        return IsCasterValid(caster) && IsTargetValid(target, FieldController.main.IsUnitPlayer(caster)) && caster && target;
+        return IsCasterValid(caster) && IsTargetValid(target, FieldController.Main.IsUnitPlayer(caster)) && caster && target;
     }
 
     public abstract bool IsCasterValid(Unit caster);

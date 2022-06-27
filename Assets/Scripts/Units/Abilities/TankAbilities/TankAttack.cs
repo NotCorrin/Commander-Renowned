@@ -46,7 +46,7 @@ public class TankAttack : QTEAbility
 
     public override bool IsTargetValid(Unit target, bool isPlayer)
     {
-        return (FieldController.main.GetPosition(target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(target) != isPlayer);
+        return (FieldController.Main.GetPosition(target) == FieldController.Position.Vanguard) && (FieldController.Main.IsUnitPlayer(target) != isPlayer);
     }
 
     protected override void AbilityUsed(GameManager.QTEResult result)
@@ -81,15 +81,6 @@ public class TankAttack : QTEAbility
     {
         return GameManager.QTEType.TimingBar;
     }
-    
-    public override bool IsCasterValid (Unit Caster)
-    {
-		return(Caster.Ammo >= Cost);
-	}    
-	public override bool IsTargetValid (Unit Target, bool isPlayer)
-    {
-		return (FieldController.Main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.Main.IsUnitPlayer(Target) != isPlayer);
-	}
 
     private void LaunchAttackAtTarget(Transform targetTransform)
     {

@@ -61,6 +61,6 @@ public class Trace : Ability
 
     public override bool IsTargetValid(Unit target, bool isPlayer)
     {
-		return (FieldController.main.IsUnitPlayer(Target) == isPlayer);
-	}
+        return FieldController.Main.IsUnitPlayer(target) == isPlayer;
+    }
 }
