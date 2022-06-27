@@ -74,11 +74,11 @@ public class TeamManager : Listener
 
     private void SetEnemyTeam()
     {
-        Debug.Log(scenario.story[scenario.level + 1].Enemies.Length);
-        int randomPuzzle = Random.Range(0, scenario.story[scenario.level + 1].Enemies.Length - 1);
+        Debug.Log(scenario.Story[scenario.Level + 1].Enemies.Length);
+        int randomPuzzle = Random.Range(0, scenario.Story[scenario.Level + 1].Enemies.Length - 1);
         currentEnemyTeam = new List<UnitScriptableObject>();
-        currentEnemyTeam.Add(scenario.story[scenario.level + 1].Enemies[randomPuzzle + 1].enemies[0]);
-        currentEnemyTeam.Add(scenario.story[scenario.level + 1].Enemies[randomPuzzle + 1].enemies[1]);
-        currentEnemyTeam.Add(scenario.story[scenario.level + 1].Enemies[randomPuzzle + 1].enemies[2]);
+        currentEnemyTeam.Add(scenario.Story[scenario.Level + 1].Enemies[randomPuzzle + 1].Enemies[0]);
+        currentEnemyTeam.Add(scenario.Story[scenario.Level + 1].Enemies[randomPuzzle + 1].Enemies[1]);
+        currentEnemyTeam.Add(scenario.Story[scenario.Level + 1].Enemies[randomPuzzle + 1].Enemies[2]);
     }
 }

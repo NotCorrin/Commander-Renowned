@@ -33,7 +33,7 @@ MonoBehaviour:
       (If you need help, check
       the battle manual in the top right)'
     scene: 3
-    Enemies:
+    enemies:
     - enemies: []
     - enemies:
       - {fileID: 11400000, guid: af8c8893720fd0d47aedfb25dc11f9a1, type: 2}
@@ -53,7 +53,7 @@ MonoBehaviour:
     description: You have heard tell that Castle Valoth is currently under siege
       from shadow creatures.
     scene: 3
-    Enemies:
+    enemies:
     - enemies: []
     - enemies:
       - {fileID: 11400000, guid: edf88a06261f4ed4891c1b5cf94ad382, type: 2}
@@ -72,7 +72,7 @@ MonoBehaviour:
       you with assaulting the home of all shadow beings.\r\n\r\nHowever, your team
       does not get far before being ambushed by shadow creatures!\r"
     scene: 4
-    Enemies:
+    enemies:
     - enemies: []
     - enemies:
       - {fileID: 11400000, guid: ff9134c33cedaaa4a8f884e77b16ccc0, type: 2}
@@ -90,7 +90,7 @@ MonoBehaviour:
     description: It is here, in the desert, that the most powerful shadow creatures
       roam. Defeat them, and all shadow creatures fall.
     scene: 5
-    Enemies:
+    enemies:
     - enemies: []
     - enemies:
       - {fileID: 11400000, guid: e7acd760f86d622409b684a33cad4664, type: 2}

@@ -134,7 +134,7 @@ public class UnitSelectionMenuUI : UISubscriber
             }
         }
 
-        LevelManager.instance.LoadScene(stories.story[stories.level + 1].scene);
+        LevelManager.instance.LoadScene(stories.Story[stories.Level + 1].Scene);
     }
 
     private void EnableAllUnits()
