@@ -6,36 +6,57 @@ public class DruidLeech : Ability
 {
     public override void SetupParams(AbilitySetup setup)
     {
-		base.SetupParams(setup);
-        if(!VFX1) VFX1 = Resources.Load("CustomLasers/Druid/LeechingVines") as GameObject;
+        base.SetupParams(setup);
+        if (!VFX1)
+        {
+            VFX1 = Resources.Load("CustomLasers/Druid/LeechingVines") as GameObject;
+        }
+
         IsMagic = true;
     }
-	public override bool IsCasterValid (Unit Caster)
+
+    public override bool IsCasterValid(Unit caster)
     {
-		return(Caster.Mana >= Cost);
-	}    
-	public override bool IsTargetValid (Unit Target, bool isPlayer)
+        return caster.Mana >= Cost;
+    }
+
+    public override bool IsTargetValid(Unit target, bool isPlayer)
     {
-        if (isPlayer) return !FieldController.main.IsUnitPlayer(Target);
-        else return (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(Target));
-	}
-	public override void UseAbility (Unit Caster, Unit Target) {
-		if (IsAbilityValid(Caster, Target)) {
+        if (isPlayer)
+        {
+            return !FieldController.main.IsUnitPlayer(target);
+        }
+        else
+        {
+            return (FieldController.main.GetPosition(target) == FieldController.Position.Vanguard) && FieldController.main.IsUnitPlayer(target);
+        }
+    }
 
-            GameObject seeds = Instantiate(VFX1, Caster.transform.position, Quaternion.identity);
-            seeds.GetComponent<FullAutoFireAtTarget>().SetSmallMissilesHoming(Target.transform);
+    public override void UseAbility(Unit caster, Unit target)
+    {
+        if (IsAbilityValid(caster, target))
+        {
+            GameObject seeds = Instantiate(VFX1, caster.transform.position, Quaternion.identity);
+            seeds.GetComponent<FullAutoFireAtTarget>().SetSmallMissilesHoming(target.transform);
 
-            GameEvents.ThornsUp(Target, StatBoost);
-			GameEvents.UseMana(Caster, Cost);
-		}
-	}
-	public override int GetMoveWeight (Unit caster) {
+            GameEvents.ThornsUp(target, StatBoost);
+            GameEvents.UseMana(caster, Cost);
+        }
+    }
 
+    public override int GetMoveWeight(Unit caster)
+    {
         if (caster.UnitType == UnitType.Mage || caster.UnitType == UnitType.Commander)
         {
-            if (caster.Mana < Cost) return 0;
+            if (caster.Mana < Cost)
+            {
+                return 0;
+            }
         }
-        else return 0;
+        else
+        {
+            return 0;
+        }
 
         return 100;
     }

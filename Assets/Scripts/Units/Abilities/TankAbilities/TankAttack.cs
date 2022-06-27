@@ -4,50 +4,33 @@ using UnityEngine;
 
 public class TankAttack : QTEAbility
 {
-    
     public override void SetupParams(AbilitySetup setup)
     {
         base.SetupParams(setup);
-        if(!VFX1) VFX1 = Resources.Load("CustomLasers/Tank/Bombard") as GameObject;
+        if (!VFX1)
+        {
+            VFX1 = Resources.Load("CustomLasers/Tank/Bombard") as GameObject;
+        }
+
         IsMagic = false;
     }
 
     public override int GetMoveWeight(Unit caster)
     {
-        int BuffWeight = FieldController.main.GetAllies(Target).Count * 30;
+        int buffWeight = FieldController.main.GetAllies(Target).Count * 30;
         if (caster.UnitType == UnitType.Military || caster.UnitType == UnitType.Commander)
         {
-            if (caster.Ammo < Cost) return 0;
-            return BuffWeight + Damage * 10;
+            if (caster.Ammo < Cost)
+            {
+                return 0;
+            }
+
+            return buffWeight + (Damage * 10);
         }
-        else return 0;
-    }
-
-    protected override void AbilityUsed(GameManager.QTEResult result)
-    {
-        int FinalDamage = Damage;
-
-        switch (result)
+        else
         {
-            case GameManager.QTEResult.Critical:
-                {
-                    FinalDamage += Variation;
-                    break;
-                }
-            case GameManager.QTEResult.Miss:
-                {
-                    FinalDamage = Mathf.Max(0, FinalDamage - Variation);
-                    break;
-                }
+            return 0;
         }
-
-        foreach (Unit unit in FieldController.main.GetAllies(Target))
-        {
-            GameEvents.UnitAttack(Caster, unit, -GetDamageCalculation(Caster, unit, FinalDamage));
-            LaunchAttackAtTarget(unit.transform);
-        }
-
-        GameEvents.UseAmmo(Caster, Cost);
     }
 
     public override void UseAbility(Unit Caster, Unit Target)
@@ -56,32 +39,55 @@ public class TankAttack : QTEAbility
         base.UseAbility(Caster, Target);
     }
 
+    public override bool IsCasterValid(Unit caster)
+    {
+        return caster.Ammo >= Cost;
+    }
+
+    public override bool IsTargetValid(Unit target, bool isPlayer)
+    {
+        return (FieldController.main.GetPosition(target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(target) != isPlayer);
+    }
+
+    protected override void AbilityUsed(GameManager.QTEResult result)
+    {
+        int finalDamage = Damage;
+
+        switch (result)
+        {
+            case GameManager.QTEResult.Critical:
+                {
+                    finalDamage += Variation;
+                    break;
+                }
+
+            case GameManager.QTEResult.Miss:
+                {
+                    finalDamage = Mathf.Max(0, finalDamage - Variation);
+                    break;
+                }
+        }
+
+        foreach (Unit unit in FieldController.main.GetAllies(Target))
+        {
+            GameEvents.UnitAttack(Caster, unit, -GetDamageCalculation(Caster, unit, finalDamage));
+            LaunchAttackAtTarget(unit.transform);
+        }
+
+        GameEvents.UseAmmo(Caster, Cost);
+    }
+
     protected override GameManager.QTEType GetQTEType()
     {
         return GameManager.QTEType.TimingBar;
     }
-    
-    public override bool IsCasterValid (Unit Caster)
-    {
-		return(Caster.Ammo >= Cost);
-	}    
-	public override bool IsTargetValid (Unit Target, bool isPlayer)
-    {
-		return (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(Target) != isPlayer);
-	}
 
-    void LaunchAttackAtTarget(Transform targetTransform)
+    private void LaunchAttackAtTarget(Transform targetTransform)
     {
         if (VFX1)
         {
-            GameObject SpawnedMissile = Instantiate(VFX1, transform);
-            SpawnedMissile.GetComponent<FullAutoFireAtTarget>().SetBigMissilesHoming(targetTransform);
+            GameObject spawnedMissile = Instantiate(VFX1, transform);
+            spawnedMissile.GetComponent<FullAutoFireAtTarget>().SetBigMissilesHoming(targetTransform);
         }
-    }
-
-    void AttackWithLaser(int damage)
-    {
-        GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, damage));
-        LaunchAttackAtTarget(Target.transform);
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Defend : QTEAbility
+public class OldAttack : QTEAbility
 {
     public override void SetupParams(AbilitySetup setup)
     {
@@ -22,7 +22,7 @@ public class Defend : QTEAbility
 
     public override int GetMoveWeight(Unit caster)
     {
-        int healthWeight = Mathf.FloorToInt((1 - ((float)caster.Health / (float)caster.MaxHealth)) * 100);
+        int buffWeight = GetTotalDamageBuffs(caster) * 30;
         if (caster.UnitType == UnitType.Military || caster.UnitType == UnitType.Commander)
         {
             if (caster.Ammo < Cost)
@@ -30,7 +30,7 @@ public class Defend : QTEAbility
                 return 0;
             }
 
-            return (healthWeight + 50) / 2;
+            return buffWeight + (Damage * 10);
         }
         else
         {
@@ -72,9 +72,10 @@ public class Defend : QTEAbility
             _ = Instantiate(VFX2, transform);
         }
 
-        GameEvents.DefenseUp(Caster, finalDefense);
+        GameEvents.AttackUp(Caster, finalDefense);
 
-        AttackWithLaser(Damage);
+        GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, Damage));
+        FireLaserAtTarget(Target.transform);
 
         GameEvents.UseAmmo(Caster, Cost);
     }
@@ -91,11 +92,5 @@ public class Defend : QTEAbility
             GameObject spawnedLaser = Instantiate(VFX1, transform);
             spawnedLaser.transform.LookAt(targetTransform);
         }
-    }
-
-    private void AttackWithLaser(int damage)
-    {
-        GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, damage));
-        FireLaserAtTarget(Target.transform);
     }
 }

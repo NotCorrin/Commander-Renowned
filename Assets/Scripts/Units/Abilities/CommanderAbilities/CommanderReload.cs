@@ -7,44 +7,63 @@ public class CommanderReload : Ability
     public override void SetupParams(AbilitySetup setup)
     {
         base.SetupParams(setup);
-        if (!VFX1) VFX1 = Resources.Load("CustomLasers/Soldier/ReloadParticles") as GameObject;
-        IsMagic = true;
-        //buffs.add(new Buff(BuffType.Attack))
-    }
-    public override bool IsCasterValid(Unit Caster)
-    {
-        return Caster.Mana >= Cost;
-    }
-    public override bool IsTargetValid(Unit Target, bool isPlayer)
-    {
-        if (isPlayer) return FieldController.main.IsUnitPlayer(Target);
-        else return (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(Target) == isPlayer);
-    }
-    public override void UseAbility(Unit Caster, Unit Target)
-    {
-        if (IsAbilityValid(Caster, Target))
+        if (!VFX1)
         {
-            Instantiate(VFX1, Target.transform);
-            GameEvents.onUseAmmo(Target, -Cost);
-            GameEvents.onUseMana(Target, -Cost);
-            GameEvents.UseMana(Caster, Cost);
+            VFX1 = Resources.Load("CustomLasers/Soldier/ReloadParticles") as GameObject;
+        }
+
+        IsMagic = true;
+
+        // buffs.add(new Buff(BuffType.Attack))
+    }
+
+    public override bool IsCasterValid(Unit caster)
+    {
+        return caster.Mana >= Cost;
+    }
+
+    public override bool IsTargetValid(Unit target, bool isPlayer)
+    {
+        if (isPlayer)
+        {
+            return FieldController.main.IsUnitPlayer(target);
+        }
+        else
+        {
+            return (FieldController.main.GetPosition(target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(target) == isPlayer);
         }
     }
+
+    public override void UseAbility(Unit caster, Unit target)
+    {
+        if (IsAbilityValid(caster, target))
+        {
+            Instantiate(VFX1, target.transform);
+            GameEvents.onUseAmmo(target, -Cost);
+            GameEvents.onUseMana(target, -Cost);
+            GameEvents.UseMana(caster, Cost);
+        }
+    }
+
     public override int GetMoveWeight(Unit caster)
     {
-
-        int HealthWeight = Mathf.FloorToInt((1 - ((float)caster.Health / (float)caster.MaxHealth)) * 100);
-        int ManaWeight;
+        int healthWeight = Mathf.FloorToInt((1 - ((float)caster.Health / (float)caster.MaxHealth)) * 100);
+        int manaWeight;
 
         if (caster.UnitType == UnitType.Mage || caster.UnitType == UnitType.Commander)
         {
-            if (caster.Mana < Cost) return 0;
+            if (caster.Mana < Cost)
+            {
+                return 0;
+            }
 
-            ManaWeight = Mathf.FloorToInt(((float)caster.Mana / (float)caster.MaxMana) * 100);
-
+            manaWeight = Mathf.FloorToInt(((float)caster.Mana / (float)caster.MaxMana) * 100);
         }
-        else return 0;
+        else
+        {
+            return 0;
+        }
 
-        return (HealthWeight + 2 * ManaWeight) / 3;
+        return (healthWeight + (2 * manaWeight)) / 3;
     }
 }

@@ -4,44 +4,66 @@ using UnityEngine;
 
 public class PaladinBuff : Ability
 {
-	public override void SetupParams(AbilitySetup setup)
+    public override void SetupParams(AbilitySetup setup)
     {
-		base.SetupParams(setup);
-        if(!VFX1) VFX1 = Resources.Load("CustomLasers/Mage/BuffParticles") as GameObject;
-        IsMagic = true;
-        //buffs.add(new Buff(BuffType.Attack))
-    }
-	public override bool IsCasterValid (Unit Caster)
-    {
-        return Caster.Mana >= Cost;
-	}    
-	public override bool IsTargetValid (Unit Target, bool isPlayer)
-    {
-        bool containsEnergySword = Target.VanguardAbilities[0] is EnergySword;
-        if (isPlayer) return FieldController.main.IsUnitPlayer(Target);
-        else return ((FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) || containsEnergySword) && (FieldController.main.IsUnitPlayer(Target) == isPlayer) && Target;
-    }
-	public override void UseAbility (Unit Caster, Unit Target) {
-		if (IsAbilityValid(Caster, Target)) {
-            Instantiate(VFX1, Target.transform);
-            GameEvents.BaseDefenseUp(Target, StatBoost);
-			GameEvents.UseMana(Caster, Cost);
-		}
-	}
-	public override int GetMoveWeight (Unit caster) {
+        base.SetupParams(setup);
+        if (!VFX1)
+        {
+            VFX1 = Resources.Load("CustomLasers/Mage/BuffParticles") as GameObject;
+        }
 
-        int HealthWeight = Mathf.FloorToInt(((float)caster.Health / (float)caster.MaxHealth) * 100);
-        int ManaWeight;
+        IsMagic = true;
+
+        // buffs.add(new Buff(BuffType.Attack))
+    }
+
+    public override bool IsCasterValid(Unit caster)
+    {
+        return caster.Mana >= Cost;
+    }
+
+    public override bool IsTargetValid(Unit target, bool isPlayer)
+    {
+        bool containsEnergySword = target.VanguardAbilities[0] is EnergySword;
+        if (isPlayer)
+        {
+            return FieldController.main.IsUnitPlayer(target);
+        }
+        else
+        {
+            return ((FieldController.main.GetPosition(target) == FieldController.Position.Vanguard) || containsEnergySword) && (FieldController.main.IsUnitPlayer(target) == isPlayer) && target;
+        }
+    }
+
+    public override void UseAbility(Unit caster, Unit target)
+    {
+        if (IsAbilityValid(caster, target))
+        {
+            Instantiate(VFX1, target.transform);
+            GameEvents.BaseDefenseUp(target, StatBoost);
+            GameEvents.UseMana(caster, Cost);
+        }
+    }
+
+    public override int GetMoveWeight(Unit caster)
+    {
+        int healthWeight = Mathf.FloorToInt(((float)caster.Health / (float)caster.MaxHealth) * 100);
+        int manaWeight;
 
         if (caster.UnitType == UnitType.Mage || caster.UnitType == UnitType.Commander)
         {
-            if (caster.Mana < Cost) return 0;
+            if (caster.Mana < Cost)
+            {
+                return 0;
+            }
 
-            ManaWeight = Mathf.FloorToInt(((float)caster.Mana / (float)caster.MaxMana) * 100);
-
+            manaWeight = Mathf.FloorToInt(((float)caster.Mana / (float)caster.MaxMana) * 100);
         }
-        else return 0;
+        else
+        {
+            return 0;
+        }
 
-        return (HealthWeight + 2 * ManaWeight) / 3;
+        return (healthWeight + (2 * manaWeight)) / 3;
     }
 }

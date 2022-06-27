@@ -7,16 +7,24 @@ public class Charge : QTEAbility
     public override void SetupParams(AbilitySetup setup)
     {
         base.SetupParams(setup);
-        if(!VFX1) VFX1 = Resources.Load("CustomLasers/Soldier/Soldier_Laser") as GameObject;
+        if (!VFX1)
+        {
+            VFX1 = Resources.Load("CustomLasers/Soldier/Soldier_Laser") as GameObject;
+        }
+
         IsMagic = false;
     }
 
     public override int GetMoveWeight(Unit caster)
     {
-        //int BuffWeight = 100;
+        // int BuffWeight = 100;
         if (caster.UnitType == UnitType.Military || caster.UnitType == UnitType.Commander)
         {
-            if (caster.Ammo < Cost) return 0;
+            if (caster.Ammo < Cost)
+            {
+                return 0;
+            }
+
             if (FieldController.main.GetIsVanguard(caster))
             {
                 return 100;
@@ -26,30 +34,44 @@ public class Charge : QTEAbility
                 return Mathf.FloorToInt(((float)caster.Ammo / (float)caster.MaxAmmo) * 100);
             }
         }
-        else return 0;
+        else
+        {
+            return 0;
+        }
+    }
+
+    public override bool IsCasterValid(Unit caster)
+    {
+        return caster.Ammo >= Cost;
+    }
+
+    public override bool IsTargetValid(Unit target, bool isPlayer)
+    {
+        return (FieldController.main.GetPosition(target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(target) != isPlayer);
     }
 
     protected override void AbilityUsed(GameManager.QTEResult result)
     {
-        int FinalDamage = Damage;
+        int finalDamage = Damage;
 
         switch (result)
         {
             case GameManager.QTEResult.Critical:
                 {
-                    FinalDamage += base.Variation;
+                    finalDamage += Variation;
                     break;
                 }
+
             case GameManager.QTEResult.Miss:
                 {
-                    FinalDamage -= base.Variation;
+                    finalDamage -= Variation;
                     break;
                 }
         }
 
         GameEvents.BaseAttackUp(Caster, StatBoost);
 
-        AttackWithLaser(Mathf.FloorToInt(FinalDamage));
+        AttackWithLaser(Mathf.FloorToInt(finalDamage));
 
         GameEvents.UseAmmo(Caster, Cost);
     }
@@ -59,35 +81,21 @@ public class Charge : QTEAbility
         return GameManager.QTEType.TimingBar;
     }
 
-    public override bool IsCasterValid (Unit Caster)
-    {
-		return(Caster.Ammo >= Cost);
-	}    
-	public override bool IsTargetValid (Unit Target, bool isPlayer)
-    {
-		return (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(Target) != isPlayer);
-	}
-
-    void FireLaserAtTarget(Transform targetTransform)
+    private void FireLaserAtTarget(Transform targetTransform)
     {
         if (VFX1)
         {
-            GameObject SpawnedLaser = Instantiate(VFX1, transform);
-            SpawnedLaser.transform.LookAt(targetTransform);
+            GameObject spawnedLaser = Instantiate(VFX1, transform);
+            spawnedLaser.transform.LookAt(targetTransform);
         }
     }
 
-    void AttackWithLaser(int damage)
+    private void AttackWithLaser(int damage)
     {
-        if(Target)
+        if (Target)
         {
             GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, damage));
             FireLaserAtTarget(Target.transform);
         }
-    }
-
-    private void Update()
-    {
-        
     }
 }

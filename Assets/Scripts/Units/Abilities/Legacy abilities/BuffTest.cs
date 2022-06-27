@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MageFireball : Ability
+public class BuffTest : Ability
 {
     public override void SetupParams(AbilitySetup setup)
     {
         base.SetupParams(setup);
         if (!VFX1)
         {
-            VFX1 = Resources.Load("CustomLasers/FireMage/Meteor") as GameObject;
+            VFX1 = Resources.Load("CustomLasers/Mage/BuffParticles") as GameObject;
         }
 
         IsMagic = true;
+
+        // buffs.add(new Buff(BuffType.Attack))
     }
 
     public override bool IsCasterValid(Unit caster)
@@ -22,18 +24,21 @@ public class MageFireball : Ability
 
     public override bool IsTargetValid(Unit target, bool isPlayer)
     {
-        return (FieldController.main.GetPosition(target) != FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(target) != isPlayer) && target;
+        if (isPlayer)
+        {
+            return FieldController.main.IsUnitPlayer(target);
+        }
+        else
+        {
+            return (FieldController.main.GetPosition(target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(target) == isPlayer);
+        }
     }
 
     public override void UseAbility(Unit caster, Unit target)
     {
         if (IsAbilityValid(caster, target))
         {
-            GameObject fireball = Instantiate(VFX1, target.transform.position + new Vector3(Random.Range(-2, 2), 5, Random.Range(-2, 2)), Quaternion.identity);
-            fireball.transform.LookAt(target.transform);
-            fireball.GetComponent<FullAutoFireAtTarget>().SetBigMissilesHoming(target.transform);
-
-            GameEvents.UnitAttack(caster, target, -GetDamageCalculation(caster, target, Damage));
+            _ = Instantiate(VFX1, target.transform);
             GameEvents.AttackUp(target, StatBoost);
             GameEvents.UseMana(caster, Cost);
         }
@@ -41,18 +46,23 @@ public class MageFireball : Ability
 
     public override int GetMoveWeight(Unit caster)
     {
+        int healthWeight = Mathf.FloorToInt((1 - ((float)caster.Health / (float)caster.MaxHealth)) * 100);
+        int manaWeight;
+
         if (caster.UnitType == UnitType.Mage || caster.UnitType == UnitType.Commander)
         {
             if (caster.Mana < Cost)
             {
                 return 0;
             }
+
+            manaWeight = Mathf.FloorToInt(((float)caster.Mana / (float)caster.MaxMana) * 100);
         }
         else
         {
             return 0;
         }
 
-        return 100;
+        return (healthWeight + (2 * manaWeight)) / 3;
     }
 }
