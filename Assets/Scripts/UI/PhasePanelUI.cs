@@ -1,19 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UIElements;
-using System.Text;
 
-public class PhasePanelUI : Listener
+/// <summary>
+/// Contains code for the PhasePanel.
+/// </summary>
+public class PhasePanelUI : UISubscriber
 {
-    private struct PhaseContainer {
-        public VisualElement frame, fill;
-        public TextElement label;
-    }
-
-    private struct Arrow {
-        public VisualElement frame, fill;
-    }
     [SerializeField] private UIDocument uIDocument;
     private VisualElement mainContainer;
     private PhaseContainer currentPhaseContainer;
@@ -23,61 +18,89 @@ public class PhasePanelUI : Listener
     private Arrow nextArrow;
     private Arrow futureArrow;
 
-    private StyleLength currentContainerLeft, nextArrowLeft, nextContainerLeft, futureArrowLeft, futureContainerLeft;
+    private StyleLength currentContainerLeft;
+    private StyleLength nextArrowLeft;
+    private StyleLength nextContainerLeft;
+    private StyleLength futureArrowLeft;
+    private StyleLength futureContainerLeft;
 
-    private bool End;
+    /* private bool end; */
+
+    /// <summary>
+    /// This function needs to be reimplemented.
+    /// </summary>
+    /// <param name="ignorethisbool">This parameter needs to be reimplemented.</param>
     public void Ended(bool ignorethisbool)
     {
-        End = true;
+        /* end = true; */
     }
 
+    /// <summary>
+    /// Assign UI elements to fields in PhasePanelUI.
+    /// </summary>
+    protected override void AssignUIElements()
+    {
+        mainContainer = uIDocument.rootVisualElement.Q<VisualElement>("container");
 
+        currentPhaseContainer.fill = mainContainer.Q<VisualElement>("current-phase-fill");
+        currentPhaseContainer.frame = mainContainer.Q<VisualElement>("current-phase-frame");
+        currentPhaseContainer.label = mainContainer.Q<TextElement>("current-phase-label");
+
+        nextPhaseContainer.fill = mainContainer.Q<VisualElement>("next-phase-fill");
+        nextPhaseContainer.frame = mainContainer.Q<VisualElement>("next-phase-frame");
+        nextPhaseContainer.label = mainContainer.Q<TextElement>("next-phase-label");
+
+        futurePhaseContainer.fill = mainContainer.Q<VisualElement>("future-phase-fill");
+        futurePhaseContainer.frame = mainContainer.Q<VisualElement>("future-phase-frame");
+        futurePhaseContainer.label = mainContainer.Q<TextElement>("future-phase-label");
+
+        nextArrow.fill = mainContainer.Q<VisualElement>("next-arrow-fill");
+        nextArrow.frame = mainContainer.Q<VisualElement>("next-arrow-frame");
+
+        futureArrow.fill = mainContainer.Q<VisualElement>("future-arrow-fill");
+        futureArrow.frame = mainContainer.Q<VisualElement>("future-arrow-frame");
+    }
+
+    /// <summary>
+    /// Subscribe UIElements to events in PhasePanelUI.
+    /// </summary>
+    protected override void RegisterCallbacks()
+    {
+        mainContainer.RegisterCallback<TransitionEndEvent>(OnTransitionEnd);
+    }
+
+    /// <summary>
+    /// Unsubscribe UIElements to events in PhasePanelUI.
+    /// </summary>
+    protected override void UnregisterCallbacks()
+    {
+        mainContainer.UnregisterCallback<TransitionEndEvent>(OnTransitionEnd);
+    }
+
+    /// <summary>
+    /// Subscribe to events in PhasePanelUI.
+    /// </summary>
     protected override void SubscribeListeners()
     {
         GameEvents.onPhaseChanged += OnPhaseChange;
         GameEvents.onGameEnd += Ended;
-        mainContainer.RegisterCallback<TransitionEndEvent>(OnTransitionEnd);
     }
 
+    /// <summary>
+    /// Unsubscribe to events in PhasePanelUI.
+    /// </summary>
     protected override void UnsubscribeListeners()
     {
         GameEvents.onPhaseChanged -= OnPhaseChange;
         GameEvents.onGameEnd -= Ended;
-        mainContainer.UnregisterCallback<TransitionEndEvent>(OnTransitionEnd);
     }
-    void Awake()
+
+    private void Start()
     {
         if (uIDocument == null)
         {
             Debug.LogWarning($"{gameObject.name} : PhasePanelUI - has no uiDocument assigned in the inspector. Script might still work, but is not 100% safe.");
             uIDocument = GetComponent<UIDocument>();
-        }
-
-        try
-        {
-            mainContainer = uIDocument.rootVisualElement.Q<VisualElement>("container");
-            
-            currentPhaseContainer.fill = mainContainer.Q<VisualElement>("current-phase-fill");
-            currentPhaseContainer.frame = mainContainer.Q<VisualElement>("current-phase-frame");
-            currentPhaseContainer.label = mainContainer.Q<TextElement>("current-phase-label");
-
-            nextPhaseContainer.fill = mainContainer.Q<VisualElement>("next-phase-fill");
-            nextPhaseContainer.frame = mainContainer.Q<VisualElement>("next-phase-frame");
-            nextPhaseContainer.label = mainContainer.Q<TextElement>("next-phase-label");
-
-            futurePhaseContainer.fill = mainContainer.Q<VisualElement>("future-phase-fill");
-            futurePhaseContainer.frame = mainContainer.Q<VisualElement>("future-phase-frame");
-            futurePhaseContainer.label = mainContainer.Q<TextElement>("future-phase-label");
-
-            nextArrow.fill = mainContainer.Q<VisualElement>("next-arrow-fill");
-            nextArrow.frame = mainContainer.Q<VisualElement>("next-arrow-frame");
-
-            futureArrow.fill = mainContainer.Q<VisualElement>("future-arrow-fill");
-            futureArrow.frame = mainContainer.Q<VisualElement>("future-arrow-frame");
-        }
-        catch
-        {
-            Debug.LogError($"{gameObject.name} : PhasePanelUI - Element Query Failed.");
         }
 
         currentContainerLeft = new Length(0, LengthUnit.Pixel);
@@ -87,14 +110,14 @@ public class PhasePanelUI : Listener
         futureContainerLeft = new Length(1100, LengthUnit.Pixel);
     }
 
-    string AddSpacesToPhase(string phase)
+    private string AddSpacesToPhase(string phase)
     {
         if (string.IsNullOrWhiteSpace(phase))
         {
-            return "";
+            return string.Empty;
         }
 
-        StringBuilder newPhase = new StringBuilder(phase.Length * 2);
+        StringBuilder newPhase = new (phase.Length * 2);
         newPhase.Append(phase[0]);
         for (int i = 1; i < phase.Length; i++)
         {
@@ -109,7 +132,7 @@ public class PhasePanelUI : Listener
         return newPhase.ToString();
     }
 
-    void OnPhaseChange(RoundController.Phase phase)
+    private void OnPhaseChange(RoundController.PhaseType phase)
     {
         // if (WorldMenuController.End) return;
         currentPhaseContainer.label.style.left = new Length(-400, LengthUnit.Pixel);
@@ -139,23 +162,23 @@ public class PhasePanelUI : Listener
         futureArrow.fill.style.left = nextArrowLeft;
         futureArrow.fill.style.opacity = 1f;
 
-        if (RoundController.phase.ToString().Contains("Player"))
+        if (RoundController.Phase.ToString().Contains("Player"))
         {
-            currentPhaseContainer.fill.style.unityBackgroundImageTintColor = new StyleColor(new Color((12f / 255f), (241f / 255f), 1f, 0.69f));
+            currentPhaseContainer.fill.style.unityBackgroundImageTintColor = new StyleColor(new Color(12f / 255f, 241f / 255f, 1f, 0.69f));
         }
         else
         {
-            currentPhaseContainer.fill.style.unityBackgroundImageTintColor = new StyleColor(new Color((245f / 255f), (85f / 255f), (93f / 255f), 0.69f));
+            currentPhaseContainer.fill.style.unityBackgroundImageTintColor = new StyleColor(new Color(245f / 255f, 85f / 255f, 93f / 255f, 0.69f));
         }
     }
 
-    void OnTransitionEnd(TransitionEndEvent evt)
+    private void OnTransitionEnd(TransitionEndEvent evt)
     {
         mainContainer.UnregisterCallback<TransitionEndEvent>(OnTransitionEnd);
 
-        currentPhaseContainer.label.text = AddSpacesToPhase(RoundController.phase.ToString()) + " Phase";
-        nextPhaseContainer.label.text = AddSpacesToPhase(((RoundController.Phase)(((int)RoundController.phase + 1) % 6)).ToString()) + " Phase";
-        futurePhaseContainer.label.text = AddSpacesToPhase(((RoundController.Phase)(((int)RoundController.phase + 2) % 6)).ToString()) + " Phase";
+        currentPhaseContainer.label.text = AddSpacesToPhase(RoundController.Phase.ToString()) + " Phase";
+        nextPhaseContainer.label.text = AddSpacesToPhase(((RoundController.PhaseType)(((int)RoundController.Phase + 1) % 6)).ToString()) + " Phase";
+        futurePhaseContainer.label.text = AddSpacesToPhase(((RoundController.PhaseType)(((int)RoundController.Phase + 2) % 6)).ToString()) + " Phase";
 
         SetAllTransitionTimes(0f);
 
@@ -191,7 +214,7 @@ public class PhasePanelUI : Listener
         SetAllTransitionTimes(600f);
     }
 
-    void SetAllTransitionTimes(float timeInMs)
+    private void SetAllTransitionTimes(float timeInMs)
     {
         currentPhaseContainer.frame.style.transitionDuration = new List<TimeValue> { new TimeValue(timeInMs, TimeUnit.Millisecond) };
         currentPhaseContainer.fill.style.transitionDuration = new List<TimeValue> { new TimeValue(timeInMs, TimeUnit.Millisecond) };
@@ -210,5 +233,18 @@ public class PhasePanelUI : Listener
 
         futureArrow.frame.style.transitionDuration = new List<TimeValue> { new TimeValue(timeInMs, TimeUnit.Millisecond) };
         futureArrow.fill.style.transitionDuration = new List<TimeValue> { new TimeValue(timeInMs, TimeUnit.Millisecond) };
+    }
+
+    private struct PhaseContainer
+    {
+        public VisualElement frame;
+        public VisualElement fill;
+        public TextElement label;
+    }
+
+    private struct Arrow
+    {
+        public VisualElement frame;
+        public VisualElement fill;
     }
 }

@@ -40,7 +40,7 @@ public class Trace : Ability
         {
             Instantiate(VFX1, transform);
             GameEvents.onUseAmmo(target, Cost);
-            FieldController.main.SwapPlayerUnit(target);
+            FieldController.Main.SwapPlayerUnit(target);
         }
     }
 
@@ -61,6 +61,6 @@ public class Trace : Ability
 
     public override bool IsTargetValid(Unit target, bool isPlayer)
     {
-        return FieldController.main.IsUnitPlayer(target) == isPlayer;
-    }
+		return (FieldController.main.IsUnitPlayer(Target) == isPlayer);
+	}
 }

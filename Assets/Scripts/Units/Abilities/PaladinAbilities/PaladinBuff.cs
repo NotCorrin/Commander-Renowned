@@ -27,11 +27,11 @@ public class PaladinBuff : Ability
         bool containsEnergySword = target.VanguardAbilities[0] is EnergySword;
         if (isPlayer)
         {
-            return FieldController.main.IsUnitPlayer(target);
+            return FieldController.Main.IsUnitPlayer(target);
         }
         else
         {
-            return ((FieldController.main.GetPosition(target) == FieldController.Position.Vanguard) || containsEnergySword) && (FieldController.main.IsUnitPlayer(target) == isPlayer) && target;
+            return ((FieldController.Main.GetPosition(target) == FieldController.Position.Vanguard) || containsEnergySword) && (FieldController.Main.IsUnitPlayer(target) == isPlayer) && target;
         }
     }
 

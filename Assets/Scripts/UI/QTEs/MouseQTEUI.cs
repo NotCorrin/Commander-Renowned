@@ -3,10 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class MouseQTEUI : Listener
+/// <summary>
+/// Contains code for the MouseQTEUI.
+/// </summary>
+public class MouseQTEUI : UISubscriber
 {
     [Header("Debugging")]
-    [Range(0, 100), SerializeField] private int critChance = 10;
+    [Range(0, 100)] [SerializeField] private int critChance = 10;
+    [Range(0, 100)] [SerializeField] private int normalChance = 50;
+    [SerializeField] private UIDocument uiDocument;
+
+    [Header("UI Elements")]
+    private VisualElement container;
+    private VisualElement arrow;
+    private VisualElement normal;
+    private VisualElement crit;
+    private TextElement statusLabel;
+    private float currentLocation;
+    private bool clicked;
+    private int qteLengthPercent;
+    private int normalLeft;
+    private int critLeft;
+
+    /// <summary>
+    /// Gets or sets the crit chance.
+    /// </summary>
     public int CritChance
     {
         get => critChance;
@@ -16,7 +37,10 @@ public class MouseQTEUI : Listener
             crit.style.width = new Length(critChance, LengthUnit.Percent);
         }
     }
-    [Range(0, 100), SerializeField] private int normalChance = 50;
+
+    /// <summary>
+    /// Gets or sets the normal chance.
+    /// </summary>
     public int NormalChance
     {
         get => normalChance;
@@ -27,31 +51,66 @@ public class MouseQTEUI : Listener
         }
     }
 
-    [Header("UI Elements")]
-    [SerializeField] private UIDocument uiDocument;
-    private VisualElement container, arrow, normal, crit;
-    private TextElement statusLabel;
-    private float currentLocation;
-    private int modifier;
-    private bool clicked;
+    /// <summary>
+    /// Sets chance values for the QTE.
+    /// </summary>
+    /// <param name="normalChance">The normal chance out of 100.</param>
+    /// <param name="critChance">The crit chance out of 100.</param>
+    public void SetQTEValues(int normalChance, int critChance)
+    {
+        NormalChance = normalChance;
+        CritChance = critChance;
+    }
 
+    /// <summary>
+    /// Assign UI elements to fields in MouseQTEUI.
+    /// </summary>
+    protected override void AssignUIElements()
+    {
+        container = uiDocument.rootVisualElement.Query<VisualElement>("container");
+
+        arrow = container.Query<VisualElement>("arrow");
+        normal = container.Query<VisualElement>("normal");
+        crit = container.Query<VisualElement>("crit");
+
+        statusLabel = container.Query<TextElement>("status");
+    }
+
+    /// <summary>
+    /// Subscribe to events in MouseQTEUI.
+    /// </summary>
     protected override void SubscribeListeners()
     {
         GameEvents.onQTEResolved += EndQTE;
+    }
 
+    /// <summary>
+    /// Unsubscribe from events in MouseQTEUI.
+    /// </summary>
+    protected override void UnsubscribeListeners()
+    {
+        GameEvents.onQTEResolved -= EndQTE;
+    }
+
+    /// <summary>
+    /// Subscribe UIElements to events in MouseQTEUI.
+    /// </summary>
+    protected override void RegisterCallbacks()
+    {
         container.RegisterCallback<ClickEvent>(OnClick);
         statusLabel.RegisterCallback<TransitionEndEvent>(OnStatusTransitionEnd);
     }
 
-    protected override void UnsubscribeListeners()
+    /// <summary>
+    /// Unsubscribe UIElements from events in MouseQTEUI.
+    /// </summary>
+    protected override void UnregisterCallbacks()
     {
-        GameEvents.onQTEResolved -= EndQTE;
-
         container.UnregisterCallback<ClickEvent>(OnClick);
         statusLabel.UnregisterCallback<TransitionEndEvent>(OnStatusTransitionEnd);
     }
 
-    void Awake()
+    private void Start()
     {
         if (uiDocument == null)
         {
@@ -59,43 +118,36 @@ public class MouseQTEUI : Listener
             uiDocument = GetComponentInParent<UIDocument>();
         }
 
-        try
-        {
-            container = uiDocument.rootVisualElement.Query<VisualElement>("container");
+        qteLengthPercent = 95;
+        int offsetPercent = 4;
 
-            arrow = container.Query<VisualElement>("arrow");
-            normal = container.Query<VisualElement>("normal");
-            crit = container.Query<VisualElement>("crit");
+        normalLeft = qteLengthPercent - normalChance;
+        critLeft = qteLengthPercent - critChance - offsetPercent;
 
-            statusLabel = container.Query<TextElement>("status");
-        }
-        catch
-        {
-            Debug.LogError($"{gameObject.name} : Mouse QTE UI - Element Query Failed.");
-        }
+        normal.style.left = new Length(normalLeft, LengthUnit.Percent);
+        crit.style.left = new Length(critLeft, LengthUnit.Percent);
 
         normal.style.width = new Length(normalChance, LengthUnit.Percent);
         crit.style.width = new Length(critChance, LengthUnit.Percent);
 
-        modifier = 1;
         clicked = false;
     }
 
-    void OnClick(ClickEvent evt)
+    private void OnClick(ClickEvent evt)
     {
         clicked = true;
         currentLocation = arrow.style.left.value.value;
 
         container.UnregisterCallback<ClickEvent>(OnClick);
 
-        if (currentLocation >= 50 - (critChance / 2) && currentLocation <= 50 + (critChance / 2))
+        if (currentLocation >= critLeft && currentLocation <= critLeft + critChance)
         {
             Debug.Log("Crit");
             statusLabel.text = "CRIT!";
-            statusLabel.style.color = new StyleColor(new Color((0f / 255f), (152f / 255f), (220f / 255f)));
+            statusLabel.style.color = new StyleColor(new Color(0f / 255f, 152f / 255f, 220f / 255f));
             MenuEvents.QTETriggered(GameManager.QTEResult.Critical);
         }
-        else if (currentLocation >= 50 - (normalChance / 2) && currentLocation <= 50 + (normalChance / 2))
+        else if (currentLocation >= normalLeft && currentLocation <= normalLeft + normalChance)
         {
             Debug.Log("Normal");
             statusLabel.text = "Hit!";
@@ -113,48 +165,41 @@ public class MouseQTEUI : Listener
         statusLabel.style.scale = new Scale(new Vector2(3, 3));
     }
 
-    void Update()
+    private void Update()
     {
-        if (clicked) return;
+        if (clicked)
+        {
+            return;
+        }
 
         currentLocation = arrow.style.left.value.value;
 
-        if (currentLocation <= 0f)
+        if (currentLocation >= 99.9f)
         {
-            modifier = 1;
-            arrow.style.left = new Length(0.1f, LengthUnit.Percent);
-        }
-        else if (currentLocation >= 100f)
-        {
-            modifier = -1;
-            arrow.style.left = new Length(99.9f, LengthUnit.Percent);
+            arrow.style.left = new Length(0f, LengthUnit.Percent);
+            currentLocation = arrow.style.left.value.value;
         }
 
-        arrow.style.left = new Length(currentLocation + (modifier * 150 * Time.deltaTime), LengthUnit.Percent);
+        arrow.style.left = new Length(currentLocation + (150 * Time.deltaTime), LengthUnit.Percent);
     }
 
-    void OnStatusTransitionEnd(TransitionEndEvent evt)
+    private void OnStatusTransitionEnd(TransitionEndEvent evt)
     {
         statusLabel.UnregisterCallback<TransitionEndEvent>(OnStatusTransitionEnd);
+
         // Set transition duration
         statusLabel.style.transitionDuration = new List<TimeValue> { new TimeValue(1000f, TimeUnit.Millisecond) };
         statusLabel.style.opacity = 0f;
         statusLabel.style.scale = new Scale(new Vector2(1, 1));
     }
 
-    void EndQTE(GameManager.QTEResult result)
+    private void EndQTE(GameManager.QTEResult result)
     {
         Invoke("DestroyQTE", 0.2f);
     }
 
-    void DestroyQTE()
+    private void DestroyQTE()
     {
-        Destroy(this.gameObject);
-    }
-
-    public void SetQTEValues(int normalChance, int critChance)
-    {
-        this.NormalChance = normalChance;
-        this.CritChance = critChance;
+        Destroy(gameObject);
     }
 }

@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
-
-public class UnitSelectionMenuUI : MonoBehaviour
+/// <summary>
+/// Contains code for the UnitSelectionMenuUI.
+/// </summary>
+public class UnitSelectionMenuUI : UISubscriber
 {
     [SerializeField] private UIDocument uiDocument;
     [SerializeField] private VisualTreeAsset unitCardUI;
@@ -19,9 +21,21 @@ public class UnitSelectionMenuUI : MonoBehaviour
     private VisualElement mainScrollViewContainer;
     private Button confirmButton;
 
-    private List<Button> activeUnits = new List<Button>();
+    private List<Button> activeUnits = new ();
 
-    void Start()
+    /// <summary>
+    /// Assign UI elements to fields in UnitSelectionMenuUI.
+    /// </summary>
+    protected override void AssignUIElements()
+    {
+        mainContainer = uiDocument.rootVisualElement.Q<VisualElement>("container");
+        mainTitleText = mainContainer.Q<TextElement>("title-label");
+        mainScrollView = mainContainer.Q<ScrollView>("scroll-view");
+        mainScrollViewContainer = mainContainer.Q<VisualElement>("unity-content-container");
+        confirmButton = mainContainer.Q<Button>("confirm-button");
+    }
+
+    private void Start()
     {
         VerifyInitialVars();
 
@@ -32,8 +46,12 @@ public class UnitSelectionMenuUI : MonoBehaviour
         VisualElement test = default;
         VisualElement unitCard = default;
 
-        if (!teamScriptableObject.tutorialComplete) teamScriptableObject.Reset();
-        for (int i = 0; i < teamScriptableObject.units.Count; i++)
+        if (!teamScriptableObject.TutorialComplete)
+        {
+            teamScriptableObject.Reset();
+        }
+
+        for (int i = 0; i < teamScriptableObject.Units.Count; i++)
         {
             if (i % 5 == 0)
             {
@@ -42,8 +60,8 @@ public class UnitSelectionMenuUI : MonoBehaviour
             }
 
             unitCard = unitCardUI.Instantiate();
-            unitCard.Q<TextElement>("name-label").text = teamScriptableObject.units[i].UnitName;
-            unitCard.Q<VisualElement>("unit").style.backgroundImage = new StyleBackground(teamScriptableObject.units[i].sprite);
+            unitCard.Q<TextElement>("name-label").text = teamScriptableObject.Units[i].UnitName;
+            unitCard.Q<VisualElement>("unit").style.backgroundImage = new StyleBackground(teamScriptableObject.Units[i].Sprite);
             test.Q<VisualElement>("container").Add(unitCard);
         }
 
@@ -80,7 +98,8 @@ public class UnitSelectionMenuUI : MonoBehaviour
                     confirmButton.SetEnabled(true);
                     confirmButton.style.backgroundColor = new StyleColor(new Color(0.3529412f, 0.772549f, 0.3098039f, 1));
                 }
-                else {
+                else
+                {
                     EnableAllUnits();
                     confirmButton.SetEnabled(false);
                     confirmButton.style.backgroundColor = new StyleColor(new Color(0.364f, 0.364f, 0.364f, 1));
@@ -89,7 +108,7 @@ public class UnitSelectionMenuUI : MonoBehaviour
         });
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         mainScrollViewContainer.Query<Button>().ForEach(button =>
         {
@@ -97,27 +116,28 @@ public class UnitSelectionMenuUI : MonoBehaviour
         });
     }
 
-    void ConfirmButton_Clicked()
+    private void ConfirmButton_Clicked()
     {
         confirmButton.SetEnabled(false);
         confirmButton.clickable.clicked -= ConfirmButton_Clicked;
 
-        teamScriptableObject.activeUnits.Clear();
+        teamScriptableObject.ActiveUnits.Clear();
         foreach (Button button in activeUnits)
         {
-            foreach(UnitScriptableObject unit in teamScriptableObject.units)
+            foreach (UnitScriptableObject unit in teamScriptableObject.Units)
             {
-                if(unit.UnitName == button.Q<TextElement>("name-label").text)
+                if (unit.UnitName == button.Q<TextElement>("name-label").text)
                 {
-                    teamScriptableObject.activeUnits.Add(unit);
+                    teamScriptableObject.ActiveUnits.Add(unit);
                     break;
                 }
             }
         }
-        LevelManager.instance.LoadScene(stories.story[stories.level + 1].scene);
+
+        LevelManager.instance.LoadScene(stories.Story[stories.Level + 1].Scene);
     }
 
-    void EnableAllUnits()
+    private void EnableAllUnits()
     {
         mainScrollViewContainer.Query<Button>().ForEach(subbutton =>
         {
@@ -125,18 +145,18 @@ public class UnitSelectionMenuUI : MonoBehaviour
         });
     }
 
-    void DisableAllUnits()
+    private void DisableAllUnits()
     {
         mainScrollViewContainer.Query<Button>().ForEach(subbutton =>
         {
-            if (!(activeUnits.Contains(subbutton)))
+            if (!activeUnits.Contains(subbutton))
             {
                 subbutton.Q<VisualElement>("unit").AddToClassList("unit-card-image-null");
             }
         });
     }
 
-    void VerifyInitialVars()
+    private void VerifyInitialVars()
     {
         if (uiDocument == null)
         {
@@ -147,7 +167,6 @@ public class UnitSelectionMenuUI : MonoBehaviour
         if (teamScriptableObject == null)
         {
             Debug.LogError($"{gameObject.name} : UnitSelectionMenuUI - has no TeamScriptableObject assigned in the inspector.");
-            // teamScriptableObject = Resources.Load<TeamScriptableObject>("ScriptableObjects/TeamScriptableObject"); TODO : Maybe come back to this.
         }
 
         if (unitCardUI == null)
@@ -158,19 +177,6 @@ public class UnitSelectionMenuUI : MonoBehaviour
         if (unitCardCollectionUI == null)
         {
             Debug.LogError($"{gameObject.name} : UnitSelectionMenuUI - has no unitCardCollectionUI assigned in the inspector.");
-        }
-
-        try
-        {
-            mainContainer = uiDocument.rootVisualElement.Q<VisualElement>("container");
-            mainTitleText = mainContainer.Q<TextElement>("title-label");
-            mainScrollView = mainContainer.Q<ScrollView>("scroll-view");
-            mainScrollViewContainer = mainContainer.Q<VisualElement>("unity-content-container");
-            confirmButton = mainContainer.Q<Button>("confirm-button");
-        }
-        catch
-        {
-            Debug.LogError($"{gameObject.name} : UnitSelectionMenuUI - Element Query Failed.");
         }
     }
 }

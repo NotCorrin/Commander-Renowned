@@ -60,6 +60,6 @@ public class SoldierAbility : Ability
 
     public override bool IsTargetValid(Unit target, bool isPlayer)
     {
-        return FieldController.main.IsUnitPlayer(target) == isPlayer;
+        return FieldController.Main.IsUnitPlayer(target) == isPlayer;
     }
 }

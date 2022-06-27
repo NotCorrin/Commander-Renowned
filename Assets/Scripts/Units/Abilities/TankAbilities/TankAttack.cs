@@ -17,7 +17,7 @@ public class TankAttack : QTEAbility
 
     public override int GetMoveWeight(Unit caster)
     {
-        int buffWeight = FieldController.main.GetAllies(Target).Count * 30;
+        int buffWeight = FieldController.Main.GetAllies(Target).Count * 30;
         if (caster.UnitType == UnitType.Military || caster.UnitType == UnitType.Commander)
         {
             if (caster.Ammo < Cost)
@@ -68,7 +68,7 @@ public class TankAttack : QTEAbility
                 }
         }
 
-        foreach (Unit unit in FieldController.main.GetAllies(Target))
+        foreach (Unit unit in FieldController.Main.GetAllies(Target))
         {
             GameEvents.UnitAttack(Caster, unit, -GetDamageCalculation(Caster, unit, finalDamage));
             LaunchAttackAtTarget(unit.transform);
@@ -81,6 +81,15 @@ public class TankAttack : QTEAbility
     {
         return GameManager.QTEType.TimingBar;
     }
+    
+    public override bool IsCasterValid (Unit Caster)
+    {
+		return(Caster.Ammo >= Cost);
+	}    
+	public override bool IsTargetValid (Unit Target, bool isPlayer)
+    {
+		return (FieldController.Main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.Main.IsUnitPlayer(Target) != isPlayer);
+	}
 
     private void LaunchAttackAtTarget(Transform targetTransform)
     {

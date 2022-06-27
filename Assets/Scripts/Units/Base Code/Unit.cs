@@ -361,10 +361,7 @@ public class Unit : Listener
         if (!ability)
         {
             animator.SetBool("greyedOut", false);
-            if (!FieldController.main.IsUnitPlayer(this))
-            {
-                UpdateEnemyVisual();
-            }
+            if (!FieldController.Main.IsUnitPlayer(this)) UpdateEnemyVisual();
         }
         else if (!ability.IsTargetValid(this, isPlayer))
         {
@@ -378,7 +375,7 @@ public class Unit : Listener
         if (caster == this)
         {
             Ability targetAbility;
-            if (FieldController.main.GetPosition(this) == FieldController.Position.Vanguard)
+            if (FieldController.Main.GetPosition(this) == FieldController.Position.Vanguard)
             {
                 targetAbility = VanguardAbilities[selectedAbility - 1];
             }
@@ -405,6 +402,7 @@ public class Unit : Listener
         {
             UpdateEnemyVisual();
         }
+        if(!FieldController.main.IsUnitPlayer(this)) UpdateEnemyVisual();
     }
 
     private void OnUseAmmo(Unit caster, int cost)
@@ -460,7 +458,7 @@ public class Unit : Listener
 
     private void ResetBuffs()
     {
-        if (RoundController.isPlayerPhase == FieldController.main.IsUnitPlayer(this))
+        if(RoundController.isPlayerPhase == FieldController.main.IsUnitPlayer(this))
         {
             if (PermAttack > 0)
             {
@@ -607,15 +605,26 @@ public class Unit : Listener
 
     private void UpdateBillboard(RoundController.Phase phase)
     {
+        Debug.LogWarning("FIRST");
+        if (!animator) animator = GetComponent<Animator>();
+        if (!billboard) billboard = GetComponent<Billboard>();
+        if (!coll) coll = GetComponent<Collider>();
+        if (!spriteRenderer) spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (!DamageNumbers) DamageNumbers = Resources.Load("UIPrefabs/DamageText") as GameObject;
+    }
+    void UpdateBillboard(RoundController.Phase _phase)
+    {
         var em = selectedps.emission;
         em.enabled = false;
 
-        billboard.SwitchBillboardState(((int)phase) >= 2);
-        if (phase == RoundController.Phase.PlayerSupport && FieldController.main.GetPosition(this) != FieldController.Position.Vanguard && FieldController.main.IsUnitPlayer(this))
+        billboard.SwitchBillboardState(((int)_phase)>=2);
+        if(_phase == RoundController.Phase.PlayerSupport && FieldController.main.GetPosition(this) != FieldController.Position.Vanguard && FieldController.main.IsUnitPlayer(this))
         {
             foreach (Ability ability in SupportAbilities)
             {
-                if (!ability)
+                if (!ability) continue;
+                if(FieldController.main.GetValidTargets(this, ability).Count != 0)
                 {
                     continue;
                 }

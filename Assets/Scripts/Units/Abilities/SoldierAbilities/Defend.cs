@@ -45,7 +45,7 @@ public class Defend : QTEAbility
 
     public override bool IsTargetValid(Unit target, bool isPlayer)
     {
-        return (FieldController.main.GetPosition(target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(target) != isPlayer);
+        return (FieldController.Main.GetPosition(target) == FieldController.Position.Vanguard) && (FieldController.Main.IsUnitPlayer(target) != isPlayer);
     }
 
     protected override void AbilityUsed(GameManager.QTEResult result)

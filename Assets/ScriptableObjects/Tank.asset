@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Tank
   m_EditorClassIdentifier: 
   unitType: 1
-  UnitName: Tank
-  VanguardAbilities:
+  unitName: Tank
+  vanguardAbilities:
   - AbilityType: 0
     AbilityName: 
     AbilityDescription: 
@@ -42,7 +42,7 @@ MonoBehaviour:
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  SupportAbilities:
+  supportAbilities:
   - AbilityType: 0
     AbilityName: 
     AbilityDescription: 
@@ -65,8 +65,8 @@ MonoBehaviour:
     VFX1: {fileID: 782153884964200169, guid: b8c56c2add686174dadacb682e6415ad, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  MaxHealth: 30
-  MaxAmmo: 5
-  MaxMana: 0
+  maxHealth: 30
+  maxAmmo: 5
+  maxMana: 0
   animator: {fileID: 9100000, guid: 78f975913a63e5f4c8c9a3c5cacfacb4, type: 2}
   sprite: {fileID: -409528804, guid: 070d380dca0c7eb4f907591a3b861940, type: 3}
