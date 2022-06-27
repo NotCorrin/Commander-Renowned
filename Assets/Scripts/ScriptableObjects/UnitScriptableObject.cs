@@ -9,32 +9,23 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Unit", menuName = "Unit", order = 1)]
 public class UnitScriptableObject : ScriptableObject
 {
-    [SerializeField]
-    private UnitType unitType;
+    [SerializeField] private UnitType unitType;
 
-    [SerializeField]
-    private string unitName;
+    [SerializeField] private string unitName;
 
-    [SerializeField]
-    private AbilitySetup[] vanguardAbilities;
+    [SerializeField] private AbilitySetup[] vanguardAbilities;
 
-    [SerializeField]
-    private AbilitySetup[] supportAbilities;
+    [SerializeField] private AbilitySetup[] supportAbilities;
 
-    [SerializeField]
-    private int maxHealth;
+    [SerializeField] private int maxHealth;
 
-    [SerializeField]
-    private int maxAmmo;
+    [SerializeField] private int maxAmmo;
 
-    [SerializeField]
-    private int maxMana;
+    [SerializeField] private int maxMana;
 
-    [SerializeField]
-    private RuntimeAnimatorController animator;
+    [SerializeField] private RuntimeAnimatorController animator;
 
-    [SerializeField]
-    private Sprite sprite;
+    [SerializeField] private Sprite sprite;
 
     public UnitType UnitType { get => unitType; }
 
