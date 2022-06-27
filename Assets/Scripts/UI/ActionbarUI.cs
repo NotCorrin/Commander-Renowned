@@ -162,14 +162,6 @@ public class ActionbarUI : UISubscriber
         switchEndPanel.RegisterCallback<MouseEnterEvent, VisualElement>(Switch_Hover, switchEndPanel);
         switchEndPanel.RegisterCallback<MouseLeaveEvent, VisualElement>(Switch_Unhover, switchEndPanel);
         switchEndPanel.RegisterCallback<ClickEvent>(SwitchEnd_Clicked);
-
-        UIEvents.onUnitSelected += OnUnitSelected;
-        UIEvents.onAllSupportUsed += AllSupportUsed;
-        GameEvents.onPhaseChanged += PhaseSwitchUI;
-        GameEvents.onAbilityResolved += AbilityUsed;
-        GameEvents.onPhaseChanged += HideActionBar;
-
-        /* GameEvents.onKill += SwitchPrompt; */
     }
 
     /// <summary>
@@ -227,7 +219,6 @@ public class ActionbarUI : UISubscriber
         UIEvents.onAllSupportUsed -= AllSupportUsed;
         GameEvents.onPhaseChanged -= PhaseSwitchUI;
         GameEvents.onAbilityResolved -= AbilityUsed;
-        GameEvents.onPhaseChanged -= HideActionBar;
         /* GameEvents.onKill -= SwitchPrompt; */
     }
 
@@ -913,20 +904,20 @@ public class ActionbarUI : UISubscriber
                 UIEvents.UnitSelected(FieldController.Main.GetUnit(FieldController.Position.Vanguard, true));
                 break;
             case RoundController.PhaseType.EnemyVangaurd:
-                supportBarContainer.style.display = DisplayStyle.Flex;
+                supportBarContainer.style.display = DisplayStyle.None;
                 break;
             case RoundController.PhaseType.PlayerSwap:
                 switchBarContainer.style.display = DisplayStyle.Flex;
                 selectedUnit = null;
                 break;
             case RoundController.PhaseType.EnemySwap:
-                switchBarContainer.style.display = DisplayStyle.Flex;
+                switchBarContainer.style.display = DisplayStyle.None;
                 break;
             case RoundController.PhaseType.PlayerSupport:
                 supportBarContainer.style.display = DisplayStyle.Flex;
                 break;
             case RoundController.PhaseType.EnemySupport:
-                supportBarContainer.style.display = DisplayStyle.Flex;
+                supportBarContainer.style.display = DisplayStyle.None;
                 break;
             default:
                 break;
@@ -971,18 +962,6 @@ public class ActionbarUI : UISubscriber
         {
             Debug.LogWarning($"{gameObject.name} : ActionbarUI - has no Switch Bar UIDocument assigned in the inspector. Script might still work, but is not 100% safe.");
             switchBarUIDocument = switchBar.GetComponent<UIDocument>();
-        }
-    }
-
-    void HideActionBar(RoundController.Phase phase)
-    {
-        if (phase == RoundController.Phase.EnemySupport || phase == RoundController.Phase.EnemySwap || phase == RoundController.Phase.EnemyVangaurd)
-        {
-            supportBarContainer.style.opacity = 0;
-        }
-        else
-        {
-            supportBarContainer.style.opacity = 1;
         }
     }
 
