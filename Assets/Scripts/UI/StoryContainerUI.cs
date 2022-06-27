@@ -3,19 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class StoryContainerUI : MonoBehaviour
+/// <summary>
+/// Contains code for the StoryContainerUI.
+/// </summary>
+public class StoryContainerUI : UISubscriber
 {
-    [SerializeField] UIDocument uiDocument;
-    [SerializeField] ScenarioScriptableObject stories;
-    [SerializeField] TeamScriptableObject team;
-    TextElement title;
-    TextElement desc;
-    VisualElement buttonContainer;
+    [SerializeField] private UIDocument uiDocument;
+    [SerializeField] private ScenarioScriptableObject stories;
+    [SerializeField] private TeamScriptableObject team;
+    private TextElement title;
+    private TextElement desc;
+    private VisualElement buttonContainer;
 
-    bool tComplete;
-    public bool AddUnit;
+    private bool tComplete;
+    private bool addUnit;
 
-    void Awake()
+    /// <summary>
+    /// Assign UI elements to fields in StoryContainerUI.
+    /// </summary>
+    protected override void AssignUIElements()
+    {
+        title = uiDocument.rootVisualElement.Q<TextElement>("title");
+        desc = uiDocument.rootVisualElement.Q<TextElement>("description");
+        buttonContainer = uiDocument.rootVisualElement.Q<VisualElement>("button-container");
+    }
+
+    private void Start()
     {
         if (uiDocument == null)
         {
@@ -23,42 +36,44 @@ public class StoryContainerUI : MonoBehaviour
             uiDocument = GetComponent<UIDocument>();
         }
 
-        try
-        {
-            title = uiDocument.rootVisualElement.Q<TextElement>("title");
-            desc = uiDocument.rootVisualElement.Q<TextElement>("description");
-            buttonContainer = uiDocument.rootVisualElement.Q<VisualElement>("button-container");
-        }
-        catch
-        {
-            Debug.LogError($"{gameObject.name} : MainMenuUI - Element Query Failed.");
-        }
-        Debug.Log(stories.level);
-        Debug.Log(stories.story.Length);
+        Debug.Log(stories.Level);
+        Debug.Log(stories.Story.Length);
         Scenario scenario;
-        if (stories.level >= stories.story.Length - 1 && !AddUnit) AddUnit = true;
-        tComplete = team.tutorialComplete;
+        if (stories.Level >= stories.Story.Length - 1 && !addUnit)
+        {
+            addUnit = true;
+        }
+
+        tComplete = team.TutorialComplete;
         if (tComplete)
         {
-            if (AddUnit) scenario = stories.story[stories.level];
-            else scenario = stories.story[stories.level + 1];
-            title.text = scenario.title;
-            desc.text = AddUnit?scenario.windescription:scenario.description;
+            if (addUnit)
+            {
+                scenario = stories.Story[stories.Level];
+            }
+            else
+            {
+                scenario = stories.Story[stories.Level + 1];
+            }
+
+            title.text = scenario.Title;
+            desc.text = addUnit ? scenario.Windescription : scenario.Description;
         }
         else
         {
-            scenario = stories.story[stories.level + 1];
+            scenario = stories.Story[stories.Level + 1];
             title.text = "Tutorial";
-            desc.text = stories.tutorialText;
+            desc.text = stories.TutorialText;
         }
 
-        if (scenario.winunit.Length <= 0 || !AddUnit)
+        if (scenario.Winunit.Length <= 0 || !addUnit)
         {
-            Button continueButton = new Button();
+            Button continueButton = new ();
             continueButton.text = "Continue";
             continueButton.AddToClassList("button");
             continueButton.RegisterCallback<MouseEnterEvent>(OnButtonHover);
-            continueButton.clickable.clicked += () => {
+            continueButton.clickable.clicked += () =>
+            {
                 AudioManager.instance.Play("OnMousePressed");
                 Continue(continueButton);
             };
@@ -67,18 +82,19 @@ public class StoryContainerUI : MonoBehaviour
         }
         else
         {
-            foreach (UnitScriptableObject unit in scenario.winunit)
+            foreach (UnitScriptableObject unit in scenario.Winunit)
             {
-                Button unitButton = new Button();
+                Button unitButton = new ();
                 unitButton.text = unit.name;
                 unitButton.AddToClassList("button");
                 unitButton.RegisterCallback<MouseEnterEvent>(OnButtonHover);
-                unitButton.clickable.clicked += () => {
+                unitButton.clickable.clicked += () =>
+                {
                     unitButton.SetEnabled(false);
                     unitButton.clickable.clicked -= () => { };
                     unitButton.UnregisterCallback<MouseEnterEvent>(OnButtonHover);
                     AudioManager.instance.Play("OnMousePressed");
-                    team.units.Add(unit);
+                    team.Units.Add(unit);
                     LevelManager.instance.LoadScene(SceneIndex.MenuSelectionScene);
                 };
 
@@ -87,12 +103,12 @@ public class StoryContainerUI : MonoBehaviour
         }
     }
 
-    void OnButtonHover(MouseEnterEvent evt)
+    private void OnButtonHover(MouseEnterEvent evt)
     {
         AudioManager.instance.Play("OnMouseHover");
     }
 
-    void Continue(Button button)
+    private void Continue(Button button)
     {
         if (tComplete)
         {
@@ -100,25 +116,25 @@ public class StoryContainerUI : MonoBehaviour
             button.clickable.clicked -= () => { };
             button.UnregisterCallback<MouseEnterEvent>(OnButtonHover);
 
-            if (stories.level >= stories.story.Length - 1)
+            if (stories.Level >= stories.Story.Length - 1)
             {
-                stories.level = 0;
-                team.tutorialComplete = false;
+                stories.Level = 0;
+                team.TutorialComplete = false;
                 LevelManager.instance.LoadScene(SceneIndex.EndScene);
             }
-            else if (team.tutorialComplete)
+            else if (team.TutorialComplete)
             {
                 LevelManager.instance.LoadScene(SceneIndex.MenuSelectionScene);
             }
             else
             {
-                LevelManager.instance.LoadScene(stories.story[stories.level + 1].scene);
+                LevelManager.instance.LoadScene(stories.Story[stories.Level + 1].Scene);
             }
         }
         else
         {
-            title.text = stories.story[stories.level + 1].title;
-            desc.text = stories.story[stories.level + 1].description;
+            title.text = stories.Story[stories.Level + 1].Title;
+            desc.text = stories.Story[stories.Level + 1].Description;
             tComplete = true;
         }
     }

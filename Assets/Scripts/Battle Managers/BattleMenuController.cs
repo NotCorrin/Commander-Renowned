@@ -9,7 +9,7 @@ public class BattleMenuController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        fieldController = FieldController.main;
+        fieldController = FieldController.Main;
     }
 
     // Update is called once per frame

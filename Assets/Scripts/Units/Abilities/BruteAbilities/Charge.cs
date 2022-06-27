@@ -17,7 +17,7 @@ public class Charge : QTEAbility
         if (caster.unitType == UnitType.Military || caster.unitType == UnitType.Commander)
         {
             if (caster.Ammo < Cost) return 0;
-            if (FieldController.main.GetIsVanguard(caster))
+            if (FieldController.Main.GetIsVanguard(caster))
             {
                 return 100;
             }
@@ -65,7 +65,7 @@ public class Charge : QTEAbility
 	}    
 	public override bool IsTargetValid (Unit Target, bool isPlayer)
     {
-		return (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(Target) != isPlayer);
+		return (FieldController.Main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.Main.IsUnitPlayer(Target) != isPlayer);
 	}
 
     void FireLaserAtTarget(Transform targetTransform)

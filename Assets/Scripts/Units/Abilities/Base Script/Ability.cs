@@ -75,7 +75,7 @@ public abstract class Ability : MonoBehaviour
     public abstract void UseAbility(Unit Caster, Unit Target);
     public virtual bool IsAbilityValid(Unit Caster, Unit Target) 
     {
-        return IsCasterValid(Caster) && IsTargetValid(Target, FieldController.main.IsUnitPlayer(Caster)) && Caster && Target;
+        return IsCasterValid(Caster) && IsTargetValid(Target, FieldController.Main.IsUnitPlayer(Caster)) && Caster && Target;
     }
     public abstract bool IsCasterValid(Unit Caster);
     public abstract bool IsTargetValid(Unit Target, bool isPlayer);

@@ -17,8 +17,8 @@ public class MageBuff : Ability
 	}    
 	public override bool IsTargetValid (Unit Target, bool isPlayer)
     {
-        if (isPlayer) return FieldController.main.IsUnitPlayer(Target);
-        else return (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(Target) == isPlayer);
+        if (isPlayer) return FieldController.Main.IsUnitPlayer(Target);
+        else return (FieldController.Main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.Main.IsUnitPlayer(Target) == isPlayer) && Target;
     }
     public override void UseAbility (Unit Caster, Unit Target) {
 		if (IsAbilityValid(Caster, Target)) {

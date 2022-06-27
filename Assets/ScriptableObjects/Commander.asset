@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Commander
   m_EditorClassIdentifier: 
   unitType: 2
-  UnitName: The Renowned
-  VanguardAbilities:
+  unitName: The Renowned
+  vanguardAbilities:
   - AbilityType: 0
     AbilityName: 
     AbilityDescription: 
@@ -51,7 +51,7 @@ MonoBehaviour:
     VFX1: {fileID: 7018246452246271507, guid: a7ae20c41e63aed4698231cfba45ec53, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  SupportAbilities:
+  supportAbilities:
   - AbilityType: 0
     AbilityName: 
     AbilityDescription: 
@@ -96,8 +96,8 @@ MonoBehaviour:
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  MaxHealth: 18
-  MaxAmmo: 2
-  MaxMana: 2
+  maxHealth: 18
+  maxAmmo: 2
+  maxMana: 2
   animator: {fileID: 9100000, guid: 74b3c6f72f520a248965c52c6f97a33e, type: 2}
   sprite: {fileID: -6852834596175607816, guid: 55e703a8ba1583a4987292f6d9806971, type: 3}
