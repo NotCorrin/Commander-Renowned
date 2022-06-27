@@ -33,7 +33,7 @@ public class WorldMenuController : Listener
 
     private void WinSceneDelay()
     {
-        scenarios.level++;
+        scenarios.Level++;
         LevelManager.instance.LoadScene(SceneIndex.AddMenuScene);
     }
 

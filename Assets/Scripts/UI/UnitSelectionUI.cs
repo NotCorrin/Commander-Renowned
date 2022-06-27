@@ -54,7 +54,7 @@ public class UnitSelectionUI : UISubscriber
     {
         if (parent == unit)
         {
-            if (FieldController.main.IsUnitPlayer(unit))
+            if (FieldController.Main.IsUnitPlayer(unit))
             {
                 unitSelectionContainer.style.opacity = 1;
             }

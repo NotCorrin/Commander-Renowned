@@ -2,141 +2,191 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#pragma warning disable SA1602 // EnumerationItemsMustBeDocumented
+
 public class FieldController : Listener
 {
-    public enum Position { Vanguard, SupportLeft, SupportRight };
+    private static FieldController main;
 
-    [SerializeField] Unit PlayerVanguard;
-    [SerializeField] Vector3 playerVanguardPos;
-    Vector3 PlayerVanguardPos {
-        get {
-            if(PlayerVanguard) playerVanguardPos = PlayerVanguard.transform.position;
+    [SerializeField] private Unit playerSupportLeft;
+    [SerializeField] private Unit playerSupportRight;
+    [SerializeField] private Unit playerVanguard;
+    [SerializeField] private Vector3 playerVanguardPos;
+
+    [SerializeField] private Unit enemySupportLeft;
+    [SerializeField] private Unit enemySupportRight;
+    [SerializeField] private Unit enemyVanguard;
+    [SerializeField] private Vector3 enemyVanguardPos;
+
+    private Unit[] allUnits;
+
+    private SceneController sceneController;
+    private Vector3 vanguardPos;
+    private Vector3 selectedUnitPos;
+
+    private Transform vanguardToSupport;
+    private Transform supportToVanguard;
+    private float timer;
+    [SerializeField] private float maxTime = 0.5f;
+
+    [SerializeField] private bool supportLeftUsed = false;
+    [SerializeField] private bool supportRightUsed = false;
+
+    public enum Position
+    {
+        Vanguard,
+        SupportLeft,
+        SupportRight,
+    }
+
+    public static FieldController Main => main;
+
+    private Vector3 PlayerVanguardPos
+    {
+        get
+        {
+            UpdatePlayerVanguardPos();
+
             return playerVanguardPos;
         }
     }
-    [SerializeField] Unit PlayerSupportLeft;
-    [SerializeField] Unit PlayerSupportRight;
 
-    [SerializeField] Unit EnemyVanguard;
-    [SerializeField] Vector3 enemyVanguardPos;
-    Vector3 EnemyVanguardPos {
-        get {
-            if(EnemyVanguard) enemyVanguardPos = EnemyVanguard.transform.position;
+    private Vector3 EnemyVanguardPos
+    {
+        get
+        {
+            UpdateEnemyVanguardPos();
+
             return enemyVanguardPos;
         }
     }
-    [SerializeField] Unit EnemySupportLeft;
-    [SerializeField] Unit EnemySupportRight;
 
-    SceneController sceneController;
-    Vector3 vanguardPos;
-    Vector3 selectedUnitPos;
-    
-    Transform VanguardToSupport;
-    Transform SupportToVanguard;
-    float timer;
-    public float maxTime = 0.5f;
-    public static bool disableInput;
-    List<Unit> deathNote = new List<Unit>();
-    public static bool deathListEmpty => main.deathNote.Count == 0;
-
-    [SerializeField] bool supportLeftUsed = false;
-    [SerializeField] bool supportRightUsed = false;
-
-    public static FieldController main;
-    // Start is called before the first frame update
-    void SetupUnits(List<Unit> playerUnits, List<Unit> enemyUnits)
+    public void SupportUsed(Unit unit)
     {
-        PlayerVanguard = playerUnits[0];
-        PlayerSupportLeft = playerUnits[1];
-        PlayerSupportRight = playerUnits[2];
-        EnemyVanguard = enemyUnits[0];
-        EnemySupportLeft = enemyUnits[1];
-        EnemySupportRight = enemyUnits[2];
-        if(PlayerVanguard) playerVanguardPos = PlayerVanguard.transform.position;
-        if(EnemyVanguard) enemyVanguardPos = EnemyVanguard.transform.position;
-        this.enemyVisual();
-    }
-    void Start()
-    {
-        sceneController = GetComponent<SceneController>();
-        timer = maxTime;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.G) && RoundController.phase == RoundController.Phase.PlayerSwap) {
-            SwapPlayerUnit();
-        }
-        if(timer < maxTime)
+        if (GetIsSupportLeft(unit))
         {
-            timer += Time.deltaTime;
-            if(timer >= maxTime)
-            {
-                timer = maxTime;
-                disableInput = false;
-                GameEvents.EndPhase();
-                LerpSwap();
-                //Debug.Log(VanguardToSupport);
-                //Debug.Log(SupportToVanguard);
-                if(PlayerVanguard) playerVanguardPos = PlayerVanguard.transform.position;
-                if(EnemyVanguard) enemyVanguardPos = EnemyVanguard.transform.position;
-            }
-            else LerpSwap();
+            /*
+            *
+            *
+            *
+            *
+            *
+            *
+            *
+            *
+            *
+            */
+            supportLeftUsed = true;
         }
-    }
 
-    private void LerpSwap()
-    {
-        if(VanguardToSupport) VanguardToSupport.position = Vector3.Lerp(vanguardPos, selectedUnitPos, timer/maxTime);
-        if(SupportToVanguard) SupportToVanguard.position = Vector3.Lerp(selectedUnitPos, vanguardPos, timer/maxTime);        
+        if (GetIsSupportRight(unit))
+        {
+            supportRightUsed = true;
+        }
+
+        UIEvents.AllSupportUsed(supportLeftUsed && supportRightUsed);
     }
 
     public bool IsUnitPlayer(Unit unit)
     {
-        return (unit == PlayerVanguard || unit == PlayerSupportLeft || unit == PlayerSupportRight);
+        return unit == playerVanguard || unit == playerSupportLeft || unit == playerSupportRight;
     }
+
     public List<Unit> GetAllies(Unit unit)
     {
         List<Unit> unitList = new List<Unit>();
-        if(IsUnitPlayer(unit))
+
+        int checkRange = IsUnitPlayer(unit) ? 0 : 3;
+        for (int i = 0; i < 3; i++)
         {
-            if (PlayerVanguard) unitList.Add(PlayerVanguard);
-            if (PlayerSupportLeft) unitList.Add(PlayerSupportLeft);
-            if (PlayerSupportRight) unitList.Add(PlayerSupportRight);
+            if (allUnits[i])
+            {
+                unitList.Add(allUnits[i]);
+            }
+        }
+
+        if (IsUnitPlayer(unit))
+        {
+            if (playerVanguard)
+            {
+                unitList.Add(playerVanguard);
+            }
+
+            if (playerSupportLeft)
+            {
+                unitList.Add(playerSupportLeft);
+            }
+
+            if (playerSupportRight)
+            {
+                unitList.Add(playerSupportRight);
+            }
         }
         else
         {
-            if (EnemyVanguard) unitList.Add(EnemyVanguard);
-            if (EnemySupportLeft) unitList.Add(EnemySupportLeft);
-            if (EnemySupportRight) unitList.Add(EnemySupportRight);
+            if (enemyVanguard)
+            {
+                unitList.Add(enemyVanguard);
+            }
+
+            if (enemySupportLeft)
+            {
+                unitList.Add(enemySupportLeft);
+            }
+
+            if (enemySupportRight)
+            {
+                unitList.Add(enemySupportRight);
+            }
         }
+
         return unitList;
     }
+
     public bool IsUnitActive(Unit unit)
     {
-        if(unit == PlayerSupportLeft && supportLeftUsed || unit == PlayerSupportRight && supportRightUsed) return false;
+        if ((unit == playerSupportLeft && supportLeftUsed) || (unit == playerSupportRight && supportRightUsed))
+        {
+            return false;
+        }
 
-        return (unit == PlayerSupportLeft && RoundController.phase == RoundController.Phase.PlayerSupport)
-        || (unit == PlayerSupportRight && RoundController.phase == RoundController.Phase.PlayerSupport)
-        || (unit == PlayerVanguard && RoundController.phase == RoundController.Phase.PlayerVanguard)
-        || (unit == EnemySupportLeft && RoundController.phase == RoundController.Phase.EnemySupport)
-        || (unit == EnemySupportRight && RoundController.phase == RoundController.Phase.EnemySupport)
-        || (unit == EnemyVanguard && RoundController.phase == RoundController.Phase.EnemyVangaurd);
+        return (unit == playerSupportLeft && RoundController.Phase == RoundController.PhaseType.PlayerSupport)
+        || (unit == playerSupportRight && RoundController.Phase == RoundController.PhaseType.PlayerSupport)
+        || (unit == playerVanguard && RoundController.Phase == RoundController.PhaseType.PlayerVanguard)
+        || (unit == enemySupportLeft && RoundController.Phase == RoundController.PhaseType.EnemySupport)
+        || (unit == enemySupportRight && RoundController.Phase == RoundController.PhaseType.EnemySupport)
+        || (unit == enemyVanguard && RoundController.Phase == RoundController.PhaseType.EnemyVangaurd);
     }
 
-    public List<Unit> GetValidTargets(Unit Caster, Ability ability)
+    public List<Unit> GetValidTargets(Unit caster, Ability ability)
     {
-        if(!Caster) {Debug.Log("No Caster. wtf."); return null;}
-        if (!ability) { Debug.LogError("No ability wtf"); return null; }
+        if (!caster)
+        {
+            Debug.Log("No Caster wtf");
+            return null;
+        }
+
+        if (!ability)
+        {
+            Debug.LogError("No ability wtf");
+            return null;
+        }
+
         List<Unit> unitList = new List<Unit>();
-        if(ability.IsAbilityValid(Caster, PlayerVanguard)) unitList.Add(PlayerVanguard);
-        if(ability.IsAbilityValid(Caster, PlayerSupportLeft)) unitList.Add(PlayerSupportLeft);
-        if(ability.IsAbilityValid(Caster, PlayerSupportRight)) unitList.Add(PlayerSupportRight);
-        if(ability.IsAbilityValid(Caster, EnemyVanguard)) unitList.Add(EnemyVanguard);
-        if(ability.IsAbilityValid(Caster, EnemySupportLeft)) unitList.Add(EnemySupportLeft);
-        if(ability.IsAbilityValid(Caster, EnemySupportRight)) unitList.Add(EnemySupportRight);
+
+        foreach (Unit unit in allUnits)
+        {
+            if (!unit)
+            {
+                continue;
+            }
+
+            if (ability.IsAbilityValid(caster, unit))
+            {
+                unitList.Add(unit);
+            }
+        }
+
         return unitList;
     }
 
@@ -145,43 +195,170 @@ public class FieldController : Listener
         switch (position)
         {
             case Position.SupportLeft:
+            {
+                if (isPlayer)
                 {
-                    if (isPlayer) return PlayerSupportLeft;
-                    else return EnemySupportLeft;
+                    return playerSupportLeft;
                 }
+
+                return enemySupportLeft;
+            }
+
             case Position.SupportRight:
+            {
+                if (isPlayer)
                 {
-                    if (isPlayer) return PlayerSupportRight;
-                    else return EnemySupportRight;
+                    return playerSupportRight;
                 }
+
+                return enemySupportRight;
+            }
+
             default:
+            {
+                if (isPlayer)
                 {
-                    if (isPlayer) return PlayerVanguard;
-                    else return EnemyVanguard;
+                    return playerVanguard;
                 }
+
+                return enemyVanguard;
+            }
         }
     }
 
     public Position GetPosition(Unit unit)
     {
-        if (GetIsSupportLeft(unit)) return Position.SupportLeft;
-        else if (GetIsSupportRight(unit)) return Position.SupportRight;
-        else return Position.Vanguard;
+        if (GetIsSupportLeft(unit))
+        {
+            return Position.SupportLeft;
+        }
+        else if (GetIsSupportRight(unit))
+        {
+            return Position.SupportRight;
+        }
+        else
+        {
+            return Position.Vanguard;
+        }
     }
 
-    public bool GetIsVanguard(Unit unit)
+    public bool GetIsVanguard(Unit unit) => unit == playerVanguard || unit == enemyVanguard;
+
+    public bool GetIsSupportLeft(Unit unit) => unit == playerSupportLeft || unit == enemySupportLeft;
+
+    public bool GetIsSupportRight(Unit unit) => unit == playerSupportRight || unit == enemySupportRight;
+
+    public void SwapPlayerUnit(Unit chosenUnit = null)
     {
-        return (unit == PlayerVanguard || unit == EnemyVanguard);
+        if (!chosenUnit)
+        {
+            chosenUnit = sceneController.selectedUnit;
+        }
+
+        vanguardPos = PlayerVanguardPos;
+        selectedUnitPos = chosenUnit.transform.position;
+
+        if (playerVanguard)
+        {
+            vanguardToSupport = playerVanguard.transform;
+        }
+        else
+        {
+            vanguardToSupport = null;
+        }
+
+        supportToVanguard = chosenUnit.transform;
+        timer = 0;
+
+        // chosenUnit.transform.position = vanguardPos;
+        // PlayerVanguard.transform.position = selectedUnitPos;
+        if (GetIsSupportLeft(chosenUnit))
+        {
+            Unit temp = playerSupportLeft;
+            playerSupportLeft = playerVanguard;
+            playerVanguard = temp;
+
+            // Debug.Log("Player Vanguard: " + PlayerVanguard.transform.position);
+            // Debug.Log("Player Support Left: " + PlayerSupportLeft.transform.position);
+            // Debug.Log("Player Support Right: " + PlayerSupportRight.transform.position);
+        }
+        else if (GetIsSupportRight(chosenUnit))
+        {
+            Unit temp = playerSupportRight;
+            playerSupportRight = playerVanguard;
+            playerVanguard = temp;
+
+            // Debug.Log("Player Vanguard: " + PlayerVanguard.transform.position);
+            // Debug.Log("Player Support Left: " + PlayerSupportLeft.transform.position);
+            // Debug.Log("Player Support Right: " + PlayerSupportRight.transform.position);
+        }
+        else
+        {
+            Debug.Log("what the fuck where did the unit go");
+        }
     }
 
-    public bool GetIsSupportLeft(Unit unit)
+    public void SwapEnemyUnit(Unit chosenUnit = null)
     {
-        return (unit == PlayerSupportLeft || unit == EnemySupportLeft);
+        Debug.Log("swapping enemy units B)");
+        if (!chosenUnit)
+        {
+            chosenUnit = sceneController.selectedUnit;
+        }
+
+        vanguardPos = EnemyVanguardPos;
+        selectedUnitPos = chosenUnit.transform.position;
+
+        if (enemyVanguard)
+        {
+            vanguardToSupport = enemyVanguard.transform;
+        }
+        else
+        {
+            vanguardToSupport = null;
+        }
+
+        supportToVanguard = chosenUnit.transform;
+        timer = 0;
+
+        // chosenUnit.transform.position = vanguardPos;
+        // EnemyVanguard.transform.position = selectedUnitPos;
+        if (GetIsSupportLeft(chosenUnit))
+        {
+            Unit temp = enemySupportLeft;
+            enemySupportLeft = enemyVanguard;
+            enemyVanguard = temp;
+
+            // Debug.Log("Enemy Vanguard: " + PlayerVanguard.transform.position);
+            // Debug.Log("Enemy Support Left: " + PlayerSupportLeft.transform.position);
+            // Debug.Log("Enemy Support Right: " + PlayerSupportRight.transform.position);
+        }
+        else if (GetIsSupportRight(chosenUnit))
+        {
+            Unit temp = enemySupportRight;
+            enemySupportRight = enemyVanguard;
+            enemyVanguard = temp;
+
+            // Debug.Log("Enemy Vanguard: " + PlayerVanguard.transform.position);
+            // Debug.Log("Enemy Support Left: " + PlayerSupportLeft.transform.position);
+            // Debug.Log("Enemy Support Right: " + PlayerSupportRight.transform.position);
+        }
+
+        // GameEvents.SetPhase(RoundController.Phase.PlayerSupport);
     }
 
-    public bool GetIsSupportRight(Unit unit)
+    public void EnemyVisual()
     {
-        return (unit == PlayerSupportRight || unit == EnemySupportRight);
+        enemyVanguard.UpdateEnemyVisual();
+        if (enemySupportLeft)
+        {
+            enemySupportLeft.UpdateEnemyVisual();
+        }
+
+        if (enemySupportRight)
+        {
+            enemySupportRight.UpdateEnemyVisual();
+        }
     }
 
     protected override void SubscribeListeners()
@@ -198,139 +375,158 @@ public class FieldController : Listener
         GameEvents.OnSetupUnits += SetupUnits;
     }
 
-    private void Kill(Unit unit)
+    private void CheckValid(Unit caster, Ability ability, Unit unit, List<Unit> unitList)
     {
-        //vanguardPos = PlayerVanguard.transform.position;
-        deathNote.Add(unit);
-        if(unit == PlayerSupportLeft) PlayerSupportLeft = null;
-        if(unit == PlayerSupportRight) PlayerSupportRight = null;
-        if(unit == PlayerVanguard) PlayerVanguard = null;
-        if(unit == EnemySupportLeft) EnemySupportLeft = null;
-        if(unit == EnemySupportRight) EnemySupportRight = null;
-        if(unit == EnemyVanguard) EnemyVanguard = null;
-        if(!PlayerSupportLeft && !PlayerSupportRight && !PlayerVanguard) GameEvents.GameEnd(false);
-        else if(!EnemySupportLeft && !EnemySupportRight && !EnemyVanguard) GameEvents.GameEnd(true);
-        UIEvents.UnitSelected(null);
-        Debug.LogWarning("this should happen first");
-        //https://i.kym-cdn.com/entries/icons/original/000/034/833/snapchat_kill.jpg
-    }
-
-    public void ActivateKill()
-    {
-        foreach (Unit unit in deathNote)
+        if (ability.IsAbilityValid(caster, unit))
         {
-            //if(unit) Destroy(unit.gameObject);
-            Debug.LogWarning("this should happen second");
+            unitList.Add(unit);
         }
     }
 
-    private void ResetSupportUsed(RoundController.Phase phase)
+    private void UpdatePlayerVanguardPos()
+    {
+        if (playerVanguard)
+        {
+            playerVanguardPos = playerVanguard.transform.position;
+        }
+    }
+
+    private void UpdateEnemyVanguardPos()
+    {
+        if (enemyVanguard)
+        {
+            enemyVanguardPos = enemyVanguard.transform.position;
+        }
+    }
+
+    private void SetupUnits(List<Unit> playerUnits, List<Unit> enemyUnits)
+    {
+        playerVanguard = playerUnits[0];
+        playerSupportLeft = playerUnits[1];
+        playerSupportRight = playerUnits[2];
+        enemyVanguard = enemyUnits[0];
+        enemySupportLeft = enemyUnits[1];
+        enemySupportRight = enemyUnits[2];
+
+        allUnits = new Unit[] { playerVanguard, playerSupportLeft, playerSupportRight, enemyVanguard, enemySupportLeft, enemySupportRight };
+
+        UpdatePlayerVanguardPos();
+        UpdateEnemyVanguardPos();
+
+        EnemyVisual();
+    }
+
+    private void Start()
+    {
+        sceneController = GetComponent<SceneController>();
+        timer = maxTime;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.G) && RoundController.Phase == RoundController.PhaseType.PlayerSwap)
+        {
+            SwapPlayerUnit();
+        }
+
+        if (timer < maxTime)
+        {
+            timer += Time.deltaTime;
+            if (timer >= maxTime)
+            {
+                timer = maxTime;
+                GameEvents.EndPhase();
+                LerpSwap();
+                UpdatePlayerVanguardPos();
+                UpdateEnemyVanguardPos();
+            }
+            else
+            {
+                LerpSwap();
+            }
+        }
+    }
+
+    private void LerpSwap()
+    {
+        if (vanguardToSupport)
+        {
+            vanguardToSupport.position = Vector3.Lerp(vanguardPos, selectedUnitPos, timer / maxTime);
+        }
+
+        if (supportToVanguard)
+        {
+            supportToVanguard.position = Vector3.Lerp(selectedUnitPos, vanguardPos, timer / maxTime);
+        }
+    }
+
+    private void Kill(Unit unit)
+    {
+        if (unit == playerSupportLeft)
+        {
+            playerSupportLeft = null;
+        }
+
+        if (unit == playerSupportRight)
+        {
+            playerSupportRight = null;
+        }
+
+        if (unit == playerVanguard)
+        {
+            playerVanguard = null;
+        }
+
+        if (unit == enemySupportLeft)
+        {
+            enemySupportLeft = null;
+        }
+
+        if (unit == enemySupportRight)
+        {
+            enemySupportRight = null;
+        }
+
+        if (unit == enemyVanguard)
+        {
+            enemyVanguard = null;
+        }
+
+        if (!playerSupportLeft && !playerSupportRight && !playerVanguard)
+        {
+            GameEvents.GameEnd(false);
+        }
+        else if (!enemySupportLeft && !enemySupportRight && !enemyVanguard)
+        {
+            GameEvents.GameEnd(true);
+        }
+
+        UIEvents.UnitSelected(null);
+
+        // https://i.kym-cdn.com/entries/icons/original/000/034/833/snapchat_kill.jpg
+    }
+
+    private void ResetSupportUsed(RoundController.PhaseType phase)
     {
         supportLeftUsed = false;
         supportRightUsed = false;
 
-        if(RoundController.isPlayerPhase)
+        if (RoundController.IsPlayerPhase)
         {
-            supportLeftUsed = !PlayerSupportLeft;
-            supportRightUsed = !PlayerSupportRight;
+            supportLeftUsed = !playerSupportLeft;
+            supportRightUsed = !playerSupportRight;
         }
-        if(phase != RoundController.Phase.PlayerSupport) UIEvents.AllSupportUsed(false);
-    }
 
-    public void SupportUsed(Unit unit)
-    {
-        if(GetIsSupportLeft(unit)) supportLeftUsed = true;
-        if(GetIsSupportRight(unit)) supportRightUsed = true;
-        UIEvents.AllSupportUsed(supportLeftUsed && supportRightUsed);
-        //if(supportLeftUsed && supportRightUsed) GameEvents.EndPhase();
+        if (phase != RoundController.PhaseType.PlayerSupport)
+        {
+            UIEvents.AllSupportUsed(false);
+        }
     }
 
     private void Awake()
     {
         main = this;
     }
-
-    public void SwapPlayerUnit(Unit chosenUnit = null)
-    {
-        if(!chosenUnit) chosenUnit = sceneController.selectedUnit;
-        vanguardPos = PlayerVanguardPos;
-        selectedUnitPos = chosenUnit.transform.position;
-
-        if (PlayerVanguard) VanguardToSupport = PlayerVanguard.transform;
-        else VanguardToSupport = null;
-        SupportToVanguard = chosenUnit.transform;
-        disableInput = true;
-        timer = 0;
-        //chosenUnit.transform.position = vanguardPos;
-        //PlayerVanguard.transform.position = selectedUnitPos;
-
-        if (GetIsSupportLeft(chosenUnit))
-        {
-            Unit temp = PlayerSupportLeft;
-            PlayerSupportLeft = PlayerVanguard;
-            PlayerVanguard = temp;
-
-            //Debug.Log("Player Vanguard: " + PlayerVanguard.transform.position);
-            //Debug.Log("Player Support Left: " + PlayerSupportLeft.transform.position);
-            //Debug.Log("Player Support Right: " + PlayerSupportRight.transform.position);
-        }
-        else if (GetIsSupportRight(chosenUnit))
-        {
-            Unit temp = PlayerSupportRight;
-            PlayerSupportRight = PlayerVanguard;
-            PlayerVanguard = temp;
-
-            //Debug.Log("Player Vanguard: " + PlayerVanguard.transform.position);
-            //Debug.Log("Player Support Left: " + PlayerSupportLeft.transform.position);
-            //Debug.Log("Player Support Right: " + PlayerSupportRight.transform.position);
-        }
-        else Debug.Log("what the fuck where did the unit go");
-        //GameEvents.SetPhase(RoundController.Phase.EnemySwap);
-    }
-
-    public void SwapEnemyUnit(Unit chosenUnit = null)
-    {
-        Debug.Log("swapping enemy units B)");
-        if(!chosenUnit) chosenUnit = sceneController.selectedUnit;
-        vanguardPos = EnemyVanguardPos;
-        selectedUnitPos = chosenUnit.transform.position;
-        
-        if(EnemyVanguard) VanguardToSupport = EnemyVanguard.transform;
-        else VanguardToSupport = null;
-        SupportToVanguard = chosenUnit.transform;
-        disableInput = true;
-        timer = 0;
-        //chosenUnit.transform.position = vanguardPos;
-        //EnemyVanguard.transform.position = selectedUnitPos;
-
-        if (GetIsSupportLeft(chosenUnit))
-        {
-            Unit temp = EnemySupportLeft;
-            EnemySupportLeft = EnemyVanguard;
-            EnemyVanguard = temp;
-
-            //Debug.Log("Enemy Vanguard: " + PlayerVanguard.transform.position);
-            //Debug.Log("Enemy Support Left: " + PlayerSupportLeft.transform.position);
-            //Debug.Log("Enemy Support Right: " + PlayerSupportRight.transform.position);
-        }
-        else if (GetIsSupportRight(chosenUnit))
-        {
-            Unit temp = EnemySupportRight;
-            EnemySupportRight = EnemyVanguard;
-            EnemyVanguard = temp;
-
-            //Debug.Log("Enemy Vanguard: " + PlayerVanguard.transform.position);
-            //Debug.Log("Enemy Support Left: " + PlayerSupportLeft.transform.position);
-            //Debug.Log("Enemy Support Right: " + PlayerSupportRight.transform.position);
-        }
-        //GameEvents.SetPhase(RoundController.Phase.PlayerSupport);
-    }
-
-    public void enemyVisual()
-    {
-        EnemyVanguard.UpdateEnemyVisual();
-        if(EnemySupportLeft) EnemySupportLeft.UpdateEnemyVisual();
-        if(EnemySupportRight) EnemySupportRight.UpdateEnemyVisual();
-    }
-
 }
+
+#pragma warning restore SA1602 // EnumerationItemsMustBeDocumented

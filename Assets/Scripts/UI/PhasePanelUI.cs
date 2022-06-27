@@ -132,7 +132,7 @@ public class PhasePanelUI : UISubscriber
         return newPhase.ToString();
     }
 
-    private void OnPhaseChange(RoundController.Phase phase)
+    private void OnPhaseChange(RoundController.PhaseType phase)
     {
         // if (WorldMenuController.End) return;
         currentPhaseContainer.label.style.left = new Length(-400, LengthUnit.Pixel);
@@ -162,7 +162,7 @@ public class PhasePanelUI : UISubscriber
         futureArrow.fill.style.left = nextArrowLeft;
         futureArrow.fill.style.opacity = 1f;
 
-        if (RoundController.phase.ToString().Contains("Player"))
+        if (RoundController.Phase.ToString().Contains("Player"))
         {
             currentPhaseContainer.fill.style.unityBackgroundImageTintColor = new StyleColor(new Color(12f / 255f, 241f / 255f, 1f, 0.69f));
         }
@@ -176,9 +176,9 @@ public class PhasePanelUI : UISubscriber
     {
         mainContainer.UnregisterCallback<TransitionEndEvent>(OnTransitionEnd);
 
-        currentPhaseContainer.label.text = AddSpacesToPhase(RoundController.phase.ToString()) + " Phase";
-        nextPhaseContainer.label.text = AddSpacesToPhase(((RoundController.Phase)(((int)RoundController.phase + 1) % 6)).ToString()) + " Phase";
-        futurePhaseContainer.label.text = AddSpacesToPhase(((RoundController.Phase)(((int)RoundController.phase + 2) % 6)).ToString()) + " Phase";
+        currentPhaseContainer.label.text = AddSpacesToPhase(RoundController.Phase.ToString()) + " Phase";
+        nextPhaseContainer.label.text = AddSpacesToPhase(((RoundController.PhaseType)(((int)RoundController.Phase + 1) % 6)).ToString()) + " Phase";
+        futurePhaseContainer.label.text = AddSpacesToPhase(((RoundController.PhaseType)(((int)RoundController.Phase + 2) % 6)).ToString()) + " Phase";
 
         SetAllTransitionTimes(0f);
 

@@ -36,37 +36,37 @@ public class StoryContainerUI : UISubscriber
             uiDocument = GetComponent<UIDocument>();
         }
 
-        Debug.Log(stories.level);
-        Debug.Log(stories.story.Length);
+        Debug.Log(stories.Level);
+        Debug.Log(stories.Story.Length);
         Scenario scenario;
-        if (stories.level >= stories.story.Length - 1 && !addUnit)
+        if (stories.Level >= stories.Story.Length - 1 && !addUnit)
         {
             addUnit = true;
         }
 
-        tComplete = team.tutorialComplete;
+        tComplete = team.TutorialComplete;
         if (tComplete)
         {
             if (addUnit)
             {
-                scenario = stories.story[stories.level];
+                scenario = stories.Story[stories.Level];
             }
             else
             {
-                scenario = stories.story[stories.level + 1];
+                scenario = stories.Story[stories.Level + 1];
             }
 
-            title.text = scenario.title;
-            desc.text = addUnit ? scenario.windescription : scenario.description;
+            title.text = scenario.Title;
+            desc.text = addUnit ? scenario.Windescription : scenario.Description;
         }
         else
         {
-            scenario = stories.story[stories.level + 1];
+            scenario = stories.Story[stories.Level + 1];
             title.text = "Tutorial";
-            desc.text = stories.tutorialText;
+            desc.text = stories.TutorialText;
         }
 
-        if (scenario.winunit.Length <= 0 || !addUnit)
+        if (scenario.Winunit.Length <= 0 || !addUnit)
         {
             Button continueButton = new ();
             continueButton.text = "Continue";
@@ -82,7 +82,7 @@ public class StoryContainerUI : UISubscriber
         }
         else
         {
-            foreach (UnitScriptableObject unit in scenario.winunit)
+            foreach (UnitScriptableObject unit in scenario.Winunit)
             {
                 Button unitButton = new ();
                 unitButton.text = unit.name;
@@ -94,7 +94,7 @@ public class StoryContainerUI : UISubscriber
                     unitButton.clickable.clicked -= () => { };
                     unitButton.UnregisterCallback<MouseEnterEvent>(OnButtonHover);
                     AudioManager.instance.Play("OnMousePressed");
-                    team.units.Add(unit);
+                    team.Units.Add(unit);
                     LevelManager.instance.LoadScene(SceneIndex.MenuSelectionScene);
                 };
 
@@ -116,25 +116,25 @@ public class StoryContainerUI : UISubscriber
             button.clickable.clicked -= () => { };
             button.UnregisterCallback<MouseEnterEvent>(OnButtonHover);
 
-            if (stories.level >= stories.story.Length - 1)
+            if (stories.Level >= stories.Story.Length - 1)
             {
-                stories.level = 0;
-                team.tutorialComplete = false;
+                stories.Level = 0;
+                team.TutorialComplete = false;
                 LevelManager.instance.LoadScene(SceneIndex.EndScene);
             }
-            else if (team.tutorialComplete)
+            else if (team.TutorialComplete)
             {
                 LevelManager.instance.LoadScene(SceneIndex.MenuSelectionScene);
             }
             else
             {
-                LevelManager.instance.LoadScene(stories.story[stories.level + 1].scene);
+                LevelManager.instance.LoadScene(stories.Story[stories.Level + 1].Scene);
             }
         }
         else
         {
-            title.text = stories.story[stories.level + 1].title;
-            desc.text = stories.story[stories.level + 1].description;
+            title.text = stories.Story[stories.Level + 1].Title;
+            desc.text = stories.Story[stories.Level + 1].Description;
             tComplete = true;
         }
     }
