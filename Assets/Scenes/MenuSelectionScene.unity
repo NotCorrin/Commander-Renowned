@@ -157,7 +157,7 @@ MonoBehaviour:
   unitCardUI: {fileID: 9197481963319205126, guid: 10f325b845b6b4f4994786d03d06c113, type: 3}
   unitCardCollectionUI: {fileID: 9197481963319205126, guid: 576b1908738009c41bcce117c2add689, type: 3}
   teamScriptableObject: {fileID: 11400000, guid: b7dab2c6d967bb64dbde10a52bb78ed4, type: 2}
-  stories: {fileID: 11400000, guid: f829df91173d761489da7c955a1523b6, type: 2}
+  stories: {fileID: 11400000, guid: eb621805b69bbfc4bb18fae8fffe08da, type: 2}
 --- !u!114 &367115552
 MonoBehaviour:
   m_ObjectHideFlags: 0

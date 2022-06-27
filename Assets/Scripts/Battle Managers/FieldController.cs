@@ -65,17 +65,6 @@ public class FieldController : Listener
     {
         if (GetIsSupportLeft(unit))
         {
-            /*
-            *
-            *
-            *
-            *
-            *
-            *
-            *
-            *
-            *
-            */
             supportLeftUsed = true;
         }
 
@@ -99,44 +88,9 @@ public class FieldController : Listener
         int checkRange = IsUnitPlayer(unit) ? 0 : 3;
         for (int i = 0; i < 3; i++)
         {
-            if (allUnits[i])
+            if (allUnits[i + checkRange])
             {
-                unitList.Add(allUnits[i]);
-            }
-        }
-
-        if (IsUnitPlayer(unit))
-        {
-            if (playerVanguard)
-            {
-                unitList.Add(playerVanguard);
-            }
-
-            if (playerSupportLeft)
-            {
-                unitList.Add(playerSupportLeft);
-            }
-
-            if (playerSupportRight)
-            {
-                unitList.Add(playerSupportRight);
-            }
-        }
-        else
-        {
-            if (enemyVanguard)
-            {
-                unitList.Add(enemyVanguard);
-            }
-
-            if (enemySupportLeft)
-            {
-                unitList.Add(enemySupportLeft);
-            }
-
-            if (enemySupportRight)
-            {
-                unitList.Add(enemySupportRight);
+                unitList.Add(allUnits[i + checkRange]);
             }
         }
 

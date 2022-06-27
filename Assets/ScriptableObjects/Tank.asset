@@ -35,7 +35,7 @@ MonoBehaviour:
 
       Deals 2 Damage to all enemies.'
     Cost: 1
-    Damage: 2
+    Damage: 200
     StatBoost: 0
     Variation: 1
     ForceTarget: 0
