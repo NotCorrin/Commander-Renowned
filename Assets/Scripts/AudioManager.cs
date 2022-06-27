@@ -98,15 +98,15 @@ public class AudioManager : Listener
         s.source.Stop();
     }
 
-    public void PlayPhaseMusic(RoundController.Phase phase)
+    public void PlayPhaseMusic(RoundController.PhaseType phase)
     {
         switch (phase)
         {
-            case RoundController.Phase.PlayerVanguard:
+            case RoundController.PhaseType.PlayerVanguard:
                 FadeInSound($"{currentMusic}V");
                 FadeOutSound($"{currentMusic}S");
                 break;
-            case RoundController.Phase.PlayerSwap:
+            case RoundController.PhaseType.PlayerSwap:
                 FadeInSound($"{currentMusic}S");
                 FadeOutSound($"{currentMusic}V");
                 break;
