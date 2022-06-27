@@ -2,22 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Attack : QTEAbility
+public class OldAttack : QTEAbility
 {
-    [SerializeField] private float secondShotDelay = 0.2f;
-
-    private int finalDamage;
-
-    private bool secondShotTrigger;
-
-    private float secondShotTimer;
-
     public override void SetupParams(AbilitySetup setup)
     {
         base.SetupParams(setup);
         if (!VFX1)
         {
             VFX1 = Resources.Load("CustomLasers/Soldier/Soldier_Laser") as GameObject;
+        }
+
+        if (!VFX2)
+        {
+            VFX2 = Resources.Load("CustomLasers/Soldier/Shield") as GameObject;
         }
 
         IsMagic = false;
@@ -41,12 +38,6 @@ public class Attack : QTEAbility
         }
     }
 
-    public override void UseAbility(Unit Caster, Unit Target)
-    {
-        GameEvents.AccuracyUp(Caster, StatBoost);
-        base.UseAbility(Caster, Target);
-    }
-
     public override bool IsCasterValid(Unit caster)
     {
         return caster.Ammo >= Cost;
@@ -59,27 +50,32 @@ public class Attack : QTEAbility
 
     protected override void AbilityUsed(GameManager.QTEResult result)
     {
-        finalDamage = Damage;
+        int finalDefense = StatBoost;
 
         switch (result)
         {
             case GameManager.QTEResult.Critical:
                 {
-                    finalDamage += Variation;
+                    finalDefense += Variation;
                     break;
                 }
 
             case GameManager.QTEResult.Miss:
                 {
-                    finalDamage -= Variation;
+                    finalDefense = Mathf.Max(0, finalDefense - Variation);
                     break;
                 }
         }
 
-        AttackWithLaser(Mathf.FloorToInt((float)finalDamage / 2));
+        if (VFX2)
+        {
+            _ = Instantiate(VFX2, transform);
+        }
 
-        secondShotTimer = secondShotDelay;
-        secondShotTrigger = true;
+        GameEvents.AttackUp(Caster, finalDefense);
+
+        GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, Damage));
+        FireLaserAtTarget(Target.transform);
 
         GameEvents.UseAmmo(Caster, Cost);
     }
@@ -95,35 +91,6 @@ public class Attack : QTEAbility
         {
             GameObject spawnedLaser = Instantiate(VFX1, transform);
             spawnedLaser.transform.LookAt(targetTransform);
-
-            spawnedLaser.TryGetComponent<FullAutoFireAtTarget>(out FullAutoFireAtTarget magicMissile);
-            if (magicMissile)
-            {
-                Debug.Log(magicMissile);
-                magicMissile.SetSmallMissilesHoming(targetTransform);
-                magicMissile.SetBigMissilesHoming(targetTransform);
-            }
-        }
-    }
-
-    private void AttackWithLaser(int damage)
-    {
-        if (Target)
-        {
-            FireLaserAtTarget(Target.transform);
-            GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, damage));
-        }
-    }
-
-    private void Update()
-    {
-        if (secondShotTrigger && Target)
-        {
-            if ((secondShotTimer -= Time.deltaTime) <= 0)
-            {
-                AttackWithLaser(Mathf.CeilToInt((float)finalDamage / 2));
-                secondShotTrigger = false;
-            }
         }
     }
 }

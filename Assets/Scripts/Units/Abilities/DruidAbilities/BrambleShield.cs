@@ -4,75 +4,84 @@ using UnityEngine;
 
 public class BrambleShield : QTEAbility
 {
-    [SerializeField] int CostVariation = -1;
+    [SerializeField] private int costVariation = -1;
+
+    public override int GetMoveWeight(Unit caster)
+    {
+        int healthWeight = Mathf.FloorToInt((1 - ((float)caster.Health / (float)caster.MaxHealth)) * 30);
+        int manaWeight = 0;
+        if (!(caster.UnitType == UnitType.Mage || caster.UnitType == UnitType.Commander))
+        {
+            return 0;
+        }
+        else if (caster.Mana >= caster.MaxMana * 0.8f)
+        {
+            return healthWeight - 10;
+        }
+        else
+        {
+            manaWeight = Mathf.FloorToInt((1 - ((float)caster.Mana / (float)caster.MaxMana)) * 60);
+        }
+
+        return ((healthWeight + manaWeight) / 2) + Random.Range(-10, 10);
+    }
 
     public override void SetupParams(AbilitySetup setup)
     {
         base.SetupParams(setup);
-        if(!VFX1) VFX1 = Resources.Load("CustomLasers/Mage/MageFlare") as GameObject;
-        isMagic = true;
+        if (!VFX1)
+        {
+            VFX1 = Resources.Load("CustomLasers/Mage/MageFlare") as GameObject;
+        }
+
+        IsMagic = true;
     }
 
-    public override bool IsCasterValid (Unit Caster)
+    public override bool IsCasterValid(Unit caster)
     {
-		return true;
-	}    
-    public override bool IsTargetValid (Unit Target, bool isPlayer)
+        return true;
+    }
+
+    public override bool IsTargetValid(Unit target, bool isPlayer)
     {
-		return (FieldController.Main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.Main.IsUnitPlayer(Target) != isPlayer);
-	}
+        return (FieldController.Main.GetPosition(target) == FieldController.Position.Vanguard) && (FieldController.Main.IsUnitPlayer(target) != isPlayer);
+    }
 
     protected override GameManager.QTEType GetQTEType()
     {
-        return GameManager.QTEType.shrinkingCircle;
-    }
-
-    public override int GetMoveWeight (Unit caster)
-    {
-        int HealthWeight = Mathf.FloorToInt((1 - ((float)caster.Health / (float)caster.MaxHealth)) * 30);
-        int ManaWeight = 0;
-        if (!(caster.unitType == UnitType.Mage || caster.unitType == UnitType.Commander))
-        {
-            return 0;
-        }
-        else if (caster.Mana >= caster.MaxMana * 0.8f )
-        {
-            return HealthWeight - 10;
-        }
-        else
-        {
-            ManaWeight = Mathf.FloorToInt((1 - ((float)caster.Mana / (float)caster.MaxMana)) * 60);
-        }
-
-        return (HealthWeight + ManaWeight)/2 + Random.Range(-10, 10);
+        return GameManager.QTEType.TimingBar;
     }
 
     protected override void AbilityUsed(GameManager.QTEResult result)
     {
-        int FinalThorns = StatBoost;
-        int FinalCost = Cost;
+        int finalThorns = StatBoost;
+        int finalCost = Cost;
 
         switch (result)
         {
             case GameManager.QTEResult.Critical:
                 {
-                    FinalThorns = FinalThorns + Variation;
+                    finalThorns = finalThorns + Variation;
                     break;
                 }
+
             case GameManager.QTEResult.Miss:
                 {
-                    FinalThorns = Mathf.Max(0, FinalThorns - Variation);
-                    FinalCost = Mathf.Min(-1, FinalCost - CostVariation);
+                    finalThorns = Mathf.Max(0, finalThorns - Variation);
+                    finalCost = Mathf.Min(-1, finalCost - costVariation);
                     break;
                 }
         }
 
-        if (VFX1) Instantiate(VFX1, transform);
-        GameEvents.DefenseUp(Caster, 2);
-        GameEvents.ThornsUp(Caster, FinalThorns);
-        //GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, Damage));
-        GameEvents.onUseMana(Caster, FinalCost);
-    }
+        if (VFX1)
+        {
+            _ = Instantiate(VFX1, transform);
+        }
 
-    
+        GameEvents.DefenseUp(Caster, 2);
+        GameEvents.ThornsUp(Caster, finalThorns);
+
+        // GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, Damage));
+        GameEvents.onUseMana(Caster, finalCost);
+    }
 }

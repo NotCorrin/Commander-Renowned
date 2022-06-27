@@ -443,7 +443,7 @@ public class ActionbarUI : UISubscriber
 
             Ability newAbility = selectedUnit.SupportAbilities[newSelectedAbility - 1];
             List<Unit> validTargets = FieldController.Main.GetValidTargets(selectedUnit, newAbility);
-            if ((validTargets.Count == 1 || newAbility.forceTarget == TargetMode.False) && newAbility.forceTarget != TargetMode.True)
+            if ((validTargets.Count == 1 || newAbility.ForceTarget == TargetMode.False) && newAbility.ForceTarget != TargetMode.True)
             {
                 GameEvents.UseAbility(selectedUnit, validTargets[0], newSelectedAbility);
             }
@@ -659,15 +659,15 @@ public class ActionbarUI : UISubscriber
         if (abilitiesList[0])
         {
             abilityOne.activeName.text = abilitiesList[0].AbilityName;
-            abilityOne.activeCost.text = abilitiesList[0].xCost ? "X" : Mathf.Abs(abilitiesList[0].Cost) + string.Empty;
+            abilityOne.activeCost.text = abilitiesList[0].XCost ? "X" : Mathf.Abs(abilitiesList[0].Cost) + string.Empty;
             abilityOne.activeDesc.text = abilitiesList[0].AbilityDescription;
 
             abilityOne.hoverName.text = abilitiesList[0].AbilityName;
-            abilityOne.hoverCost.text = abilitiesList[0].xCost ? "X" : Mathf.Abs(abilitiesList[0].Cost) + string.Empty;
+            abilityOne.hoverCost.text = abilitiesList[0].XCost ? "X" : Mathf.Abs(abilitiesList[0].Cost) + string.Empty;
             abilityOne.hoverDesc.text = abilitiesList[0].AbilityDescription;
 
             abilityOne.disabledName.text = abilitiesList[0].AbilityName;
-            abilityOne.disabledCost.text = abilitiesList[0].xCost ? "X" : Mathf.Abs(abilitiesList[0].Cost) + string.Empty;
+            abilityOne.disabledCost.text = abilitiesList[0].XCost ? "X" : Mathf.Abs(abilitiesList[0].Cost) + string.Empty;
             abilityOne.disabledDesc.text = abilitiesList[0].AbilityDescription;
 
             if (abilitiesList[0].Cost < 0)
@@ -733,15 +733,15 @@ public class ActionbarUI : UISubscriber
         if (abilitiesList[1])
         {
             abilityTwo.activeName.text = abilitiesList[1].AbilityName;
-            abilityTwo.activeCost.text = abilitiesList[1].xCost ? "X" : Mathf.Abs(abilitiesList[1].Cost) + string.Empty;
+            abilityTwo.activeCost.text = abilitiesList[1].XCost ? "X" : Mathf.Abs(abilitiesList[1].Cost) + string.Empty;
             abilityTwo.activeDesc.text = abilitiesList[1].AbilityDescription;
 
             abilityTwo.hoverName.text = abilitiesList[1].AbilityName;
-            abilityTwo.hoverCost.text = abilitiesList[1].xCost ? "X" : Mathf.Abs(abilitiesList[1].Cost) + string.Empty;
+            abilityTwo.hoverCost.text = abilitiesList[1].XCost ? "X" : Mathf.Abs(abilitiesList[1].Cost) + string.Empty;
             abilityTwo.hoverDesc.text = abilitiesList[1].AbilityDescription;
 
             abilityTwo.disabledName.text = abilitiesList[1].AbilityName;
-            abilityTwo.disabledCost.text = abilitiesList[1].xCost ? "X" : Mathf.Abs(abilitiesList[1].Cost) + string.Empty;
+            abilityTwo.disabledCost.text = abilitiesList[1].XCost ? "X" : Mathf.Abs(abilitiesList[1].Cost) + string.Empty;
             abilityTwo.disabledDesc.text = abilitiesList[1].AbilityDescription;
 
             if (abilitiesList[1].Cost < 0)
@@ -807,15 +807,15 @@ public class ActionbarUI : UISubscriber
         if (abilitiesList[2])
         {
             abilityThree.activeName.text = abilitiesList[2].AbilityName;
-            abilityThree.activeCost.text = abilitiesList[2].xCost ? "X" : Mathf.Abs(abilitiesList[2].Cost) + string.Empty;
+            abilityThree.activeCost.text = abilitiesList[2].XCost ? "X" : Mathf.Abs(abilitiesList[2].Cost) + string.Empty;
             abilityThree.activeDesc.text = abilitiesList[2].AbilityDescription;
 
             abilityThree.hoverName.text = abilitiesList[2].AbilityName;
-            abilityThree.hoverCost.text = abilitiesList[2].xCost ? "X" : Mathf.Abs(abilitiesList[2].Cost) + string.Empty;
+            abilityThree.hoverCost.text = abilitiesList[2].XCost ? "X" : Mathf.Abs(abilitiesList[2].Cost) + string.Empty;
             abilityThree.hoverDesc.text = abilitiesList[2].AbilityDescription;
 
             abilityThree.disabledName.text = abilitiesList[2].AbilityName;
-            abilityThree.disabledCost.text = abilitiesList[2].xCost ? "X" : Mathf.Abs(abilitiesList[2].Cost) + string.Empty;
+            abilityThree.disabledCost.text = abilitiesList[2].XCost ? "X" : Mathf.Abs(abilitiesList[2].Cost) + string.Empty;
             abilityThree.disabledDesc.text = abilitiesList[2].AbilityDescription;
 
             if (abilitiesList[2].Cost < 0)
@@ -904,20 +904,20 @@ public class ActionbarUI : UISubscriber
                 UIEvents.UnitSelected(FieldController.Main.GetUnit(FieldController.Position.Vanguard, true));
                 break;
             case RoundController.PhaseType.EnemyVangaurd:
-                supportBarContainer.style.display = DisplayStyle.Flex;
+                supportBarContainer.style.display = DisplayStyle.None;
                 break;
             case RoundController.PhaseType.PlayerSwap:
                 switchBarContainer.style.display = DisplayStyle.Flex;
                 selectedUnit = null;
                 break;
             case RoundController.PhaseType.EnemySwap:
-                switchBarContainer.style.display = DisplayStyle.Flex;
+                switchBarContainer.style.display = DisplayStyle.None;
                 break;
             case RoundController.PhaseType.PlayerSupport:
                 supportBarContainer.style.display = DisplayStyle.Flex;
                 break;
             case RoundController.PhaseType.EnemySupport:
-                supportBarContainer.style.display = DisplayStyle.Flex;
+                supportBarContainer.style.display = DisplayStyle.None;
                 break;
             default:
                 break;
