@@ -29,7 +29,7 @@ public class Scenario
 
     public int GetNumPuzzles() => enemies.Length;
 
-    public struct EnemyList
+    private struct EnemyList
     {
         [SerializeField] private UnitScriptableObject[] enemies;
 
