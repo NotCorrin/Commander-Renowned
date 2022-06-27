@@ -25,11 +25,19 @@ public class EnemyController : Listener
     private int supportLeftSwitchScore;
     private int supportRightSwitchScore;
 
+    private List<int> switchUpperBracket = new List<int>();
+    private List<int> switchMiddleBracket = new List<int>();
+    private List<int> switchLowerBracket = new List<int>();
+
     private FieldController fieldController;
 
     public void SwitchPositions()
     {
         CalculateSwitchStickScores();
+
+        switchUpperBracket.Clear();
+        switchMiddleBracket.Clear();
+        switchLowerBracket.Clear();
 
         // No support enemies
         if (enemySupportLeft == null && enemySupportRight == null)
@@ -49,11 +57,91 @@ public class EnemyController : Listener
         {
             // Has left support
             int leftSwitchScore = enemySupportLeft.GetSwitchScore();
+            if (leftSwitchScore >= 80)
+            {
+                switchUpperBracket.Add(leftSwitchScore);
+            }
+            else if (leftSwitchScore <= 79 && leftSwitchScore >= 50)
+            {
+                switchMiddleBracket.Add(leftSwitchScore);
+            }
+            else
+            {
+                switchLowerBracket.Add(leftSwitchScore);
+            }
+
             if (enemySupportRight)
             {
                 // Has both support
                 int rightSwitchScore = enemySupportRight.GetSwitchScore();
-                if (rightSwitchScore > leftSwitchScore)
+
+                if (rightSwitchScore >= 80)
+                {
+                    switchUpperBracket.Add(rightSwitchScore);
+                }
+                else if (rightSwitchScore <= 79 && rightSwitchScore >= 50)
+                {
+                    switchMiddleBracket.Add(rightSwitchScore);
+                }
+                else
+                {
+                    switchLowerBracket.Add(rightSwitchScore);
+                }
+
+                if (switchUpperBracket.Count > 0)
+                {
+                    if (switchUpperBracket.Count > 1)
+                    {
+                        int highest = Mathf.Max(switchUpperBracket[0], switchUpperBracket[1]);
+                        SwitchCompareToVangaurd(highest, leftSwitchScore, rightSwitchScore);
+                        return;
+                    }
+
+                    SwitchCompareToVangaurd(switchUpperBracket[0], leftSwitchScore, rightSwitchScore);
+                    return;
+                }
+
+                if (switchMiddleBracket.Count > 0)
+                {
+                    if (switchMiddleBracket.Count > 1)
+                    {
+                        int highest = Mathf.Max(switchMiddleBracket[0], switchMiddleBracket[1]);
+                        int lowest = Mathf.Min(switchMiddleBracket[0], switchMiddleBracket[1]);
+                        if (Random.Range(0, 100) <= 80)
+                        {
+                            SwitchCompareToVangaurd(lowest, leftSwitchScore, rightSwitchScore);
+                            return;
+                        }
+
+                        SwitchCompareToVangaurd(highest, leftSwitchScore, rightSwitchScore);
+                        return;
+                    }
+
+                    SwitchCompareToVangaurd(switchMiddleBracket[0], leftSwitchScore, rightSwitchScore);
+                    return;
+                }
+
+                if (switchLowerBracket.Count > 0)
+                {
+                    if (switchLowerBracket.Count > 1)
+                    {
+                        int highest = Mathf.Max(switchLowerBracket[0], switchLowerBracket[1]);
+                        int lowest = Mathf.Min(switchLowerBracket[0], switchLowerBracket[1]);
+                        if (Random.Range(0, 100) <= 50)
+                        {
+                            SwitchCompareToVangaurd(lowest, leftSwitchScore, rightSwitchScore);
+                            return;
+                        }
+
+                        SwitchCompareToVangaurd(highest, leftSwitchScore, rightSwitchScore);
+                        return;
+                    }
+
+                    SwitchCompareToVangaurd(switchLowerBracket[0], leftSwitchScore, rightSwitchScore);
+                    return;
+                }
+
+                /* if (rightSwitchScore > leftSwitchScore)
                 {
                     // Right > Left
                     if (rightSwitchScore > vanguardStickScore)
@@ -112,7 +200,7 @@ public class EnemyController : Listener
 
                         return;
                     }
-                }
+                }*/
             }
             else
             {
@@ -193,6 +281,32 @@ public class EnemyController : Listener
         SetEnemyVanguard();
         SetEnemySupportLeft();
         SetEnemySupportRight();
+    }
+
+    private void SwitchCompareToVangaurd(int switchScore, int leftSwitchScore, int rightSwitchScore)
+    {
+        if (switchScore == rightSwitchScore)
+        {
+            if (rightSwitchScore > vanguardStickScore)
+            {
+                SwapUnit(enemySupportRight);
+            }
+            else
+            {
+                GoToNextPhase();
+            }
+        }
+        else
+        {
+            if (leftSwitchScore > vanguardStickScore)
+            {
+                SwapUnit(enemySupportLeft);
+            }
+            else
+            {
+                GoToNextPhase();
+            }
+        }
     }
 
     private void FindBestVanguardAbilityIndex()
