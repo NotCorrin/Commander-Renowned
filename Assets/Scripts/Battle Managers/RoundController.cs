@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 #pragma warning disable SA1602 // EnumerationItemsMustBeDocumented
-#pragma warning disable SA1413 // UseTrailingCommasInMultiLineInitializers
 
 public class RoundController : Listener
 {
@@ -19,7 +18,7 @@ public class RoundController : Listener
         PlayerSwap,
         EnemySwap,
         PlayerSupport,
-        EnemySupport
+        EnemySupport,
     }
 
     public static PhaseType Phase => phase;
@@ -104,4 +103,3 @@ public class RoundController : Listener
 }
 
 #pragma warning restore SA1602 // EnumerationItemsMustBeDocumented
-#pragma warning restore SA1413 // UseTrailingCommasInMultiLineInitializers

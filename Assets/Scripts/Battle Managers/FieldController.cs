@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 #pragma warning disable SA1602 // EnumerationItemsMustBeDocumented
-#pragma warning disable SA1413 // UseTrailingCommasInMultiLineInitializers
 
 public class FieldController : Listener
 {
@@ -37,7 +36,7 @@ public class FieldController : Listener
     {
         Vanguard,
         SupportLeft,
-        SupportRight
+        SupportRight,
     }
 
     public static FieldController Main => main;
@@ -531,4 +530,3 @@ public class FieldController : Listener
 }
 
 #pragma warning restore SA1602 // EnumerationItemsMustBeDocumented
-#pragma warning restore SA1413 // UseTrailingCommasInMultiLineInitializers
