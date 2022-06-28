@@ -116,67 +116,6 @@ public class EnemyController : Listener
                     SwitchCompareToVangaurd(switchLowerBracket[0], supportLeftSwitchScore, supportRightSwitchScore);
                     return;
                 }
-
-                /* if (rightSwitchScore > leftSwitchScore)
-                {
-                    // Right > Left
-                    if (rightSwitchScore > vanguardStickScore)
-                    {
-                        SwapUnit(enemySupportRight);
-                    }
-                    else
-                    {
-                        GoToNextPhase();
-                    }
-
-                    return;
-                }
-                else if (leftSwitchScore > rightSwitchScore)
-                {
-                    // Left > Right
-                    if (leftSwitchScore > vanguardStickScore)
-                    {
-                        SwapUnit(enemySupportLeft);
-                    }
-                    else
-                    {
-                        GoToNextPhase();
-                    }
-
-                    return;
-                }
-                else
-                {
-                    // Left == Right
-                    if (Random.Range(0, 100) <= 50)
-                    {
-                        // Randomly choose left
-                        if (leftSwitchScore > vanguardStickScore)
-                        {
-                            SwapUnit(enemySupportLeft);
-                        }
-                        else
-                        {
-                            GoToNextPhase();
-                        }
-
-                        return;
-                    }
-                    else
-                    {
-                        // Randomly choose right
-                        if (rightSwitchScore > vanguardStickScore)
-                        {
-                            SwapUnit(enemySupportRight);
-                        }
-                        else
-                        {
-                            GoToNextPhase();
-                        }
-
-                        return;
-                    }
-                }*/
             }
             else
             {
@@ -300,6 +239,76 @@ public class EnemyController : Listener
         }
     }
 
+    private Ability FindBestAbility(List<Ability> availableAbilities)
+    {
+        List<Ability> abilityList = availableAbilities;
+
+        if (abilityList.Count == 1)
+        {
+            return abilityList[0];
+        }
+
+        int i;
+        for (i = 0; i < abilityList.Count; i++)
+        {
+            if (abilityList[i])
+            {
+                break;
+            }
+        }
+
+        i = Mathf.Min(i, abilityList.Count - 1);
+
+        if (abilityList[i] == null)
+        {
+            return null;
+        }
+
+        int highestWeight = abilityList[i].GetMoveWeight(enemyVanguard);
+        Ability bestAbility = abilityList[i];
+
+        foreach (Ability ability in abilityList)
+        {
+            if (ability)
+            {
+                if (ability.GetMoveWeight(enemyVanguard) > highestWeight)
+                {
+                    bestAbility = ability;
+                    highestWeight = ability.GetMoveWeight(enemyVanguard);
+                }
+            }
+        }
+
+        if (highestWeight > 80)
+        {
+            return bestAbility;
+        }
+        else if (highestWeight > 50)
+        {
+            if (Random.Range(0, 10) >= 7)
+            {
+                abilityList.Remove(bestAbility);
+                return FindBestAbility(abilityList);
+            }
+            else
+            {
+                return bestAbility;
+            }
+        }
+        else
+        {
+            if (Random.Range(0, 10) >= 5)
+            {
+                abilityList.Remove(bestAbility);
+                return FindBestAbility(abilityList);
+            }
+            else
+            {
+                return bestAbility;
+            }
+        }
+    }
+
     private void FindBestVanguardAbilityIndex()
     {
         // Determine if there is an enemy in that position
@@ -308,9 +317,31 @@ public class EnemyController : Listener
             return;
         }
 
+        List<Ability> vanguardAbilities = new List<Ability>();
+        foreach (Ability ability in enemyVanguard.VanguardAbilities)
+        {
+            if (ability == null)
+            {
+                continue;
+            }
+
+            vanguardAbilities.Add(ability);
+        }
+
+        vanguardBestAbility = FindBestAbility(vanguardAbilities);
+        for (int i = 0; i < enemyVanguard.VanguardAbilities.Length; i++)
+        {
+            if (vanguardBestAbility == enemyVanguard.VanguardAbilities[i])
+            {
+                vanguardBestAbilityIndex = i + 1;
+            }
+        }
+
+        /*
         // Get the best ability's index
         int highestAbilityWeight = enemyVanguard.VanguardAbilities[0].GetMoveWeight(enemyVanguard);
         vanguardBestAbility = enemyVanguard.VanguardAbilities[0];
+
         int index = 0;
         for (int i = 0; i < enemyVanguard.VanguardAbilities.Length; i++)
         {
@@ -338,6 +369,7 @@ public class EnemyController : Listener
         }
 
         vanguardBestAbilityIndex = index + 1;
+        */
     }
 
     private void FindBestSupportLeftAbility()
@@ -348,6 +380,27 @@ public class EnemyController : Listener
             return;
         }
 
+        List<Ability> supportLeftAbilities = new List<Ability>();
+        foreach (Ability ability in enemySupportLeft.SupportAbilities)
+        {
+            if (ability == null)
+            {
+                continue;
+            }
+
+            supportLeftAbilities.Add(ability);
+        }
+
+        supportLeftBestAbility = FindBestAbility(supportLeftAbilities);
+        for (int i = 0; i < enemySupportLeft.SupportAbilities.Length; i++)
+        {
+            if (supportLeftBestAbility == enemySupportLeft.SupportAbilities[i])
+            {
+                supportLeftBestAbilityIndex = i + 1;
+            }
+        }
+
+        /*
         // Get the best ability's index
         int highestAbilityWeight = enemySupportLeft.SupportAbilities[0].GetMoveWeight(enemySupportLeft);
         supportLeftBestAbility = enemySupportLeft.SupportAbilities[0];
@@ -390,6 +443,7 @@ public class EnemyController : Listener
         }
 
         supportLeftBestAbilityIndex = index + 1;
+        */
     }
 
     private void FindBestSupportRightAbility()
@@ -400,6 +454,27 @@ public class EnemyController : Listener
             return;
         }
 
+        List<Ability> supportRightAbilities = new List<Ability>();
+        foreach (Ability ability in enemySupportRight.SupportAbilities)
+        {
+            if (ability == null)
+            {
+                continue;
+            }
+
+            supportRightAbilities.Add(ability);
+        }
+
+        supportRightBestAbility = FindBestAbility(supportRightAbilities);
+        for (int i = 0; i < enemySupportRight.SupportAbilities.Length; i++)
+        {
+            if (supportRightBestAbility == enemySupportRight.SupportAbilities[i])
+            {
+                supportRightBestAbilityIndex = i + 1;
+            }
+        }
+
+        /*
         // Get the best ability's index
         int highestAbilityWeight = enemySupportRight.SupportAbilities[0].GetMoveWeight(enemySupportRight);
         supportRightBestAbility = enemySupportRight.SupportAbilities[0];
@@ -440,6 +515,7 @@ public class EnemyController : Listener
         }
 
         supportRightBestAbilityIndex = index + 1;
+        */
     }
 
     private bool SetEnemyVanguard()
