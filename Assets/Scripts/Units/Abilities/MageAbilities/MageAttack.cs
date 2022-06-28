@@ -9,17 +9,17 @@ public class MageAttack : QTEAbility
     public override int GetMoveWeight(Unit caster)
     {
         int manaWeight;
-        int buffWeight = GetTotalDamageBuffs(caster) * 26;
+        int buffWeight = GetTotalDamageBuffs(caster) * 16;
         if (caster.UnitType == UnitType.Mage || caster.UnitType == UnitType.Commander)
         {
-            manaWeight = Mathf.FloorToInt((1 - ((float)caster.Mana / (float)caster.MaxMana)) * 100);
+            manaWeight = Mathf.FloorToInt((1 - ((float)caster.Mana / (float)caster.MaxMana)) * 50);
         }
         else
         {
             return 0;
         }
 
-        return ((2 * manaWeight) / 3) + buffWeight;
+        return (manaWeight / 3) + buffWeight;
     }
 
     public override void SetupParams(AbilitySetup setup)
