@@ -30,8 +30,11 @@ MonoBehaviour:
     AbilityName: Bombard
     AbilityDescription: 'Lose 2 Accuracy
 
-      Target All Enemies, Deal 2 Damage'
-    Cost: 1
+      Target All Enemies, Deal 2 Damage
+
+      Attack
+      buff effect halved (rounded down)'
+    Cost: 2
     Damage: 2
     StatBoost: 0
     Variation: 1
@@ -53,8 +56,8 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 5
     AbilityName: Reload
-    AbilityDescription: Gain 3 Ammo
-    Cost: -3
+    AbilityDescription: Gain 1 Ammo
+    Cost: -1
     Damage: 0
     StatBoost: 0
     Variation: 0
@@ -62,8 +65,8 @@ MonoBehaviour:
     VFX1: {fileID: 782153884964200169, guid: b8c56c2add686174dadacb682e6415ad, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  maxHealth: 30
-  maxAmmo: 5
+  maxHealth: 24
+  maxAmmo: 4
   maxMana: 0
   animator: {fileID: 9100000, guid: 78f975913a63e5f4c8c9a3c5cacfacb4, type: 2}
   sprite: {fileID: -409528804, guid: 070d380dca0c7eb4f907591a3b861940, type: 3}

@@ -25,24 +25,14 @@ public class EnergySword : QTEAbility
 
     public override int GetMoveWeight(Unit caster)
     {
-        int healthWeight = Mathf.FloorToInt(1 - ((float)caster.Health / (float)caster.MaxHealth * 100));
-        int manaWeight;
-        int buffWeight = GetTotalDamageBuffs(caster) * 20;
+        int buffWeight = GetTotalDamageBuffs(caster) * 15;
         if (GetTotalDefenseBuffs(caster) >= 1)
         {
-            buffWeight += 50;
+            buffWeight += 55;
         }
 
-        if (caster.UnitType == UnitType.Mage || caster.UnitType == UnitType.Commander)
-        {
-            manaWeight = Mathf.FloorToInt((1 - ((float)caster.Mana / (float)caster.MaxMana)) * 100);
-        }
-        else
-        {
-            return 0;
-        }
-
-        return ((healthWeight + (2 * manaWeight)) / 3) + buffWeight;
+        Debug.Log(buffWeight);
+        return buffWeight;
     }
 
     protected override GameManager.QTEType GetQTEType()

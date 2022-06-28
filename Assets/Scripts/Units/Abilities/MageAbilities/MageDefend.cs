@@ -16,14 +16,14 @@ public class MageDefend : QTEAbility
         }
         else if (caster.Mana >= caster.MaxMana * 0.8f)
         {
-            return healthWeight - 10;
+            return Mathf.Min(healthWeight - 10, 40);
         }
         else
         {
             manaWeight = Mathf.FloorToInt((1 - ((float)caster.Mana / (float)caster.MaxMana)) * 60);
         }
 
-        return ((healthWeight + manaWeight) / 2) + Random.Range(-10, 10);
+        return Mathf.Min((healthWeight + manaWeight) / 2, 40);
     }
 
     public override void SetupParams(AbilitySetup setup)

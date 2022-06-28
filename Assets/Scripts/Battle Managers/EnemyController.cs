@@ -285,7 +285,7 @@ public class EnemyController : Listener
         }
         else if (highestWeight > 50)
         {
-            if (Random.Range(0, 10) >= 7)
+            if (Random.Range(0, 10) >= 8)
             {
                 abilityList.Remove(bestAbility);
                 return FindBestAbility(abilityList);
@@ -297,7 +297,7 @@ public class EnemyController : Listener
         }
         else
         {
-            if (Random.Range(0, 10) >= 5)
+            if (Random.Range(0, 10) >= 6)
             {
                 abilityList.Remove(bestAbility);
                 return FindBestAbility(abilityList);

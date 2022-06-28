@@ -31,7 +31,7 @@ public class StoryContainerUI : UISubscriber
     private void Start()
     {
         Debug.LogWarning("DEMO ONLY");
-        team.TutorialComplete = false;
+        team.TutorialComplete = true;
 
         if (uiDocument == null)
         {

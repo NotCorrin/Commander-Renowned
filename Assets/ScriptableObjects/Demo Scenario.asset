@@ -26,12 +26,28 @@ MonoBehaviour:
     windescription: 
     winunit: []
   - title: Tutorial
-    description: 'Your party of adventurers have been called to save the village
-      from invading shadow creatures.
+    description: 'Welcome to Commander: Renowned.
 
+      
 
-      (If you need help, check the battle
-      manual in the top right)'
+      You are an elite
+      commander of both magic and military known as the Renowned.
+
+      
+
+      Your
+      objective is to eliminate all the units from the enemy team before you lose
+      all of your own units.
+
+      
+
+      You will need to create strategies
+      and form cohesions to best the enemy team.
+
+      
+
+      (If you need help,
+      check the battle manual in the top right)'
     scene: 5
     enemies:
     - enemies: []

@@ -357,7 +357,6 @@ public class Unit : Listener
 
     private void GreyOut(Ability ability, bool isPlayer)
     {
-        Debug.LogWarning(this);
         if (!ability)
         {
             animator.SetBool("greyedOut", false);

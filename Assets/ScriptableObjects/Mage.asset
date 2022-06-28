@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1315abb00406e0a458b2138c8363ac1c, type: 3}
-  m_Name: Fire Mage
+  m_Name: Mage
   m_EditorClassIdentifier: 
   unitType: 0
   unitName: Mage
@@ -30,8 +30,8 @@ MonoBehaviour:
     AbilityName: Spirit Burn
     AbilityDescription: 'Deal 2 Damage
 
-      Gain 4 Mana'
-    Cost: -4
+      Gain 3 Mana'
+    Cost: -3
     Damage: 2
     StatBoost: 0
     Variation: 1

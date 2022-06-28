@@ -76,7 +76,7 @@ MonoBehaviour:
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   maxHealth: 18
-  maxAmmo: 4
+  maxAmmo: 3
   maxMana: 0
   animator: {fileID: 9100000, guid: 599668aef52e092489a5a10909743a1e, type: 2}
   sprite: {fileID: -1922040017, guid: 7f10c4f9eea82124bb76d669fc687814, type: 3}

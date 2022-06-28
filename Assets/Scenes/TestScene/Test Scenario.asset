@@ -18,18 +18,18 @@ MonoBehaviour:
   - title: 
     description: 
     scene: 0
-    Enemies: []
+    enemies: []
     windescription: 
     winunit: []
   - title: Test
     description: Hi Ash
     scene: 3
-    Enemies:
+    enemies:
     - enemies: []
     - enemies:
-      - {fileID: 11400000, guid: af8c8893720fd0d47aedfb25dc11f9a1, type: 2}
-      - {fileID: 11400000, guid: edf88a06261f4ed4891c1b5cf94ad382, type: 2}
-      - {fileID: 11400000, guid: edf88a06261f4ed4891c1b5cf94ad382, type: 2}
+      - {fileID: 11400000, guid: f6265ea57b7308b46a6e86b2ff8e1581, type: 2}
+      - {fileID: 11400000, guid: f6265ea57b7308b46a6e86b2ff8e1581, type: 2}
+      - {fileID: 11400000, guid: f6265ea57b7308b46a6e86b2ff8e1581, type: 2}
     windescription: 'You Won.
 
       Noice.'
