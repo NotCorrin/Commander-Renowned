@@ -233,7 +233,6 @@ public class ActionbarUI : UISubscriber
 
     private void SwitchConfirm_Clicked(ClickEvent evt)
     {
-        AudioManager.instance.Play("OnMousePressed");
         Debug.Log("Switch Button Clicked");
         if (RoundController.Phase == RoundController.PhaseType.PlayerSwap)
         {
@@ -241,6 +240,8 @@ public class ActionbarUI : UISubscriber
             {
                 if (FieldController.Main.IsUnitPlayer(SceneController.main.selectedUnit))
                 {
+                    switchConfirmPanel.UnregisterCallback<ClickEvent>(SwitchConfirm_Clicked);
+                    AudioManager.instance.Play("OnMousePressed");
                     FieldController.Main.SwapPlayerUnit();
                 }
             }
