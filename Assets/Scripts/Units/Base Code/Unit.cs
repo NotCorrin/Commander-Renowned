@@ -625,13 +625,13 @@ public class Unit : Listener
         }
     }
 
-    private void UpdateBillboard(RoundController.PhaseType _phase)
+    private void UpdateBillboard(RoundController.PhaseType newPhase)
     {
         var em = selectedps.emission;
         em.enabled = false;
 
-        billboard.SwitchBillboardState(((int)_phase)>=2);
-        if (_phase == RoundController.PhaseType.PlayerSupport && FieldController.Main.GetPosition(this) != FieldController.Position.Vanguard && FieldController.Main.IsUnitPlayer(this))
+        billboard.SwitchBillboardState(((int)newPhase) >= 2);
+        if (newPhase == RoundController.PhaseType.PlayerSupport && FieldController.Main.GetPosition(this) != FieldController.Position.Vanguard && FieldController.Main.IsUnitPlayer(this))
         {
             foreach (Ability ability in SupportAbilities)
             {

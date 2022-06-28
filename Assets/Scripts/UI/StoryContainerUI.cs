@@ -74,7 +74,7 @@ public class StoryContainerUI : UISubscriber
             continueButton.RegisterCallback<MouseEnterEvent>(OnButtonHover);
             continueButton.clickable.clicked += () =>
             {
-                AudioManager.instance.Play("OnMousePressed");
+                AudioManager.Instance.Play("OnMousePressed");
                 Continue(continueButton);
             };
 
@@ -93,7 +93,7 @@ public class StoryContainerUI : UISubscriber
                     unitButton.SetEnabled(false);
                     unitButton.clickable.clicked -= () => { };
                     unitButton.UnregisterCallback<MouseEnterEvent>(OnButtonHover);
-                    AudioManager.instance.Play("OnMousePressed");
+                    AudioManager.Instance.Play("OnMousePressed");
                     team.Units.Add(unit);
                     LevelManager.instance.LoadScene(SceneIndex.MenuSelectionScene);
                 };
@@ -105,7 +105,7 @@ public class StoryContainerUI : UISubscriber
 
     private void OnButtonHover(MouseEnterEvent evt)
     {
-        AudioManager.instance.Play("OnMouseHover");
+        AudioManager.Instance.Play("OnMouseHover");
     }
 
     private void Continue(Button button)

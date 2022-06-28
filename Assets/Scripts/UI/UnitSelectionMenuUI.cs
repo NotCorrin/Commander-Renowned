@@ -83,12 +83,12 @@ public class UnitSelectionMenuUI : UISubscriber
 
                 if (activeUnits.Contains(button))
                 {
-                    AudioManager.instance.Play("OnMousePressed");
+                    AudioManager.Instance.Play("OnMousePressed");
                     button.Q<VisualElement>("white-background").style.backgroundColor = new StyleColor(Color.white);
                 }
                 else
                 {
-                    AudioManager.instance.Play("OnMousePressed");
+                    AudioManager.Instance.Play("OnMousePressed");
                     button.Q<VisualElement>("white-background").style.backgroundColor = new StyleColor(new Color(0.364f, 0.364f, 0.364f, 1));
                 }
 
