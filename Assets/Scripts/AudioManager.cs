@@ -5,71 +5,78 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
-[System.Serializable]
-public class Sound
-{
-    public string name;
-    public AudioClip clip;
-    [Range(0f,1f)]
-    public float volume = 0.5f;
-    [Range(-1f, 3f)]
-    public float pitch = 1f;
-    public bool loop = false;
-    [HideInInspector]
-    public AudioSource source;
-}
-
+/// <summary>
+/// This class is used to manage the audio in the game.
+/// It will be used as a singleton to ensure that there is only one instance of the audio manager.
+/// </summary>
 public class AudioManager : Listener
 {
-    public static AudioManager instance;
+    private static AudioManager instance;
 
     /// <summary>
     /// An array of sounds for the AudioManager.
     /// </summary>
-    public Sound[] sounds;
+    [SerializeField] private Sound[] sounds;
     private string currentMusic;
     private bool isBattleMusic = true;
 
-    protected override void SubscribeListeners()
+    /// <summary>
+    /// Gets the AudioManager instance.
+    /// </summary>
+    public static AudioManager Instance
     {
-        GameEvents.onPhaseChanged += PlayPhaseMusic;
-        SceneManager.sceneLoaded += CheckScene;
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<AudioManager>();
+            }
+
+            return instance;
+        }
     }
 
-    protected override void UnsubscribeListeners()
-    {
-        GameEvents.onPhaseChanged -= PlayPhaseMusic;
-        SceneManager.sceneLoaded -= CheckScene;
-    }
-
+    /// <summary>
+    /// Plays a sound.
+    /// </summary>
+    /// <param name="name">The name of the sound to play.</param>
     public void Play(string name)
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
+        Sound s = Array.Find(sounds, sound => sound.Name == name);
         if (s == null)
         {
             Debug.LogWarning("Sound: " + name + " was not found!");
             return;
         }
 
-        s.source.Play();
+        s.Source.Play();
     }
 
+    /// <summary>
+    /// Plays a sound with zero volume.
+    /// </summary>
+    /// <param name="name">The name of the sound to play.</param>
     public void PlayZeroVolume(string name)
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
+        Sound s = Array.Find(sounds, sound => sound.Name == name);
         if (s == null)
         {
             Debug.LogWarning("Sound: " + name + " was not found!");
             return;
         }
 
-        s.source.volume = 0f;
-        s.source.Play();
+        s.Source.volume = 0f;
+        s.Source.Play();
     }
 
+    /// <summary>
+    /// Plays a sound with a random pitch.
+    /// </summary>
+    /// <param name="name">The name of the sound to play.</param>
+    /// <param name="randomPitch">Should play a random pitch.</param>
     public void Play(string name, bool randomPitch)
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
+        Sound s = Array.Find(sounds, sound => sound.Name == name);
         if (s == null)
         {
             Debug.LogWarning("Sound: " + name + " was not found!");
@@ -79,25 +86,33 @@ public class AudioManager : Listener
         if (randomPitch)
         {
             float variance = UnityEngine.Random.Range(-0.1f, 0.1f);
-            s.source.pitch = s.pitch;
-            s.source.pitch += variance;
+            s.Source.pitch = s.Pitch;
+            s.Source.pitch += variance;
         }
 
-        s.source.Play();
+        s.Source.Play();
     }
 
+    /// <summary>
+    /// Stops a sound.
+    /// </summary>
+    /// <param name="name">The name of the sound to stop.</param>
     public void Stop(string name)
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
+        Sound s = Array.Find(sounds, sound => sound.Name == name);
         if (s == null)
         {
             Debug.LogWarning("Sound: " + name + " was not found!");
             return;
         }
 
-        s.source.Stop();
+        s.Source.Stop();
     }
 
+    /// <summary>
+    /// A method to play the battle music.
+    /// </summary>
+    /// <param name="phase">The current phase.</param>
     public void PlayPhaseMusic(RoundController.PhaseType phase)
     {
         switch (phase)
@@ -113,6 +128,24 @@ public class AudioManager : Listener
             default:
                 break;
         }
+    }
+
+    /// <summary>
+    /// Subscribe to events in AudioManager.
+    /// </summary>
+    protected override void SubscribeListeners()
+    {
+        GameEvents.onPhaseChanged += PlayPhaseMusic;
+        SceneManager.sceneLoaded += CheckScene;
+    }
+
+    /// <summary>
+    /// Unsubscribe from events in AudioManager.
+    /// </summary>
+    protected override void UnsubscribeListeners()
+    {
+        GameEvents.onPhaseChanged -= PlayPhaseMusic;
+        SceneManager.sceneLoaded -= CheckScene;
     }
 
     private void Awake()
@@ -131,11 +164,11 @@ public class AudioManager : Listener
 
         foreach (Sound s in sounds)
         {
-            s.source = gameObject.AddComponent<AudioSource>();
-            s.source.clip = s.clip;
-            s.source.volume = s.volume;
-            s.source.pitch = s.pitch;
-            s.source.loop = s.loop;
+            s.Source = gameObject.AddComponent<AudioSource>();
+            s.Source.clip = s.Clip;
+            s.Source.volume = s.Volume;
+            s.Source.pitch = s.Pitch;
+            s.Source.loop = s.Loop;
         }
     }
 
@@ -143,9 +176,9 @@ public class AudioManager : Listener
     {
         foreach (Sound s in sounds)
         {
-            if (s.name != "Swoosh")
+            if (s.Name != "Swoosh")
             {
-                s.source.Stop();
+                s.Source.Stop();
             }
         }
     }
@@ -207,14 +240,14 @@ public class AudioManager : Listener
 
     private void FadeInSound(string name)
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
+        Sound s = Array.Find(sounds, sound => sound.Name == name);
         if (s == null)
         {
             Debug.LogWarning("Sound: " + name + " was not found!");
             return;
         }
 
-        if (s.source.volume > 0)
+        if (s.Source.volume > 0)
         {
             return;
         }
@@ -224,14 +257,14 @@ public class AudioManager : Listener
 
     private void FadeOutSound(string name)
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
+        Sound s = Array.Find(sounds, sound => sound.Name == name);
         if (s == null)
         {
             Debug.LogWarning("Sound: " + name + " was not found!");
             return;
         }
 
-        if (s.source.volume <= 0)
+        if (s.Source.volume <= 0)
         {
             return;
         }
@@ -241,22 +274,22 @@ public class AudioManager : Listener
 
     private IEnumerator FadeOut(Sound s)
     {
-        float volume = s.source.volume;
+        float volume = s.Source.volume;
         while (volume >= 0)
         {
-            volume -= (Time.deltaTime * s.volume) * 0.5f;
-            s.source.volume = volume;
+            volume -= (Time.deltaTime * s.Volume) * 0.5f;
+            s.Source.volume = volume;
             yield return 0;
         }
     }
 
     private IEnumerator FadeOutFast(Sound s)
     {
-        float volume = s.source.volume;
+        float volume = s.Source.volume;
         while (volume >= 0)
         {
-            volume -= (Time.deltaTime * s.volume) * 15f;
-            s.source.volume = volume;
+            volume -= (Time.deltaTime * s.Volume) * 15f;
+            s.Source.volume = volume;
             yield return 0;
         }
     }
@@ -264,11 +297,59 @@ public class AudioManager : Listener
     private IEnumerator FadeIn(Sound s)
     {
         float volume = 0;
-        while (volume <= s.volume)
+        while (volume <= s.Volume)
         {
-            volume += (Time.deltaTime * s.volume) * 0.5f;
-            s.source.volume = volume;
+            volume += (Time.deltaTime * s.Volume) * 0.5f;
+            s.Source.volume = volume;
             yield return 0;
+        }
+    }
+
+    [Serializable] private class Sound
+    {
+        [SerializeField] private string name;
+        [SerializeField] private AudioClip clip;
+        [Range(0f, 1f)]
+        [SerializeField] private float volume = 0.5f;
+        [Range(-1f, 3f)]
+        [SerializeField] private float pitch = 1f;
+        [SerializeField] private bool loop = false;
+        private AudioSource source;
+
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        public AudioClip Clip
+        {
+            get { return clip; }
+            set { clip = value; }
+        }
+
+        public float Volume
+        {
+            get { return volume; }
+            set { volume = value; }
+        }
+
+        public float Pitch
+        {
+            get { return pitch; }
+            set { pitch = value; }
+        }
+
+        public bool Loop
+        {
+            get { return loop; }
+            set { loop = value; }
+        }
+
+        public AudioSource Source
+        {
+            get { return source; }
+            set { source = value; }
         }
     }
 }

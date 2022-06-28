@@ -241,7 +241,7 @@ public class ActionbarUI : UISubscriber
                 if (FieldController.Main.IsUnitPlayer(SceneController.main.selectedUnit))
                 {
                     switchConfirmPanel.UnregisterCallback<ClickEvent>(SwitchConfirm_Clicked);
-                    AudioManager.instance.Play("OnMousePressed");
+                    AudioManager.Instance.Play("OnMousePressed");
                     FieldController.Main.SwapPlayerUnit();
                 }
             }
@@ -261,7 +261,7 @@ public class ActionbarUI : UISubscriber
 
     private void SwitchEnd_Clicked(ClickEvent evt)
     {
-        AudioManager.instance.Play("OnMousePressed");
+        AudioManager.Instance.Play("OnMousePressed");
         Debug.Log("End Switch Turn Button Clicked");
         if (RoundController.Phase == RoundController.PhaseType.PlayerSwap)
         {
@@ -275,7 +275,7 @@ public class ActionbarUI : UISubscriber
 
     private void Switch_Hover(MouseEnterEvent evt, VisualElement element)
     {
-        AudioManager.instance.Play("OnMouseHover");
+        AudioManager.Instance.Play("OnMouseHover");
         element.style.width = new Length(100, LengthUnit.Percent);
         element.style.height = new Length(100, LengthUnit.Percent);
     }
@@ -289,7 +289,7 @@ public class ActionbarUI : UISubscriber
     private void OnPromptCancel_Clicked(ClickEvent evt)
     {
         prompt = string.Empty;
-        AudioManager.instance.Play("OnMouseHover");
+        AudioManager.Instance.Play("OnMouseHover");
 
         if (RoundController.Phase == RoundController.PhaseType.PlayerSwap)
         {
@@ -309,7 +309,7 @@ public class ActionbarUI : UISubscriber
     {
         if (RoundController.Phase == RoundController.PhaseType.PlayerVanguard || RoundController.Phase == RoundController.PhaseType.PlayerSupport)
         {
-            AudioManager.instance.Play("OnMouseHover");
+            AudioManager.Instance.Play("OnMouseHover");
             promptCancel.style.width = new Length(92, LengthUnit.Percent);
             promptCancel.style.height = new Length(59, LengthUnit.Percent);
         }
@@ -325,7 +325,7 @@ public class ActionbarUI : UISubscriber
     {
         if (abilityActive[0])
         {
-            AudioManager.instance.Play("OnMouseHover");
+            AudioManager.Instance.Play("OnMouseHover");
 
             abilityOne.hover.style.height = new Length(100, LengthUnit.Percent);
             abilityOne.active.style.height = new Length(0, LengthUnit.Percent);
@@ -346,7 +346,7 @@ public class ActionbarUI : UISubscriber
         if (abilityActive[0])
         {
             UseAbility(1);
-            AudioManager.instance.Play("OnMousePressed");
+            AudioManager.Instance.Play("OnMousePressed");
             abilityOne.hover.style.height = new Length(0, LengthUnit.Percent);
             abilityOne.active.style.height = new Length(100, LengthUnit.Percent);
             Debug.Log("Ability One Button Clicked");
@@ -357,7 +357,7 @@ public class ActionbarUI : UISubscriber
     {
         if (abilityActive[1])
         {
-            AudioManager.instance.Play("OnMouseHover");
+            AudioManager.Instance.Play("OnMouseHover");
             abilityTwo.hover.style.height = new Length(100, LengthUnit.Percent);
             abilityTwo.active.style.height = new Length(0, LengthUnit.Percent);
         }
@@ -377,7 +377,7 @@ public class ActionbarUI : UISubscriber
         if (abilityActive[1])
         {
             UseAbility(2);
-            AudioManager.instance.Play("OnMousePressed");
+            AudioManager.Instance.Play("OnMousePressed");
             abilityTwo.hover.style.height = new Length(0, LengthUnit.Percent);
             abilityTwo.active.style.height = new Length(100, LengthUnit.Percent);
             Debug.Log("Ability Two Button Clicked");
@@ -388,7 +388,7 @@ public class ActionbarUI : UISubscriber
     {
         if (abilityActive[2])
         {
-            AudioManager.instance.Play("OnMouseHover");
+            AudioManager.Instance.Play("OnMouseHover");
             abilityThree.hover.style.height = new Length(100, LengthUnit.Percent);
             abilityThree.active.style.height = new Length(0, LengthUnit.Percent);
         }
@@ -408,7 +408,7 @@ public class ActionbarUI : UISubscriber
         if (abilityActive[2])
         {
             UseAbility(3);
-            AudioManager.instance.Play("OnMousePressed");
+            AudioManager.Instance.Play("OnMousePressed");
             abilityThree.hover.style.height = new Length(0, LengthUnit.Percent);
             abilityThree.active.style.height = new Length(100, LengthUnit.Percent);
             Debug.Log("Ability Three Button Clicked");
@@ -468,7 +468,7 @@ public class ActionbarUI : UISubscriber
     {
         if (RoundController.Phase == RoundController.PhaseType.PlayerVanguard || RoundController.Phase == RoundController.PhaseType.PlayerSupport)
         {
-            AudioManager.instance.Play("OnMouseHover");
+            AudioManager.Instance.Play("OnMouseHover");
             endSupportTurnBtn.style.width = new Length(92, LengthUnit.Percent);
             endSupportTurnBtn.style.height = new Length(59, LengthUnit.Percent);
         }
@@ -486,7 +486,7 @@ public class ActionbarUI : UISubscriber
 
         if (RoundController.Phase == RoundController.PhaseType.PlayerVanguard || RoundController.Phase == RoundController.PhaseType.PlayerSupport)
         {
-            AudioManager.instance.Play("OnMousePressed");
+            AudioManager.Instance.Play("OnMousePressed");
             GameEvents.EndPhase();
         }
         else
