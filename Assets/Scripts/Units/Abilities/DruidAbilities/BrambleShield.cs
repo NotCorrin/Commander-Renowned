@@ -23,7 +23,7 @@ public class BrambleShield : QTEAbility
             manaWeight = Mathf.FloorToInt((1 - ((float)caster.Mana / (float)caster.MaxMana)) * 60);
         }
 
-        return ((healthWeight + manaWeight) / 2) + Random.Range(-10, 10);
+        return Mathf.Min((healthWeight + manaWeight) / 2, 40);
     }
 
     public override void SetupParams(AbilitySetup setup)

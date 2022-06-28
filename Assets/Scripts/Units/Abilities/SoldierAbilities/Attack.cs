@@ -25,7 +25,7 @@ public class Attack : QTEAbility
 
     public override int GetMoveWeight(Unit caster)
     {
-        int buffWeight = GetTotalDamageBuffs(caster) * 30;
+        int buffWeight = (GetTotalDamageBuffs(caster) * 25) + 20;
         if (caster.UnitType == UnitType.Military || caster.UnitType == UnitType.Commander)
         {
             if (caster.Ammo < Cost)
@@ -33,7 +33,7 @@ public class Attack : QTEAbility
                 return 0;
             }
 
-            return buffWeight + (Damage * 10);
+            return buffWeight;
         }
         else
         {

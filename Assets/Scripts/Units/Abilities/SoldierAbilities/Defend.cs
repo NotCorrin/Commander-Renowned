@@ -30,7 +30,7 @@ public class Defend : QTEAbility
                 return 0;
             }
 
-            return (healthWeight + 50) / 2;
+            return 51;
         }
         else
         {
@@ -50,19 +50,19 @@ public class Defend : QTEAbility
 
     protected override void AbilityUsed(GameManager.QTEResult result)
     {
-        int finalDefense = StatBoost;
+        int finalDamage = StatBoost;
 
         switch (result)
         {
             case GameManager.QTEResult.Critical:
                 {
-                    finalDefense += Variation;
+                    finalDamage += Variation;
                     break;
                 }
 
             case GameManager.QTEResult.Miss:
                 {
-                    finalDefense = Mathf.Max(0, finalDefense - Variation);
+                    finalDamage -= Variation;
                     break;
                 }
         }
@@ -72,9 +72,9 @@ public class Defend : QTEAbility
             _ = Instantiate(VFX2, transform);
         }
 
-        GameEvents.DefenseUp(Caster, finalDefense);
+        GameEvents.DefenseUp(Caster, StatBoost);
 
-        AttackWithLaser(Damage);
+        AttackWithLaser(finalDamage);
 
         GameEvents.UseAmmo(Caster, Cost);
     }

@@ -27,7 +27,7 @@ public class MechAttack : QTEAbility
 
     public override int GetMoveWeight(Unit caster)
     {
-        int buffWeight = (caster.Attack * 15) + ((caster.Ammo - 2) * 15);
+        int ammoWeight = Mathf.FloorToInt(caster.Ammo * 9.5f);
         if (caster.UnitType == UnitType.Military || caster.UnitType == UnitType.Commander)
         {
             if (caster.Ammo < Cost)
@@ -35,7 +35,7 @@ public class MechAttack : QTEAbility
                 return 0;
             }
 
-            return ((2 * buffWeight) + 50) / 3;
+            return ammoWeight;
         }
         else
         {
