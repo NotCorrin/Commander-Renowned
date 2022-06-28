@@ -32,7 +32,7 @@ MonoBehaviour:
 
       (If you need help, check the battle
       manual in the top right)'
-    scene: 3
+    scene: 5
     enemies:
     - enemies: []
     - enemies:

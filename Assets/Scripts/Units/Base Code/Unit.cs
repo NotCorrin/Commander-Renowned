@@ -488,6 +488,7 @@ public class Unit : Listener
             }
 
             Attack = PermAttack;
+            Accuracy = 0;
         }
         else
         {

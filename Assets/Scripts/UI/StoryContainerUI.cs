@@ -30,6 +30,9 @@ public class StoryContainerUI : UISubscriber
 
     private void Start()
     {
+        Debug.LogWarning("DEMO ONLY");
+        team.TutorialComplete = false;
+
         if (uiDocument == null)
         {
             Debug.LogWarning($"{gameObject.name} : MainMenuUI - has no uiDocument assigned in the inspector. Script might still work, but is not 100% safe.");
