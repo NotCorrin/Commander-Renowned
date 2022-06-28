@@ -122,7 +122,7 @@ public class LevelManager : MonoBehaviour
                 container.style.opacity = 1;
                 loading.style.opacity = 1;
                 yield return new WaitForSeconds(1f);
-                AudioManager.instance.Play("Swoosh");
+                AudioManager.Instance.Play("Swoosh");
                 operation.allowSceneActivation = true;
             }
         }
