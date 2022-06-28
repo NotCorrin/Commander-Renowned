@@ -109,7 +109,7 @@ public class FieldController : Listener
         || (unit == playerVanguard && RoundController.Phase == RoundController.PhaseType.PlayerVanguard)
         || (unit == enemySupportLeft && RoundController.Phase == RoundController.PhaseType.EnemySupport)
         || (unit == enemySupportRight && RoundController.Phase == RoundController.PhaseType.EnemySupport)
-        || (unit == enemyVanguard && RoundController.Phase == RoundController.PhaseType.EnemyVangaurd);
+        || (unit == enemyVanguard && RoundController.Phase == RoundController.PhaseType.EnemyVanguard);
     }
 
     public List<Unit> GetValidTargets(Unit caster, Ability ability)

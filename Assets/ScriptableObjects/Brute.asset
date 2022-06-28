@@ -28,10 +28,9 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 7
     AbilityName: Charge
-    AbilityDescription: 'Charge at the enemy with +2 Permanant ATT (Decays by 1 each
-      turn).
+    AbilityDescription: 'Deal 3 Damage
 
-      1 ATT'
+      Gain 2 Permanant attack'
     Cost: 1
     Damage: 1
     StatBoost: 2
@@ -42,7 +41,9 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 4
     AbilityName: Defense Formation
-    AbilityDescription: Strike in a negative formation. Defense up, Damage 4
+    AbilityDescription: 'Deal 4 Damage
+
+      Gain 1 Defence'
     Cost: 1
     Damage: 4
     StatBoost: 1
@@ -65,7 +66,7 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 5
     AbilityName: Reload
-    AbilityDescription: Gain 3 ammo
+    AbilityDescription: Gain 3 Ammo
     Cost: -3
     Damage: 0
     StatBoost: 0

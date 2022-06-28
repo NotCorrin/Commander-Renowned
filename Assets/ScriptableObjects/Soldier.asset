@@ -28,10 +28,9 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 3
     AbilityName: Press the Attack
-    AbilityDescription: 'Strike the enemy with dual arcane bullets.
+    AbilityDescription: 'Deal 4 Damage split over 2 Attacks
 
-      Deal 2
-      damage twice.'
+      Gain 1 Accuracy'
     Cost: 1
     Damage: 4
     StatBoost: 1
@@ -42,7 +41,9 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 4
     AbilityName: Defense Formation
-    AbilityDescription: "Strike in a negative formation. \nDefense up, Damage 4"
+    AbilityDescription: 'Deal 4 Damage
+
+      Gain 1 Defence'
     Cost: 1
     Damage: 4
     StatBoost: 1

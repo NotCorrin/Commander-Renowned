@@ -43,7 +43,7 @@ public class CameraController : Listener
         {
             StartCoroutine(MoveCameraUp());
         }
-        else if ((phase == RoundController.PhaseType.EnemyVangaurd ||
+        else if ((phase == RoundController.PhaseType.EnemyVanguard ||
                  phase == RoundController.PhaseType.PlayerVanguard) &&
                  dolly.m_PathPosition != 0)
         {

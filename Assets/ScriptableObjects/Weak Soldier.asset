@@ -28,9 +28,7 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 14
     AbilityName: Attack Formation
-    AbilityDescription: 'Strike the enemy!
-
-      Deal 5 damage.'
+    AbilityDescription: Deal 5 Damage
     Cost: 1
     Damage: 5
     StatBoost: 1
@@ -41,7 +39,9 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 4
     AbilityName: Defense Formation
-    AbilityDescription: "Strike in a negative formation. \nDefense up, Damage 3"
+    AbilityDescription: 'Deal 3 Damage
+
+      Gain 1 Defence'
     Cost: 1
     Damage: 3
     StatBoost: 1
@@ -64,7 +64,7 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 5
     AbilityName: Reload
-    AbilityDescription: Gain 3 ammo
+    AbilityDescription: Gain 3 Ammo
     Cost: -3
     Damage: 0
     StatBoost: 0

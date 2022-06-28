@@ -28,9 +28,9 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 0
     AbilityName: Spirit Burn
-    AbilityDescription: 'Steal the enemy''s flame to empower your own
+    AbilityDescription: 'Deal 2 Damage
 
-      2 ATT'
+      Gain 4 Mana'
     Cost: -4
     Damage: 2
     StatBoost: 0
@@ -41,10 +41,9 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 2
     AbilityName: Wall of Plasma
-    AbilityDescription: 'Will form an invisible wall to protect the mage.
+    AbilityDescription: 'Gain 2 Defence
 
-      +2
-      DEF'
+      Gain 2 Mana'
     Cost: -2
     Damage: 0
     StatBoost: 2
@@ -67,12 +66,7 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 6
     AbilityName: Fireball
-    AbilityDescription: 'Send down an asteroid to destroy your foes.
-
-      Targets
-      enemy support units.
-
-      8 ATT'
+    AbilityDescription: Target 1 Enemy support, Deal 8 Damage.
     Cost: 4
     Damage: 8
     StatBoost: 0
