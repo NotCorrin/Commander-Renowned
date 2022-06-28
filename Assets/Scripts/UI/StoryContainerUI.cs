@@ -125,8 +125,9 @@ public class StoryContainerUI : UISubscriber
                 team.TutorialComplete = false;
                 LevelManager.instance.LoadScene(SceneIndex.EndScene);
             }
-            else if (team.TutorialComplete)
+            else if (team.TutorialComplete || true)
             {
+                Debug.LogWarning("DEMO ONLY");
                 LevelManager.instance.LoadScene(SceneIndex.MenuSelectionScene);
             }
             else
