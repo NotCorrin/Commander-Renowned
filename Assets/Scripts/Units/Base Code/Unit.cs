@@ -488,6 +488,7 @@ public class Unit : Listener
             }
 
             Attack = PermAttack;
+            Accuracy = 0;
         }
         else
         {
@@ -628,8 +629,6 @@ public class Unit : Listener
     private void UpdateBillboard(RoundController.PhaseType newPhase)
     {
         animator.SetBool("isAnimating", FieldController.Main.IsUnitActive(this));
-        Debug.LogError(gameObject.name + FieldController.Main.IsUnitActive(this));
-        Debug.LogError(RoundController.Phase);
 
         var em = selectedps.emission;
         em.enabled = false;
