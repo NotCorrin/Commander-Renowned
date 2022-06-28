@@ -83,7 +83,7 @@ public class EnemyController : Listener
                     {
                         int highest = Mathf.Max(switchMiddleBracket[0], switchMiddleBracket[1]);
                         int lowest = Mathf.Min(switchMiddleBracket[0], switchMiddleBracket[1]);
-                        if (Random.Range(0, 100) <= 80)
+                        if (Random.Range(0, 100) <= 20)
                         {
                             SwitchCompareToVangaurd(lowest, supportLeftSwitchScore, supportRightSwitchScore);
                             return;
