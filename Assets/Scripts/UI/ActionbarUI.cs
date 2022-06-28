@@ -909,6 +909,7 @@ public class ActionbarUI : UISubscriber
                 break;
             case RoundController.PhaseType.PlayerSwap:
                 switchBarContainer.style.display = DisplayStyle.Flex;
+                switchConfirmPanel.RegisterCallback<ClickEvent>(SwitchConfirm_Clicked);
                 selectedUnit = null;
                 break;
             case RoundController.PhaseType.EnemySwap:
