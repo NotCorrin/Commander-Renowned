@@ -56,48 +56,24 @@ public class EnemyController : Listener
         if (enemySupportLeft)
         {
             // Has left support
-            int leftSwitchScore = enemySupportLeft.GetSwitchScore();
-            if (leftSwitchScore >= 80)
-            {
-                switchUpperBracket.Add(leftSwitchScore);
-            }
-            else if (leftSwitchScore <= 79 && leftSwitchScore >= 50)
-            {
-                switchMiddleBracket.Add(leftSwitchScore);
-            }
-            else
-            {
-                switchLowerBracket.Add(leftSwitchScore);
-            }
+            AddScoreToBracket(supportLeftSwitchScore);
 
             if (enemySupportRight)
             {
                 // Has both support
-                int rightSwitchScore = enemySupportRight.GetSwitchScore();
-
-                if (rightSwitchScore >= 80)
-                {
-                    switchUpperBracket.Add(rightSwitchScore);
-                }
-                else if (rightSwitchScore <= 79 && rightSwitchScore >= 50)
-                {
-                    switchMiddleBracket.Add(rightSwitchScore);
-                }
-                else
-                {
-                    switchLowerBracket.Add(rightSwitchScore);
-                }
+                // Bracket system is only required when there are two support units.
+                AddScoreToBracket(supportRightSwitchScore);
 
                 if (switchUpperBracket.Count > 0)
                 {
                     if (switchUpperBracket.Count > 1)
                     {
                         int highest = Mathf.Max(switchUpperBracket[0], switchUpperBracket[1]);
-                        SwitchCompareToVangaurd(highest, leftSwitchScore, rightSwitchScore);
+                        SwitchCompareToVangaurd(highest, supportLeftSwitchScore, supportRightSwitchScore);
                         return;
                     }
 
-                    SwitchCompareToVangaurd(switchUpperBracket[0], leftSwitchScore, rightSwitchScore);
+                    SwitchCompareToVangaurd(switchUpperBracket[0], supportLeftSwitchScore, supportRightSwitchScore);
                     return;
                 }
 
@@ -109,15 +85,15 @@ public class EnemyController : Listener
                         int lowest = Mathf.Min(switchMiddleBracket[0], switchMiddleBracket[1]);
                         if (Random.Range(0, 100) <= 80)
                         {
-                            SwitchCompareToVangaurd(lowest, leftSwitchScore, rightSwitchScore);
+                            SwitchCompareToVangaurd(lowest, supportLeftSwitchScore, supportRightSwitchScore);
                             return;
                         }
 
-                        SwitchCompareToVangaurd(highest, leftSwitchScore, rightSwitchScore);
+                        SwitchCompareToVangaurd(highest, supportLeftSwitchScore, supportRightSwitchScore);
                         return;
                     }
 
-                    SwitchCompareToVangaurd(switchMiddleBracket[0], leftSwitchScore, rightSwitchScore);
+                    SwitchCompareToVangaurd(switchMiddleBracket[0], supportLeftSwitchScore, supportRightSwitchScore);
                     return;
                 }
 
@@ -129,15 +105,15 @@ public class EnemyController : Listener
                         int lowest = Mathf.Min(switchLowerBracket[0], switchLowerBracket[1]);
                         if (Random.Range(0, 100) <= 50)
                         {
-                            SwitchCompareToVangaurd(lowest, leftSwitchScore, rightSwitchScore);
+                            SwitchCompareToVangaurd(lowest, supportLeftSwitchScore, supportRightSwitchScore);
                             return;
                         }
 
-                        SwitchCompareToVangaurd(highest, leftSwitchScore, rightSwitchScore);
+                        SwitchCompareToVangaurd(highest, supportLeftSwitchScore, supportRightSwitchScore);
                         return;
                     }
 
-                    SwitchCompareToVangaurd(switchLowerBracket[0], leftSwitchScore, rightSwitchScore);
+                    SwitchCompareToVangaurd(switchLowerBracket[0], supportLeftSwitchScore, supportRightSwitchScore);
                     return;
                 }
 
@@ -205,7 +181,7 @@ public class EnemyController : Listener
             else
             {
                 // Has only left
-                if (leftSwitchScore > vanguardStickScore)
+                if (supportLeftSwitchScore > vanguardStickScore)
                 {
                     SwapUnit(enemySupportLeft);
                 }
@@ -221,8 +197,7 @@ public class EnemyController : Listener
         {
             // Has no left
             // Has only right
-            int rightSwitchScore = enemySupportRight.GetSwitchScore();
-            if (rightSwitchScore > vanguardStickScore)
+            if (supportRightSwitchScore > vanguardStickScore)
             {
                 SwapUnit(enemySupportRight);
             }
@@ -281,6 +256,22 @@ public class EnemyController : Listener
         SetEnemyVanguard();
         SetEnemySupportLeft();
         SetEnemySupportRight();
+    }
+
+    private void AddScoreToBracket(int score)
+    {
+        if (score >= 80)
+        {
+            switchUpperBracket.Add(score);
+        }
+        else if (score <= 79 && score >= 50)
+        {
+            switchMiddleBracket.Add(score);
+        }
+        else
+        {
+            switchLowerBracket.Add(score);
+        }
     }
 
     private void SwitchCompareToVangaurd(int switchScore, int leftSwitchScore, int rightSwitchScore)
@@ -625,7 +616,7 @@ public class EnemyController : Listener
             List<Unit> rightAbilityValidTargets = fieldController.GetValidTargets(enemySupportRight, supportRightBestAbility);
             if (rightAbilityValidTargets.Count > 0)
             {
-                Unit rightTarget = rightAbilityValidTargets[Random.Range(0, rightAbilityValidTargets.Count)];
+                Unit rightTarget = rightAbilityValidTargets[UnityEngine.Random.Range(0, rightAbilityValidTargets.Count)];
                 if (supportRightBestAbility.IsAbilityValid(enemySupportRight, rightTarget))
                 {
                     GameEvents.UseAbility(enemySupportRight, rightTarget, supportRightBestAbilityIndex);
