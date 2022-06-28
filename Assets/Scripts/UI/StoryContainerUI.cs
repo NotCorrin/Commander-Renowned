@@ -31,7 +31,7 @@ public class StoryContainerUI : UISubscriber
     private void Start()
     {
         Debug.LogWarning("DEMO ONLY");
-        team.TutorialComplete = false;
+        team.TutorialComplete = true;
 
         if (uiDocument == null)
         {
@@ -125,9 +125,8 @@ public class StoryContainerUI : UISubscriber
                 team.TutorialComplete = false;
                 LevelManager.instance.LoadScene(SceneIndex.EndScene);
             }
-            else if (team.TutorialComplete || true)
+            else if (team.TutorialComplete)
             {
-                Debug.LogWarning("DEMO ONLY");
                 LevelManager.instance.LoadScene(SceneIndex.MenuSelectionScene);
             }
             else

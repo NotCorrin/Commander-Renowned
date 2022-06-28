@@ -64,8 +64,8 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 5
     AbilityName: Reload
-    AbilityDescription: Gain 3 Ammo
-    Cost: -3
+    AbilityDescription: Gain 2 Ammo
+    Cost: -2
     Damage: 0
     StatBoost: 1
     Variation: 0

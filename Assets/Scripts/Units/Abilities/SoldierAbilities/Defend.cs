@@ -50,7 +50,7 @@ public class Defend : QTEAbility
 
     protected override void AbilityUsed(GameManager.QTEResult result)
     {
-        int finalDamage = StatBoost;
+        int finalDamage = Damage;
 
         switch (result)
         {
