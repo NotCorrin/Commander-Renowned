@@ -238,7 +238,7 @@ public class EnemyController : Listener
 
     private void Start()
     {
-        fieldController = FieldController.main;
+        fieldController = FieldController.Main;
         main = this;
     }
 
@@ -511,17 +511,17 @@ public class EnemyController : Listener
         }
     }
 
-    private void EnemyTurn(RoundController.Phase phase)
+    private void EnemyTurn(RoundController.PhaseType phase)
     {
         switch (phase)
         {
-            case RoundController.Phase.EnemyVangaurd:
+            case RoundController.PhaseType.EnemyVanguard:
                 Invoke("UseVanguardAbility", 0.8f);
                 break;
-            case RoundController.Phase.EnemySwap:
+            case RoundController.PhaseType.EnemySwap:
                 Invoke("SwitchPositions", 0.8f);
                 break;
-            case RoundController.Phase.EnemySupport:
+            case RoundController.PhaseType.EnemySupport:
                 Invoke("UseSupportAbility", 0.8f);
                 break;
             default:
