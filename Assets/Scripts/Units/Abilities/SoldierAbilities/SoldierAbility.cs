@@ -4,50 +4,62 @@ using UnityEngine;
 
 public class SoldierAbility : Ability
 {
-
     public override void SetupParams(AbilitySetup setup)
     {
         base.SetupParams(setup);
-        if(!VFX1) VFX1 = Resources.Load("CustomLasers/Soldier/ReloadParticles") as GameObject;
-        isMagic = false;
+        if (!VFX1)
+        {
+            VFX1 = Resources.Load("CustomLasers/Soldier/ReloadParticles") as GameObject;
+        }
+
+        IsMagic = false;
     }
 
     public override int GetMoveWeight(Unit caster)
     {
-        int AmmoWeight;
-        if (caster.unitType == UnitType.Military || caster.unitType == UnitType.Commander)
+        int ammoWeight;
+        if (caster.UnitType == UnitType.Military || caster.UnitType == UnitType.Commander)
         {
-            if (caster.Ammo >= caster.MaxAmmo) return 0;
-            AmmoWeight = Mathf.FloorToInt((1 - ((float)caster.Ammo / (float)caster.MaxAmmo)) * 50);
-            return AmmoWeight;
+            if (caster.Ammo >= caster.MaxAmmo)
+            {
+                return 0;
+            }
+
+            ammoWeight = Mathf.FloorToInt((1 - ((float)caster.Ammo / (float)caster.MaxAmmo)) * 50);
+            return ammoWeight;
         }
-        else return 0;
+        else
+        {
+            return 0;
+        }
     }
 
-    public override void UseAbility(Unit Caster, Unit Target)
+    public override void UseAbility(Unit caster, Unit target)
     {
-        if (IsAbilityValid(Caster, Target))
+        if (IsAbilityValid(caster, target))
         {
             Instantiate(VFX1, transform);
-            GameEvents.onUseAmmo(Target, Cost);
+            GameEvents.onUseAmmo(target, Cost);
         }
     }
 
-    public override bool IsAbilityValid(Unit Caster, Unit Target)
+    public override bool IsAbilityValid(Unit caster, Unit target)
     {
-        if (Caster == Target)
+        if (caster == target)
         {
-            return Caster.Ammo < Caster.MaxAmmo;
+            return caster.Ammo < caster.MaxAmmo;
         }
 
         return false;
     }
-    public override bool IsCasterValid (Unit Caster)
+
+    public override bool IsCasterValid(Unit caster)
     {
-		return IsAbilityValid(Caster, Caster);
-	}    
-	public override bool IsTargetValid (Unit Target, bool isPlayer)
+        return IsAbilityValid(caster, caster);
+    }
+
+    public override bool IsTargetValid(Unit target, bool isPlayer)
     {
-		return (FieldController.main.IsUnitPlayer(Target) == isPlayer);
-	}
+        return FieldController.Main.IsUnitPlayer(target) == isPlayer;
+    }
 }

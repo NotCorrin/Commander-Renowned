@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b12e751dbe26864a83de92a31c6d08e, type: 3}
+  m_Name: Demo Scenario
+  m_EditorClassIdentifier: 
+  level: 0
+  tutorialText: "Welcome to Commander: Renowned.\r\n\r\nYou are an elite commander
+    of both magic and military known as the Renowned.\r\n\r\nYour objective is to
+    eliminate all the units from the enemy team before you lose all of your own units.\r\n\r\nYou
+    will need to create strategies and form cohesions to best the enemy team.\r\n\r\nIt\u2019s
+    a battle to the death!\r\n"
+  story:
+  - title: 
+    description: 
+    scene: 0
+    enemies: []
+    windescription: 
+    winunit: []
+  - title: Tutorial
+    description: 'Your party of adventurers have been called to save the village
+      from invading shadow creatures.
+
+
+      (If you need help, check the battle
+      manual in the top right)'
+    scene: 3
+    enemies:
+    - enemies: []
+    - enemies:
+      - {fileID: 11400000, guid: af8c8893720fd0d47aedfb25dc11f9a1, type: 2}
+      - {fileID: 11400000, guid: f78fa59ac970f7f4885ddd64aba64a80, type: 2}
+      - {fileID: 11400000, guid: edf88a06261f4ed4891c1b5cf94ad382, type: 2}
+    - enemies:
+      - {fileID: 11400000, guid: af8c8893720fd0d47aedfb25dc11f9a1, type: 2}
+      - {fileID: 11400000, guid: f78fa59ac970f7f4885ddd64aba64a80, type: 2}
+      - {fileID: 11400000, guid: ff9134c33cedaaa4a8f884e77b16ccc0, type: 2}
+    - enemies:
+      - {fileID: 11400000, guid: e7acd760f86d622409b684a33cad4664, type: 2}
+      - {fileID: 11400000, guid: f6265ea57b7308b46a6e86b2ff8e1581, type: 2}
+      - {fileID: 11400000, guid: fcd4ac7d08691474480c50f178f7222c, type: 2}
+    - enemies:
+      - {fileID: 11400000, guid: ff9134c33cedaaa4a8f884e77b16ccc0, type: 2}
+      - {fileID: 11400000, guid: e7acd760f86d622409b684a33cad4664, type: 2}
+      - {fileID: 11400000, guid: f6265ea57b7308b46a6e86b2ff8e1581, type: 2}
+    - enemies:
+      - {fileID: 11400000, guid: ff9134c33cedaaa4a8f884e77b16ccc0, type: 2}
+      - {fileID: 11400000, guid: e7acd760f86d622409b684a33cad4664, type: 2}
+      - {fileID: 11400000, guid: f6265ea57b7308b46a6e86b2ff8e1581, type: 2}
+    - enemies:
+      - {fileID: 11400000, guid: edf88a06261f4ed4891c1b5cf94ad382, type: 2}
+      - {fileID: 11400000, guid: 7803db8250df25b40be0d0b5a9dea4fd, type: 2}
+      - {fileID: 11400000, guid: e7acd760f86d622409b684a33cad4664, type: 2}
+    - enemies:
+      - {fileID: 11400000, guid: edf88a06261f4ed4891c1b5cf94ad382, type: 2}
+      - {fileID: 11400000, guid: ff9134c33cedaaa4a8f884e77b16ccc0, type: 2}
+      - {fileID: 11400000, guid: e99b8f8a0a04431478f676225795751c, type: 2}
+    - enemies:
+      - {fileID: 11400000, guid: edf88a06261f4ed4891c1b5cf94ad382, type: 2}
+      - {fileID: 11400000, guid: e7acd760f86d622409b684a33cad4664, type: 2}
+      - {fileID: 11400000, guid: e99b8f8a0a04431478f676225795751c, type: 2}
+    windescription: Thanks for playing!
+    winunit: []

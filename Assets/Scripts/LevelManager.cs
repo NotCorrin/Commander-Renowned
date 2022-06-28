@@ -1,21 +1,53 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
-using UnityEngine.SceneManagement;
 
 public enum SceneIndex
 {
+    /// <summary>
+    /// Scene 0
+    /// </summary>
     StartMenuScene = 0,
+
+    /// <summary>
+    /// Scene 1
+    /// </summary>
     StoryScene = 1,
+
+    /// <summary>
+    /// Scene 2
+    /// </summary>
     MenuSelectionScene = 2,
+
+    /// <summary>
+    /// Scene 3
+    /// </summary>
     TerrainTestScene = 3,
+
+    /// <summary>
+    /// Scene 4
+    /// </summary>
     BattleSceneTwo = 4,
+
+    /// <summary>
+    /// Scene 5
+    /// </summary>
     BattleSceneThree = 5,
+
+    /// <summary>
+    /// Scene 6
+    /// </summary>
     EndScene = 6,
-    AddMenuScene = 7
+
+    /// <summary>
+    /// Scene 7
+    /// </summary>
+    AddMenuScene = 7,
 }
+
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
@@ -25,17 +57,30 @@ public class LevelManager : MonoBehaviour
     private TextElement loading;
     private bool startedLoading = false;
 
-    void Awake()
+    public void LoadScene(SceneIndex index)
     {
-        if(instance == null)
-		{
+        if (startedLoading == true)
+        {
+            return;
+        }
+
+        startedLoading = true;
+        container.style.scale = new Vector2(1, 1);
+
+        StartCoroutine(StartLoading((int)index));
+    }
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
             instance = this;
-		}
-		else
-		{
+        }
+        else
+        {
             Destroy(gameObject);
             return;
-		}
+        }
 
         try
         {
@@ -49,37 +94,21 @@ public class LevelManager : MonoBehaviour
         }
 
         container.RegisterCallback<TransitionEndEvent>(OnTransitionEnd);
-
     }
 
-	void LateStart()
-	{
+    private void LateStart()
+    {
         container.style.opacity = 0;
         loading.style.opacity = 0;
     }
 
-    void OnTransitionEnd(TransitionEndEvent evt)
-	{
+    private void OnTransitionEnd(TransitionEndEvent evt)
+    {
         container.style.scale = Vector2.zero;
         container.UnregisterCallback<TransitionEndEvent>(OnTransitionEnd);
     }
 
-	public void LoadScene(SceneIndex index)
-    {
-        if(startedLoading == true)
-		{
-            return;
-		}
-        startedLoading = true;
-        container.style.scale = new Vector2(1, 1);
-        //foreach (GameObject item in GameObject.FindObjectsOfType(typeof(GameObject)))
-        //{
-        //    item.SetActive(false);
-        //}
-        StartCoroutine(StartLoading((int)index));
-	}
-
-    IEnumerator StartLoading(int index)
+    private IEnumerator StartLoading(int index)
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(index);
 
@@ -88,7 +117,7 @@ public class LevelManager : MonoBehaviour
         while (operation.isDone == false)
         {
             yield return null;
-            if(operation.progress >= 0.9f)
+            if (operation.progress >= 0.9f)
             {
                 container.style.opacity = 1;
                 loading.style.opacity = 1;
@@ -97,6 +126,7 @@ public class LevelManager : MonoBehaviour
                 operation.allowSceneActivation = true;
             }
         }
+
         startedLoading = false;
-	}
+    }
 }
