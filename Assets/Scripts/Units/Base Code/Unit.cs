@@ -454,6 +454,21 @@ public class Unit : Listener
         }
     }
 
+    /// <summary>
+    /// Called by the Animator during unit death.
+    /// </summary>
+    private void AnimationEventKillUnit()
+    {
+        if (visibleElements)
+        {
+            Destroy(visibleElements);
+        }
+
+        spriteRenderer.sprite = null;
+        var em = ps.emission;
+        em.enabled = false;
+    }
+
     private void ResetUnit()
     {
         Health = MaxHealth;

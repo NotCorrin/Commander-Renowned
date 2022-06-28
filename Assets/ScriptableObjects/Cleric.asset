@@ -28,10 +28,9 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 0
     AbilityName: Divine Smite
-    AbilityDescription: 'Summon a burst of holy energy, damaging the enemy and restoring
-      your mana.
+    AbilityDescription: 'Deal 2 Damage
 
-      2 ATT'
+      Gain 2 Mana'
     Cost: -2
     Damage: 2
     StatBoost: 0
@@ -42,10 +41,9 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 2
     AbilityName: Repel Harm
-    AbilityDescription: 'Compels those who intend to lessen their efforts.
+    AbilityDescription: 'Gain 3 Defence
 
-      +3
-      DEF'
+      Gain 1 Mana'
     Cost: -1
     Damage: 0
     StatBoost: 3
@@ -68,7 +66,7 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 1
     AbilityName: Confidence
-    AbilityDescription: Target Ally gains +2 ATT
+    AbilityDescription: Target 1 Ally Gains 2 Attack
     Cost: 1
     Damage: 0
     StatBoost: 2

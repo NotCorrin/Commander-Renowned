@@ -904,7 +904,7 @@ public class ActionbarUI : UISubscriber
                 supportBarContainer.style.display = DisplayStyle.Flex;
                 UIEvents.UnitSelected(FieldController.Main.GetUnit(FieldController.Position.Vanguard, true));
                 break;
-            case RoundController.PhaseType.EnemyVangaurd:
+            case RoundController.PhaseType.EnemyVanguard:
                 supportBarContainer.style.display = DisplayStyle.None;
                 break;
             case RoundController.PhaseType.PlayerSwap:

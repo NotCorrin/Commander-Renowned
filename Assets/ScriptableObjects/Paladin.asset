@@ -28,8 +28,12 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 9
     AbilityName: Righteous Blow
-    AbilityDescription: "3 Damage\nDeals bonus damage if the Paladin has at least
-      1 def. \nSmall mana boost."
+    AbilityDescription: 'Deal 3 Damage
+
+      Deal +2 Damage if the caster has at
+      least 1 Defence
+
+      Gain 1 Mana'
     Cost: -1
     Damage: 3
     StatBoost: 0
@@ -40,13 +44,12 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 2
     AbilityName: Stand Your Ground
-    AbilityDescription: 'Raise your shield and absorb the incoming blow.
+    AbilityDescription: 'Gain 2 Defence
 
-      +3
-      DEF'
+      Gain 2 Mana'
     Cost: -2
     Damage: 0
-    StatBoost: 3
+    StatBoost: 2
     Variation: 1
     ForceTarget: 0
     VFX1: {fileID: 217341259536796723, guid: 75432b09afa8a304da43e1ecf77684af, type: 3}
@@ -66,10 +69,7 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 10
     AbilityName: Holy Shield
-    AbilityDescription: 'Summon a protective aura for your allies.
-
-      +2 Permanent
-      Defense to any target.'
+    AbilityDescription: Target 1 Ally Gains +2 Permanent Defence
     Cost: 1
     Damage: 0
     StatBoost: 2

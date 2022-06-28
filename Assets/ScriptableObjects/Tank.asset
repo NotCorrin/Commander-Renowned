@@ -28,12 +28,9 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 15
     AbilityName: Bombard
-    AbilityDescription: 'Call an orbital strike to bombard your enemies!
+    AbilityDescription: 'Lose 2 Accuracy
 
-      Very
-      risky, low accuracy attack.
-
-      Deals 2 Damage to all enemies.'
+      Target All Enemies, Deal 2 Damage'
     Cost: 1
     Damage: 2
     StatBoost: 0
@@ -56,7 +53,7 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 5
     AbilityName: Reload
-    AbilityDescription: Gain 3 ammo
+    AbilityDescription: Gain 3 Ammo
     Cost: -3
     Damage: 0
     StatBoost: 0

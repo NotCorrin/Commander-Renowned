@@ -28,10 +28,9 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 0
     AbilityName: Root Burst
-    AbilityDescription: 'Create as growth of roots that burst out, sapping the opponent''s
-      energy
+    AbilityDescription: 'Deal 2 Damage
 
-      2 ATT'
+      Gain 3 Mana'
     Cost: -3
     Damage: 2
     StatBoost: 0
@@ -42,10 +41,11 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 12
     AbilityName: Bramble Shield
-    AbilityDescription: 'Will form a wall of thorns to protect the mage and damage
-      incoming enemies.
+    AbilityDescription: 'Gain 2 Defence
 
-      +2 DEF'
+      Gain 2 Thorm
+
+      Gain 1 Mana'
     Cost: -1
     Damage: 0
     StatBoost: 2
@@ -68,10 +68,10 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 11
     AbilityName: Leech
-    AbilityDescription: 'Mark an enemy with -2 thorns.
+    AbilityDescription: 'Target 1 Enemy, Inflict with -2 Thorns.
 
-      Damage them to heal
-      2.'
+      (Damage inflicted
+      enemy to heal 2.)'
     Cost: 2
     Damage: 0
     StatBoost: -2

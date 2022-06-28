@@ -14,7 +14,7 @@ public class RoundController : Listener
     public enum PhaseType
     {
         PlayerVanguard,
-        EnemyVangaurd,
+        EnemyVanguard,
         PlayerSwap,
         EnemySwap,
         PlayerSupport,
@@ -82,7 +82,7 @@ public class RoundController : Listener
 
     private void ChangePhase()
     {
-        if (RoundController.Phase == RoundController.PhaseType.PlayerVanguard || RoundController.Phase == RoundController.PhaseType.EnemyVangaurd)
+        if (RoundController.Phase == RoundController.PhaseType.PlayerVanguard || RoundController.Phase == RoundController.PhaseType.EnemyVanguard)
         {
             GameEvents.ResetBuffs();
         }

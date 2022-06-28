@@ -361,7 +361,7 @@ public class EnemyController : Listener
 	{
 		switch (phase)
 		{
-			case RoundController.PhaseType.EnemyVangaurd:
+			case RoundController.PhaseType.EnemyVanguard:
 				Invoke("UseVanguardAbility", 0.8f);
 				break;
 			case RoundController.PhaseType.EnemySwap:

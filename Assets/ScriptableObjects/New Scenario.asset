@@ -22,7 +22,7 @@ MonoBehaviour:
   - title: 
     description: 
     scene: 0
-    Enemies: []
+    enemies: []
     windescription: 
     winunit: []
   - title: Tutorial
