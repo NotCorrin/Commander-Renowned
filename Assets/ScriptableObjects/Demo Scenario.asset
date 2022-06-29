@@ -28,26 +28,22 @@ MonoBehaviour:
   - title: Tutorial
     description: 'Welcome to Commander: Renowned.
 
-      
 
-      You are an elite
-      commander of both magic and military known as the Renowned.
+      You are an elite commander
+      of both magic and military known as the Renowned.
 
-      
 
-      Your
-      objective is to eliminate all the units from the enemy team before you lose
-      all of your own units.
+      Your objective is
+      to eliminate all the units from the enemy team before you lose all of your
+      own units.
 
-      
 
-      You will need to create strategies
-      and form cohesions to best the enemy team.
+      You will need to create strategies and form cohesions to
+      best the enemy team.
 
-      
 
-      (If you need help,
-      check the battle manual in the top right)'
+      (If you need help, check the battle manual in
+      the top right)'
     scene: 5
     enemies:
     - enemies: []
@@ -66,13 +62,13 @@ MonoBehaviour:
     - enemies:
       - {fileID: 11400000, guid: ff9134c33cedaaa4a8f884e77b16ccc0, type: 2}
       - {fileID: 11400000, guid: e7acd760f86d622409b684a33cad4664, type: 2}
-      - {fileID: 11400000, guid: f6265ea57b7308b46a6e86b2ff8e1581, type: 2}
+      - {fileID: 11400000, guid: e7acd760f86d622409b684a33cad4664, type: 2}
     - enemies:
       - {fileID: 11400000, guid: ff9134c33cedaaa4a8f884e77b16ccc0, type: 2}
       - {fileID: 11400000, guid: e7acd760f86d622409b684a33cad4664, type: 2}
       - {fileID: 11400000, guid: f6265ea57b7308b46a6e86b2ff8e1581, type: 2}
     - enemies:
-      - {fileID: 11400000, guid: edf88a06261f4ed4891c1b5cf94ad382, type: 2}
+      - {fileID: 11400000, guid: af8c8893720fd0d47aedfb25dc11f9a1, type: 2}
       - {fileID: 11400000, guid: 7803db8250df25b40be0d0b5a9dea4fd, type: 2}
       - {fileID: 11400000, guid: e7acd760f86d622409b684a33cad4664, type: 2}
     - enemies:
@@ -83,5 +79,9 @@ MonoBehaviour:
       - {fileID: 11400000, guid: edf88a06261f4ed4891c1b5cf94ad382, type: 2}
       - {fileID: 11400000, guid: e7acd760f86d622409b684a33cad4664, type: 2}
       - {fileID: 11400000, guid: e99b8f8a0a04431478f676225795751c, type: 2}
+    - enemies:
+      - {fileID: 11400000, guid: af8c8893720fd0d47aedfb25dc11f9a1, type: 2}
+      - {fileID: 11400000, guid: fcd4ac7d08691474480c50f178f7222c, type: 2}
+      - {fileID: 11400000, guid: ff9134c33cedaaa4a8f884e77b16ccc0, type: 2}
     windescription: Thanks for playing!
     winunit: []
