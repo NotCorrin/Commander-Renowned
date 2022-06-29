@@ -890,6 +890,7 @@ public class ActionbarUI : UISubscriber
         {
             switchEndPanelContainer.style.display = DisplayStyle.None;
             switchBarContainer.style.display = DisplayStyle.Flex;
+            switchConfirmPanel.RegisterCallback<ClickEvent>(SwitchConfirm_Clicked);
             OnUnitSelected(selectedUnit);
             return;
         }
