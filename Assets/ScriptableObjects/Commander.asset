@@ -74,7 +74,7 @@ MonoBehaviour:
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   - AbilityType: 17
-    AbilityName: Transmutatation
+    AbilityName: Transmutation
     AbilityDescription: Target unit Gains 1 Ammo and/or Mana
     Cost: 1
     Damage: 0
