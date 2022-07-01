@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Unit : Listener
 {
@@ -36,6 +37,11 @@ public class Unit : Listener
     public Ability[] SupportAbilities { get; private set; } = new Ability[3];
 
     public int MaxHealth { get; private set; }
+
+    /// <summary>
+    /// Gets or sets the list of statuses on an unit.
+    /// </summary>
+    public List<Status> StatusList { get; set; }
 
 #pragma warning disable SA1201 // Elements should appear in the correct order. Done here for grouping purposes.
     private int health;
