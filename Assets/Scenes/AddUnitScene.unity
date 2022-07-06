@@ -270,8 +270,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiDocument: {fileID: 1046628882}
-  stories: {fileID: 11400000, guid: eb621805b69bbfc4bb18fae8fffe08da, type: 2}
+  stories: {fileID: 11400000, guid: f829df91173d761489da7c955a1523b6, type: 2}
   team: {fileID: 11400000, guid: b7dab2c6d967bb64dbde10a52bb78ed4, type: 2}
+  addUnit: 1
 --- !u!1001 &1250100057
 PrefabInstance:
   m_ObjectHideFlags: 0

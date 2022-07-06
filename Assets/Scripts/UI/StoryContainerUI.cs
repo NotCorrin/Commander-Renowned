@@ -16,7 +16,7 @@ public class StoryContainerUI : UISubscriber
     private VisualElement buttonContainer;
 
     private bool tComplete;
-    private bool addUnit;
+    [SerializeField] private bool addUnit;
 
     /// <summary>
     /// Assign UI elements to fields in StoryContainerUI.
@@ -30,9 +30,8 @@ public class StoryContainerUI : UISubscriber
 
     private void Start()
     {
-        Debug.LogWarning("DEMO ONLY");
-        team.TutorialComplete = true;
-
+        // Debug.LogWarning("DEMO ONLY");
+        // team.TutorialComplete = true;
         if (uiDocument == null)
         {
             Debug.LogWarning($"{gameObject.name} : MainMenuUI - has no uiDocument assigned in the inspector. Script might still work, but is not 100% safe.");
@@ -87,6 +86,7 @@ public class StoryContainerUI : UISubscriber
         {
             foreach (UnitScriptableObject unit in scenario.Winunit)
             {
+                Debug.LogError("what the actua");
                 Button unitButton = new ();
                 unitButton.text = unit.name;
                 unitButton.AddToClassList("button");
