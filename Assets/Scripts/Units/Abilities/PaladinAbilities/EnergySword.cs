@@ -4,60 +4,60 @@ using UnityEngine;
 
 public class EnergySword : QTEAbility
 {
-    [SerializeField] int CostVariation = -1;
+    [SerializeField] private int costVariation = -1;
 
     public override void SetupParams(AbilitySetup setup)
     {
         VFX1 = Resources.Load("CustomLasers/Mage/Mage_Explosion") as GameObject;
-        isMagic = true;
+        IsMagic = true;
         base.SetupParams(setup);
     }
 
-    public override bool IsCasterValid (Unit Caster)
+    public override bool IsCasterValid(Unit caster)
     {
         return true;
-	}    
-    public override bool IsTargetValid (Unit Target, bool isPlayer)
+    }
+
+    public override bool IsTargetValid(Unit target, bool isPlayer)
     {
-		return (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(Target) != isPlayer);
-	}
+        return (FieldController.Main.GetPosition(target) == FieldController.Position.Vanguard) && (FieldController.Main.IsUnitPlayer(target) != isPlayer);
+    }
+
+    public override int GetMoveWeight(Unit caster)
+    {
+        int buffWeight = GetTotalDamageBuffs(caster) * 15;
+        if (GetTotalDefenseBuffs(caster) >= 1)
+        {
+            buffWeight += 55;
+        }
+
+        Debug.Log(buffWeight);
+        return buffWeight;
+    }
 
     protected override GameManager.QTEType GetQTEType()
     {
-        return GameManager.QTEType.shrinkingCircle;
+        return GameManager.QTEType.TimingBar;
     }
 
-    public override int GetMoveWeight (Unit caster)
-    {   
-        int HealthWeight = Mathf.FloorToInt(1 - ((float)caster.Health / (float)caster.MaxHealth) * 100);
-        int ManaWeight;
-        int BuffWeight = GetTotalDamageBuffs(caster) * 20;
-        if (GetTotalDefenseBuffs(caster) >= 1) BuffWeight += 50;
-        if (caster.unitType == UnitType.Mage || caster.unitType == UnitType.Commander)
-        {
-            ManaWeight = Mathf.FloorToInt((1 - ((float)caster.Mana / (float)caster.MaxMana)) * 100);
-        }
-        else return 0;
-
-        return (HealthWeight+2 * ManaWeight)/3 + BuffWeight;
-    }
     protected override void AbilityUsed(GameManager.QTEResult result)
     {
-        int FinalDamage = Damage;
-        int FinalCost = Cost;
+        int finalDamage = Damage;
+        int finalCost = Cost;
 
         switch (result)
         {
             case GameManager.QTEResult.Critical:
                 {
-                    FinalDamage += Variation;
-                    FinalCost += CostVariation;
+                    finalDamage += Variation;
+                    finalCost += costVariation;
                     Debug.Log("Critical");
                     break;
                 }
+
             case GameManager.QTEResult.Miss:
                 {
-                    FinalDamage -= Variation;
+                    finalDamage -= Variation;
                     Debug.Log("Poor");
                     break;
                 }
@@ -66,18 +66,22 @@ public class EnergySword : QTEAbility
         if (Caster.Defense >= 1)
         {
             SpawnVFX(VFX2);
-            FinalDamage += 3;
+            finalDamage += 3;
         }
-        else SpawnVFX(VFX1);
-
-        GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, FinalDamage));
-        GameEvents.onUseMana(Caster, FinalCost);
-    }
-    void SpawnVFX(GameObject VFXprefab)
-    {
-        if (VFXprefab)
+        else
         {
-            Instantiate(VFXprefab, Target.transform.position + new Vector3(0,2,0), Quaternion.identity).transform.LookAt(Target.transform.position);
+            SpawnVFX(VFX1);
+        }
+
+        GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, finalDamage));
+        GameEvents.onUseMana(Caster, finalCost);
+    }
+
+    private void SpawnVFX(GameObject vFXprefab)
+    {
+        if (vFXprefab)
+        {
+            Instantiate(vFXprefab, Target.transform.position + new Vector3(0, 2, 0), Quaternion.identity).transform.LookAt(Target.transform.position);
         }
     }
 }

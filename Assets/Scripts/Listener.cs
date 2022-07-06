@@ -2,9 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Base class for all UI listeners.
+/// </summary>
 public abstract class Listener : MonoBehaviour
 {
-    // Start is called before the first frame update
+    /// <summary>
+    /// Subscribe to events.
+    /// </summary>
+    protected abstract void SubscribeListeners();
+
+    /// <summary>
+    /// Unsubscribe from events.
+    /// </summary>
+    protected abstract void UnsubscribeListeners();
+
     private void OnEnable()
     {
         SubscribeListeners();
@@ -14,8 +26,4 @@ public abstract class Listener : MonoBehaviour
     {
         UnsubscribeListeners();
     }
-
-    abstract protected void SubscribeListeners();
-
-    abstract protected void UnsubscribeListeners();
 }

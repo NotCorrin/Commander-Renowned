@@ -272,7 +272,7 @@ MonoBehaviour:
   uiDocument: {fileID: 1046628882}
   stories: {fileID: 11400000, guid: f829df91173d761489da7c955a1523b6, type: 2}
   team: {fileID: 11400000, guid: b7dab2c6d967bb64dbde10a52bb78ed4, type: 2}
-  AddUnit: 1
+  addUnit: 1
 --- !u!1001 &1250100057
 PrefabInstance:
   m_ObjectHideFlags: 0

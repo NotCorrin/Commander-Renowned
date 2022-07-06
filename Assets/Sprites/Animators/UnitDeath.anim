@@ -326,7 +326,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 1
-    functionName: KillUnit
+    functionName: AnimationEventKillUnit
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

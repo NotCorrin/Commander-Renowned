@@ -4,76 +4,96 @@ using UnityEngine;
 
 public class Defend : QTEAbility
 {
-    
     public override void SetupParams(AbilitySetup setup)
     {
         base.SetupParams(setup);
-        if(!VFX1) VFX1 = Resources.Load("CustomLasers/Soldier/Soldier_Laser") as GameObject;
-        if(!VFX2) VFX2 = Resources.Load("CustomLasers/Soldier/Shield") as GameObject;
-        isMagic = false;
+        if (!VFX1)
+        {
+            VFX1 = Resources.Load("CustomLasers/Soldier/Soldier_Laser") as GameObject;
+        }
+
+        if (!VFX2)
+        {
+            VFX2 = Resources.Load("CustomLasers/Soldier/Shield") as GameObject;
+        }
+
+        IsMagic = false;
     }
 
     public override int GetMoveWeight(Unit caster)
     {
-        int HealthWeight = Mathf.FloorToInt((1 - ((float)caster.Health / (float)caster.MaxHealth)) * 100);
-        if (caster.unitType == UnitType.Military || caster.unitType == UnitType.Commander)
+        int healthWeight = Mathf.FloorToInt((1 - ((float)caster.Health / (float)caster.MaxHealth)) * 100);
+        if (caster.UnitType == UnitType.Military || caster.UnitType == UnitType.Commander)
         {
-            if (caster.Ammo < Cost) return 0;
-            return (HealthWeight + 50) / 2;
+            if (caster.Ammo < Cost)
+            {
+                return 0;
+            }
+
+            return 51;
         }
-        else return 0;
+        else
+        {
+            return 0;
+        }
+    }
+
+    public override bool IsCasterValid(Unit caster)
+    {
+        return caster.Ammo >= Cost;
+    }
+
+    public override bool IsTargetValid(Unit target, bool isPlayer)
+    {
+        return (FieldController.Main.GetPosition(target) == FieldController.Position.Vanguard) && (FieldController.Main.IsUnitPlayer(target) != isPlayer);
     }
 
     protected override void AbilityUsed(GameManager.QTEResult result)
     {
-        int FinalDefense = StatBoost;
+        int finalDamage = Damage;
 
         switch (result)
         {
             case GameManager.QTEResult.Critical:
                 {
-                    FinalDefense += Variation;
+                    finalDamage += Variation;
                     break;
                 }
+
             case GameManager.QTEResult.Miss:
                 {
-                    FinalDefense = Mathf.Max(0, FinalDefense - Variation);
+                    finalDamage -= Variation;
                     break;
                 }
         }
 
-        if (VFX2) Instantiate(VFX2, transform);
-        GameEvents.DefenseUp(Caster, FinalDefense);
+        if (VFX2)
+        {
+            _ = Instantiate(VFX2, transform);
+        }
 
-        AttackWithLaser(Damage);
+        GameEvents.DefenseUp(Caster, StatBoost);
+
+        AttackWithLaser(finalDamage);
 
         GameEvents.UseAmmo(Caster, Cost);
     }
 
     protected override GameManager.QTEType GetQTEType()
     {
-        return GameManager.QTEType.shrinkingCircle;
+        return GameManager.QTEType.TimingBar;
     }
-    
-    public override bool IsCasterValid (Unit Caster)
-    {
-		return(Caster.Ammo >= Cost);
-	}    
-	public override bool IsTargetValid (Unit Target, bool isPlayer)
-    {
-		return (FieldController.main.GetPosition(Target) == FieldController.Position.Vanguard) && (FieldController.main.IsUnitPlayer(Target) != isPlayer);
-	}
 
-    void FireLaserAtTarget(Transform targetTransform)
+    private void FireLaserAtTarget(Transform targetTransform)
     {
         if (VFX1)
         {
-            GameObject SpawnedLaser = Instantiate(VFX1, transform);
-            SpawnedLaser.transform.LookAt(targetTransform);
+            GameObject spawnedLaser = Instantiate(VFX1, transform);
+            spawnedLaser.transform.LookAt(targetTransform);
         }
     }
 
-    void AttackWithLaser(int damage)
+    private void AttackWithLaser(int damage)
     {
         GameEvents.UnitAttack(Caster, Target, -GetDamageCalculation(Caster, Target, damage));
         FireLaserAtTarget(Target.transform);

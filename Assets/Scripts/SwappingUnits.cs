@@ -4,48 +4,10 @@ using UnityEngine;
 
 public class SwappingUnits : MonoBehaviour
 {
-    public GameObject selectedUnit;
-    public GameObject vanguardUnit;
-    public GameObject backUnit1;
-    public GameObject backUnit2;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            RaycastHit hit;
-
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out hit, 100.0f))
-            {
-                if (hit.transform)
-                {
-                    if (hit.transform.gameObject.tag == "Military" && hit.transform.gameObject.transform.position.x < 3)
-                    {
-                        Debug.Log("military");
-                    }
-                    else if (hit.transform.gameObject.tag == "Magic" && hit.transform.gameObject.transform.position.x < 3)
-                    {
-                        Debug.Log("magic");
-                    }
-                    else if (hit.transform.gameObject.tag == "Renowned" && hit.transform.gameObject.transform.position.x < 3)
-                    {
-                        Debug.Log("renowned");
-                    }
-
-                    selectedUnit = hit.transform.gameObject;
-                }
-            }
-        }
-    }
+    private GameObject selectedUnit;
+    private GameObject vanguardUnit;
+    private GameObject backUnit1;
+    private GameObject backUnit2;
 
     public void SwapUnits()
     {
@@ -61,11 +23,29 @@ public class SwappingUnits : MonoBehaviour
             backUnit1 = vanguardUnit;
             vanguardUnit = temp;
         }
-        else if(backUnit2 == selectedUnit)
+        else if (backUnit2 == selectedUnit)
         {
             GameObject temp = backUnit2;
             backUnit2 = vanguardUnit;
             vanguardUnit = temp;
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit;
+
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit, 100.0f))
+            {
+                if (hit.transform)
+                {
+                    selectedUnit = hit.transform.gameObject;
+                }
+            }
         }
     }
 }

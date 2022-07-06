@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Commander
   m_EditorClassIdentifier: 
   unitType: 2
-  UnitName: The Renowned
-  VanguardAbilities:
+  unitName: The Renowned
+  vanguardAbilities:
   - AbilityType: 0
     AbilityName: 
     AbilityDescription: 
@@ -28,9 +28,9 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 14
     AbilityName: Arcane Bullet
-    AbilityDescription: "Strike in an attack formation. \nDamage 3"
+    AbilityDescription: Deal 3 Damage
     Cost: 1
-    Damage: 3
+    Damage: 214748365
     StatBoost: 0
     Variation: 1
     ForceTarget: 0
@@ -39,10 +39,9 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 2
     AbilityName: Hardlight Projection
-    AbilityDescription: 'Will form an invisible wall to protect the commander.
+    AbilityDescription: 'Gain 2 Defence
 
-      +2
-      DEF'
+      Gain 2 Mana'
     Cost: -2
     Damage: 1
     StatBoost: 2
@@ -51,7 +50,7 @@ MonoBehaviour:
     VFX1: {fileID: 7018246452246271507, guid: a7ae20c41e63aed4698231cfba45ec53, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  SupportAbilities:
+  supportAbilities:
   - AbilityType: 0
     AbilityName: 
     AbilityDescription: 
@@ -65,8 +64,8 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 5
     AbilityName: Reload
-    AbilityDescription: Gain 3 ammo
-    Cost: -3
+    AbilityDescription: Gain 2 Ammo
+    Cost: -2
     Damage: 0
     StatBoost: 1
     Variation: 0
@@ -75,8 +74,8 @@ MonoBehaviour:
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
   - AbilityType: 17
-    AbilityName: Transmutatation
-    AbilityDescription: Target unit gains 1 ammo and/or mana
+    AbilityName: Transmutation
+    AbilityDescription: Target unit Gains 1 Ammo and/or Mana
     Cost: 1
     Damage: 0
     StatBoost: 1
@@ -87,7 +86,7 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 16
     AbilityName: Charisma
-    AbilityDescription: All Allies gain +2 ATT
+    AbilityDescription: All Allies Gain +2 Attack
     Cost: 2
     Damage: 0
     StatBoost: 2
@@ -96,8 +95,8 @@ MonoBehaviour:
     VFX1: {fileID: 0}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  MaxHealth: 18
-  MaxAmmo: 2
-  MaxMana: 2
+  maxHealth: 18
+  maxAmmo: 2
+  maxMana: 2
   animator: {fileID: 9100000, guid: 74b3c6f72f520a248965c52c6f97a33e, type: 2}
   sprite: {fileID: -6852834596175607816, guid: 55e703a8ba1583a4987292f6d9806971, type: 3}

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Paladin
   m_EditorClassIdentifier: 
   unitType: 0
-  UnitName: Paladin
-  VanguardAbilities:
+  unitName: Paladin
+  vanguardAbilities:
   - AbilityType: 0
     AbilityName: 
     AbilityDescription: 
@@ -28,8 +28,12 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 9
     AbilityName: Righteous Blow
-    AbilityDescription: "3 Damage\nDeals bonus damage if the Paladin has at least
-      1 def. \nSmall mana boost."
+    AbilityDescription: 'Deal 3 Damage
+
+      Deal +2 Damage if the caster has at
+      least 1 Defence
+
+      Gain 1 Mana'
     Cost: -1
     Damage: 3
     StatBoost: 0
@@ -40,19 +44,18 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 2
     AbilityName: Stand Your Ground
-    AbilityDescription: 'Raise your shield and absorb the incoming blow.
+    AbilityDescription: 'Gain 2 Defence
 
-      +3
-      DEF'
+      Gain 2 Mana'
     Cost: -2
     Damage: 0
-    StatBoost: 3
+    StatBoost: 2
     Variation: 1
     ForceTarget: 0
     VFX1: {fileID: 217341259536796723, guid: 75432b09afa8a304da43e1ecf77684af, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  SupportAbilities:
+  supportAbilities:
   - AbilityType: 0
     AbilityName: 
     AbilityDescription: 
@@ -66,10 +69,7 @@ MonoBehaviour:
     VFX3: {fileID: 0}
   - AbilityType: 10
     AbilityName: Holy Shield
-    AbilityDescription: 'Summon a protective aura for your allies.
-
-      +2 Permanent
-      Defense to any target.'
+    AbilityDescription: Target 1 Ally Gains +2 Permanent Defence
     Cost: 1
     Damage: 0
     StatBoost: 2
@@ -78,8 +78,8 @@ MonoBehaviour:
     VFX1: {fileID: 217341259536796723, guid: 75432b09afa8a304da43e1ecf77684af, type: 3}
     VFX2: {fileID: 0}
     VFX3: {fileID: 0}
-  MaxHealth: 16
-  MaxAmmo: 0
-  MaxMana: 2
+  maxHealth: 16
+  maxAmmo: 0
+  maxMana: 2
   animator: {fileID: 9100000, guid: f30ec2216d9c56642b27c8e06645643d, type: 2}
   sprite: {fileID: 101593814, guid: edbb65b9073b8b3408437d88a3821805, type: 3}

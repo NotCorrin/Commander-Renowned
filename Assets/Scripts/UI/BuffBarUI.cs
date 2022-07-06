@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+/// <summary>
+/// Contains code for the buffbar.
+/// </summary>
+/// <remarks>
+/// Inherits from Listener as it does not register callbacks.
+/// </remarks>
 public class BuffBarUI : Listener
 {
     [SerializeField] private UIDocument uiDocument;
@@ -10,20 +16,16 @@ public class BuffBarUI : Listener
 
     private Camera cam;
     private Unit parent;
+    private Buff permAttack;
+    private Buff permDefence;
+    private Buff attack;
+    private Buff defence;
+    private Buff thorns;
+    private Buff accuracy;
 
-    struct Buff
-    {
-        public VisualElement element;
-        public Label label;
-    }
-
-    Buff permAttack;
-    Buff permDefence;
-    Buff attack;
-    Buff defence; 
-    Buff thorns;
-    Buff accuracy;
-
+    /// <summary>
+    /// Subscribes BuffBarUI to events.
+    /// </summary>
     protected override void SubscribeListeners()
     {
         UIEvents.onUnitPermAttackChanged += UpdatePermAttackBuff;
@@ -35,6 +37,9 @@ public class BuffBarUI : Listener
         GameEvents.onKill += HideSelf;
     }
 
+    /// <summary>
+    /// Unsubscribes BuffBarUI to events.
+    /// </summary>
     protected override void UnsubscribeListeners()
     {
         UIEvents.onUnitPermAttackChanged -= UpdatePermAttackBuff;
@@ -46,15 +51,15 @@ public class BuffBarUI : Listener
         GameEvents.onKill -= HideSelf;
     }
 
-    void HideSelf(Unit unit)
+    private void HideSelf(Unit unit)
     {
-        if(unit == parent)
+        if (unit == parent)
         {
             container.style.display = DisplayStyle.None;
         }
     }
 
-    void Awake()
+    private void Awake()
     {
         cam = Camera.main;
         parent = transform.parent.GetComponent<Unit>();
@@ -89,7 +94,7 @@ public class BuffBarUI : Listener
         }
     }
 
-    void UpdateBuff(Buff buff, int amount)
+    private void UpdateBuff(Buff buff, int amount)
     {
         if (amount == 0)
         {
@@ -101,51 +106,75 @@ public class BuffBarUI : Listener
         buff.label.text = amount.ToString();
     }
 
-    void UpdatePermAttackBuff(Unit unit, int amount)
+    private void UpdatePermAttackBuff(Unit unit, int amount)
     {
-        if(unit != parent) return;
+        if (unit != parent)
+        {
+            return;
+        }
 
         UpdateBuff(permAttack, amount);
     }
 
-    void UpdatePermDefenceBuff(Unit unit, int amount)
+    private void UpdatePermDefenceBuff(Unit unit, int amount)
     {
-        if(unit != parent) return;
+        if (unit != parent)
+        {
+            return;
+        }
 
         UpdateBuff(permDefence, amount);
     }
 
-    void UpdateAttackBuff(Unit unit, int buff)
+    private void UpdateAttackBuff(Unit unit, int buff)
     {
-        if(unit != parent) return;
+        if (unit != parent)
+        {
+            return;
+        }
 
         UpdateBuff(attack, buff);
     }
 
-    void UpdateDefenceBuff(Unit unit, int buff)
+    private void UpdateDefenceBuff(Unit unit, int buff)
     {
-        if(unit != parent) return;
+        if (unit != parent)
+        {
+            return;
+        }
 
         UpdateBuff(defence, buff);
     }
 
-    void UpdateAccuracyBuff(Unit unit, int buff)
+    private void UpdateAccuracyBuff(Unit unit, int buff)
     {
-        if(unit != parent) return;
+        if (unit != parent)
+        {
+            return;
+        }
 
         UpdateBuff(accuracy, buff);
     }
 
-    void UpdateThornsBuff(Unit unit, int buff)
+    private void UpdateThornsBuff(Unit unit, int buff)
     {
-        if(unit != parent) return;
+        if (unit != parent)
+        {
+            return;
+        }
 
         UpdateBuff(thorns, buff);
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         Vector2 newPosition = RuntimePanelUtils.CameraTransformWorldToPanel(container.panel, transform.position, cam);
-        container.transform.position = new Vector3(newPosition.x - container.layout.width / 2, newPosition.y - container.layout.height / 2, 0);
+        container.transform.position = new Vector3(newPosition.x - (container.layout.width / 2), newPosition.y - (container.layout.height / 2), 0);
+    }
+
+    private struct Buff
+    {
+        public VisualElement element;
+        public Label label;
     }
 }

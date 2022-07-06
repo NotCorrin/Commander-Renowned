@@ -51,9 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 665a4b1ad9216f14892118f0a7e70df8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitSwitched: {fileID: 0}
-  unitUsed: {fileID: 0}
-  DEBUG_NextPhase: 0
+  debugChangePhase: 0
 --- !u!114 &8653105001587342314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,14 +89,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7638aa0dc4623d84ea57b8766d46169b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerVanguard: {fileID: 0}
+  playerSupportLeft: {fileID: 0}
+  playerSupportRight: {fileID: 0}
+  playerVanguard: {fileID: 0}
   playerVanguardPos: {x: 0, y: 0, z: 0}
-  PlayerSupportLeft: {fileID: 0}
-  PlayerSupportRight: {fileID: 0}
-  EnemyVanguard: {fileID: 0}
+  enemySupportLeft: {fileID: 0}
+  enemySupportRight: {fileID: 0}
+  enemyVanguard: {fileID: 0}
   enemyVanguardPos: {x: 0, y: 0, z: 0}
-  EnemySupportLeft: {fileID: 0}
-  EnemySupportRight: {fileID: 0}
   maxTime: 0.5
   supportLeftUsed: 0
   supportRightUsed: 0
@@ -119,7 +117,7 @@ MonoBehaviour:
   selected: 0
   clickLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
 --- !u!114 &1100034884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,10 +148,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f33124207217d9b43bb92600102c4c6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Team: {fileID: 11400000, guid: b7dab2c6d967bb64dbde10a52bb78ed4, type: 2}
-  Scenario: {fileID: 0}
-  PositionParent: {fileID: 0}
-  UnitPrefab: {fileID: 6480894034537515106, guid: e64746209dcc14f4ab958e8e25afdceb, type: 3}
+  team: {fileID: 11400000, guid: b7dab2c6d967bb64dbde10a52bb78ed4, type: 2}
+  scenario: {fileID: 11400000, guid: eb621805b69bbfc4bb18fae8fffe08da, type: 2}
+  positionParent: {fileID: 0}
+  unitPrefab: {fileID: 6480894034537515106, guid: e64746209dcc14f4ab958e8e25afdceb, type: 3}
 --- !u!114 &416161354
 MonoBehaviour:
   m_ObjectHideFlags: 0

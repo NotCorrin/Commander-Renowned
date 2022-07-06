@@ -4,20 +4,51 @@ using UnityEngine;
 
 public class GameManager : Listener
 {
-    public enum QTEType { shrinkingCircle }
-    public enum QTEResult { Critical, Hit, Miss }
-    public enum QTEDisplayResult { Perfect, Good, Poor }
-
-    // Start is called before the first frame update
-    void Start()
+    /// <summary>
+    /// Identifies type of QTE used.
+    /// </summary>
+    public enum QTEType
     {
-        
+        /// <summary>
+        /// Bar in which cursor loops through, player must input in 'success zone'
+        /// </summary>
+        TimingBar,
     }
 
-    // Update is called once per frame
-    void Update()
+    public enum QTEResult
     {
-        
+        /// <summary>
+        /// Perfect success
+        /// </summary>
+        Critical,
+
+        /// <summary>
+        /// Standard in hit zone
+        /// </summary>
+        Hit,
+
+        /// <summary>
+        /// Player missed input window
+        /// </summary>
+        Miss,
+    }
+
+    public enum QTEDisplayResult
+    {
+        /// <summary>
+        /// Display when player hit critical
+        /// </summary>
+        Perfect,
+
+        /// <summary>
+        /// Display when player hit
+        /// </summary>
+        Good,
+
+        /// <summary>
+        /// Display when player misses
+        /// </summary>
+        Poor,
     }
 
     protected override void SubscribeListeners()
@@ -30,7 +61,7 @@ public class GameManager : Listener
         MenuEvents.onBattleStartSelected -= InitiateBattle;
     }
 
-    static void InitiateBattle()
+    private static void InitiateBattle()
     {
         GameEvents.BattleStart();
     }
