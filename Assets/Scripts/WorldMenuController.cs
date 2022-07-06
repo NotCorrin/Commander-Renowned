@@ -35,10 +35,10 @@ public class WorldMenuController : Listener
     {
         scenarios.Level++;
 
-        /* LevelManager.instance.LoadScene(SceneIndex.AddMenuScene); */
+        LevelManager.instance.LoadScene(SceneIndex.AddMenuScene);
 
-        Debug.LogWarning("demo only");
-        LevelManager.instance.LoadScene(SceneIndex.EndScene);
+        // Debug.LogWarning("demo only");
+        // LevelManager.instance.LoadScene(SceneIndex.EndScene);
     }
 
     private void LoseSceneDelay()

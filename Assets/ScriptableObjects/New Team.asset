@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3eb4b625d33a24e95e411e55228343, type: 3}
   m_Name: New Team
   m_EditorClassIdentifier: 
-  templateTeam: {fileID: 11400000, guid: 39067e9189c9ab746ada1f26ecd909a6, type: 2}
-  tutorialComplete: 1
+  templateTeam: {fileID: 11400000, guid: 054d5dc112e825f498d6b77e1b1def52, type: 2}
+  tutorialComplete: 0
   units:
   - {fileID: 11400000, guid: b21d54bddb21f7a419bd7a79ec36a958, type: 2}
   - {fileID: 11400000, guid: edf88a06261f4ed4891c1b5cf94ad382, type: 2}
