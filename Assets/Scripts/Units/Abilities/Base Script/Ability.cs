@@ -67,13 +67,13 @@ public abstract class Ability : MonoBehaviour
 
     protected int GetDamageCalculation(Unit caster, Unit target, int damage)
     {
-        return Mathf.Max(damage + caster.Attack - target.Defense, 0);
+        return Mathf.Max(damage + caster.BonusDamage - target.DamageReduction, 0);
     }
 
     protected int GetTotalDamageBuffs(Unit caster)
     {
         int totalDamageBuffs = 0;
-        totalDamageBuffs += caster.Attack;
+        totalDamageBuffs += caster.BonusDamage;
         /*Version made AI look at opponent defense buffs. Took away satisfaction of oursmarting AI
         totalDamageBuffs -= FieldController.main.GetUnit(FieldController.Position.Vanguard, !FieldController.main.IsUnitPlayer(Caster)).Defense);*/
         return totalDamageBuffs;
@@ -82,7 +82,7 @@ public abstract class Ability : MonoBehaviour
     protected int GetTotalDefenseBuffs(Unit caster)
     {
         int totalDefenseBuffs = 0;
-        totalDefenseBuffs += caster.Defense;
+        totalDefenseBuffs += caster.DamageReduction;
         /*Version made AI look at opponent defense buffs. Took away satisfaction of oursmarting AI
         totalDamageBuffs -= FieldController.main.GetUnit(FieldController.Position.Vanguard, !FieldController.main.IsUnitPlayer(Caster)).Defense);*/
         return totalDefenseBuffs;

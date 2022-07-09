@@ -10,11 +10,6 @@ public abstract class Status
     public int StackAmount { get; protected set; }
 
     /// <summary>
-    /// Gets or sets the icon to be displayed on the status bar.
-    /// </summary>
-    public Sprite Icon { get; protected set; }
-
-    /// <summary>
     /// Gets or sets the unit afflicted by the affect.
     /// </summary>
     public Unit Afflicted { get; protected set; }
@@ -28,21 +23,31 @@ public abstract class Status
     /// <param name="amount">
     /// The amount of stacks to be added.
     /// </param>
-    protected virtual void AddEffect(Unit afflicted, int amount)
+    public virtual void AddEffect(Unit afflicted, int amount)
     {
         foreach (Status status in afflicted.StatusList)
         {
-            if (status.GetType() == this.GetType())
+            if (status != null)
             {
-                status.AddStacks(amount);
-                return;
+                if (status.GetType() == this.GetType())
+                {
+                    status.AddStacks(amount);
+                    return;
+                }
             }
         }
 
         afflicted.StatusList.Add(this);
         Afflicted = afflicted;
+        SubscribeListeners();
         AddStacks(amount);
     }
+
+    /// <summary>
+    /// Used to get icon of status. Use body to set path of icon.
+    /// </summary>
+    /// <returns> Sprite used for icon.</returns>
+    public abstract Sprite GetIcon();
 
     /// <summary>
     /// Adds stacks to an existing effect.
@@ -53,7 +58,7 @@ public abstract class Status
     protected virtual void AddStacks(int amount)
     {
         StackAmount += amount;
-        OnTriggered();
+        OnChanged(amount);
         if (StackAmount == 0)
         {
             RemoveStatus();
@@ -66,6 +71,7 @@ public abstract class Status
     protected virtual void RemoveStatus()
     {
         Afflicted.StatusList.Remove(this);
+        UnsubscribeListeners();
     }
 
     /// <summary>
@@ -73,14 +79,20 @@ public abstract class Status
     /// </summary>
     protected virtual void DecayStatus()
     {
-        StackAmount = 0;
-        OnTriggered();
-        RemoveStatus();
+        AddStacks(-StackAmount);
     }
 
     /// <summary>
     /// Activate the effect of the status.
     /// </summary>
-    protected abstract void OnTriggered();
+    /// <param name="changeAmount">
+    /// The difference between the old and new stack value.
+    /// </param>
+    protected virtual void OnChanged(int changeAmount)
+    {
+    }
 
+    protected abstract void SubscribeListeners();
+
+    protected abstract void UnsubscribeListeners();
 }

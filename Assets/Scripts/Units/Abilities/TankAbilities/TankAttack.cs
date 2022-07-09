@@ -70,7 +70,7 @@ public class TankAttack : QTEAbility
 
         foreach (Unit unit in FieldController.Main.GetAllies(Target))
         {
-            GameEvents.UnitAttack(Caster, unit, -Mathf.Max(finalDamage + Mathf.FloorToInt(Caster.Attack / 2) - unit.Defense, 0));
+            GameEvents.UnitAttack(Caster, unit, -Mathf.Max(finalDamage + Mathf.FloorToInt(Caster.BonusDamage / 2) - unit.DamageReduction, 0));
             LaunchAttackAtTarget(unit.transform);
         }
 

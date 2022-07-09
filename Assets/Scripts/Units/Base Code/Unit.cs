@@ -1,6 +1,6 @@
 using System;
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Unit : Listener
 {
@@ -41,7 +41,13 @@ public class Unit : Listener
     /// <summary>
     /// Gets or sets the list of statuses on an unit.
     /// </summary>
-    public List<Status> StatusList { get; set; }
+    public List<Status> StatusList { get; set; } = new List<Status>();
+
+    public Action VanguardEndStatusTrigger { get; set; }
+
+    public Action OpponentVanguardEndStatusTrigger { get; set; }
+
+    public Action<Unit, int> OnAttackedStatusTrigger { get; set; }
 
 #pragma warning disable SA1201 // Elements should appear in the correct order. Done here for grouping purposes.
     private int health;
@@ -105,15 +111,15 @@ public class Unit : Listener
         }
     }
 
-    private int attack;
+    private int bonusDamage;
 
-    public int Attack
+    public int BonusDamage
     {
-        get => attack;
+        get => bonusDamage;
         set
         {
-            attack = value;
-            UIEvents.UnitAttackChanged(this, attack - permAttack);
+            bonusDamage = value;
+            UIEvents.UnitAttackChanged(this, bonusDamage - permAttack);
         }
     }
 
@@ -129,15 +135,15 @@ public class Unit : Listener
         }
     }
 
-    private int defense;
+    private int damageReduction;
 
-    public int Defense
+    public int DamageReduction
     {
-        get => defense;
+        get => damageReduction;
         set
         {
-            defense = value;
-            UIEvents.UnitDefenseChanged(this, defense - permDefense);
+            damageReduction = value;
+            UIEvents.UnitDefenseChanged(this, damageReduction - permDefense);
         }
     }
 
@@ -315,7 +321,7 @@ public class Unit : Listener
     {
         if (target == this)
         {
-            Attack += attackChange;
+            BonusDamage += attackChange;
         }
     }
 
@@ -324,7 +330,7 @@ public class Unit : Listener
         if (target == this)
         {
             PermAttack += attackChange;
-            Attack += attackChange;
+            BonusDamage += attackChange;
         }
     }
 
@@ -332,7 +338,7 @@ public class Unit : Listener
     {
         if (target == this)
         {
-            Defense += defenseChange;
+            DamageReduction += defenseChange;
         }
     }
 
@@ -341,7 +347,7 @@ public class Unit : Listener
         if (target == this)
         {
             PermDefense += defenseChange;
-            Defense += defenseChange;
+            DamageReduction += defenseChange;
         }
     }
 
@@ -487,12 +493,13 @@ public class Unit : Listener
     {
         if (RoundController.IsPlayerPhase == FieldController.Main.IsUnitPlayer(this))
         {
+            VanguardEndStatusTrigger?.Invoke();
             if (PermAttack > 0)
             {
                 PermAttack--;
             }
 
-            Attack = PermAttack;
+            BonusDamage = PermAttack;
             Accuracy = 0;
         }
         else
@@ -502,7 +509,7 @@ public class Unit : Listener
                 PermDefense--;
             }
 
-            Defense = PermDefense;
+            DamageReduction = PermDefense;
             Thorns = 0;
         }
     }
@@ -557,12 +564,12 @@ public class Unit : Listener
 
         healthWeight = Mathf.RoundToInt(((float)Health / (float)MaxHealth) * 100);
 
-        if ((Attack + Defense + Thorns) > 0)
+        if ((BonusDamage + DamageReduction + Thorns) > 0)
         {
             buffWeight = 10;
         }
 
-        buffWeight += ((Attack + Defense + Thorns) * 20) + (Accuracy * 10);
+        buffWeight += ((BonusDamage + DamageReduction + Thorns) * 20) + (Accuracy * 10);
 
         if (UnitType == UnitType.Military || UnitType == UnitType.Commander)
         {

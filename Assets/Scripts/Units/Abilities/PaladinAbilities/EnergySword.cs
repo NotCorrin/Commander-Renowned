@@ -63,7 +63,7 @@ public class EnergySword : QTEAbility
                 }
         }
 
-        if (Caster.Defense >= 1)
+        if (Caster.DamageReduction >= 1)
         {
             SpawnVFX(VFX2);
             finalDamage += 3;
