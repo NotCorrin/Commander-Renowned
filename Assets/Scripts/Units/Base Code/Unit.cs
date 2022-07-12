@@ -43,9 +43,7 @@ public class Unit : Listener
     /// </summary>
     public List<Status> StatusList { get; set; } = new List<Status>();
 
-    public Action VanguardEndStatusTrigger { get; set; }
-
-    public Action OpponentVanguardEndStatusTrigger { get; set; }
+    public Action OnStatusDecayTrigger { get; set; }
 
     public Action<Unit, int> OnAttackedStatusTrigger { get; set; }
 
@@ -135,27 +133,27 @@ public class Unit : Listener
         }
     }
 
-    private int damageReduction;
+    private int bonusDefense;
 
-    public int DamageReduction
+    public int BonusDefense
     {
-        get => damageReduction;
+        get => bonusDefense;
         set
         {
-            damageReduction = value;
-            UIEvents.UnitDefenseChanged(this, damageReduction - permDefense);
+            bonusDefense = value;
+            UIEvents.UnitDefenseChanged(this, bonusDefense - permDefense);
         }
     }
 
-    private int accuracy;
+    private int bonusAccuracy;
 
-    public int Accuracy
+    public int BonusAccuracy
     {
-        get => accuracy;
+        get => bonusAccuracy;
         set
         {
-            accuracy = value;
-            UIEvents.UnitAccuracyChanged(this, accuracy);
+            bonusAccuracy = value;
+            UIEvents.UnitAccuracyChanged(this, bonusAccuracy);
         }
     }
 
@@ -338,7 +336,7 @@ public class Unit : Listener
     {
         if (target == this)
         {
-            DamageReduction += defenseChange;
+            BonusDefense += defenseChange;
         }
     }
 
@@ -347,7 +345,7 @@ public class Unit : Listener
         if (target == this)
         {
             PermDefense += defenseChange;
-            DamageReduction += defenseChange;
+            BonusDefense += defenseChange;
         }
     }
 
@@ -355,7 +353,7 @@ public class Unit : Listener
     {
         if (target == this)
         {
-            Accuracy += accuracyChange;
+            BonusAccuracy += accuracyChange;
         }
     }
 
@@ -443,6 +441,7 @@ public class Unit : Listener
     {
         if (defender == this)
         {
+            OnAttackedStatusTrigger?.Invoke(attacker, damage);
             if (Thorns != 0)
             {
                 GameEvents.HealthChanged(attacker, -Thorns);
@@ -493,14 +492,14 @@ public class Unit : Listener
     {
         if (RoundController.IsPlayerPhase == FieldController.Main.IsUnitPlayer(this))
         {
-            VanguardEndStatusTrigger?.Invoke();
+            OnStatusDecayTrigger?.Invoke();
             if (PermAttack > 0)
             {
                 PermAttack--;
             }
 
             BonusDamage = PermAttack;
-            Accuracy = 0;
+            BonusAccuracy = 0;
         }
         else
         {
@@ -509,7 +508,7 @@ public class Unit : Listener
                 PermDefense--;
             }
 
-            DamageReduction = PermDefense;
+            BonusDefense = PermDefense;
             Thorns = 0;
         }
     }
@@ -564,12 +563,12 @@ public class Unit : Listener
 
         healthWeight = Mathf.RoundToInt(((float)Health / (float)MaxHealth) * 100);
 
-        if ((BonusDamage + DamageReduction + Thorns) > 0)
+        if ((BonusDamage + BonusDefense + Thorns) > 0)
         {
             buffWeight = 10;
         }
 
-        buffWeight += ((BonusDamage + DamageReduction + Thorns) * 20) + (Accuracy * 10);
+        buffWeight += ((BonusDamage + BonusDefense + Thorns) * 20) + (BonusAccuracy * 10);
 
         if (UnitType == UnitType.Military || UnitType == UnitType.Commander)
         {

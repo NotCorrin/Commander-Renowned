@@ -92,7 +92,19 @@ public abstract class Status
     {
     }
 
-    protected abstract void SubscribeListeners();
+    protected virtual void SubscribeListeners()
+    {
+        if (Afflicted)
+        {
+            Afflicted.OnStatusDecayTrigger += DecayStatus;
+        }
+    }
 
-    protected abstract void UnsubscribeListeners();
+    protected virtual void UnsubscribeListeners()
+    {
+        if (Afflicted)
+        {
+            Afflicted.OnStatusDecayTrigger -= DecayStatus;
+        }
+    }
 }

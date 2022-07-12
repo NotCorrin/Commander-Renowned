@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackBuff : Status
+public class DefenseBuff : Status
 {
     public override Sprite GetIcon()
     {
@@ -13,7 +13,7 @@ public class AttackBuff : Status
     {
         if (Afflicted)
         {
-            Afflicted.BonusDamage += changeAmount;
+            Afflicted.BonusDefense += changeAmount;
         }
     }
 }
