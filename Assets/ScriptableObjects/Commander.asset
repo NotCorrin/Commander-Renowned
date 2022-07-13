@@ -30,7 +30,7 @@ MonoBehaviour:
     AbilityName: Arcane Bullet
     AbilityDescription: Deal 3 Damage
     Cost: 1
-    Damage: 214748365
+    Damage: 3
     StatBoost: 0
     Variation: 1
     ForceTarget: 0

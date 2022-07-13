@@ -86,7 +86,6 @@ public class StoryContainerUI : UISubscriber
         {
             foreach (UnitScriptableObject unit in scenario.Winunit)
             {
-                Debug.LogError("what the actua");
                 Button unitButton = new ();
                 unitButton.text = unit.name;
                 unitButton.AddToClassList("button");
@@ -98,7 +97,7 @@ public class StoryContainerUI : UISubscriber
                     unitButton.UnregisterCallback<MouseEnterEvent>(OnButtonHover);
                     AudioManager.Instance.Play("OnMousePressed");
                     team.Units.Add(unit);
-                    LevelManager.instance.LoadScene(SceneIndex.MenuSelectionScene);
+                    LevelManager.instance.LoadScene(SceneIndex.StoryScene);
                 };
 
                 buttonContainer.Add(unitButton);
