@@ -17,7 +17,7 @@ public abstract class QTEAbility : Ability
         {
             this.Caster = Caster;
             this.Target = Target;
-            GameEvents.QTEStart(GetQTEType(), -Caster.Accuracy);
+            GameEvents.QTEStart(GetQTEType(), -Caster.BonusAccuracy);
             GameEvents.onQTEResolved += OnQTEResolved;
         }
     }

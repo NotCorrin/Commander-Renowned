@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Unit : Listener
@@ -36,6 +37,15 @@ public class Unit : Listener
     public Ability[] SupportAbilities { get; private set; } = new Ability[3];
 
     public int MaxHealth { get; private set; }
+
+    /// <summary>
+    /// Gets or sets the list of statuses on an unit.
+    /// </summary>
+    public List<Status> StatusList { get; set; } = new List<Status>();
+
+    public Action OnStatusDecayTrigger { get; set; }
+
+    public Action<Unit, int> OnAttackedStatusTrigger { get; set; }
 
 #pragma warning disable SA1201 // Elements should appear in the correct order. Done here for grouping purposes.
     private int health;
@@ -99,15 +109,15 @@ public class Unit : Listener
         }
     }
 
-    private int attack;
+    private int bonusDamage;
 
-    public int Attack
+    public int BonusDamage
     {
-        get => attack;
+        get => bonusDamage;
         set
         {
-            attack = value;
-            UIEvents.UnitAttackChanged(this, attack - permAttack);
+            bonusDamage = value;
+            UIEvents.UnitAttackChanged(this, bonusDamage - permAttack);
         }
     }
 
@@ -123,27 +133,27 @@ public class Unit : Listener
         }
     }
 
-    private int defense;
+    private int bonusDefense;
 
-    public int Defense
+    public int BonusDefense
     {
-        get => defense;
+        get => bonusDefense;
         set
         {
-            defense = value;
-            UIEvents.UnitDefenseChanged(this, defense - permDefense);
+            bonusDefense = value;
+            UIEvents.UnitDefenseChanged(this, bonusDefense - permDefense);
         }
     }
 
-    private int accuracy;
+    private int bonusAccuracy;
 
-    public int Accuracy
+    public int BonusAccuracy
     {
-        get => accuracy;
+        get => bonusAccuracy;
         set
         {
-            accuracy = value;
-            UIEvents.UnitAccuracyChanged(this, accuracy);
+            bonusAccuracy = value;
+            UIEvents.UnitAccuracyChanged(this, bonusAccuracy);
         }
     }
 
@@ -309,7 +319,7 @@ public class Unit : Listener
     {
         if (target == this)
         {
-            Attack += attackChange;
+            BonusDamage += attackChange;
         }
     }
 
@@ -318,7 +328,7 @@ public class Unit : Listener
         if (target == this)
         {
             PermAttack += attackChange;
-            Attack += attackChange;
+            BonusDamage += attackChange;
         }
     }
 
@@ -326,7 +336,7 @@ public class Unit : Listener
     {
         if (target == this)
         {
-            Defense += defenseChange;
+            BonusDefense += defenseChange;
         }
     }
 
@@ -335,7 +345,7 @@ public class Unit : Listener
         if (target == this)
         {
             PermDefense += defenseChange;
-            Defense += defenseChange;
+            BonusDefense += defenseChange;
         }
     }
 
@@ -343,7 +353,7 @@ public class Unit : Listener
     {
         if (target == this)
         {
-            Accuracy += accuracyChange;
+            BonusAccuracy += accuracyChange;
         }
     }
 
@@ -431,6 +441,7 @@ public class Unit : Listener
     {
         if (defender == this)
         {
+            OnAttackedStatusTrigger?.Invoke(attacker, damage);
             if (Thorns != 0)
             {
                 GameEvents.HealthChanged(attacker, -Thorns);
@@ -481,13 +492,14 @@ public class Unit : Listener
     {
         if (RoundController.IsPlayerPhase == FieldController.Main.IsUnitPlayer(this))
         {
+            OnStatusDecayTrigger?.Invoke();
             if (PermAttack > 0)
             {
                 PermAttack--;
             }
 
-            Attack = PermAttack;
-            Accuracy = 0;
+            BonusDamage = PermAttack;
+            BonusAccuracy = 0;
         }
         else
         {
@@ -496,7 +508,7 @@ public class Unit : Listener
                 PermDefense--;
             }
 
-            Defense = PermDefense;
+            BonusDefense = PermDefense;
             Thorns = 0;
         }
     }
@@ -551,12 +563,12 @@ public class Unit : Listener
 
         healthWeight = Mathf.RoundToInt(((float)Health / (float)MaxHealth) * 100);
 
-        if ((Attack + Defense + Thorns) > 0)
+        if ((BonusDamage + BonusDefense + Thorns) > 0)
         {
             buffWeight = 10;
         }
 
-        buffWeight += ((Attack + Defense + Thorns) * 20) + (Accuracy * 10);
+        buffWeight += ((BonusDamage + BonusDefense + Thorns) * 20) + (BonusAccuracy * 10);
 
         if (UnitType == UnitType.Military || UnitType == UnitType.Commander)
         {

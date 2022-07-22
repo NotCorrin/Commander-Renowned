@@ -39,7 +39,8 @@ public class MageBuff : Ability
         if (IsAbilityValid(caster, target))
         {
             Instantiate(VFX1, target.transform);
-            GameEvents.AttackUp(target, StatBoost);
+            new AttackBuff().AddEffect(target, StatBoost);
+            // GameEvents.AttackUp(target, StatBoost);
             GameEvents.UseMana(caster, Cost);
         }
     }
