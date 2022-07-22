@@ -134,6 +134,8 @@ public class UnitSelectionMenuUI : UISubscriber
             }
         }
 
+        // LevelManager.instance.LoadScene(SceneIndex.StoryScene);
+
         LevelManager.instance.LoadScene(stories.Story[stories.Level + 1].Scene);
     }
 
