@@ -6,6 +6,9 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.UIElements;
 
+/// <summary>
+/// Tests for the BuffBarHelper class.
+/// </summary>
 public class BuffBarHelperTests
 {
     /// <summary>
@@ -34,13 +37,6 @@ public class BuffBarHelperTests
         VectorImage accuracyIcon = Resources.Load<VectorImage>("UI/Icons/Accuracy");
         VectorImage thornsIcon = Resources.Load<VectorImage>("UI/Icons/Thorns");
 
-        KeyValuePair<string, VectorImage> permAttackPair = new ("permAttack", permAttackIcon);
-        KeyValuePair<string, VectorImage> permDefencePair = new ("permDefence", permDefenceIcon);
-        KeyValuePair<string, VectorImage> attackPair = new ("attack", attackIcon);
-        KeyValuePair<string, VectorImage> defencePair = new ("defence", defenceIcon);
-        KeyValuePair<string, VectorImage> accuracyPair = new ("accuracy", accuracyIcon);
-        KeyValuePair<string, VectorImage> thornsPair = new ("thorns", thornsIcon);
-
         GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/Loading/Buff Bar Helper"));
         yield return new WaitForSeconds(0.2f);
 
@@ -49,12 +45,12 @@ public class BuffBarHelperTests
         yield return new WaitForSeconds(0.5f);
 
         // Assert
-        Assert.Contains(permAttackPair, BuffBarHelper.BuffBarDict);
-        Assert.Contains(permDefencePair, BuffBarHelper.BuffBarDict);
-        Assert.Contains(attackPair, BuffBarHelper.BuffBarDict);
-        Assert.Contains(defencePair, BuffBarHelper.BuffBarDict);
-        Assert.Contains(accuracyPair, BuffBarHelper.BuffBarDict);
-        Assert.Contains(thornsPair, BuffBarHelper.BuffBarDict);
+        Assert.AreEqual(permAttackIcon, BuffBarHelper.BuffBarDict["permAttack"]);
+        Assert.AreEqual(permDefenceIcon, BuffBarHelper.BuffBarDict["permDefence"]);
+        Assert.AreEqual(attackIcon, BuffBarHelper.BuffBarDict["attack"]);
+        Assert.AreEqual(defenceIcon, BuffBarHelper.BuffBarDict["defence"]);
+        Assert.AreEqual(accuracyIcon, BuffBarHelper.BuffBarDict["accuracy"]);
+        Assert.AreEqual(thornsIcon, BuffBarHelper.BuffBarDict["thorns"]);
         yield return null;
     }
 }

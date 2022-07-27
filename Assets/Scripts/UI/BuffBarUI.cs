@@ -17,6 +17,9 @@ public class BuffBarUI : UISubscriber
     private Camera cam;
     private Unit parent;
 
+    /// <summary>
+    /// Initializes the buffbar.
+    /// </summary>
     protected override void AssignUIElements()
     {
         container = uiDocument.rootVisualElement.Q<VisualElement>("container");
@@ -28,6 +31,9 @@ public class BuffBarUI : UISubscriber
     protected override void SubscribeListeners()
     {
         GameEvents.onKill += HideSelf;
+        StatusEvents.onStatusAdded += CreateBuff;
+        StatusEvents.onStatusStacked += UpdateBuff;
+        StatusEvents.onStatusRemoved += RemoveBuff;
     }
 
     /// <summary>
@@ -36,6 +42,9 @@ public class BuffBarUI : UISubscriber
     protected override void UnsubscribeListeners()
     {
         GameEvents.onKill -= HideSelf;
+        StatusEvents.onStatusAdded -= CreateBuff;
+        StatusEvents.onStatusStacked -= UpdateBuff;
+        StatusEvents.onStatusRemoved -= RemoveBuff;
     }
 
     private void HideSelf(Unit unit)
@@ -46,44 +55,68 @@ public class BuffBarUI : UISubscriber
         }
     }
 
-    private void EmptyContainer()
+    private void CreateBuff(Unit unit, Status status)
     {
-        foreach (VisualElement child in container.Children())
+        if (unit != parent)
         {
-            child.style.opacity = 0;
+            return;
         }
-    }
 
-    private void RemoveChildFromContainer(TransitionEndEvent evt)
-    {
-        container.Remove(evt.target as VisualElement);
-    }
-
-    private void CreateBuff(string buffName, int buffAmount)
-    {
         VisualElement buff = new ()
         {
-            name = buffName,
+            name = status.Name,
             style =
             {
-                backgroundImage = new StyleBackground(BuffBarHelper.BuffBarDict[buffName]),
+                backgroundImage = new StyleBackground(BuffBarHelper.BuffBarDict[status.Name]),
             },
         };
 
-        Label amount = new Label()
+        Label amount = new ()
         {
             name = "label",
-            text = buffAmount.ToString(),
+            text = string.Empty,
         };
 
         buff.AddToClassList("buff");
         amount.AddToClassList("label");
 
-        buff.RegisterCallback<TransitionEndEvent>(RemoveChildFromContainer);
-
         buff.Add(amount);
 
         container.Add(buff);
+    }
+
+    private void UpdateBuff(Unit unit, Status status)
+    {
+        if (unit != parent)
+        {
+            return;
+        }
+
+        foreach (VisualElement child in container.Children())
+        {
+            if (child.name == status.Name)
+            {
+                Label amount = child.Q<Label>("label");
+                amount.text = status.StackAmount.ToString();
+            }
+        }
+    }
+
+    private void RemoveBuff(Unit unit, Status status)
+    {
+        if (unit != parent)
+        {
+            return;
+        }
+
+        foreach (VisualElement child in container.Children())
+        {
+            if (child.name == status.Name)
+            {
+                child.style.opacity = 0;
+                container.Remove(child);
+            }
+        }
     }
 
     private void Awake()

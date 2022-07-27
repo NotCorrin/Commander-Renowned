@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PermDefense : Status
 {
-    public override Sprite GetIcon()
-    {
-        throw new System.NotImplementedException();
-    }
+    /// <summary>
+    /// Gets the name of the perm defence buff.
+    /// </summary>
+    public override string Name { get => "permDefence"; }
 
     protected override void DecayStatus()
     {

@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class AttackBuff : Status
 {
-    public override Sprite GetIcon()
-    {
-        throw new System.NotImplementedException();
-    }
+    /// <summary>
+    /// Gets the name of the attack buff.
+    /// </summary>
+    public override string Name { get => "attack"; }
 
     protected override void OnChanged(int changeAmount)
     {
