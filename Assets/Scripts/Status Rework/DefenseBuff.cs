@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class DefenseBuff : Status
 {
-    public override Sprite GetIcon()
-    {
-        throw new System.NotImplementedException();
-    }
+    /// <summary>
+    /// Gets the name of the defence buff.
+    /// </summary>
+    public override string Name { get => "defence"; }
 
     protected override void OnChanged(int changeAmount)
     {

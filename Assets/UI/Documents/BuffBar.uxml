@@ -1,23 +1,4 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/USS/Buffs.uss?fileID=7433441132597879392&amp;guid=0afd32d8f6b23a443a87f2f0550ad3df&amp;type=3#Buffs" />
-    <ui:VisualElement name="container" style="width: 130px; height: 86px; flex-direction: row; justify-content: center; flex-wrap: wrap; align-items: center;">
-        <ui:VisualElement name="permAttack" class="buffPermAttack" style="display: none;">
-            <ui:Label tabindex="-1" display-tooltip-when-elided="true" name="label" class="label" />
-        </ui:VisualElement>
-        <ui:VisualElement name="permDefence" class="buffPermDefence" style="display: none;">
-            <ui:Label tabindex="-1" display-tooltip-when-elided="true" name="label" class="label" />
-        </ui:VisualElement>
-        <ui:VisualElement name="thorns" class="buffThorns" style="display: none;">
-            <ui:Label tabindex="-1" display-tooltip-when-elided="true" name="label" class="label" />
-        </ui:VisualElement>
-        <ui:VisualElement name="attack" class="buffAttack" style="display: none;">
-            <ui:Label tabindex="-1" display-tooltip-when-elided="true" name="label" class="label" />
-        </ui:VisualElement>
-        <ui:VisualElement name="defence" class="buffDefence" style="display: none;">
-            <ui:Label tabindex="-1" display-tooltip-when-elided="true" name="label" class="label" />
-        </ui:VisualElement>
-        <ui:VisualElement name="accuracy" class="buffAccuracy" style="display: none;">
-            <ui:Label tabindex="-1" display-tooltip-when-elided="true" name="label" class="label" />
-        </ui:VisualElement>
-    </ui:VisualElement>
+    <ui:VisualElement name="container" style="width: 130px; height: 86px; flex-direction: row; justify-content: center; flex-wrap: wrap; align-items: center;" />
 </ui:UXML>

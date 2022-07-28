@@ -152,6 +152,7 @@ public class PhasePanelUI : UISubscriber
 
     private void OnPhaseChange(RoundController.PhaseType phase)
     {
+        Debug.Log("HELLO");
         if (RoundController.Phase.ToString().Contains("Player"))
         {
             currentPhaseContainer.fill.style.unityBackgroundImageTintColor = new StyleColor(new Color(12f / 255f, 241f / 255f, 1f, 0.69f));

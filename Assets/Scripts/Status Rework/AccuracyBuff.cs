@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class AccuracyBuff : Status
 {
-    public override Sprite GetIcon()
-    {
-        throw new System.NotImplementedException();
-    }
+    /// <summary>
+    /// Gets the name of the accuracy buff.
+    /// </summary>
+    public override string Name { get => "accuracy"; }
 
     protected override void OnChanged(int changeAmount)
     {

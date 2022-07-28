@@ -15,6 +15,11 @@ public abstract class Status
     public Unit Afflicted { get; protected set; }
 
     /// <summary>
+    /// Gets the name of the status.
+    /// </summary>
+    public abstract string Name { get; }
+
+    /// <summary>
     /// Adds new status or stacks of an existing status to a unit.
     /// </summary>
     /// <param name="afflicted">
@@ -39,15 +44,10 @@ public abstract class Status
 
         afflicted.StatusList.Add(this);
         Afflicted = afflicted;
+        StatusEvents.StatusAdded(Afflicted, this);
         SubscribeListeners();
         AddStacks(amount);
     }
-
-    /// <summary>
-    /// Used to get icon of status. Use body to set path of icon.
-    /// </summary>
-    /// <returns> Sprite used for icon.</returns>
-    public abstract Sprite GetIcon();
 
     /// <summary>
     /// Adds stacks to an existing effect.
@@ -59,6 +59,7 @@ public abstract class Status
     {
         StackAmount += amount;
         OnChanged(amount);
+        StatusEvents.StatusStacked(Afflicted, this);
         if (StackAmount == 0)
         {
             RemoveStatus();
@@ -71,6 +72,7 @@ public abstract class Status
     protected virtual void RemoveStatus()
     {
         Afflicted.StatusList.Remove(this);
+        StatusEvents.StatusRemoved(Afflicted, this);
         UnsubscribeListeners();
     }
 

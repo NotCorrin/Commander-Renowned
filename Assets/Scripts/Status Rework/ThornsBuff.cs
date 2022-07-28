@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ThornsBuff : Status
 {
-    public override Sprite GetIcon()
-    {
-        throw new System.NotImplementedException();
-    }
+    /// <summary>
+    /// Gets the name of the thorns buff.
+    /// </summary>
+    public override string Name { get => "thorns"; }
 
     protected override void SubscribeListeners()
     {
