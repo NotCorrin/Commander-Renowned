@@ -115,6 +115,7 @@ public class BuffBarUI : UISubscriber
             {
                 child.style.opacity = 0;
                 container.Remove(child);
+                break;
             }
         }
     }
